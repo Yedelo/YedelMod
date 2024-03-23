@@ -79,7 +79,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean guildWelcome = true;
+    public static boolean guildWelcome = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Dropper AutoGG",
@@ -104,7 +104,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean autoAtlas = true;
+    public static boolean autoAtlas = false;
 
     // Start of config
     @Property(
@@ -131,7 +131,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean limboCreative = false;
+    public static boolean limboCreative = true;
 
     /* General */
 
@@ -251,7 +251,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Customization"
     )
-    public static String favoriteServer = "mc.hypixel.net";
+    public static String favoriteServer = "yedelmod.hypixel.net";
 
     // Customization
     @Property(
