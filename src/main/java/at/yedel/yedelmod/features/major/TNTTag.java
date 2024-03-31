@@ -35,10 +35,10 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class TNTTag {
-    private final ArrayList<String> players = new ArrayList<>(4);
+    private final ArrayList<String> players = new ArrayList<>();
     private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
     private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");
-    private final ArrayList<String> lines = new ArrayList<>(); // Display
+    private final ArrayList<String> lines = new ArrayList<>(4); // Display
     private final Pattern tagOtherRegex = Pattern.compile("You tagged ([^\\s!]+)!");
     private final Pattern personIsItRegex = Pattern.compile("^(\\w+) is IT!");
     private final Pattern peopleDeathPattern = Pattern.compile("^(\\w+) blew up!");
@@ -106,10 +106,8 @@ public class TNTTag {
     public void onRoundStarted(ClientChatReceivedEvent event) {
         if (!YedelConfig.bountyHunting || !playingTag || !event.message.getUnformattedText().endsWith("has started!"))
             return;
-        System.out.println("initial conditions passed");
         players.clear();
         if (YedelConfig.bhClickables) {
-            System.out.println("clickables");
             minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.playAgainItem - 1, playItemStack);
             minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.returnToLobbyItem - 1, leaveGameStack);
         }
@@ -124,14 +122,12 @@ public class TNTTag {
         if (YedelConfig.bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
         lines.set(1, "§a" + YedelConfig.points + " points");
         lines.set(2, "§a" + YedelConfig.kills + " kills");
-        System.out.println("end");
     }
 
     @SubscribeEvent
     public void onWhoMessage(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.bountyHunting || !playingTag)
-            return; // color code
+        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.bountyHunting || !playingTag) return;
         whoCheck = false;
         event.setCanceled(true);
         String[] playersArray = msg.substring(14).split("§r§7, ");
@@ -196,7 +192,6 @@ public class TNTTag {
         ItemStack item = minecraft.thePlayer.getHeldItem();
         if (item == null) return;
         String itemName = item.getDisplayName();
-
         if (Objects.equals(itemName, "§b§lPlay Again §r§7(Right Click)")) {
             UChat.say("/play tnt_tntag");
             event.setCanceled(true);
