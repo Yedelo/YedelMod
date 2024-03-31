@@ -16,20 +16,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(GuiContainer.class)
-public class MixinGuiContainer {
+public abstract class MixinGuiContainer {
     @Inject(method = "drawSlot", at = @At("HEAD"))
-    public void yedelmod$postDrawSlotEvent(Slot slotIn, CallbackInfo ci) {
+    private void yedelmod$postDrawSlotEvent(Slot slotIn, CallbackInfo ci) {
         MinecraftForge.EVENT_BUS.post(new DrawSlotEvent(slotIn));
     }
 
     @Inject(method = "handleMouseClick", at = @At("HEAD"), cancellable = true)
-    public void yedelmod$postGuiContainerClickEvent(Slot slotIn, int slotId, int clickedButton, int clickType, CallbackInfo ci) {
+    private void yedelmod$postGuiContainerClickEvent(Slot slotIn, int slotId, int clickedButton, int clickType, CallbackInfo ci) {
         if (MinecraftForge.EVENT_BUS.post(new GuiContainerClickEvent(slotIn, slotId, clickedButton, clickType)))
             ci.cancel();
     }
 
     @Inject(method = "keyTyped", at = @At("HEAD"), cancellable = true)
-    public void yedelmod$postGuiContainerKeyEvent(char typedChar, int keyCode, CallbackInfo ci) {
+    private void yedelmod$postGuiContainerKeyEvent(char typedChar, int keyCode, CallbackInfo ci) {
         if (MinecraftForge.EVENT_BUS.post(new GuiContainerKeyEvent(typedChar, keyCode))) ci.cancel();
     }
 }

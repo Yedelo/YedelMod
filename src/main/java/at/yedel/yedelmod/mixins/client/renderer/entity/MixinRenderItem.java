@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(RenderItem.class)
-public class MixinRenderItem {
+public abstract class MixinRenderItem {
     @Inject(method = "renderItemAndEffectIntoGUI", at = @At("HEAD"))
-    public void yedelmod$postRenderItemEvent(ItemStack stack, int xPosition, int yPosition, CallbackInfo ci) {
+    private void yedelmod$postRenderItemEvent(ItemStack stack, int xPosition, int yPosition, CallbackInfo ci) {
         MinecraftForge.EVENT_BUS.post(new RenderItemEvent(stack, xPosition, yPosition));
     }
 }

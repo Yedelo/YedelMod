@@ -43,6 +43,5 @@ public abstract class MixinGuiMainMenu extends GuiScreen {
     @Inject(method = "drawScreen", at = @At("TAIL"))
     private void yedelmod$drawButton(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (YedelConfig.buttonFavoriteServer) yedelmod$favoriteServerButton.drawButton(minecraft, mouseX, mouseY);
-
     }
 }
