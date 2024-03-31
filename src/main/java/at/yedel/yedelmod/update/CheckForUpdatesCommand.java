@@ -22,12 +22,12 @@ public class CheckForUpdatesCommand extends Command {
     }
 
     @SubCommand(value = "modrinth", description = "Searches Modrinth for a mod update.")
-    public void handleModrinth() throws IOException {
+    public void handleModrinth() {
         UpdateManager.instance.checkVersion(UpdateSource.MODRINTH, "chat");
     }
 
     @SubCommand(value = "github", description = "Searches GitHub for a mod update.")
-    public void handleGithub() throws IOException {
+    public void handleGithub() {
         UpdateManager.instance.checkVersion(UpdateSource.GITHUB, "chat");
     }
 }

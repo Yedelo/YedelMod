@@ -16,7 +16,7 @@ public class SetNickCommand extends Command {
 
     @DefaultHandler
     public void handle(String nick) {
-        UChat.chat("[§c§lBounty§f§lHunting] §eSet nick to " + nick + "§e!");
+        UChat.chat("§6[BountyHunting] §eSet nick to " + nick + "§e!");
         YedelConfig.nick = nick;
         YedelConfig.save();
     }

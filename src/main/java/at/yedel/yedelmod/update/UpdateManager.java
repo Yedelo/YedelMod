@@ -38,22 +38,24 @@ public class UpdateManager {
     private final Logger updateLogger = LogManager.getLogger("Update Manager");
 
     public void checkVersion(UpdateSource source, String type) {
-        new Thread(() -> checkVersionInThread(source, type), "YedelMod").start();
+        new Thread(() -> {
+            try {
+                checkVersionInThread(source, type);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }, "YedelMod").start();
     }
 
-    private void checkVersionInThread(UpdateSource source, String type) {
+    private void checkVersionInThread(UpdateSource source, String type) throws Exception {
         try {
             CloseableHttpClient client = HttpClients.createDefault();
             HttpGet request = new HttpGet(source.apiLink);
             request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
 
             HttpResponse response = null;
-            try {
-                response = client.execute(request);
-            }
-            catch (IOException exception) {
-                updateLogger.error("Couldn't execute request at " + source.apiLink + "!");
-            }
+            response = client.execute(request);
             updateLogger.info("\nGetting latest version from " + source.apiLink + " (" + source.name + ")");
             updateLogger.info("Response: " + response.getStatusLine().getStatusCode());
 
@@ -61,13 +63,7 @@ public class UpdateManager {
             reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             StringBuffer result = new StringBuffer();
             String line = "";
-            while (true) {
-                try {
-                    if ((line = reader.readLine()) == null) break;
-                }
-                catch (IOException exception) {
-                    throw exception;
-                }
+            while ((line = reader.readLine()) != null) {
                 result.append(line);
             }
             String version;
@@ -90,7 +86,7 @@ public class UpdateManager {
             }
         }
         catch (Exception error) {
-            handleUpdateError(type);
+            handleUpdateError(error, type, source.name);
         }
     }
 
@@ -118,10 +114,11 @@ public class UpdateManager {
         });
     }
 
-    private void handleUpdateError(String type) {
+    private void handleUpdateError(Exception error, String type, String sourceName) throws Exception {
         updateLogger.error("Couldn't check for updates");
-        if (Objects.equals(type, "chat")) UChat.chat(logo + " &cCouldn't check for updates!");
-        Constants.notifications.push("YedelMod", "Couldn't check for updates!");
+        if (Objects.equals(type, "chat")) UChat.chat(logo + " &cCouldn't check for updates on " + sourceName + "!");
+        else Constants.notifications.push("YedelMod", "Couldn't check for updates on " + sourceName + "!");
+        throw error;
     }
 }
 

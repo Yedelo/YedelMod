@@ -90,6 +90,7 @@ public class TNTTag {
         playerName = minecraft.thePlayer.getName();
         dead = false;
         target = null;
+        lines.set(0, "§c§lBounty §f§lHunting");
         lines.set(1, "§a" + YedelConfig.points + " points");
         lines.set(2, "§a" + YedelConfig.kills + " kills");
         lines.set(3, "");
