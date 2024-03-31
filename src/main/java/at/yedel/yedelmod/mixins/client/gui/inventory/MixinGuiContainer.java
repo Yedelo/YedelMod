@@ -24,7 +24,8 @@ public class MixinGuiContainer {
 
     @Inject(method = "handleMouseClick", at = @At("HEAD"), cancellable = true)
     public void yedelmod$postGuiContainerClickEvent(Slot slotIn, int slotId, int clickedButton, int clickType, CallbackInfo ci) {
-        if (MinecraftForge.EVENT_BUS.post(new GuiContainerClickEvent(slotIn, slotId, clickedButton, clickType))) ci.cancel();
+        if (MinecraftForge.EVENT_BUS.post(new GuiContainerClickEvent(slotIn, slotId, clickedButton, clickType)))
+            ci.cancel();
     }
 
     @Inject(method = "keyTyped", at = @At("HEAD"), cancellable = true)

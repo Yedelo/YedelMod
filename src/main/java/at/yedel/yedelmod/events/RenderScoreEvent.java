@@ -5,7 +5,6 @@ package at.yedel.yedelmod.events;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 

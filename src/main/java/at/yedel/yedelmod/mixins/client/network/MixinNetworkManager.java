@@ -3,14 +3,12 @@ package at.yedel.yedelmod.mixins.client.network;
 
 
 import at.yedel.yedelmod.events.PacketEvent;
-import at.yedel.yedelmod.events.PacketEvent.ReceiveEvent;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraftforge.common.MinecraftForge;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

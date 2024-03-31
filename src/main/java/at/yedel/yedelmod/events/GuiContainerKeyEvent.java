@@ -4,7 +4,6 @@ package at.yedel.yedelmod.events;
 
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 

@@ -128,7 +128,8 @@ public class TNTTag {
     @SubscribeEvent
     public void onWhoMessage(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.bountyHunting || !playingTag) return;
+        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.bountyHunting || !playingTag)
+            return;
         whoCheck = false;
         event.setCanceled(true);
         String[] playersArray = msg.substring(14).split("§r§7, ");

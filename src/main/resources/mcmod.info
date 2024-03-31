@@ -1,17 +1,19 @@
 [
-    {
-        "modid": "yedelmod",
-        "name": "YedelMod",
-        "description": "QOL mod for small features related to the general game and larger features for Hypixel\nUse /yedel or the config button for settings and more info.\nUse /yedelupdate or the check for update button in the settings menu to check for updates on Modrinth or GitHub.",
-        "version": "${version}",
-        "mcversion": "${mcversion}",
-        "url": "https://modrinth.com/project/yedelmod",
-        "updateUrl": "https://github.com/Yedelo/YedelMod",
-        "authorList": ["Yedel"],
-        "credits": "Debuggings for a good example mod",
-        "logoFile": "yedelmod.png",
-        "screenshots": [],
-        "dependencies": []
-    }
+  {
+    "modid": "yedelmod",
+    "name": "YedelMod",
+    "description": "QOL mod for small features related to the general game and larger features for Hypixel\nUse /yedel or the config button for settings and more info.\nUse /yedelupdate or the check for update button in the settings menu to check for updates on Modrinth or GitHub.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://modrinth.com/project/yedelmod",
+    "updateUrl": "https://github.com/Yedelo/YedelMod",
+    "authorList": [
+      "Yedel"
+    ],
+    "credits": "Debuggings for a good example mod",
+    "logoFile": "yedelmod.png",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]
  
