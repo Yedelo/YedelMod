@@ -1,0 +1,19 @@
+[
+    {
+        "modid": "yedelmod",
+        "name": "YedelMod",
+        "description": "QOL mod for small features related to the general game and larger features for Hypixel",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "https://modrinth.com/project/yedelmod",
+        "updateUrl": "https://github.com/Yedelo/YedelMod",
+        "authorList": [
+            "Yedel"
+        ],
+        "credits": "Debuggings for a good example mod",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]
+ 

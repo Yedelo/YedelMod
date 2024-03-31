@@ -1,0 +1,16 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "at.yedel.yedelmod.mixins",
+  "client": [
+    "client.entity.MixinEntityPlayerSP",
+    "client.gui.MixinGuiMainMenu",
+    "client.gui.MixinGuiNewChat",
+    "client.gui.inventory.MixinGuiContainer",
+    "client.multiplayer.MixinWorldClient",
+    "client.network.MixinNetHandlerPlayClient",
+    "client.renderer.entity.InvokerRender",
+    "client.renderer.entity.MixinRenderItem",
+    "client.renderer.entity.MixinRenderPlayer"
+  ],
+  "verbose": true
+}

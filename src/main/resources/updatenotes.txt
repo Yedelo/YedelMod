@@ -1,0 +1,6 @@
+For updating the mod:
+- Update the mod version in at.yedel.yedelmod.YedelMod
+- Update the mod version in build.gradle.kts
+For updating the links:
+- Update the modrinthLink and githubLink in at.yedel.yedelmod.update.UpdateManager
+- Update the api links in at.yedel.yedelmod.update.UpdateSource
