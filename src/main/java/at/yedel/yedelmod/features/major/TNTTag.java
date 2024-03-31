@@ -35,7 +35,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class TNTTag {
-    private final ArrayList<String> players = new ArrayList<>();
+    private final ArrayList<String> players = new ArrayList<>(4);
     private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
     private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");
     private final ArrayList<String> lines = new ArrayList<>(); // Display
@@ -77,7 +77,6 @@ public class TNTTag {
         if (!playingTag || !YedelConfig.bountyHunting) return;
         int y = YedelConfig.bhDisplayY;
         FontRenderer fontRenderer = minecraft.fontRendererObj;
-        fontRenderer.drawStringWithShadow("font renderer in bounty hunting", 200, 100, 16777215);
         for (String line: lines) {
             fontRenderer.drawStringWithShadow(line, YedelConfig.bhDisplayX, y, 16777215);
             y += fontRenderer.FONT_HEIGHT + 2;
@@ -87,9 +86,7 @@ public class TNTTag {
     @SubscribeEvent
     public void onTNTTagJoin(GameJoinEvent.TNTJoinEvent event) {
         playingTag = true;
-        System.out.println("tnt join event");
         if (!YedelConfig.bountyHunting) return;
-        System.out.println("bounty hunting enabled");
         playerName = minecraft.thePlayer.getName();
         dead = false;
         target = null;
@@ -215,7 +212,7 @@ public class TNTTag {
         if (event.message.getUnformattedText().startsWith("You were blown up by") && playingTag) {
             target = null;
             dead = true;
-            if (lines.size() == 4) lines.set(3, "");
+            lines.set(3, "");
         }
     }
 
@@ -229,7 +226,7 @@ public class TNTTag {
             if (Objects.equals(personDied, playerName)) {
                 dead = true;
                 target = null;
-                if (lines.size() == 4) lines.set(3, "");
+                lines.set(3, "");
             }
             if (Objects.equals(personDied, target) && fightingTarget) {
                 Multithreading.schedule(() -> {
@@ -256,6 +253,9 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onLeaveTag(WorldEvent.Unload event) {
-        lines.clear();
+        lines.set(0, "");
+        lines.set(1, "");
+        lines.set(2, "");
+        lines.set(3, "");
     }
 }

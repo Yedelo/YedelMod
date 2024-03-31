@@ -24,6 +24,6 @@ public class SetTextCommand extends Command {
         CustomText.instance.displayedText = displayText;
         YedelConfig.displayedText = displayText;
         YedelConfig.save();
-        UChat.chat(logo + " &eSet displayed text to \"" + displayText + "&e\"!");
+        UChat.chat(logo + " &eSet displayed text to \"&r" + displayText + "&e\"!");
     }
 }

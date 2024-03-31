@@ -44,8 +44,6 @@ dependencies {
 
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-
-    implementation("org.apache.httpcomponents:httpclient:4.5.13")
 }
 
 repositories {

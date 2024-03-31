@@ -25,6 +25,7 @@ public abstract class MixinEntityPlayerSP extends EntityLivingBase implements Lo
         super.swingItem();
     }
 
+    // I would prefer to make this an event but not sure how to right now
     @ModifyVariable(method = "sendChatMessage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     public String yedelmod$replaceChat(String message) {
         return message.replace(YedelConfig.randomString, "@" + TextUtils.randomUuid(8));

@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.utils.update;
+package at.yedel.yedelmod.update;
 
 
 
@@ -42,55 +42,55 @@ public class UpdateManager {
     }
 
     private void checkVersionInThread(UpdateSource source, String type) {
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(source.apiLink);
-        request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
-
-        HttpResponse response = null;
         try {
-            response = client.execute(request);
-        }
-        catch (IOException exception) {
-            handleUpdateError(type);
-        }
-        updateLogger.info("\nGetting latest version from " + source.apiLink + " (" + source.name + ")");
-        updateLogger.info("Response: " + response.getStatusLine().getStatusCode());
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(source.apiLink);
+            request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
 
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        }
-        catch (IOException e) {
-            handleUpdateError(type);
-        }
-        StringBuffer result = new StringBuffer();
-        String line = "";
-        while (true) {
+            HttpResponse response = null;
             try {
-                if ((line = reader.readLine()) == null) break;
+                response = client.execute(request);
             }
-            catch (IOException e) {
-                handleUpdateError(type);
+            catch (IOException exception) {
+                updateLogger.error("Couldn't execute request at " + source.apiLink + "!");
             }
-            result.append(line);
+            updateLogger.info("\nGetting latest version from " + source.apiLink + " (" + source.name + ")");
+            updateLogger.info("Response: " + response.getStatusLine().getStatusCode());
+
+            BufferedReader reader = null;
+            reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while (true) {
+                try {
+                    if ((line = reader.readLine()) == null) break;
+                }
+                catch (IOException exception) {
+                    throw exception;
+                }
+                result.append(line);
+            }
+            String version;
+            if (source == UpdateSource.MODRINTH) {
+                JsonArray jsonArray = new Gson().fromJson(String.valueOf(result), JsonArray.class);
+                JsonObject jsonResult = jsonArray.get(0).getAsJsonObject();
+                version = String.valueOf(jsonResult.get("version_number")).replaceAll("\"", "");
+            }
+            else {
+                JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
+                version = String.valueOf(jsonResult.get("tag_name")).replaceAll("\"", "");
+            }
+            if (type == "chat") {
+                if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);
+                else UChat.chat(logo + " &cYou are already on the latest version!");
+            }
+            else {
+                if (!version.equals(YedelMod.version)) sendUpdateNotification(source, version);
+                else Constants.notifications.push("YedelMod", "You are already on the latest version!");
+            }
         }
-        String version;
-        if (source == UpdateSource.MODRINTH) {
-            JsonArray jsonArray = new Gson().fromJson(String.valueOf(result), JsonArray.class);
-            JsonObject jsonResult = jsonArray.get(0).getAsJsonObject();
-            version = String.valueOf(jsonResult.get("version_number")).replaceAll("\"", "");
-        }
-        else {
-            JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
-            version = String.valueOf(jsonResult.get("tag_name")).replaceAll("\"", "");
-        }
-        if (type == "chat") {
-            if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);
-            else UChat.chat(logo + " &cYou are already on the latest version!");
-        }
-        else {
-            if (!version.equals(YedelMod.version)) sendUpdateNotification(source, version);
-            else Constants.notifications.push("YedelMod", "You are already on the latest version!");
+        catch (Exception error) {
+            handleUpdateError(type);
         }
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
@@ -60,5 +61,15 @@ public class EasyAtlasVerdicts {
                 InventoryClicker.instance.setupTimeout();
             }, (long) (NumberUtils.randomRange(158, 301)), TimeUnit.MILLISECONDS);
         }
+    }
+
+    @SubscribeEvent
+    public void onLeaveAtlas(WorldEvent.Load event) {
+        inAtlas = false;
+    }
+
+    @SubscribeEvent
+    public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
+        inAtlas = false;
     }
 }

@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features.major;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S2DPacketOpenWindow;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,20 +35,19 @@ public class DefusalHelper {
     @SubscribeEvent
     public void onOpenDefusalWindow(PacketEvent.ReceiveEvent event) {
         if (YedelConfig.defusalHelper) {
-            if (event.packet instanceof net.minecraft.network.play.server.S2DPacketOpenWindow) {
-                if (java.util.Objects.equals(((net.minecraft.network.play.server.S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText(), "C4 (Click REDSTONE)")) {
+            if (event.packet instanceof S2DPacketOpenWindow) {
+                if (Objects.equals(((S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText(), "C4 (Click REDSTONE)")) {
                     inDefusal = true;
                     clickedSlots.clear();
-                    container = (net.minecraft.client.gui.inventory.GuiContainer) minecraft.currentScreen;
+                    container = (GuiContainer) minecraft.currentScreen;
                 }
             }
-        }
-        else {
         }
     }
 
     @SubscribeEvent
     public void onResetItems(PacketEvent.ReceiveEvent event) {
+        if (!YedelConfig.defusalHelper) return;
         if (event.packet instanceof S2FPacketSetSlot) {
             if (minecraft.currentScreen instanceof GuiContainer) {
                 if (((GuiContainer) minecraft.currentScreen).inventorySlots.getSlot(0).inventory.getName().contains("REDSTONE")) {

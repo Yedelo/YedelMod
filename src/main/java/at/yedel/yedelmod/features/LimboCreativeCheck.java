@@ -36,7 +36,7 @@ public class LimboCreativeCheck {
         }
         else if (playerController.isInCreativeMode())
             UChat.chat(logo + " &cYou are already in creative mode!");
-        else UChat.chat(logo + " &cLimbo check failed, try again in a bit!");
+        else UChat.chat(logo + " &cLimbo check failed, try again in a bit or rejoin!");
     }
 
     @SubscribeEvent
