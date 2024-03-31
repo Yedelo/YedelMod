@@ -17,6 +17,7 @@ import at.yedel.yedelmod.commands.SetTitleCommand;
 import at.yedel.yedelmod.commands.SimulateChatCommand;
 import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.PacketEvent;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
@@ -38,12 +39,15 @@ import at.yedel.yedelmod.update.UpdateManager;
 import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 
@@ -117,6 +121,8 @@ public class YedelMod {
         MinecraftForge.EVENT_BUS.register(new StrengthIndicators());
         MinecraftForge.EVENT_BUS.register(new TNTTag());
         MinecraftForge.EVENT_BUS.register(new YedelCheck());
+
+        MinecraftForge.EVENT_BUS.register(this);
 
         new PlaytimeSchedule().startSchedule();
 

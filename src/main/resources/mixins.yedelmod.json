@@ -7,10 +7,12 @@
     "client.gui.MixinGuiNewChat",
     "client.gui.inventory.MixinGuiContainer",
     "client.multiplayer.MixinWorldClient",
-    "client.network.MixinNetHandlerPlayClient",
     "client.renderer.entity.InvokerRender",
     "client.renderer.entity.MixinRenderItem",
     "client.renderer.entity.MixinRenderPlayer"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "client.network.MixinNetworkManager"
+  ]
 }

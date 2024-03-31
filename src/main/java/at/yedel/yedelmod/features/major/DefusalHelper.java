@@ -77,7 +77,7 @@ public class DefusalHelper {
         ItemStack stackUnderMouse = slotUnderMouse.getStack();
         if (stackUnderMouse == null) return;
         if ((stackUnderMouse.getItem() != Items.redstone && inDefusal) || clickedSlots.contains(slotUnderMouse)) {
-            event.ci.cancel();
+            event.setCanceled(true);
         }
         clickedSlots.add(slotUnderMouse);
     }
@@ -89,7 +89,7 @@ public class DefusalHelper {
         ItemStack stackUnderMouse = event.slotIn.getStack();
         if (stackUnderMouse == null) return;
         if ((stackUnderMouse.getItem() != Items.redstone && inDefusal) || clickedSlots.contains(event.slotIn)) {
-            event.ci.cancel();
+            event.setCanceled(true);
             clickedSlots.add(event.slotIn);
         }
     }

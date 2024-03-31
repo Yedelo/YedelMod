@@ -22,7 +22,7 @@ public class LimboCommand extends Command {
     public void handle() {
         UChat.say("§");
         Multithreading.schedule(() -> {
-            if (minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */) UChat.say("§");
+            if (!minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */) UChat.say("§");
         }, 500, TimeUnit.MILLISECONDS);
 
     }
