@@ -96,7 +96,7 @@ public class TNTTag {
         lines.set(3, "");
         if (YedelConfig.bhFirst) {
             UChat.chat(
-                    "[§c§lBounty§f§lHunting] §3If this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3."
+                    "&6&l[BountyHunting] §3If this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3."
             );
             YedelConfig.bhFirst = false;
             YedelConfig.save();
@@ -244,7 +244,7 @@ public class TNTTag {
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
         if (event.message.getUnformattedText() == "Processing request. Please wait..." && YedelConfig.bountyHunting) {
-            UChat.chat("[§c§lBounty§f§lHunting] §ePlease set your nick with /setnick or in the config.");
+            UChat.chat("&6&l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
         }
     }
 
