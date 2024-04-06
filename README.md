@@ -83,7 +83,8 @@ Sets your gamemode to creative in limbo.
 
 Draws the default gray background in book GUIs
 
-![311408197-1e1ecc3e-f1de-404b-8d40-c94ccf76279e](https://github.com/Yedelo/YedelMod/assets/158670400/6853b5bf-ece3-4998-bdc3-498ee5ee5725)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/a994a4e6-5ee7-4b18-aa08-a7d50db92433)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/8575560f-68b4-418b-acdb-37b24d6e4346)
 
 </details>
 
