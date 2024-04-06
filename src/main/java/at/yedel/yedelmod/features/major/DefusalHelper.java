@@ -70,7 +70,7 @@ public class DefusalHelper {
 
     @SubscribeEvent
     public void onHotkeyNonRedstone(GuiContainerKeyEvent event) {
-        if (!YedelConfig.defusalHelper) return;
+        if (!YedelConfig.defusalBlockClicks) return;
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || container == null) return;
         Slot slotUnderMouse = container.getSlotUnderMouse();
         if (slotUnderMouse == null) return;
@@ -84,7 +84,7 @@ public class DefusalHelper {
 
     @SubscribeEvent
     public void onClickNonRedstone(GuiContainerClickEvent event) {
-        if (!YedelConfig.defusalHelper) return;
+        if (!YedelConfig.defusalBlockClicks) return;
         if (event.slotIn == null) return;
         ItemStack stackUnderMouse = event.slotIn.getStack();
         if (stackUnderMouse == null) return;
