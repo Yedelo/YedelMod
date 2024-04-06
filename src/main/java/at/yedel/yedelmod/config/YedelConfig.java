@@ -576,7 +576,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Play sound"
     )
     private void playSelection() {
-        if (minecraft.thePlayer == null) return;
+        if (minecraft.theWorld == null) return;
         minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
     }
 
@@ -589,7 +589,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Play sound"
     )
     private void playKill() {
-        if (minecraft.thePlayer == null) return;
+        if (minecraft.theWorld == null) return;
         minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
     }
 
