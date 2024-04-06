@@ -4,8 +4,7 @@ For the ChatTriggers module, see [YedelUtils](https://github.com/Yedelo/YedelUti
 
 ![Badge](https://img.shields.io/badge/discord-yedel-blue)
 
-[![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?display_name=release&label=GitHub%20downloads)](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20release
-)
+![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20release)
 
 ![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version)
 
@@ -20,6 +19,22 @@ When using a random string placeholder in chat, replaces it with a random string
 - Edit this placeholder in the config
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/798c82d9-b92d-4742-b72a-8394518feda8)
+
+</details>
+
+<details><summary>Change window title</summary>
+
+Changes the window title when you join a world/server or host on LAN.
+
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/effc5c08-6fc8-4436-b455-08a3b0c4ebbc)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/73e5d7e7-23cc-4dd2-b70c-9a88f8469a1f)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/cf4545c3-5566-4c69-a3ff-1d0e4190b13e)
+
+</details>
+
+<details><summary>Item swings</summary>
+
+Swing your item (clientside only) when throwing a projectile or dropping an item.
 
 </details>
 
@@ -39,7 +54,7 @@ AutoGG for dropper with customizable delay, will be removed when a trigger for D
 
 <details><summary>Easy atlas verdicts</summary>
 
-Adds keybinds for Atlas that automatically click on the two verdicts. 
+Adds keybinds for Atlas that automatically click on the two verdicts, bound to O and P by default. 
 - This automatically clicks for you, so it is use at your own risk.
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/ddd76d06-0f23-43b5-a297-3d5bbe59dfcf)
@@ -60,6 +75,7 @@ Sets your gamemode to creative in limbo.
 - Use /lgmc if the check fails
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/4586b6d5-9367-4861-a697-7e88fafc9a05)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/51ec60dc-e82a-4e22-8ad5-f86b737ee3d0)
 
 </details>
 
@@ -120,13 +136,30 @@ AH/BZ search your currently held item with keybinds, bound to K and L by default
 
 ## **Commands:**
 
-<details><summary>/settext</summary>
+<details><summary>/simulatechat (/simc) [message]</summary>
+
+Adds the given chat message to chat
+
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/4b3c2733-bc8e-4378-8fdd-2e19402c7386)
+
+</details>
+
+<details><summary>/settext [text]</summary>
 
 Adds custom text to the screen. 
 - Use /movetext to change the position and /cleartext to remove.
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/be4b75af-7b14-4c02-ac15-a8566aee0da8)
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/280749ad-b04d-42b1-a3c6-3e72cda46c8f)
+
+</details>
+
+<details><summary>/settitle [title]</summary>
+
+Sets the title of the game window
+
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/44a1fbd4-7222-472b-be88-de143b5c9d62)
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/130e0891-9044-478b-9652-c5676568a278)
 
 </details>
 
@@ -138,10 +171,10 @@ Shows your playtime (hours and minutes)
 
 </details>
 
-<details><summary>/yping (/yp)</summary>
+<details><summary>/yping (/yp) [method] </summary>
 
 Estimates your ping with several possible methods. 
-- Edit the default used in the config
+- Edit the default method used in the config
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/1e03ab3e-a5f7-482f-851b-ad25ddd9b34a)
 
