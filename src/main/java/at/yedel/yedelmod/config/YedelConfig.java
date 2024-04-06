@@ -100,7 +100,7 @@ public class YedelConfig extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Easy atlas verdicts",
-            description = "Adds keybinds for the two atlas verdicts in your hotbar. §cThis automatically clicks for you, so it is use at your own risk.",
+            description = "Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is &cuse at your own risk.",
             category = "General",
             subcategory = "Features"
     )
@@ -123,6 +123,14 @@ public class YedelConfig extends Vigilant {
             subcategory = "Features"
     )
     public static boolean defusalHelper = true;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Block non-redstone clicks",
+            description = "Blocks clicks on non-redstone items in defusal, &cuse at your own risk.",
+            category = "General",
+            subcategory = "Features"
+    )
+    public static boolean defusalBlockClicks = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Limbo creative mode",
