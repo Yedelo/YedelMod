@@ -25,6 +25,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
+// the order of everything here keeps getting reset its very annoying
 public class YedelConfig extends Vigilant {
     private static final URI video;
     public static YedelConfig instance = new YedelConfig();
@@ -43,6 +44,30 @@ public class YedelConfig extends Vigilant {
             category = "General"
     )
     public static boolean autoCheckUpdates = true;
+
+    @Property(
+            type = PropertyType.BUTTON,
+            name = "&9Modrinth link",
+            description = "Click to open the Modrinth site",
+            category = "General"
+    )
+    public static void openModrinthLink() throws IOException, URISyntaxException {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            Desktop.getDesktop().browse(new URI(UpdateSource.MODRINTH.link));
+        }
+    }
+
+    @Property(
+            type = PropertyType.BUTTON,
+            name = "&9GitHub link",
+            description = "Click to open the GitHub repository",
+            category = "General"
+    )
+    public static void openGitHubRepository() throws IOException, URISyntaxException {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            Desktop.getDesktop().browse(new URI(UpdateSource.GITHUB.link));
+        }
+    }
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto welcome guild members",
@@ -459,7 +484,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             placeholder = "Check"
     )
-    public static void checkForUpdates() throws IOException {
+    public static void checkForUpdates() {
         UpdateManager.instance.checkVersion(getUpdateSource(), "notification");
     }
 
