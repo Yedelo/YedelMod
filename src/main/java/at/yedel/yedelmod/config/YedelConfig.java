@@ -323,7 +323,7 @@ public class YedelConfig extends Vigilant {
             category = "Modern Features",
             subcategory = "General"
     )
-    public static boolean changeTitle = false;
+    public static boolean changeTitle = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Projectile throws",
