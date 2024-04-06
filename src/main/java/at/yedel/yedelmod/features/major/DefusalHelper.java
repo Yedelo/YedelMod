@@ -8,19 +8,15 @@ import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
-import at.yedel.yedelmod.events.GuiContainerClickEvent;
-import at.yedel.yedelmod.events.GuiContainerKeyEvent;
 import at.yedel.yedelmod.events.PacketEvent;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2DPacketOpenWindow;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.input.Keyboard;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
@@ -65,32 +61,6 @@ public class DefusalHelper {
         if (slot.getStack() == null) return;
         if (slot.getStack().getItem() == Items.redstone && inDefusal) {
             RenderUtils.highlightItem(slot, red);
-        }
-    }
-
-    @SubscribeEvent
-    public void onHotkeyNonRedstone(GuiContainerKeyEvent event) {
-        if (!YedelConfig.defusalBlockClicks) return;
-        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || container == null) return;
-        Slot slotUnderMouse = container.getSlotUnderMouse();
-        if (slotUnderMouse == null) return;
-        ItemStack stackUnderMouse = slotUnderMouse.getStack();
-        if (stackUnderMouse == null) return;
-        if ((stackUnderMouse.getItem() != Items.redstone && inDefusal) || clickedSlots.contains(slotUnderMouse)) {
-            event.setCanceled(true);
-        }
-        clickedSlots.add(slotUnderMouse);
-    }
-
-    @SubscribeEvent
-    public void onClickNonRedstone(GuiContainerClickEvent event) {
-        if (!YedelConfig.defusalBlockClicks) return;
-        if (event.slotIn == null) return;
-        ItemStack stackUnderMouse = event.slotIn.getStack();
-        if (stackUnderMouse == null) return;
-        if ((stackUnderMouse.getItem() != Items.redstone && inDefusal) || clickedSlots.contains(event.slotIn)) {
-            event.setCanceled(true);
-            clickedSlots.add(event.slotIn);
         }
     }
 

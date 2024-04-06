@@ -125,14 +125,6 @@ public class YedelConfig extends Vigilant {
     public static boolean defusalHelper = true;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Block non-redstone clicks",
-            description = "Blocks clicks on non-redstone items in defusal, &cuse at your own risk.",
-            category = "General",
-            subcategory = "Features"
-    )
-    public static boolean defusalBlockClicks = false;
-    @Property(
-            type = PropertyType.SWITCH,
             name = "Limbo creative mode",
             description = "Automatically gives creative mode in limbo, not bannable because the server does not listen to anything happening. " +
                     "Use /lgmc in limbo if it doesn't work the first time",
