@@ -319,7 +319,7 @@ public class YedelConfig extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Change window title",
-            description = "Changes the window title on world join, similar to what newer versions do. You can manually do this with /settitle",
+            description = "Changes the window title on world join. \nYou can manually do this with /settitle",
             category = "Modern Features",
             subcategory = "General"
     )
@@ -443,7 +443,7 @@ public class YedelConfig extends Vigilant {
                         "\n" +
                         "\n&nCommands:" +
                         "\n" +
-                        "\n&9/simulatechat (/simc): &7Simulates a given chat message" +
+                        "\n&9/simulatechat (/simc): &7Simulates a given chat message, supports ampersauds for formatting." +
                         "\n&9/settext: &7Adds custom display text, move with &9/movetext &7and remove with &9/cleartext " +
                         "\n&9/settitle: &7Sets the title of the game window." +
                         "\n&9/yedelplaytime (/ypt, /yedelpt): &7Shows your playtime in hours and minutes" +
