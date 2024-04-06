@@ -28,7 +28,7 @@ public class ScoreboardName {
             if (inTNTTag && notPreviouslyTNTTag) {
                 MinecraftForge.EVENT_BUS.post(new GameJoinEvent.TNTJoinEvent());
             }
-            inSkywars = scoreboardName.contains("SKYWARS");
+            inSkywars = /*scoreboardName.contains("SKYWARS")*/ true; // doesn't work currently
             inSkyblock = scoreboardName.contains("SKYBLOCK") || scoreboardName.contains("SKIBLOCK");
             inAtlas = scoreboardName.equals("ATLAS");
         }

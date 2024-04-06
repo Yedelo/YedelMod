@@ -228,7 +228,7 @@ public class TNTTag {
             if (Objects.equals(personDied, target) && fightingTarget) {
                 Multithreading.schedule(() -> {
                     // Half points if you died while killing your target
-                    double pointIncrease = Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
+                    int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
                     YedelConfig.points += pointIncrease;
                     YedelConfig.kills += 1;
                     lines.set(1, "§a" + YedelConfig.points + " points (+" + pointIncrease + ")");

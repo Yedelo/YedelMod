@@ -79,17 +79,10 @@ public class StrengthIndicators {
         if (!YedelConfig.strengthIndicators || !ScoreboardName.inSkywars) return;
         String message = event.message.getUnformattedText();
         for (String killMessage: KillMessages.killMessages) {
-            if (message.matches(killMessage)) {
-                handleKillMessage(message, killMessage);
+            Matcher messageMatcher = Pattern.compile(killMessage).matcher(message);
+            if (messageMatcher.find()) {
+                triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
             }
-        }
-    }
-
-    private void handleKillMessage(String message, String regex) {
-        Pattern killPattern = Pattern.compile(regex);
-        Matcher messageMatcher = killPattern.matcher(message);
-        if (messageMatcher.find()) {
-            triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
         }
     }
 
