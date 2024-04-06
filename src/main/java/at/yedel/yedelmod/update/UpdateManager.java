@@ -75,6 +75,7 @@ public class UpdateManager {
             else {
                 JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
                 version = String.valueOf(jsonResult.get("tag_name")).replaceAll("\"", "");
+                if (version.equals("null")) version = null;
             }
             if (type == "chat") {
                 if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);

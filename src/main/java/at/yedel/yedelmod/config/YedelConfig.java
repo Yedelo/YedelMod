@@ -49,7 +49,8 @@ public class YedelConfig extends Vigilant {
             type = PropertyType.BUTTON,
             name = "&9Modrinth link",
             description = "Click to open the Modrinth site",
-            category = "General"
+            category = "General",
+            placeholder = "Open"
     )
     public static void openModrinthLink() throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -61,7 +62,8 @@ public class YedelConfig extends Vigilant {
             type = PropertyType.BUTTON,
             name = "&9GitHub link",
             description = "Click to open the GitHub repository",
-            category = "General"
+            category = "General",
+            placeholder = "Open"
     )
     public static void openGitHubRepository() throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
