@@ -18,6 +18,7 @@ public class ScoreboardName {
     public static boolean inSkywars;
     public static boolean inSkyblock;
     public static boolean inAtlas;
+    public static boolean inTNTRun;
 
     @SubscribeEvent
     public void onScoreboardPacket(PacketEvent.ReceiveEvent event) {
@@ -30,7 +31,8 @@ public class ScoreboardName {
             }
             inSkywars = /*scoreboardName.contains("SKYWARS")*/ true; // doesn't work currently
             inSkyblock = scoreboardName.contains("SKYBLOCK") || scoreboardName.contains("SKIBLOCK");
-            inAtlas = scoreboardName.equals("ATLAS");
+            inAtlas = scoreboardName.contains("ATLAS");
+            inTNTRun = scoreboardName.contains("TNT RUN");
         }
     }
 
@@ -41,5 +43,6 @@ public class ScoreboardName {
         inSkywars = false;
         inSkyblock = false;
         inAtlas = false;
+        inTNTRun = false;
     }
 }

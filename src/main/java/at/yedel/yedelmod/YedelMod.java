@@ -16,6 +16,7 @@ import at.yedel.yedelmod.commands.SetTextCommand;
 import at.yedel.yedelmod.commands.SetTitleCommand;
 import at.yedel.yedelmod.commands.SimulateChatCommand;
 import at.yedel.yedelmod.commands.YedelCommand;
+import at.yedel.yedelmod.commands.YedelMessageCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.CustomText;
@@ -100,6 +101,7 @@ public class YedelMod {
         EssentialAPI.getCommandRegistry().registerCommand(new SimulateChatCommand("simulatechat"));
         EssentialAPI.getCommandRegistry().registerCommand(new SimulateChatCommand("simc"));
         EssentialAPI.getCommandRegistry().registerCommand(new YedelCommand("yedel"));
+        EssentialAPI.getCommandRegistry().registerCommand(new YedelMessageCommand("yedelmessage"));
 
         MinecraftForge.EVENT_BUS.register(new AutoGuildWelcome());
         MinecraftForge.EVENT_BUS.register(new ChangeTitle());

@@ -132,7 +132,6 @@ public class YedelConfig extends Vigilant {
             subcategory = "Features"
     )
     public static boolean limboCreative = true;
-
     /* General */
 
     // Features

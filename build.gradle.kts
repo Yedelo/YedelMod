@@ -44,14 +44,11 @@ dependencies {
 
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-
-    implementation("moe.nea:hotswapagent-forge:1.0.0")
 }
 
 repositories {
     maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.spongepowered.org/repository/maven-public")
-    maven("https://repo.nea.moe/releases")
 }
 
 tasks {
