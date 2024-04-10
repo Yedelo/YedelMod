@@ -4,7 +4,7 @@ For the ChatTriggers module, see [YedelUtils](https://github.com/Yedelo/YedelUti
 
 ![Badge](https://img.shields.io/badge/discord-yedel-blue)
 
-![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20release)
+![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20version)
 
 ![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version)
 
