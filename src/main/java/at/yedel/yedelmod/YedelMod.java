@@ -136,4 +136,5 @@ public class YedelMod {
             UpdateManager.instance.checkVersion(YedelConfig.getUpdateSource(), "notification");
         }
     }
+
 }
