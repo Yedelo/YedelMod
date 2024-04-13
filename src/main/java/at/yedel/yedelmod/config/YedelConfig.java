@@ -26,9 +26,10 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 // the order of everything here keeps getting reset its very annoying
+// "instance needs to be at the bottom or the default values take priority" - patcher
+// i messed up
 public class YedelConfig extends Vigilant {
     private static final URI video;
-    public static YedelConfig instance = new YedelConfig();
     @Property(
             type = PropertyType.SELECTOR,
             name = "&9Update source",
@@ -585,4 +586,6 @@ public class YedelConfig extends Vigilant {
     }
 
     // End of configuration
+
+    public static YedelConfig instance = new YedelConfig();
 }
