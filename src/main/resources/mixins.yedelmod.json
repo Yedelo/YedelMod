@@ -8,6 +8,7 @@
     "net.minecraft.client.gui.inventory.MixinGuiContainer",
     "net.minecraft.client.multiplayer.MixinWorldClient",
     "net.minecraft.client.network.MixinNetworkManager",
+    "net.minecraft.client.renderer.MixinEntityRenderer",
     "net.minecraft.client.renderer.entity.InvokerRender",
     "net.minecraft.client.renderer.entity.MixinRenderItem",
     "net.minecraft.client.renderer.entity.MixinRenderPlayer"

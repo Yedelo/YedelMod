@@ -340,6 +340,14 @@ public class YedelConfig extends Vigilant {
             subcategory = "Hand Swings"
     )
     public static boolean dropSwings = false;
+    @Property(
+            type = PropertyType.PERCENT_SLIDER,
+            name = "Damage Tilt",
+            description = "The amount of camera shake caused by being hurt.",
+            category = "Modern Features",
+            subcategory = "Other"
+    )
+    public static float damageTiltStrength = 1f;
 
     // Features
     @Property(

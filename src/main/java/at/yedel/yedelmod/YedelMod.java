@@ -5,6 +5,7 @@ package at.yedel.yedelmod;
 import java.io.File;
 
 import at.yedel.yedelmod.commands.ClearTextCommand;
+import at.yedel.yedelmod.commands.HotSwapCommand;
 import at.yedel.yedelmod.commands.LimboCommand;
 import at.yedel.yedelmod.commands.LimboCreativeCommand;
 import at.yedel.yedelmod.commands.MoveHuntingTextCommand;
@@ -82,6 +83,7 @@ public class YedelMod {
 
         EssentialAPI.getCommandRegistry().registerCommand(new CheckForUpdatesCommand("yedelupdate"));
         EssentialAPI.getCommandRegistry().registerCommand(new ClearTextCommand("cleartext"));
+        EssentialAPI.getCommandRegistry().registerCommand(new HotSwapCommand("yhs"));
         EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("yedelli"));
         EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("yli"));
         EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("li"));
