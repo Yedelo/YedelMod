@@ -153,6 +153,14 @@ public class YedelConfig extends Vigilant {
     )
     public static boolean buttonFavoriteServer = true;
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Keep chat history on chat clear",
+            description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
+            category = "General",
+            subcategory = "Features"
+    )
+    public static boolean keepChatHistory = true;
+    @Property(
             type = PropertyType.TEXT,
             name = "Guild welcome message",
             description = "Message for new guild members. Use [player] for the new player.",

@@ -26,9 +26,9 @@ public abstract class MixinNetworkManager extends SimpleChannelInboundHandler {
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void yedelmod$onSendPacket(Packet packet, CallbackInfo ci) {
-        if (MinecraftForge.EVENT_BUS.post(new PacketEvent.SendEvent(packet))) ci.cancel();
         if (packet instanceof S01PacketJoinGame) {
             MinecraftForge.EVENT_BUS.post(new JoinGamePacketEvent());
         }
+        if (MinecraftForge.EVENT_BUS.post(new PacketEvent.SendEvent(packet))) ci.cancel();
     }
 }

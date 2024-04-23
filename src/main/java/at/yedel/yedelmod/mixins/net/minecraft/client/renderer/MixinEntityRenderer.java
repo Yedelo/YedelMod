@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
     @ModifyConstant(method = "hurtCameraEffect", constant = @Constant(floatValue = 14.0f))
-    private float hurtCameraEffect(float constant) {
+    private float yedelmod$hurtCameraEffect(float constant) {
         return constant * YedelConfig.damageTiltStrength;
     }
 }

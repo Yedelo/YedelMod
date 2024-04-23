@@ -2,8 +2,11 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.gui;
 
 
 
+import java.util.List;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import gg.essential.lib.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.opengl.Display;
@@ -23,5 +26,10 @@ public abstract class MixinGuiNewChat {
             String port = TextUtils.removeSection(chatComponent.getFormattedText().substring(26));
             if (YedelConfig.changeTitle) Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
         }
+    }
+
+    @WrapWithCondition(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2))
+    private boolean yedelmod$keepChatHistory(List sentMessages) {
+        return !YedelConfig.keepChatHistory;
     }
 }
