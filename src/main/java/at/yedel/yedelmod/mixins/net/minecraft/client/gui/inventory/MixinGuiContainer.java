@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.mixins.client.gui.inventory;
+package at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory;
 
 
 

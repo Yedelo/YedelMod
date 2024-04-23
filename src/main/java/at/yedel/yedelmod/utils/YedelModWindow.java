@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
-public class YedelWindow {
+public class YedelModWindow {
     public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -33,7 +33,7 @@ public class YedelWindow {
                 "Select Directory"
         );
         if (option == JOptionPane.YES_OPTION) {
-            Path thisPath = new File(YedelWindow.class.getProtectionDomain().getCodeSource().getLocation().getFile()).toPath();
+            Path thisPath = new File(YedelModWindow.class.getProtectionDomain().getCodeSource().getLocation().getFile()).toPath();
             JFileChooser fileSelector = new JFileChooser();
             fileSelector.setDialogTitle("Choose a directory...");
             fileSelector.setFileSelectionMode(JFileChooser.FILES_ONLY);

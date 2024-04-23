@@ -30,7 +30,9 @@ public class ChangeTitle {
     public void onRenderGame(RenderGameOverlayEvent event) {
         if (!setDisplay) return;
         setDisplay = false;
-        if (local) Display.setTitle("Minecraft 1.8.9 - Singleplayer");
+        if (local) {
+            Display.setTitle("Minecraft 1.8.9 - Singleplayer");
+        }
         else {
             ServerData serverData = minecraft.getCurrentServerData();
             if (Objects.equals(serverData.serverName, "Minecraft Server")) {

@@ -2,15 +2,15 @@
   "compatibilityLevel": "JAVA_8",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
-    "client.entity.MixinEntityPlayerSP",
-    "client.gui.MixinGuiMainMenu",
-    "client.gui.MixinGuiNewChat",
-    "client.gui.inventory.MixinGuiContainer",
-    "client.multiplayer.MixinWorldClient",
-    "client.network.MixinNetworkManager",
-    "client.renderer.entity.InvokerRender",
-    "client.renderer.entity.MixinRenderItem",
-    "client.renderer.entity.MixinRenderPlayer"
+    "net.minecraft.client.entity.MixinEntityPlayerSP",
+    "net.minecraft.client.gui.MixinGuiMainMenu",
+    "net.minecraft.client.gui.MixinGuiNewChat",
+    "net.minecraft.client.gui.inventory.MixinGuiContainer",
+    "net.minecraft.client.multiplayer.MixinWorldClient",
+    "net.minecraft.client.network.MixinNetworkManager",
+    "net.minecraft.client.renderer.entity.InvokerRender",
+    "net.minecraft.client.renderer.entity.MixinRenderItem",
+    "net.minecraft.client.renderer.entity.MixinRenderPlayer"
   ],
   "verbose": true
 }

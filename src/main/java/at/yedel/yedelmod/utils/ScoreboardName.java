@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class ScoreboardName {
+    public static ScoreboardName instance = new ScoreboardName();
     public static String scoreboardName;
 
     public static boolean inTNTTag;

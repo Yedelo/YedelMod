@@ -25,6 +25,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class EasyAtlasVerdicts {
+    public static EasyAtlasVerdicts instance = new EasyAtlasVerdicts();
     private boolean inAtlas;
 
     @SubscribeEvent

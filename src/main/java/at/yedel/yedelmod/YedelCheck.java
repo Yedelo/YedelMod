@@ -24,6 +24,7 @@ public class YedelCheck {
     // alreadyWarned is not supposed to be saved
 
     // Also used for the first time message
+    public static YedelCheck instance = new YedelCheck();
     public static boolean YedelUtils = false;
     public static boolean alreadyWarned = true;
 

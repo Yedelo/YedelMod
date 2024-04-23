@@ -103,22 +103,22 @@ public class YedelMod {
         EssentialAPI.getCommandRegistry().registerCommand(new YedelCommand("yedel"));
         EssentialAPI.getCommandRegistry().registerCommand(new YedelMessageCommand("yedelmessage"));
 
-        MinecraftForge.EVENT_BUS.register(new AutoGuildWelcome());
-        MinecraftForge.EVENT_BUS.register(new ChangeTitle());
+        MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.instance);
+        MinecraftForge.EVENT_BUS.register(ChangeTitle.instance);
         MinecraftForge.EVENT_BUS.register(CustomText.instance);
-        MinecraftForge.EVENT_BUS.register(new DefusalHelper());
-        MinecraftForge.EVENT_BUS.register(new DrawBookBackground());
-        MinecraftForge.EVENT_BUS.register(new DropperGG());
-        MinecraftForge.EVENT_BUS.register(new EasyAtlasVerdicts());
-        MinecraftForge.EVENT_BUS.register(new ItemSwings());
-        MinecraftForge.EVENT_BUS.register(new LimboCreativeCheck());
-        MinecraftForge.EVENT_BUS.register(new MarketSearch());
-        MinecraftForge.EVENT_BUS.register(new PingResponse());
-        MinecraftForge.EVENT_BUS.register(new SacrificeDisplay());
-        MinecraftForge.EVENT_BUS.register(new ScoreboardName());
-        MinecraftForge.EVENT_BUS.register(new StrengthIndicators());
-        MinecraftForge.EVENT_BUS.register(new TNTTag());
-        MinecraftForge.EVENT_BUS.register(new YedelCheck());
+        MinecraftForge.EVENT_BUS.register(DefusalHelper.instance);
+        MinecraftForge.EVENT_BUS.register(DrawBookBackground.instance);
+        MinecraftForge.EVENT_BUS.register(DropperGG.instance);
+        MinecraftForge.EVENT_BUS.register(EasyAtlasVerdicts.instance);
+        MinecraftForge.EVENT_BUS.register(ItemSwings.instance);
+        MinecraftForge.EVENT_BUS.register(LimboCreativeCheck.instance);
+        MinecraftForge.EVENT_BUS.register(MarketSearch.instance);
+        MinecraftForge.EVENT_BUS.register(PingResponse.instance);
+        MinecraftForge.EVENT_BUS.register(SacrificeDisplay.instance);
+        MinecraftForge.EVENT_BUS.register(ScoreboardName.instance);
+        MinecraftForge.EVENT_BUS.register(StrengthIndicators.instance);
+        MinecraftForge.EVENT_BUS.register(TNTTag.instance);
+        MinecraftForge.EVENT_BUS.register(YedelCheck.instance);
 
         new PlaytimeSchedule().startSchedule();
 

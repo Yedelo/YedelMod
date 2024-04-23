@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.mixins.client.renderer.entity;
+package at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity;
 
 
 

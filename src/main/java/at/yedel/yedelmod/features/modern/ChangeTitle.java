@@ -16,6 +16,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class ChangeTitle {
+    public static ChangeTitle instance = new ChangeTitle();
     private boolean setDisplay = false;
     private boolean local;
 

@@ -22,6 +22,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class ItemSwings {
+    public static ItemSwings instance = new ItemSwings();
     private final List swingItems;
 
     public ItemSwings() {

@@ -18,7 +18,7 @@ public class ClearTextCommand extends Command {
     }
 
     @DefaultHandler
-    public void handle() {
+    public void handle() throws Exception {
         CustomText.instance.displayedText = "";
         YedelConfig.displayedText = "";
         YedelConfig.save();

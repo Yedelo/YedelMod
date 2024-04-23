@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class AutoGuildWelcome {
+    public static AutoGuildWelcome instance = new AutoGuildWelcome();
     @SubscribeEvent
     public void onGuildJoinMessage(ClientChatReceivedEvent event) {
         if (!YedelConfig.guildWelcome) return;

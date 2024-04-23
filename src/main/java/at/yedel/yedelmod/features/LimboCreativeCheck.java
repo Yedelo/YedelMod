@@ -20,6 +20,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class LimboCreativeCheck {
+    public static LimboCreativeCheck instance = new LimboCreativeCheck();
     private static final WorldSettings.GameType creative = WorldSettings.GameType.CREATIVE;
     private static final BlockPos limboBlockPos = new BlockPos(-23.5, 31, 21.5);
 

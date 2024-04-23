@@ -16,6 +16,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class PingResponse {
+    public static PingResponse instance = new PingResponse();
     @SubscribeEvent
     public void onUnknownCommandResponse(ClientChatReceivedEvent event) {
         if (!PingSender.instance.commandCheck) return;

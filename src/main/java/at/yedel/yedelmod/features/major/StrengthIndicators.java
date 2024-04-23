@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.RenderScoreEvent;
-import at.yedel.yedelmod.mixins.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.KillMessages;
 import at.yedel.yedelmod.utils.ScoreboardName;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class StrengthIndicators {
+    public static StrengthIndicators instance = new StrengthIndicators();
     private final Map<String, Double> strengthPlayers = Maps.newHashMap();
     private final ArrayList<String> startStrengthPlayers = new ArrayList<>();
     private final ArrayList<String> endStrengthPlayers = new ArrayList<>();

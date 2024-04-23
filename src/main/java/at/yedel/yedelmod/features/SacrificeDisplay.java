@@ -19,6 +19,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class SacrificeDisplay {
+    public static SacrificeDisplay instance = new SacrificeDisplay();
     public static String coins;
 
     @SubscribeEvent

@@ -23,6 +23,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class MarketSearch {
+    public static MarketSearch instance = new MarketSearch();
     private boolean ahSearching = false;
     private boolean bzSearching = false;
     private boolean bzSearchingClose = false;

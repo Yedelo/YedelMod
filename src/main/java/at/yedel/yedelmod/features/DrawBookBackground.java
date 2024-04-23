@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class DrawBookBackground {
+    public static DrawBookBackground instance = new DrawBookBackground();
     @SubscribeEvent
     public void onRenderBook(GuiScreenEvent.DrawScreenEvent.Pre event) {
         Gui gui = event.gui;

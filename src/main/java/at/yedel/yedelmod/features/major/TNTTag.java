@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.GameJoinEvent;
-import at.yedel.yedelmod.mixins.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.RankColor;
 import gg.essential.api.utils.Multithreading;
 import gg.essential.universal.UChat;
@@ -35,6 +35,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class TNTTag {
+    public static TNTTag instance = new TNTTag();
     private final ArrayList<String> players = new ArrayList<>();
     private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
     private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");

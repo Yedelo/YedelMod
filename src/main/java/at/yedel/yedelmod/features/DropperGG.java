@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class DropperGG {
+    public static DropperGG instance = new DropperGG();
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!YedelConfig.dropperGG) return;

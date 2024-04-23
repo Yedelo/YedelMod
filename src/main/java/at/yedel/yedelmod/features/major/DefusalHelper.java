@@ -23,10 +23,10 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class DefusalHelper {
+    public static DefusalHelper instance = new DefusalHelper();
     public static boolean inDefusal;
     private final int red = new Color(246, 94, 94, 255).getRGB();
     private final ArrayList<Slot> clickedSlots = new ArrayList<>();
-    private GuiContainer container;
 
     @SubscribeEvent
     public void onOpenDefusalWindow(PacketEvent.ReceiveEvent event) {
@@ -35,7 +35,6 @@ public class DefusalHelper {
                 if (Objects.equals(((S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText(), "C4 (Click REDSTONE)")) {
                     inDefusal = true;
                     clickedSlots.clear();
-                    container = (GuiContainer) minecraft.currentScreen;
                 }
             }
         }
