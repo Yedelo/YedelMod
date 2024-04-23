@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.events.RenderScoreEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.KillMessages;
@@ -20,7 +21,6 @@ import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
@@ -69,7 +69,7 @@ public class StrengthIndicators {
     }
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    public void onServerChange(JoinGamePacketEvent event) {
         strengthPlayers.clear();
         startStrengthPlayers.clear();
         endStrengthPlayers.clear();

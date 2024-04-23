@@ -5,13 +5,13 @@ package at.yedel.yedelmod;
 import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import gg.essential.api.utils.Multithreading;
 import gg.essential.universal.UChat;
 import gg.essential.universal.wrappers.message.UMessage;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static at.yedel.yedelmod.YedelMod.logo;
@@ -39,7 +39,7 @@ public class YedelCheck {
     );
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    public void onServerChange(JoinGamePacketEvent event) {
         if (YedelUtils && !alreadyWarned) {
             Multithreading.schedule(() -> {
                 warnMessage.chat();

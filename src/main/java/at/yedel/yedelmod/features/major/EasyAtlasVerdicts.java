@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.utils.InventoryClicker;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import gg.essential.api.utils.Multithreading;
@@ -65,7 +66,7 @@ public class EasyAtlasVerdicts {
     }
 
     @SubscribeEvent
-    public void onLeaveAtlas(WorldEvent.Load event) {
+    public void onLeaveAtlas(JoinGamePacketEvent event) {
         inAtlas = false;
     }
 
