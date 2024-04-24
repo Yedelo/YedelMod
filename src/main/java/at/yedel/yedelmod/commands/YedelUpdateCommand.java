@@ -15,7 +15,7 @@ import net.minecraft.util.BlockPos;
 
 
 
-public class CheckForUpdatesCommand extends CommandBase {
+public class YedelUpdateCommand extends CommandBase {
     @Override
     public String getCommandName() {
         return "yedelupdate";
@@ -38,6 +38,9 @@ public class CheckForUpdatesCommand extends CommandBase {
         }
         else if (Objects.equals(arg, "github")) {
             UpdateManager.instance.checkVersion(UpdateSource.GITHUB, "chat");
+        }
+        else {
+            UpdateManager.instance.checkVersion(YedelConfig.getUpdateSource(), "chat");
         }
     }
 

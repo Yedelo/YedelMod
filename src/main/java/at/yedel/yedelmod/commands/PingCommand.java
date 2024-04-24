@@ -29,7 +29,7 @@ public class PingCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            PingSender.instance.commandSendPing();
+            PingSender.instance.defaultMethodPing();
             return;
         }
         String arg = args[0];
@@ -47,6 +47,9 @@ public class PingCommand extends CommandBase {
         }
         else if (Objects.equals(arg, "list") || Objects.equals(arg, "l")) {
             PingSender.instance.serverListPing();
+        }
+        else {
+            PingSender.instance.defaultMethodPing();
         }
     }
 

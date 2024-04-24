@@ -21,7 +21,7 @@ public class PingSender {
     public boolean tabCheck = false;
     public long lastTime;
 
-    public void commandSendPing() {
+    public void defaultMethodPing() {
         switch (YedelConfig.pingMethod) {
             case 0:
                 pingPing();

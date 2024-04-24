@@ -3,7 +3,10 @@ package at.yedel.yedelmod.commands;
 
 
 import java.util.List;
+import java.util.Scanner;
 
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -25,7 +28,11 @@ public class HotSwapCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-
+        ThreadManager.run(() -> {
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            Chat.display(input);
+        });
     }
 
     @Override
