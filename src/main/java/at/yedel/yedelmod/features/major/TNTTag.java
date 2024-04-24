@@ -4,16 +4,16 @@ package at.yedel.yedelmod.features.major;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.GameJoinEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.RankColor;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.UChat;
+import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -96,9 +96,7 @@ public class TNTTag {
         lines.set(2, "§a" + YedelConfig.kills + " kills");
         lines.set(3, "");
         if (YedelConfig.bhFirst) {
-            UChat.chat(
-                    "&6&l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3."
-            );
+            Chat.display(Messages.firstTime);
             YedelConfig.bhFirst = false;
             YedelConfig.save();
         }
@@ -120,7 +118,7 @@ public class TNTTag {
         players.remove(YedelConfig.nick);
         target = players.get((int) Math.floor(Math.random() * players.size()));
         whoCheck = true;
-        UChat.say("/who");
+        Chat.command("who");
         if (YedelConfig.bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
         lines.set(1, "§a" + YedelConfig.points + " points");
         lines.set(2, "§a" + YedelConfig.kills + " kills");
@@ -196,11 +194,11 @@ public class TNTTag {
         if (item == null) return;
         String itemName = item.getDisplayName();
         if (Objects.equals(itemName, "§b§lPlay Again §r§7(Right Click)")) {
-            UChat.say("/play tnt_tntag");
+            Chat.command("play tnt_tntag");
             event.setCanceled(true);
         }
         else if (Objects.equals(itemName, "§r§c§lReturn To Lobby §r§7(Right Click)")) {
-            UChat.say("/lobby");
+            Chat.command("lobby");
             event.setCanceled(true);
         }
     }
@@ -227,7 +225,7 @@ public class TNTTag {
                 lines.set(3, "");
             }
             if (Objects.equals(personDied, target) && fightingTarget) {
-                Multithreading.schedule(() -> {
+                ThreadManager.scheduleOnce(() -> {
                     // Half points if you died while killing your target
                     int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
                     YedelConfig.points += pointIncrease;
@@ -237,15 +235,15 @@ public class TNTTag {
                     lines.set(3, "§cYou killed your target!");
                     if (YedelConfig.bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
                     YedelConfig.save();
-                }, 500, TimeUnit.MILLISECONDS);
+                }, 500);
             }
         }
     }
 
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText() == "Processing request. Please wait..." && YedelConfig.bountyHunting) {
-            UChat.chat("&6&l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
+        if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.bountyHunting) {
+            Chat.display(Messages.pleaseChangeNick);
         }
     }
 

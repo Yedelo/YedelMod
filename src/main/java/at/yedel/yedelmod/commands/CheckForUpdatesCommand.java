@@ -3,22 +3,22 @@ package at.yedel.yedelmod.commands;
 
 
 import java.util.List;
+import java.util.Objects;
 
-import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.update.UpdateManager;
+import at.yedel.yedelmod.update.UpdateSource;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
-import org.lwjgl.opengl.Display;
 
 
 
-public class SetTitleCommand extends CommandBase {
+public class CheckForUpdatesCommand extends CommandBase {
     @Override
     public String getCommandName() {
-        return "settitle";
+        return "yedelupdate";
     }
 
     @Override
@@ -29,12 +29,16 @@ public class SetTitleCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            Chat.display(Messages.enterValidTitle);
+            UpdateManager.instance.checkVersion(YedelConfig.getUpdateSource(), "chat");
             return;
         }
-        String title = TextUtils.joinArgs(args);
-        Chat.logoDisplay("&eSet display title to \"&f" + title + "&e\"!");
-        Display.setTitle(title);
+        String arg = args[0];
+        if (Objects.equals(arg, "modrinth")) {
+            UpdateManager.instance.checkVersion(UpdateSource.MODRINTH, "chat");
+        }
+        else if (Objects.equals(arg, "github")) {
+            UpdateManager.instance.checkVersion(UpdateSource.GITHUB, "chat");
+        }
     }
 
     @Override
@@ -44,6 +48,7 @@ public class SetTitleCommand extends CommandBase {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+        if (args.length == 1) return getListOfStringsMatchingLastWord(args, "modrinth", "github");
         return null;
     }
 }

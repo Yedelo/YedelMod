@@ -11,12 +11,13 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
+import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import gg.essential.universal.UChat;
 import net.minecraft.util.ChatComponentText;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -28,6 +29,8 @@ import org.apache.logging.log4j.Logger;
 
 import static at.yedel.yedelmod.YedelMod.logo;
 import static at.yedel.yedelmod.YedelMod.minecraft;
+
+;
 
 
 
@@ -79,7 +82,7 @@ public class UpdateManager {
             }
             if (type == "chat") {
                 if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);
-                else UChat.chat(logo + " &cYou are already on the latest version!");
+                else Chat.display(Messages.latestVersion);
             }
             else {
                 if (!version.equals(YedelMod.version)) sendUpdateNotification(source, version);
@@ -117,7 +120,7 @@ public class UpdateManager {
 
     private void handleUpdateError(Exception error, String type, String sourceName) throws Exception {
         updateLogger.error("Couldn't check for updates");
-        if (Objects.equals(type, "chat")) UChat.chat(logo + " &cCouldn't check for updates on " + sourceName + "!");
+        if (Objects.equals(type, "chat")) Chat.logoDisplay("&cCouldn't check for updates on " + sourceName + "!");
         else Constants.notifications.push("YedelMod", "Couldn't check for updates on " + sourceName + "!");
         throw error;
     }

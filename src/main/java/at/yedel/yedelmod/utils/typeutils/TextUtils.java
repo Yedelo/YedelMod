@@ -3,6 +3,7 @@ package at.yedel.yedelmod.utils.typeutils;
 
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 
 
@@ -23,8 +24,9 @@ public class TextUtils {
         return string.replaceAll("&.", "");
     }
 
+    public static Pattern pattern = Pattern.compile("&(?!\\s)");
     public static String replaceAmpersand(String string) {
-        return string.replaceAll("&.", "§.");
+        return pattern.matcher(string).replaceAll("§");
     }
 
     public static String randomUuid(int length) {
@@ -48,5 +50,9 @@ public class TextUtils {
         else if (ping < 700) return "§7";
         else if (ping < 740) return "§8";
         else return "§0";
+    }
+
+    public static String joinArgs(String[] array) {
+        return String.join(" ", array);
     }
 }

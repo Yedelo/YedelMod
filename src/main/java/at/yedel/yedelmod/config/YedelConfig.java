@@ -14,7 +14,6 @@ import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.update.UpdateManager;
 import at.yedel.yedelmod.update.UpdateSource;
 import at.yedel.yedelmod.utils.Constants;
-import gg.essential.api.utils.GuiUtil;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
 import gg.essential.vigilance.data.Property;
@@ -119,7 +118,7 @@ public class YedelConfig extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "BedWars defusal helper",
-            description = "Highlights redstone and blocks incorrect clicks/hotkeys for the BedWars defusal challenge.",
+            description = "Highlights redstone for the BedWars defusal challenge.",
             category = "General",
             subcategory = "Features"
     )
@@ -560,7 +559,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Open GUI"
     )
     private void openGui() {
-        GuiUtil.open(MoveTextGui.instance);
+        minecraft.displayGuiScreen(MoveTextGui.instance);
     }
 
     @Property(
@@ -572,7 +571,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Open GUI"
     )
     private void openHuntingGui() {
-        GuiUtil.open(MoveHuntingTextGui.instance);
+        minecraft.displayGuiScreen(MoveHuntingTextGui.instance);
     }
 
     @Property(

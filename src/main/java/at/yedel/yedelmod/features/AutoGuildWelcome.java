@@ -3,9 +3,11 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import gg.essential.universal.UChat;
+import at.yedel.yedelmod.utils.Chat;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+;
 
 
 
@@ -19,7 +21,7 @@ public class AutoGuildWelcome {
         if (msg.contains("[")) { // ranked
             if (!msg.startsWith("[")) return; // fake messages ending in "joined the guild!"
         }
-        UChat.say("/gc " + YedelConfig.guildWelcomeMessage.replace("[player]", getGuildName(msg)));
+        Chat.command("gc " + YedelConfig.guildWelcomeMessage.replace("[player]", getGuildName(msg)));
     }
 
     private String getGuildName(String joinString) {

@@ -2,46 +2,67 @@ package at.yedel.yedelmod.commands;
 
 
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import at.yedel.yedelmod.features.major.ping.PingSender;
-import gg.essential.api.commands.Command;
-import gg.essential.api.commands.DefaultHandler;
-import gg.essential.api.commands.SubCommand;
-import gg.essential.universal.UChat;
+import at.yedel.yedelmod.utils.Chat;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 
 
 
-public class PingCommand extends Command {
-    public PingCommand(String name) {
-        super(name);
+public class PingCommand extends CommandBase {
+    @Override
+    public String getCommandName() {
+        return "yping";
     }
 
-    @DefaultHandler
-    public void handle() {
-        PingSender.instance.commandSendPing(); // change this later
+    @Override
+    public String getCommandUsage(ICommandSender sender) {
+        return null;
     }
 
-    @SubCommand(value = "ping", aliases = {"p"}, description = "Try to get ping from /ping command")
-    public void getPingFromPingCommand() {
-        UChat.say("/ping");
+    @Override
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+        if (args.length == 0) {
+            PingSender.instance.commandSendPing();
+            return;
+        }
+        String arg = args[0];
+        if (Objects.equals(arg, "ping") || Objects.equals(arg, "p")) {
+            Chat.command("ping");
+        }
+        else if (Objects.equals(arg, "command") || Objects.equals(arg, "c")) {
+            PingSender.instance.commandPing();
+        }
+        else if (Objects.equals(arg, "tab") || Objects.equals(arg, "t")) {
+            PingSender.instance.tabPing();
+        }
+        else if (Objects.equals(arg, "stats") || Objects.equals(arg, "s")) {
+            PingSender.instance.statsPing();
+        }
+        else if (Objects.equals(arg, "list") || Objects.equals(arg, "l")) {
+            PingSender.instance.serverListPing();
+        }
     }
 
-    @SubCommand(value = "command", aliases = {"c"}, description = "Get ping from an unknown command response")
-    public void getPingFromCommand() {
-        PingSender.instance.commandPing();
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("yp");
     }
 
-    @SubCommand(value = "tab", aliases = {"t"}, description = "Get ping from a tab autofill packet")
-    public void getPingFromTab() {
-        PingSender.instance.tabPing();
+    @Override
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+        return true;
     }
 
-    @SubCommand(value = "stats", aliases = {"s"}, description = "Get ping from a stats request packet")
-    public void getPingFromStats() {
-        PingSender.instance.statsPing();
-    }
-
-    @SubCommand(value = "list", aliases = {"l"}, description = "Get ping from server list")
-    public void getPingFromServerList() {
-        PingSender.instance.serverListPing();
+    @Override
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+        if (args.length == 1) return getListOfStringsMatchingLastWord(args, "ping", "command", "tab", "stats", "list");
+        return null;
     }
 }

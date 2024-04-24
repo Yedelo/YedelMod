@@ -5,7 +5,6 @@ package at.yedel.yedelmod.features.major;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,9 +14,9 @@ import at.yedel.yedelmod.events.RenderScoreEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.KillMessages;
 import at.yedel.yedelmod.utils.ScoreboardName;
+import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import com.google.common.collect.Maps;
-import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -50,7 +49,7 @@ public class StrengthIndicators {
         colorMap.put(13, "§7");
         colorMap.put(14, "§8");
         colorMap.put(15, "§0");
-        Multithreading.INSTANCE.schedule(() -> {
+        ThreadManager.scheduleRepeat(() -> {
             if (!YedelConfig.strengthIndicators || !ScoreboardName.inSkywars) return;
             for (Map.Entry<String, Double> entry: strengthPlayers.entrySet()) {
                 String player = entry.getKey();
@@ -65,7 +64,7 @@ public class StrengthIndicators {
                     endStrengthPlayers.remove(player);
                 }
             }
-        }, 0, 100, TimeUnit.MILLISECONDS);
+        }, 100);
     }
 
     @SubscribeEvent

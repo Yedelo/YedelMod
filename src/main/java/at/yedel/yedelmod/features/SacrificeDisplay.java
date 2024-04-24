@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
+import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import gg.essential.api.utils.Multithreading;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -24,7 +24,7 @@ public class SacrificeDisplay {
 
     @SubscribeEvent
     public void onServerChange(JoinGamePacketEvent event) {
-        Multithreading.schedule(() -> {
+        ThreadManager.scheduleOnce(() -> {
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_YEAR);
             int daysquared = day * day;

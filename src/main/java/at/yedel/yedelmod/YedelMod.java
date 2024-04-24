@@ -4,6 +4,7 @@ package at.yedel.yedelmod;
 
 import java.io.File;
 
+import at.yedel.yedelmod.commands.CheckForUpdatesCommand;
 import at.yedel.yedelmod.commands.ClearTextCommand;
 import at.yedel.yedelmod.commands.HotSwapCommand;
 import at.yedel.yedelmod.commands.LimboCommand;
@@ -34,12 +35,12 @@ import at.yedel.yedelmod.features.major.TNTTag;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.ItemSwings;
-import at.yedel.yedelmod.update.CheckForUpdatesCommand;
 import at.yedel.yedelmod.update.UpdateManager;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ScoreboardName;
-import gg.essential.api.EssentialAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -81,29 +82,21 @@ public class YedelMod {
     public void init(FMLInitializationEvent event) {
         YedelConfig.instance.preload();
 
-        EssentialAPI.getCommandRegistry().registerCommand(new CheckForUpdatesCommand("yedelupdate"));
-        EssentialAPI.getCommandRegistry().registerCommand(new ClearTextCommand("cleartext"));
-        EssentialAPI.getCommandRegistry().registerCommand(new HotSwapCommand("yhs"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("yedelli"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("yli"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCommand("li"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCreativeCommand("yedellimbocreative"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCreativeCommand("limbogmc"));
-        EssentialAPI.getCommandRegistry().registerCommand(new LimboCreativeCommand("lgmc"));
-        EssentialAPI.getCommandRegistry().registerCommand(new MoveTextCommand("movetext"));
-        EssentialAPI.getCommandRegistry().registerCommand(new MoveHuntingTextCommand("movehuntingtext"));
-        EssentialAPI.getCommandRegistry().registerCommand(new PingCommand("yping"));
-        EssentialAPI.getCommandRegistry().registerCommand(new PingCommand("yp"));
-        EssentialAPI.getCommandRegistry().registerCommand(new PlaytimeCommand("yedelplaytime"));
-        EssentialAPI.getCommandRegistry().registerCommand(new PlaytimeCommand("yedelpt"));
-        EssentialAPI.getCommandRegistry().registerCommand(new PlaytimeCommand("ypt"));
-        EssentialAPI.getCommandRegistry().registerCommand(new SetNickCommand("setnick"));
-        EssentialAPI.getCommandRegistry().registerCommand(new SetTextCommand("settext"));
-        EssentialAPI.getCommandRegistry().registerCommand(new SetTitleCommand("settitle"));
-        EssentialAPI.getCommandRegistry().registerCommand(new SimulateChatCommand("simulatechat"));
-        EssentialAPI.getCommandRegistry().registerCommand(new SimulateChatCommand("simc"));
-        EssentialAPI.getCommandRegistry().registerCommand(new YedelCommand("yedel"));
-        EssentialAPI.getCommandRegistry().registerCommand(new YedelMessageCommand("yedelmessage"));
+        ClientCommandHandler.instance.registerCommand(new CheckForUpdatesCommand());
+        ClientCommandHandler.instance.registerCommand(new ClearTextCommand());
+        ClientCommandHandler.instance.registerCommand(new HotSwapCommand());
+        ClientCommandHandler.instance.registerCommand(new LimboCommand());
+        ClientCommandHandler.instance.registerCommand(new LimboCreativeCommand());
+        ClientCommandHandler.instance.registerCommand(new MoveHuntingTextCommand());
+        ClientCommandHandler.instance.registerCommand(new MoveTextCommand());
+        ClientCommandHandler.instance.registerCommand(new PingCommand());
+        ClientCommandHandler.instance.registerCommand(new PlaytimeCommand());
+        ClientCommandHandler.instance.registerCommand(new SetNickCommand());
+        ClientCommandHandler.instance.registerCommand(new SetTextCommand());
+        ClientCommandHandler.instance.registerCommand(new SetTitleCommand());
+        ClientCommandHandler.instance.registerCommand(new SimulateChatCommand());
+        ClientCommandHandler.instance.registerCommand(new YedelCommand());
+        ClientCommandHandler.instance.registerCommand(new YedelMessageCommand());
 
         MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.instance);
         MinecraftForge.EVENT_BUS.register(ChangeTitle.instance);
@@ -112,6 +105,7 @@ public class YedelMod {
         MinecraftForge.EVENT_BUS.register(DrawBookBackground.instance);
         MinecraftForge.EVENT_BUS.register(DropperGG.instance);
         MinecraftForge.EVENT_BUS.register(EasyAtlasVerdicts.instance);
+        MinecraftForge.EVENT_BUS.register(Functions.instance);
         MinecraftForge.EVENT_BUS.register(ItemSwings.instance);
         MinecraftForge.EVENT_BUS.register(LimboCreativeCheck.instance);
         MinecraftForge.EVENT_BUS.register(MarketSearch.instance);

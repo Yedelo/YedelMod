@@ -6,15 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
-import gg.essential.api.utils.Multithreading;
-import gg.essential.universal.UChat;
-import gg.essential.universal.wrappers.message.UMessage;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import static at.yedel.yedelmod.YedelMod.logo;
 
 
 
@@ -28,26 +23,16 @@ public class YedelCheck {
     public static boolean YedelUtils = false;
     public static boolean alreadyWarned = true;
 
-    private final ChatStyle uninstallYedelUtils = new ChatStyle().setChatClickEvent(
-            new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ct delete YedelUtils")
-    );
-    private final UMessage warnMessage = new UMessage(
-            logo,
-            " &9&lYedel&7&lUtils &cdetected, it's likely that it will completely break this mod.",
-            " If you are not seeing a similar message from &9&lYedel&7&lUtils, &cignore this message. ",
-            new ChatComponentText("&c&n&lUninstall YedelUtils").setChatStyle(uninstallYedelUtils)
-    );
-
     @SubscribeEvent
     public void onServerChange(JoinGamePacketEvent event) {
         if (YedelUtils && !alreadyWarned) {
-            Multithreading.schedule(() -> {
-                warnMessage.chat();
+            ThreadManager.scheduleOnce(() -> {
+                Chat.display(Messages.YedelUtilsMessage);
             }, 3, TimeUnit.SECONDS);
             alreadyWarned = false;
         }
         if (YedelConfig.first) {
-            UChat.chat(logo + " &7Welcome to &9&lYedel&7&lMod! Use &9/yedel &7for more information.");
+            Chat.display(Messages.welcomeMessage);
             YedelConfig.first = false;
             YedelConfig.save();
         }

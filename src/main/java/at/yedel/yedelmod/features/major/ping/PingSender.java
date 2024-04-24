@@ -3,12 +3,12 @@ package at.yedel.yedelmod.features.major.ping;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import gg.essential.universal.UChat;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 
-import static at.yedel.yedelmod.YedelMod.logo;
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
@@ -42,12 +42,12 @@ public class PingSender {
     }
 
     public void pingPing() {
-        UChat.say("/ping");
+        Chat.command("ping");
     }
 
     public void commandPing() {
         lastTime = System.nanoTime();
-        UChat.say("/" + TextUtils.randomUuid(8));
+        Chat.command(TextUtils.randomUuid(8));
         commandCheck = true;
     }
 
@@ -64,12 +64,12 @@ public class PingSender {
     }
 
     public void serverListPing() {
-        if (minecraft.isSingleplayer()) UChat.chat(logo + " &cThis method does not work in singleplayer!");
+        if (minecraft.isSingleplayer()) Chat.display(Messages.listPingInSingleplayer);
         float ping = (float) minecraft.getCurrentServerData().pingToServer;
         if (ping == 0)
-            UChat.chat(logo + " &cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
+            Chat.display(Messages.pingIs0);
         else {
-            UChat.chat(logo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
+            Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
             minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (ping * -0.006 + 2));
         }
     }

@@ -5,9 +5,10 @@ package at.yedel.yedelmod.features.major;
 import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.ScoreboardName;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import gg.essential.universal.UChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.inventory.Slot;
@@ -17,8 +18,9 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
-import static at.yedel.yedelmod.YedelMod.logo;
 import static at.yedel.yedelmod.YedelMod.minecraft;
+
+;
 
 
 
@@ -37,8 +39,8 @@ public class MarketSearch {
                     String itemName = heldItem.getDisplayName();
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     ahSearching = true;
-                    UChat.chat(logo + " &eSearching the auction house for " + itemName + "&e...");
-                    UChat.say("/ahs " + TextUtils.removeAmpersand(itemName));
+                    Chat.logoDisplay("&eSearching the auction house for " + itemName + "&e...");
+                    Chat.command("ahs " + TextUtils.removeAmpersand(itemName));
                 }
             }
         }
@@ -49,8 +51,8 @@ public class MarketSearch {
                     String itemName = TextUtils.removeFormatting(heldItem.getDisplayName());
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     bzSearching = true;
-                    UChat.chat(logo + " &eSearching the bazaar for " + itemName + "&e...");
-                    UChat.say("/bz " + itemName);
+                    Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
+                    Chat.command("bz " + itemName);
                     bzSearchingClose = true;
                 }
             }
@@ -63,7 +65,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                UChat.chat(logo + " &r&cYou don't have the Cookie Buff!");
+                Chat.display(Messages.noCookieBuff);
             }
         }
         else if (msg.equals("Obtain a Booster Cookie from the community shop in the hub!")) {
@@ -86,7 +88,7 @@ public class MarketSearch {
                 if (itemName.contains("No Product Found")) {
                     bzSearchingClose = false;
                     minecraft.thePlayer.closeScreen();
-                    UChat.chat(logo + " &cNo item in bazaar with this name!");
+                    Chat.display(Messages.noItemFound);
                 }
             }
         }

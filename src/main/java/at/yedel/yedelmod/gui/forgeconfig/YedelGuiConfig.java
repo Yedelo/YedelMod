@@ -3,11 +3,9 @@ package at.yedel.yedelmod.gui.forgeconfig;
 
 
 import java.io.File;
-import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
-import gg.essential.api.utils.GuiUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -18,7 +16,6 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class YedelGuiConfig extends GuiConfig {
-
     public YedelGuiConfig(GuiScreen parentScreen) {
         super(
                 parentScreen,
@@ -39,6 +36,6 @@ public class YedelGuiConfig extends GuiConfig {
 
     public void initGui() {
         minecraft.displayGuiScreen(null);
-        GuiUtil.open(Objects.requireNonNull(YedelConfig.instance.gui())); // Main
+        minecraft.displayGuiScreen(YedelConfig.instance.gui()); // Main
     }
 }
