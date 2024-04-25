@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "at.yedel"
-version = "1.0.2"
+version = "1.0.3"
 
 loom {
     runConfigs {

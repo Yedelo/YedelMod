@@ -5,7 +5,6 @@ package at.yedel.yedelmod;
 import java.io.File;
 
 import at.yedel.yedelmod.commands.ClearTextCommand;
-import at.yedel.yedelmod.commands.HotSwapCommand;
 import at.yedel.yedelmod.commands.LimboCommand;
 import at.yedel.yedelmod.commands.LimboCreativeCommand;
 import at.yedel.yedelmod.commands.MoveHuntingTextCommand;
@@ -61,7 +60,7 @@ import org.lwjgl.input.Keyboard;
 public class YedelMod {
     public static final String modid = "yedelmod";
     public static final String name = "YedelMod";
-    public static final String version = "1.0.2";
+    public static final String version = "1.0.3";
     public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
     public static final Minecraft minecraft = Minecraft.getMinecraft();
     @Mod.Instance
@@ -84,7 +83,7 @@ public class YedelMod {
 
         ClientCommandHandler.instance.registerCommand(new YedelUpdateCommand());
         ClientCommandHandler.instance.registerCommand(new ClearTextCommand());
-        ClientCommandHandler.instance.registerCommand(new HotSwapCommand());
+        // ClientCommandHandler.instance.registerCommand(new HotSwapCommand());
         ClientCommandHandler.instance.registerCommand(new LimboCommand());
         ClientCommandHandler.instance.registerCommand(new LimboCreativeCommand());
         ClientCommandHandler.instance.registerCommand(new MoveHuntingTextCommand());

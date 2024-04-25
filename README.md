@@ -10,6 +10,7 @@ For the ChatTriggers module, see [YedelUtils](https://github.com/Yedelo/YedelUti
 
 Use /yedel or the config button for settings and more info.
 Use /yedelupdate or the check for update button in the settings menu to check for updates on Modrinth or GitHub.
+Use /yedelmessage for messages from me regarding the mod. These are usually tips or bug notices.
 
 # Features
 
@@ -93,6 +94,32 @@ Draws the default gray background in book GUIs
 Highlights redstone items in BedWars defusal challenge. 
 
 ![image](https://github.com/Yedelo/YedelMod/assets/158670400/dfe7b772-5440-4041-9985-e981eeb24832)
+
+</details>
+
+<details><summary>Favorite server button</summary>
+
+Adds a button to the main menu to join your favorite server, which can be edited in the config
+
+</details>
+
+<details><summary>Keep chat history on chat clear</summary>
+
+Keep your sent chat messages when your chat is cleared (usually F3 + D).
+
+</details>
+
+<details><summary>Shadow action bar text</summary>
+
+Renders action bar text with a shadow
+
+![image](https://github.com/Yedelo/YedelMod/assets/158670400/682ea321-60c8-43eb-ad19-1d101555de3d)
+
+</details>
+
+<details><summary>Damage tilt strength</summary>
+
+Adds an option to adjust the strength of your screen tilt when you get hurt, with 0% disabling the shake.
 
 </details>
 
