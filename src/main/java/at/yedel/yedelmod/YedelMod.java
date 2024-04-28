@@ -34,6 +34,7 @@ import at.yedel.yedelmod.features.major.TNTTag;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.ItemSwings;
+import at.yedel.yedelmod.mixins.net.minecraft.client.AccessorMinecraft;
 import at.yedel.yedelmod.update.UpdateManager;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ScoreboardName;
@@ -46,6 +47,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 
@@ -65,6 +68,7 @@ public class YedelMod {
     public static final Minecraft minecraft = Minecraft.getMinecraft();
     @Mod.Instance
     public static YedelMod instance;
+    public static Logger logger = LogManager.getLogger("YedelMod");
     public static File modConfigurationFactory;
 
     public static KeyBinding ahSearch;
@@ -75,6 +79,18 @@ public class YedelMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         modConfigurationFactory = event.getModConfigurationDirectory();
+        String serverName = System.getProperty("yedelmod.server.name");
+        String serverPort = System.getProperty("yedelmod.server.port");
+        if (serverName != null) {
+            AccessorMinecraft minecraft$accessible = ((AccessorMinecraft) minecraft);
+            logger.info("Loaded server name from JVM argument yedelmod.server.name: " + serverName);
+            minecraft$accessible.setServerName(serverName);
+            if (serverPort != null) {
+                logger.info("Loaded server port from JVM argument yedelmod.server.port: " + serverPort);
+                minecraft$accessible.setServerPort(Integer.parseInt(serverPort));
+            }
+            else minecraft$accessible.setServerPort(25565);
+        }
     }
 
     @Mod.EventHandler

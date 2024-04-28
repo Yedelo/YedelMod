@@ -2,6 +2,7 @@
   "compatibilityLevel": "JAVA_8",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
+    "net.minecraft.client.AccessorMinecraft",
     "net.minecraft.client.entity.MixinEntityPlayerSP",
     "net.minecraft.client.gui.MixinGuiMainMenu",
     "net.minecraft.client.gui.MixinGuiNewChat",
