@@ -58,7 +58,7 @@ tasks {
         manifest.attributes(
             mapOf(
                 "ModSide" to "CLIENT",
-                    "Main-Class" to "at.yedel.yedelmod.utils.YedelWindow",
+                "Main-Class" to "at.yedel.yedelmod.utils.YedelWindow",
                 "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker",
                 "MixinConfigs" to "mixins.examplemod.json",
             )
