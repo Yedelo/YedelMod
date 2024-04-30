@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.ducks.entity.LocalSwinger;
 import at.yedel.yedelmod.events.PacketEvent;
+import at.yedel.yedelmod.utils.Duck;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -39,7 +39,7 @@ public class ItemSwings {
     }
 
     public void swing() {
-        ((LocalSwinger) minecraft.thePlayer).yedelmod$swingItemLocally();
+        ((Duck) minecraft.thePlayer).yedelmod$swingItemLocally();
     }
 
     @SubscribeEvent

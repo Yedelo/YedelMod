@@ -81,6 +81,7 @@ public class YedelMod {
         modConfigurationFactory = event.getModConfigurationDirectory();
         String serverName = System.getProperty("yedelmod.server.name");
         String serverPort = System.getProperty("yedelmod.server.port");
+        // this sets the fields serverName and serverPort in Minecraft, which automatically get checked and joined when the game starts
         if (serverName != null) {
             AccessorMinecraft minecraft$accessible = ((AccessorMinecraft) minecraft);
             logger.info("Loaded server name from JVM argument yedelmod.server.name: " + serverName);

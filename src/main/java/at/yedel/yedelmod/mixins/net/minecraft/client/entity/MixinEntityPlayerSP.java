@@ -3,7 +3,7 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.entity;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.ducks.entity.LocalSwinger;
+import at.yedel.yedelmod.utils.Duck;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 
 @Mixin(EntityPlayerSP.class)
-public abstract class MixinEntityPlayerSP extends EntityLivingBase implements LocalSwinger {
+public abstract class MixinEntityPlayerSP extends EntityLivingBase implements Duck {
     private MixinEntityPlayerSP(World worldIn) {
         super(worldIn);
     }

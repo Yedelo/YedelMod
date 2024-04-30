@@ -160,13 +160,6 @@ public class YedelConfig extends Vigilant {
     )
     public static boolean keepChatHistory = true;
     @Property(
-            type = PropertyType.SWITCH,
-            name = "Shadow action bar text",
-            category = "General",
-            subcategory = "Features"
-    )
-    public static boolean shadowActionBar = false;
-    @Property(
             type = PropertyType.TEXT,
             name = "Guild welcome message",
             description = "Message for new guild members. Use [player] for the new player.",
