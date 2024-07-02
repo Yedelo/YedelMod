@@ -148,8 +148,8 @@ public class YedelMod {
 
         ahSearchKeybind = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
         bzSearchKeybind = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
-        insufficientKeybind = new KeyBinding("Insufficient Evidence", 24, "YedelMod | Atlas");
-        sufficientKeybind = new KeyBinding("Evidence Without Doubt", 25, "YedelMod | Atlas");
+        insufficientKeybind = new KeyBinding("Insufficient Evidence", Keyboard.KEY_O, "YedelMod | Atlas");
+        sufficientKeybind = new KeyBinding("Evidence Without Doubt", Keyboard.KEY_P, "YedelMod | Atlas");
         ClientRegistry.registerKeyBinding(ahSearchKeybind);
         ClientRegistry.registerKeyBinding(bzSearchKeybind);
         ClientRegistry.registerKeyBinding(insufficientKeybind);
