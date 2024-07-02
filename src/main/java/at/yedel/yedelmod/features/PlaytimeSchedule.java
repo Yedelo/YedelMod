@@ -15,8 +15,8 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 public class PlaytimeSchedule implements Schedule {
     public Runnable runnable = () -> {
         if (minecraft.theWorld != null) {
-            YedelConfig.playtimeMinutes++;
-            YedelConfig.save();
+            YedelConfig.getInstance().playtimeMinutes++;
+            YedelConfig.getInstance().save();
         }
     };
 

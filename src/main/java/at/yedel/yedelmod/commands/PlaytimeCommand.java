@@ -27,7 +27,7 @@ public class PlaytimeCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        Chat.logoDisplay("&ePlaytime: &6" + YedelConfig.playtimeMinutes / 60 + " hours &eand &6" + YedelConfig.playtimeMinutes % 60 + " minutes");
+        Chat.logoDisplay("&ePlaytime: &6" + YedelConfig.getInstance().playtimeMinutes / 60 + " hours &eand &6" + YedelConfig.getInstance().playtimeMinutes % 60 + " minutes");
     }
 
     @Override

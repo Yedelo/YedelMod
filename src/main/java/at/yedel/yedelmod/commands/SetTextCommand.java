@@ -7,7 +7,7 @@ import java.util.List;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -30,14 +30,14 @@ public class SetTextCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            Chat.display(Messages.enterValidText);
+            Chat.display(messages.enterValidText);
             return;
         }
         String displayText = TextUtils.joinArgs(args);
         displayText = displayText.replaceAll("&", "§");
-        CustomText.instance.displayedText = displayText;
-        YedelConfig.displayedText = displayText;
-        YedelConfig.save();
+        CustomText.getInstance().setDisplayedText(displayText);
+        YedelConfig.getInstance().displayedText = displayText;
+        YedelConfig.getInstance().save();
         Chat.logoDisplay("&eSet displayed text to \"&r" + displayText + "&e\"!");
     }
 

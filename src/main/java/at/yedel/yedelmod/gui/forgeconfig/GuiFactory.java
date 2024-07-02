@@ -12,9 +12,7 @@ import net.minecraftforge.fml.client.IModGuiFactory;
 
 public class GuiFactory implements IModGuiFactory {
     @Override
-    public void initialize(Minecraft minecraft) {
-
-    }
+    public void initialize(Minecraft minecraft) {}
 
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {

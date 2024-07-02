@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class ThreadManager {
-    public static ScheduledExecutorService service = Executors.newScheduledThreadPool(10);
+    private static final ScheduledExecutorService service = Executors.newScheduledThreadPool(10);
 
     public static void scheduleRepeat(Runnable runnable, int delay) {
         scheduleRepeat(runnable, delay, TimeUnit.MILLISECONDS);

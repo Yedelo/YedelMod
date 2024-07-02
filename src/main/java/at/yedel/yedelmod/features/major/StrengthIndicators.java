@@ -12,7 +12,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.events.RenderScoreEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
-import at.yedel.yedelmod.utils.KillMessages;
+import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.ScoreboardName;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
@@ -25,7 +25,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class StrengthIndicators {
-    public static StrengthIndicators instance = new StrengthIndicators();
+    private static final StrengthIndicators instance = new StrengthIndicators();
+
+    public static StrengthIndicators getInstance() {
+        return instance;
+    }
+
     private final Map<String, Double> strengthPlayers = Maps.newHashMap();
     private final ArrayList<String> startStrengthPlayers = new ArrayList<>();
     private final ArrayList<String> endStrengthPlayers = new ArrayList<>();
@@ -50,7 +55,7 @@ public class StrengthIndicators {
         colorMap.put(14, "§8");
         colorMap.put(15, "§0");
         ThreadManager.scheduleRepeat(() -> {
-            if (!YedelConfig.strengthIndicators || !ScoreboardName.inSkywars) return;
+            if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
             for (Map.Entry<String, Double> entry: strengthPlayers.entrySet()) {
                 String player = entry.getKey();
                 Double seconds = entry.getValue();
@@ -76,9 +81,9 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void onKillMessage(ClientChatReceivedEvent event) {
-        if (!YedelConfig.strengthIndicators || !ScoreboardName.inSkywars) return;
+        if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
         String message = event.message.getUnformattedText();
-        for (String killMessage: KillMessages.killMessages) {
+        for (String killMessage: Constants.killMessages) {
             Matcher messageMatcher = Pattern.compile(killMessage).matcher(message);
             if (messageMatcher.find()) {
                 triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
@@ -98,13 +103,13 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void onRenderStrengthPlayer_HealthTag(RenderScoreEvent event) {
-        if (!YedelConfig.strengthIndicators || !ScoreboardName.inSkywars) return;
+        if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
         EntityPlayer entityPlayer = event.entity;
         String entityName = entityPlayer.getName();
         boolean inStart = startStrengthPlayers.contains(entityName);
         RenderPlayer renderer = event.renderer;
         if (!inStart && !endStrengthPlayers.contains(entityName)) return;
-        String color = inStart ? colorMap.get(YedelConfig.startStrengthColor) : colorMap.get(YedelConfig.endStrengthColor);
+        String color = inStart ? colorMap.get(YedelConfig.getInstance().startStrengthColor) : colorMap.get(YedelConfig.getInstance().endStrengthColor);
         String text = color + "Strength - " + strengthPlayers.get(entityName) + "s";
         ((InvokerRender) renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55, event.z, 64);
     }

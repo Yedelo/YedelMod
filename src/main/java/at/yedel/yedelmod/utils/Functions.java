@@ -12,8 +12,20 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class Functions {
-    public static Functions instance = new Functions();
+    private static final Functions instance = new Functions();
+
+    public static Functions getInstance() {
+        return instance;
+    }
+
+    private Events events = new Events();
+
+    public Events getEvents() {
+        return events;
+    }
+
     private static GuiScreen screenToOpen;
+
     public static String getScoreboardName() {
         try {
             return TextUtils.removeFormatting(minecraft.theWorld.getScoreboard().getObjectiveInDisplaySlot(1).getDisplayName());
@@ -25,11 +37,13 @@ public class Functions {
         screenToOpen = screen;
     }
 
-    @SubscribeEvent
-    public void onTickEnd(TickEvent event) {
-        if (screenToOpen != null) {
-            minecraft.displayGuiScreen(screenToOpen);
-            screenToOpen = null;
+    private class Events {
+        @SubscribeEvent
+        public void onTickEnd(TickEvent event) {
+            if (screenToOpen != null) {
+                minecraft.displayGuiScreen(screenToOpen);
+                screenToOpen = null;
+            }
         }
     }
 }

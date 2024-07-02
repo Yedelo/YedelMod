@@ -28,7 +28,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 // "instance needs to be at the bottom or the default values take priority" - patcher
 // i messed up
 public class YedelConfig extends Vigilant {
-    private static final URI video;
+    private final URI video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
     @Property(
             type = PropertyType.SELECTOR,
             name = "&9Update source",
@@ -36,14 +36,14 @@ public class YedelConfig extends Vigilant {
             category = "General",
             options = {"Modrinth", "GitHub"}
     )
-    public static int updateSource = 0;
+    public int updateSource = 0;
     @Property(
             type = PropertyType.SWITCH,
             name = "&9Automatically check for updates",
             description = "Checks for updates on game load",
             category = "General"
     )
-    public static boolean autoCheckUpdates = true;
+    public boolean autoCheckUpdates = true;
 
     @Property(
             type = PropertyType.BUTTON,
@@ -52,7 +52,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             placeholder = "Open"
     )
-    public static void openModrinthLink() throws IOException, URISyntaxException {
+    public void openModrinthLink() throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI(UpdateSource.MODRINTH.link));
         }
@@ -65,7 +65,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             placeholder = "Open"
     )
-    public static void openGitHubRepository() throws IOException, URISyntaxException {
+    public void openGitHubRepository() throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI(UpdateSource.GITHUB.link));
         }
@@ -79,7 +79,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean guildWelcome = false;
+    public boolean guildWelcome = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Dropper AutoGG",
@@ -88,7 +88,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean dropperGG = isAutoGGLoaded();
+    public boolean dropperGG = isAutoGGLoaded();
     @Property(
             type = PropertyType.SWITCH,
             name = "SkyWars strength indicators",
@@ -96,7 +96,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean strengthIndicators = true;
+    public boolean strengthIndicators = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Easy atlas verdicts",
@@ -104,7 +104,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean autoAtlas = false;
+    public boolean autoAtlas = false;
 
     // Start of config
     @Property(
@@ -114,7 +114,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean sacrificeDisplay = true;
+    public boolean sacrificeDisplay = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "BedWars defusal helper",
@@ -122,7 +122,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean defusalHelper = true;
+    public boolean defusalHelper = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Limbo creative mode",
@@ -131,7 +131,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean limboCreative = true;
+    public boolean limboCreative = true;
     /* General */
 
     // Features
@@ -142,7 +142,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean drawBookBackground = true;
+    public boolean drawBookBackground = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Favorite server button",
@@ -150,7 +150,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean buttonFavoriteServer = true;
+    public boolean buttonFavoriteServer = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Keep chat history on chat clear",
@@ -158,7 +158,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Features"
     )
-    public static boolean keepChatHistory = true;
+    public boolean keepChatHistory = true;
     @Property(
             type = PropertyType.TEXT,
             name = "Guild welcome message",
@@ -166,7 +166,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Customization"
     )
-    public static String guildWelcomeMessage = "Welcome, [player]!";
+    public String guildWelcomeMessage = "Welcome, [player]!";
     @Property(
             type = PropertyType.SLIDER,
             name = "Delay",
@@ -175,7 +175,7 @@ public class YedelConfig extends Vigilant {
             subcategory = "Customization",
             max = 5
     )
-    public static int dropperGGDelay = 1;
+    public int dropperGGDelay = 1;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Strength color",
@@ -201,7 +201,7 @@ public class YedelConfig extends Vigilant {
                     "§0Black"
             }
     )
-    public static int startStrengthColor = 1;
+    public int startStrengthColor = 1;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Sub strength color",
@@ -227,7 +227,7 @@ public class YedelConfig extends Vigilant {
                     "§0Black"
             }
     )
-    public static int endStrengthColor = 2;
+    public int endStrengthColor = 2;
     @Property(
             type = PropertyType.TEXT,
             name = "Random placeholder",
@@ -236,7 +236,7 @@ public class YedelConfig extends Vigilant {
             subcategory = "Customization",
             placeholder = "//r"
     )
-    public static String randomString = "//r";
+    public String randomString = "//r";
     @Property(
             type = PropertyType.SELECTOR,
             name = "Ping method",
@@ -250,7 +250,7 @@ public class YedelConfig extends Vigilant {
             subcategory = "Customization",
             options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
     )
-    public static int pingMethod = 4;
+    public int pingMethod = 4;
     @Property(
             type = PropertyType.TEXT,
             name = "Specified server",
@@ -258,7 +258,7 @@ public class YedelConfig extends Vigilant {
             category = "General",
             subcategory = "Customization"
     )
-    public static String favoriteServer = "yedelmod.hypixel.net";
+    public String favoriteServer = "yedelmod.hypixel.net";
 
     // Customization
     @Property(
@@ -267,7 +267,7 @@ public class YedelConfig extends Vigilant {
             description = "Enables bounty hunting",
             category = "TNT Tag"
     )
-    public static boolean bountyHunting = true;
+    public boolean bountyHunting = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Highlight target and show distance",
@@ -275,7 +275,7 @@ public class YedelConfig extends Vigilant {
             category = "TNT Tag",
             subcategory = "Features"
     )
-    public static boolean bhDisplay = true;
+    public boolean bhDisplay = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Play sounds for target selections and kills",
@@ -283,7 +283,7 @@ public class YedelConfig extends Vigilant {
             category = "TNT Tag",
             subcategory = "Features"
     )
-    public static boolean bhSounds = true;
+    public boolean bhSounds = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Give items to play again and leave the game",
@@ -291,7 +291,7 @@ public class YedelConfig extends Vigilant {
             category = "TNT Tag",
             subcategory = "Features"
     )
-    public static boolean bhClickables = true;
+    public boolean bhClickables = true;
     @Property(
             type = PropertyType.TEXT,
             name = "Current nick",
@@ -300,7 +300,7 @@ public class YedelConfig extends Vigilant {
             subcategory = "Customization",
             placeholder = "Replace"
     )
-    public static String nick = "";
+    public String nick = "";
     @Property(
             type = PropertyType.SLIDER,
             name = "Play again item",
@@ -310,7 +310,7 @@ public class YedelConfig extends Vigilant {
             min = 1,
             max = 9
     )
-    public static int playAgainItem = 8;
+    public int playAgainItem = 8;
     @Property(
             type = PropertyType.SLIDER,
             name = "Return to lobby item",
@@ -320,7 +320,7 @@ public class YedelConfig extends Vigilant {
             min = 1,
             max = 9
     )
-    public static int returnToLobbyItem = 9;
+    public int returnToLobbyItem = 9;
 
     /* TNT Tag */
     @Property(
@@ -330,7 +330,7 @@ public class YedelConfig extends Vigilant {
             category = "Modern Features",
             subcategory = "General"
     )
-    public static boolean changeTitle = true;
+    public boolean changeTitle = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Projectile throws",
@@ -338,7 +338,7 @@ public class YedelConfig extends Vigilant {
             category = "Modern Features",
             subcategory = "Hand Swings"
     )
-    public static boolean itemSwings = false;
+    public boolean itemSwings = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Item drops",
@@ -346,7 +346,7 @@ public class YedelConfig extends Vigilant {
             category = "Modern Features",
             subcategory = "Hand Swings"
     )
-    public static boolean dropSwings = false;
+    public boolean dropSwings = false;
     @Property(
             type = PropertyType.PERCENT_SLIDER,
             name = "Damage Tilt",
@@ -354,7 +354,7 @@ public class YedelConfig extends Vigilant {
             category = "Modern Features",
             subcategory = "Other"
     )
-    public static float damageTiltStrength = 1f;
+    public float damageTiltStrength = 1f;
 
     // Features
     @Property(
@@ -363,21 +363,21 @@ public class YedelConfig extends Vigilant {
             name = "playtimeMinutes",
             hidden = true
     )
-    public static int playtimeMinutes = 0;
+    public int playtimeMinutes = 0;
     @Property(
             type = PropertyType.SWITCH,
             category = "storage",
             name = "first",
             hidden = true
     )
-    public static boolean first = false;
+    public boolean first = false;
     @Property(
             type = PropertyType.NUMBER,
             category = "storage",
             name = "displayX",
             hidden = true
     )
-    public static int displayX = 5;
+    public int displayX = 5;
 
     // Customization
     @Property(
@@ -386,66 +386,59 @@ public class YedelConfig extends Vigilant {
             name = "displayY",
             hidden = true
     )
-    public static int displayY = 5;
+    public int displayY = 5;
     @Property(
             type = PropertyType.TEXT,
             category = "storage",
             name = "displayedText",
             hidden = true
     )
-    public static String displayedText = "";
+    public String displayedText = "";
     @Property(
             type = PropertyType.NUMBER,
             category = "storage",
             name = "bhDisplayX",
             hidden = true
     )
-    public static int bhDisplayX = 5;
+    public int bhDisplayX = 5;
     @Property(
             type = PropertyType.NUMBER,
             category = "storage",
             name = "bhDisplayY",
             hidden = true
     )
-    public static int bhDisplayY = 5;
+    public int bhDisplayY = 5;
     @Property(
             type = PropertyType.NUMBER,
             category = "storage",
             name = "points",
             hidden = true
     )
-    public static int points = 0;
+    public int points = 0;
     @Property(
             type = PropertyType.NUMBER,
             category = "storage",
             name = "kills",
             hidden = true
     )
-    public static int kills = 0;
+    public int kills = 0;
     @Property(
             type = PropertyType.CHECKBOX,
             category = "storage",
             name = "bhFirst",
             hidden = true
     )
-    public static boolean bhFirst = true;
+    public boolean bhFirst = true;
 
     /* Modern features */
 
     // General
 
-    static {
-        try {
-            video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
-        }
-        catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     // Hand Swings
 
-    public YedelConfig() {
+    public YedelConfig() throws URISyntaxException {
         super(
                 new File("./config/YedelMod.toml"),
                 "YedelMod",
@@ -479,19 +472,19 @@ public class YedelConfig extends Vigilant {
         addDependencies();
     }
 
-    public static void save() {
+    public void save() {
         instance.markDirty();
         instance.writeData();
     }
 
     // Variables stored but hidden in this config
 
-    private static boolean isAutoGGLoaded() {
+    private boolean isAutoGGLoaded() {
         return Loader.isModLoaded("autogg");
     }
 
-    public static UpdateSource getUpdateSource() {
-        return YedelConfig.updateSource == 0 ? UpdateSource.MODRINTH : UpdateSource.GITHUB;
+    public UpdateSource getUpdateSource() {
+        return updateSource == 0 ? UpdateSource.MODRINTH : UpdateSource.GITHUB;
     }
 
     @Property(
@@ -501,8 +494,8 @@ public class YedelConfig extends Vigilant {
             category = "General",
             placeholder = "Check"
     )
-    public static void checkForUpdates() {
-        UpdateManager.instance.checkVersion(getUpdateSource(), "notification");
+    public void checkForUpdates() {
+        UpdateManager.getInstance().checkVersion(getUpdateSource(), "notification");
     }
 
     public void addDependencies() {
@@ -559,7 +552,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Open GUI"
     )
     private void openGui() {
-        minecraft.displayGuiScreen(MoveTextGui.instance);
+        minecraft.displayGuiScreen(new MoveTextGui(minecraft.currentScreen));
     }
 
     @Property(
@@ -571,7 +564,7 @@ public class YedelConfig extends Vigilant {
             placeholder = "Open GUI"
     )
     private void openHuntingGui() {
-        minecraft.displayGuiScreen(MoveHuntingTextGui.instance);
+        minecraft.displayGuiScreen(new MoveHuntingTextGui(minecraft.currentScreen));
     }
 
     @Property(
@@ -602,5 +595,18 @@ public class YedelConfig extends Vigilant {
 
     // End of configuration
 
-    public static YedelConfig instance = new YedelConfig();
+    private static final YedelConfig instance;
+
+    static {
+        try {
+            instance = new YedelConfig();
+        }
+        catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static YedelConfig getInstance() {
+        return instance;
+    }
 }

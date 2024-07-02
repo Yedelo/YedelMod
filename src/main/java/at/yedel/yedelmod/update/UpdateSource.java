@@ -13,20 +13,20 @@ public enum UpdateSource {
     MODRINTH(
             "Modrinth",
             "https://api.modrinth.com/v2/project/yedelmod/version",
-            UpdateManager.modrinthLink,
+            UpdateManager.getModrinthLink(),
             (ChatComponentText) new ChatComponentText("§2Modrinth!").setChatStyle(
                     new ChatStyle().setChatClickEvent(
-                            new ClickEvent(Action.OPEN_URL, UpdateManager.modrinthLink)
+                            new ClickEvent(Action.OPEN_URL, UpdateManager.getModrinthLink())
                     )
             )
     ),
     GITHUB(
             "GitHub",
             "https://api.github.com/repos/Yedelo/YedelMod/releases/latest",
-            UpdateManager.githubLink,
+            UpdateManager.getGithubLink(),
             (ChatComponentText) new ChatComponentText("§9GitHub!").setChatStyle(
                     new ChatStyle().setChatClickEvent(
-                            new ClickEvent(Action.OPEN_URL, UpdateManager.githubLink)
+                            new ClickEvent(Action.OPEN_URL, UpdateManager.getGithubLink())
                     )
             )
 

@@ -2,13 +2,11 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import java.util.Objects;
-
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.InventoryClicker;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
@@ -25,41 +23,46 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class EasyAtlasVerdicts {
-    public static EasyAtlasVerdicts instance = new EasyAtlasVerdicts();
+    private static final EasyAtlasVerdicts instance = new EasyAtlasVerdicts();
+
+    public static EasyAtlasVerdicts getInstance() {
+        return instance;
+    }
+
     private boolean inAtlas;
 
     @SubscribeEvent
     public void onSuspectTeleport(ClientChatReceivedEvent event) {
         String text = event.message.getUnformattedText();
-        if (Objects.equals(text, "Teleporting you to suspect")) {
+        if (text.equals("Teleporting you to suspect")) {
             inAtlas = true;
         }
-        else if (Objects.equals(text, "Atlas verdict submitted! Thank you :)")) inAtlas = false;
+        else if (text.equals("Atlas verdict submitted! Thank you :)")) inAtlas = false;
     }
 
     @SubscribeEvent
     public void onAtlasKeys(InputEvent.KeyInputEvent event) {
         EntityPlayerSP player = minecraft.thePlayer;
-        if (YedelMod.insufficient.isPressed()) {
-            if (!inAtlas || !YedelConfig.autoAtlas) return;
-            Chat.display(Messages.insufficientEvidence);
+        if (YedelMod.getInstance().getInsufficient().isPressed()) {
+            if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
+            Chat.display(messages.insufficientEvidence);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 KeyBinding.onTick(minecraft.gameSettings.keyBindUseItem.getKeyCode()); // click
-                InventoryClicker.instance.slot = 30;
-                MinecraftForge.EVENT_BUS.register(InventoryClicker.instance);
-                InventoryClicker.instance.setupTimeout();
+                InventoryClicker.getInstance().setSlot(30);
+                MinecraftForge.EVENT_BUS.register(InventoryClicker.getInstance());
+                InventoryClicker.getInstance().setupTimeout();
             }, (int) (NumberUtils.randomRange(158, 301)));
         }
-        else if (YedelMod.sufficient.isPressed()) {
-            if (!inAtlas || !YedelConfig.autoAtlas) return;
-            Chat.display(Messages.evidenceWithoutDoubt);
+        else if (YedelMod.getInstance().getSufficient().isPressed()) {
+            if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
+            Chat.display(messages.evidenceWithoutDoubt);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 KeyBinding.onTick(minecraft.gameSettings.keyBindUseItem.getKeyCode());
-                InventoryClicker.instance.slot = 32;
-                MinecraftForge.EVENT_BUS.register(InventoryClicker.instance);
-                InventoryClicker.instance.setupTimeout();
+                InventoryClicker.getInstance().setSlot(32);
+                MinecraftForge.EVENT_BUS.register(InventoryClicker.getInstance());
+                InventoryClicker.getInstance().setupTimeout();
             }, (int) (NumberUtils.randomRange(158, 301)));
         }
     }

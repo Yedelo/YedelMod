@@ -6,8 +6,8 @@ import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 
-import static at.yedel.yedelmod.YedelMod.logo;
 import static at.yedel.yedelmod.YedelMod.minecraft;
+import static at.yedel.yedelmod.utils.Constants.logo;
 
 
 

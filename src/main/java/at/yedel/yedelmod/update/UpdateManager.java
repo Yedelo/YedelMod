@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,17 +26,30 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static at.yedel.yedelmod.YedelMod.logo;
 import static at.yedel.yedelmod.YedelMod.minecraft;
-
-;
+import static at.yedel.yedelmod.utils.Constants.logo;
 
 
 
 public class UpdateManager {
-    public static final UpdateManager instance = new UpdateManager();
-    public static final String modrinthLink = "https://modrinth.com/mod/yedelmod/versions";
-    public static final String githubLink = "https://github.com/Yedelo/YedelMod/releases";
+    private static final UpdateManager instance = new UpdateManager();
+
+    public static UpdateManager getInstance() {
+        return instance;
+    }
+
+    private static final String modrinthLink = "https://modrinth.com/mod/yedelmod/versions";
+
+    public static String getModrinthLink() {
+        return modrinthLink;
+    }
+
+    private static final String githubLink = "https://github.com/Yedelo/YedelMod/releases";
+
+    public static String getGithubLink() {
+        return githubLink;
+    }
+
     private final Logger updateLogger = LogManager.getLogger("Update Manager");
 
     public void checkVersion(UpdateSource source, String type) {
@@ -80,9 +92,9 @@ public class UpdateManager {
                 version = String.valueOf(jsonResult.get("tag_name")).replaceAll("\"", "");
                 if (version.equals("null")) version = null;
             }
-            if (type == "chat") {
+            if (type.equals("chat")) {
                 if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);
-                else Chat.display(Messages.latestVersion);
+                else Chat.display(messages.latestVersion);
             }
             else {
                 if (!version.equals(YedelMod.version)) sendUpdateNotification(source, version);
@@ -120,7 +132,7 @@ public class UpdateManager {
 
     private void handleUpdateError(Exception error, String type, String sourceName) throws Exception {
         updateLogger.error("Couldn't check for updates");
-        if (Objects.equals(type, "chat")) Chat.logoDisplay("&cCouldn't check for updates on " + sourceName + "!");
+        if (type.equals("chat")) Chat.logoDisplay("&cCouldn't check for updates on " + sourceName + "!");
         else Constants.notifications.push("YedelMod", "Couldn't check for updates on " + sourceName + "!");
         throw error;
     }

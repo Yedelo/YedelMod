@@ -7,7 +7,7 @@ import java.util.List;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,10 +28,10 @@ public class ClearTextCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        CustomText.instance.displayedText = "";
-        YedelConfig.displayedText = "";
-        YedelConfig.save();
-        Chat.display(Messages.clearedDisplayText);
+        CustomText.getInstance().setDisplayedText("");
+        YedelConfig.getInstance().displayedText = "";
+        YedelConfig.getInstance().save();
+        Chat.display(messages.clearedDisplayText);
     }
 
     @Override

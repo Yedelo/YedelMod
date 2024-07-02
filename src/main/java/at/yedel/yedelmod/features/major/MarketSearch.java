@@ -2,11 +2,9 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import java.util.Objects;
-
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.ScoreboardName;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.gui.Gui;
@@ -25,31 +23,36 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class MarketSearch {
-    public static MarketSearch instance = new MarketSearch();
+    private static final MarketSearch instance = new MarketSearch();
+
+    public static MarketSearch getInstance() {
+        return instance;
+    }
+
     private boolean ahSearching = false;
     private boolean bzSearching = false;
     private boolean bzSearchingClose = false;
 
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
-        if (YedelMod.ahSearch.isPressed()) {
-            if (ScoreboardName.inSkyblock) {
+        if (YedelMod.getInstance().getAhSearch().isPressed()) {
+            if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
-                    if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
+                    if (itemName.equals("§aSkyBlock Menu §7(Click)")) return;
                     ahSearching = true;
                     Chat.logoDisplay("&eSearching the auction house for " + itemName + "&e...");
                     Chat.command("ahs " + TextUtils.removeAmpersand(itemName));
                 }
             }
         }
-        else if (YedelMod.bzSearch.isPressed()) {
-            if (ScoreboardName.inSkyblock) {
+        else if (YedelMod.getInstance().getBzSearch().isPressed()) {
+            if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = TextUtils.removeFormatting(heldItem.getDisplayName());
-                    if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
+                    if (itemName.equals("§aSkyBlock Menu §7(Click)")) return;
                     bzSearching = true;
                     Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
                     Chat.command("bz " + itemName);
@@ -65,7 +68,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                Chat.display(Messages.noCookieBuff);
+                Chat.display(messages.noCookieBuff);
             }
         }
         else if (msg.equals("Obtain a Booster Cookie from the community shop in the hub!")) {
@@ -88,7 +91,7 @@ public class MarketSearch {
                 if (itemName.contains("No Product Found")) {
                     bzSearchingClose = false;
                     minecraft.thePlayer.closeScreen();
-                    Chat.display(Messages.noItemFound);
+                    Chat.display(messages.noItemFound);
                 }
             }
         }

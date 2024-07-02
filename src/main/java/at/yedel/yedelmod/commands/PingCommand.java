@@ -4,7 +4,6 @@ package at.yedel.yedelmod.commands;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.utils.Chat;
@@ -29,27 +28,27 @@ public class PingCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            PingSender.instance.defaultMethodPing();
+            PingSender.getInstance().defaultMethodPing();
             return;
         }
         String arg = args[0];
-        if (Objects.equals(arg, "ping") || Objects.equals(arg, "p")) {
+        if (arg.equals("ping") || arg.equals("p")) {
             Chat.command("ping");
         }
-        else if (Objects.equals(arg, "command") || Objects.equals(arg, "c")) {
-            PingSender.instance.commandPing();
+        else if (arg.equals("command") || arg.equals("c")) {
+            PingSender.getInstance().commandPing();
         }
-        else if (Objects.equals(arg, "tab") || Objects.equals(arg, "t")) {
-            PingSender.instance.tabPing();
+        else if (arg.equals("tab") || arg.equals("t")) {
+            PingSender.getInstance().tabPing();
         }
-        else if (Objects.equals(arg, "stats") || Objects.equals(arg, "s")) {
-            PingSender.instance.statsPing();
+        else if (arg.equals("stats") || arg.equals("s")) {
+            PingSender.getInstance().statsPing();
         }
-        else if (Objects.equals(arg, "list") || Objects.equals(arg, "l")) {
-            PingSender.instance.serverListPing();
+        else if (arg.equals("list") || arg.equals("l")) {
+            PingSender.getInstance().serverListPing();
         }
         else {
-            PingSender.instance.defaultMethodPing();
+            PingSender.getInstance().defaultMethodPing();
         }
     }
 

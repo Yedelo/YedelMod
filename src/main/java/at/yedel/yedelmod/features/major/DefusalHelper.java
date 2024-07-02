@@ -3,8 +3,6 @@ package at.yedel.yedelmod.features.major;
 
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
@@ -23,18 +21,21 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class DefusalHelper {
-    public static DefusalHelper instance = new DefusalHelper();
+    private static final DefusalHelper instance = new DefusalHelper();
+
+    public static DefusalHelper getInstance() {
+        return instance;
+    }
+
     public static boolean inDefusal;
     private final int red = new Color(246, 94, 94, 255).getRGB();
-    private final ArrayList<Slot> clickedSlots = new ArrayList<>();
 
     @SubscribeEvent
     public void onOpenDefusalWindow(PacketEvent.ReceiveEvent event) {
-        if (YedelConfig.defusalHelper) {
+        if (YedelConfig.getInstance().defusalHelper) {
             if (event.packet instanceof S2DPacketOpenWindow) {
-                if (Objects.equals(((S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText(), "C4 (Click REDSTONE)")) {
+                if (((S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText().equals("C4 (Click REDSTONE)")) {
                     inDefusal = true;
-                    clickedSlots.clear();
                 }
             }
         }
@@ -42,12 +43,11 @@ public class DefusalHelper {
 
     @SubscribeEvent
     public void onResetItems(PacketEvent.ReceiveEvent event) {
-        if (!YedelConfig.defusalHelper) return;
+        if (!YedelConfig.getInstance().defusalHelper) return;
         if (event.packet instanceof S2FPacketSetSlot) {
             if (minecraft.currentScreen instanceof GuiContainer) {
                 if (((GuiContainer) minecraft.currentScreen).inventorySlots.getSlot(0).inventory.getName().contains("REDSTONE")) {
                     inDefusal = true;
-                    clickedSlots.clear();
                 }
             }
         }
@@ -55,7 +55,7 @@ public class DefusalHelper {
 
     @SubscribeEvent
     public void onRenderRedstones(DrawSlotEvent event) {
-        if (!YedelConfig.defusalHelper) return;
+        if (!YedelConfig.getInstance().defusalHelper) return;
         Slot slot = event.slotIn;
         if (slot.getStack() == null) return;
         if (slot.getStack().getItem() == Items.redstone && inDefusal) {

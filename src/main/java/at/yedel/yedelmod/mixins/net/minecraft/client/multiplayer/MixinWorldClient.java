@@ -2,8 +2,6 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.multiplayer;
 
 
 
-import java.util.Objects;
-
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.multiplayer.WorldClient;
 import org.lwjgl.opengl.Display;
@@ -19,7 +17,7 @@ public abstract class MixinWorldClient {
     // for some reason, using the FML event of disconnecting from the server freezes
     @Inject(method = "sendQuittingDisconnectingPacket", at = @At("HEAD"))
     private void yedelmod$onQuit(CallbackInfo ci) {
-        if (YedelConfig.changeTitle || !Objects.equals(Display.getTitle(), "Minecraft 1.8.9")) {
+        if (YedelConfig.getInstance().changeTitle || !Display.getTitle().equals("Minecraft 1.8.9")) {
             Display.setTitle("Minecraft 1.8.9");
         }
     }

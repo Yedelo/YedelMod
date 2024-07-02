@@ -24,12 +24,12 @@ public abstract class MixinGuiNewChat {
     private void yedelmod$onLanHost(IChatComponent chatComponent, CallbackInfo ci) {
         if (chatComponent.getUnformattedText().startsWith("Local game hosted on port")) {
             String port = TextUtils.removeSection(chatComponent.getFormattedText().substring(26));
-            if (YedelConfig.changeTitle) Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
+            if (YedelConfig.getInstance().changeTitle) Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
         }
     }
 
     @WrapWithCondition(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2))
     private boolean yedelmod$keepChatHistory(List sentMessages) {
-        return !YedelConfig.keepChatHistory;
+        return !YedelConfig.getInstance().keepChatHistory;
     }
 }

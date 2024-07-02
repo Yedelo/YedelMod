@@ -27,7 +27,7 @@ public class YedelCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        Functions.displayScreen(YedelConfig.instance.gui());
+        Functions.displayScreen(YedelConfig.getInstance().gui());
     }
 
     @Override

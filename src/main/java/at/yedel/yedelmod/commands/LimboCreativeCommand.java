@@ -26,7 +26,7 @@ public class LimboCreativeCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        LimboCreativeCheck.checkLimbo();
+        LimboCreativeCheck.getInstance().checkLimbo();
     }
 
     @Override

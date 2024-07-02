@@ -2,16 +2,20 @@ package at.yedel.yedelmod.gui;
 
 
 
+import java.io.IOException;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.input.Keyboard;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
 public class MoveHuntingTextGui extends GuiScreen {
-    public static final MoveHuntingTextGui instance = new MoveHuntingTextGui();
+    private final GuiScreen parentScreen;
+
     private final String[] lines = {
             "§c§lBounty §f§lHunting",
             "§a73 points",
@@ -22,21 +26,15 @@ public class MoveHuntingTextGui extends GuiScreen {
     private GuiButton close;
     private GuiButton centerVertically;
 
-    @Override
-    public boolean doesGuiPauseGame() {
-        return false;
+    public MoveHuntingTextGui(GuiScreen parentScreen) {
+        this.parentScreen = parentScreen;
     }
 
     @Override
     public void initGui() {
-        super.initGui();
-        reset = new GuiButton(0, (width / 2) - 50, 40, 100, 20, "Reset (R)");
-        close = new GuiButton(0, width - 30, 10, 20, 20, "X");
-        centerVertically = new GuiButton(0, width - 140, height - 29, 131, 20, "Center Vertically (V)");
-
-        this.buttonList.add(reset);
-        this.buttonList.add(close);
-        this.buttonList.add(centerVertically);
+        this.buttonList.add(reset = new GuiButton(0, (width / 2) - 50, 40, 100, 20, "Reset (R)"));
+        this.buttonList.add(close = new GuiButton(0, width - 30, 10, 20, 20, "X"));
+        this.buttonList.add(centerVertically = new GuiButton(0, width - 140, height - 29, 131, 20, "Center Vertically (V)"));
     }
 
     @Override
@@ -49,9 +47,9 @@ public class MoveHuntingTextGui extends GuiScreen {
         drawString(fontRendererObj, "Move your mouse to where you want to place the text, then click to set it.", (int) (width / 2 - 185.5), 25, 0xffffffff);
         drawString(fontRendererObj, mouseText, partialMouseX - (fontRendererObj.getStringWidth(mouseText)) / 2, partialMouseY + 15, 0xffffffff);
 
-        int y = YedelConfig.bhDisplayY;
+        int y = YedelConfig.getInstance().bhDisplayY;
         for (String line: lines) {
-            fontRendererObj.drawStringWithShadow(line, YedelConfig.bhDisplayX, y, 16777215);
+            fontRendererObj.drawStringWithShadow(line, YedelConfig.getInstance().bhDisplayX, y, 16777215);
             y += fontRendererObj.FONT_HEIGHT + 2;
         }
 
@@ -59,41 +57,51 @@ public class MoveHuntingTextGui extends GuiScreen {
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (reset.isMouseOver()) {
-            YedelConfig.bhDisplayX = 5;
-            YedelConfig.bhDisplayY = 5;
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+        if (mouseButton == 0) {
+            YedelConfig.getInstance().bhDisplayX = mouseX;
+            YedelConfig.getInstance().bhDisplayY = mouseY;
         }
-        else if (close.isMouseOver()) {
-            minecraft.displayGuiScreen(null);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        if (button == reset) {
+            YedelConfig.getInstance().bhDisplayX = 5;
+            YedelConfig.getInstance().bhDisplayY = 5;
         }
-        else if (centerVertically.isMouseOver()) {
+        else if (button == close) {
+            minecraft.displayGuiScreen(parentScreen);
+        }
+        else if (button == centerVertically) {
             int textHeight = 4 * (fontRendererObj.FONT_HEIGHT + 2);
-            YedelConfig.bhDisplayY = (height / 2) - textHeight;
-        }
-        else if (mouseButton == 0) {
-            YedelConfig.bhDisplayX = mouseX;
-            YedelConfig.bhDisplayY = mouseY;
+            YedelConfig.getInstance().bhDisplayY = (height / 2) - textHeight;
         }
     }
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) {
         if (typedChar == 'r') {
-            YedelConfig.bhDisplayX = 5;
-            YedelConfig.bhDisplayY = 5;
+            YedelConfig.getInstance().bhDisplayX = 5;
+            YedelConfig.getInstance().bhDisplayY = 5;
         }
         else if (typedChar == 'v') {
             int textHeight = 4 * (fontRendererObj.FONT_HEIGHT + 2);
-            YedelConfig.bhDisplayY = (height / 2) - textHeight;
+            YedelConfig.getInstance().bhDisplayY = (height / 2) - textHeight;
         }
-        else if (keyCode == 1) {
-            minecraft.displayGuiScreen(null);
+        else if (keyCode == Keyboard.KEY_ESCAPE) {
+            minecraft.displayGuiScreen(parentScreen);
         }
     }
 
     @Override
+    public boolean doesGuiPauseGame() {
+        return false;
+    }
+
+    @Override
     public void onGuiClosed() {
-        YedelConfig.save();
+        YedelConfig.getInstance().save();
     }
 }

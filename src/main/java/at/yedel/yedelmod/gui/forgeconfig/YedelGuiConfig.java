@@ -22,7 +22,7 @@ public class YedelGuiConfig extends GuiConfig {
                 new ConfigElement(
                         new Configuration(
                                 new File(
-                                        YedelMod.modConfigurationFactory,
+                                        YedelMod.getInstance().getModConfigurationFactory(),
                                         "yedelmod.cfg")
                         ).getCategory(Configuration.CATEGORY_GENERAL))
                         .getChildElements(),
@@ -35,7 +35,6 @@ public class YedelGuiConfig extends GuiConfig {
     }
 
     public void initGui() {
-        minecraft.displayGuiScreen(null);
-        minecraft.displayGuiScreen(YedelConfig.instance.gui()); // Main
+        minecraft.displayGuiScreen(YedelConfig.getInstance().gui()); // Main
     }
 }

@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.ducks.SwingItemDuck;
 import at.yedel.yedelmod.events.PacketEvent;
-import at.yedel.yedelmod.utils.Duck;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,12 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class ItemSwings {
-    public static ItemSwings instance = new ItemSwings();
+    private static final ItemSwings instance = new ItemSwings();
+
+    public static ItemSwings getInstance() {
+        return instance;
+    }
+
     private final List swingItems;
 
     public ItemSwings() {
@@ -39,12 +44,12 @@ public class ItemSwings {
     }
 
     public void swing() {
-        ((Duck) minecraft.thePlayer).yedelmod$swingItemLocally();
+        ((SwingItemDuck) minecraft.thePlayer).yedelmod$swingItemLocally();
     }
 
     @SubscribeEvent
     public void onUseSwingable(PlayerInteractEvent event) {
-        if (!YedelConfig.itemSwings) return;
+        if (!YedelConfig.getInstance().itemSwings) return;
         ItemStack stack = minecraft.thePlayer.getHeldItem();
         if (stack == null) return;
         Item item = stack.getItem();
@@ -67,7 +72,7 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void onDropItem(ItemTossEvent event) { // rework
-        if (YedelConfig.dropSwings) swing();
+        if (YedelConfig.getInstance().dropSwings) swing();
     }
 
     @SubscribeEvent
@@ -75,7 +80,7 @@ public class ItemSwings {
         if (event.packet instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
             if (action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) {
-                if (YedelConfig.dropSwings) swing();
+                if (YedelConfig.getInstance().dropSwings) swing();
             }
         }
 

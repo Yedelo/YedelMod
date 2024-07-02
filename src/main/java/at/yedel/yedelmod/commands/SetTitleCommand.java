@@ -5,7 +5,7 @@ package at.yedel.yedelmod.commands;
 import java.util.List;
 
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -29,7 +29,7 @@ public class SetTitleCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            Chat.display(Messages.enterValidTitle);
+            Chat.display(messages.enterValidTitle);
             return;
         }
         String title = TextUtils.joinArgs(args);

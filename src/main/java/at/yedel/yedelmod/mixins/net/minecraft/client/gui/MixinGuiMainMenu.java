@@ -26,7 +26,7 @@ public abstract class MixinGuiMainMenu extends GuiScreen {
 
     @Inject(method = "initGui", at = @At("TAIL"))
     private void yedelmod$addGuiButtons(CallbackInfo ci) {
-        if (YedelConfig.buttonFavoriteServer) this.buttonList.add(yedelmod$favoriteServerButton);
+        if (YedelConfig.getInstance().buttonFavoriteServer) this.buttonList.add(yedelmod$favoriteServerButton);
     }
 
     @Inject(method = "actionPerformed", at = @At("TAIL"))
@@ -34,7 +34,7 @@ public abstract class MixinGuiMainMenu extends GuiScreen {
         if (button.id == 1539) {
             minecraft.addScheduledTask(() -> {
                 FMLClientHandler.instance().connectToServer(
-                        new GuiMultiplayer(new GuiMainMenu()), new ServerData("Favorite Server", YedelConfig.favoriteServer, false)
+                        new GuiMultiplayer(new GuiMainMenu()), new ServerData("Favorite Server", YedelConfig.getInstance().favoriteServer, false)
                 );
             });
         }
@@ -42,6 +42,7 @@ public abstract class MixinGuiMainMenu extends GuiScreen {
 
     @Inject(method = "drawScreen", at = @At("TAIL"))
     private void yedelmod$drawButton(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
-        if (YedelConfig.buttonFavoriteServer) yedelmod$favoriteServerButton.drawButton(minecraft, mouseX, mouseY);
+        if (YedelConfig.getInstance().buttonFavoriteServer)
+            yedelmod$favoriteServerButton.drawButton(minecraft, mouseX, mouseY);
     }
 }

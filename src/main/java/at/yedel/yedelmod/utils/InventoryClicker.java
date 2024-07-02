@@ -14,8 +14,17 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class InventoryClicker {
-    public static InventoryClicker instance = new InventoryClicker();
-    public int slot;
+    private static final InventoryClicker instance = new InventoryClicker();
+
+    public static InventoryClicker getInstance() {
+        return instance;
+    }
+
+    private int slot;
+
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
 
     @SubscribeEvent
     public void onOpenAtlas(GuiOpenEvent event) {

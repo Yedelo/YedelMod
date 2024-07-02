@@ -19,8 +19,13 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class SacrificeDisplay {
-    public static SacrificeDisplay instance = new SacrificeDisplay();
-    public static String coins;
+    private static final SacrificeDisplay instance = new SacrificeDisplay();
+
+    public static SacrificeDisplay getInstance() {
+        return instance;
+    }
+
+    private String coins;
 
     @SubscribeEvent
     public void onServerChange(JoinGamePacketEvent event) {
@@ -35,7 +40,7 @@ public class SacrificeDisplay {
 
     @SubscribeEvent
     public void onRenderGui(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!YedelConfig.sacrificeDisplay) return;
+        if (!YedelConfig.getInstance().sacrificeDisplay) return;
         GuiScreen currentScreen = minecraft.currentScreen;
         if (currentScreen instanceof GuiEditSign) {
             if (minecraft.thePlayer.getDistance(-389, 81, -705) > 15)

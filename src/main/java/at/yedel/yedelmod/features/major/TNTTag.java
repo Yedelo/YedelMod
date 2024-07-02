@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features.major;
 
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +10,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.GameJoinEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -35,7 +34,12 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class TNTTag {
-    public static TNTTag instance = new TNTTag();
+    private static final TNTTag instance = new TNTTag();
+
+    public static TNTTag getInstance() {
+        return instance;
+    }
+
     private final ArrayList<String> players = new ArrayList<>();
     private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
     private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");
@@ -54,20 +58,20 @@ public class TNTTag {
 
     public TNTTag() {
         lines.add("§c§lBounty §f§lHunting");
-        lines.add("§a" + YedelConfig.points + " points");
-        lines.add("§a" + YedelConfig.kills + " kills");
+        lines.add("§a" + YedelConfig.getInstance().points + " points");
+        lines.add("§a" + YedelConfig.getInstance().kills + " kills");
         lines.add("");
     }
 
     @SubscribeEvent
     public void onRenderTagLayoutEdtior(GuiScreenEvent.BackgroundDrawnEvent event) {
         if (!(event.gui instanceof GuiContainer)) return;
-        if (Objects.equals(((GuiContainer) event.gui).inventorySlots.getSlot(0).inventory.getName(), "Layout Editor - TNT Tag") && YedelConfig.bhClickables) {
+        if (((GuiContainer) event.gui).inventorySlots.getSlot(0).inventory.getName().equals("Layout Editor - TNT Tag") && YedelConfig.getInstance().bhClickables) {
             int width = event.gui.width;
             FontRenderer fontRenderer = minecraft.fontRendererObj;
-            fontRenderer.drawStringWithShadow("§r§b§lPlay Again §r§7(Right Click) §r| Slot " + YedelConfig.playAgainItem, (float) (width - 165) / 2, 30, 16777215);
-            fontRenderer.drawStringWithShadow("§r§c§lReturn To Lobby §r§7(Right Click) §r| Slot " + YedelConfig.returnToLobbyItem, (float) (width - 203) / 2, 30 + fontRenderer.FONT_HEIGHT + 2, 16777215);
-            if (YedelConfig.playAgainItem == YedelConfig.returnToLobbyItem) {
+            fontRenderer.drawStringWithShadow("§r§b§lPlay Again §r§7(Right Click) §r| Slot " + YedelConfig.getInstance().playAgainItem, (float) (width - 165) / 2, 30, 16777215);
+            fontRenderer.drawStringWithShadow("§r§c§lReturn To Lobby §r§7(Right Click) §r| Slot " + YedelConfig.getInstance().returnToLobbyItem, (float) (width - 203) / 2, 30 + fontRenderer.FONT_HEIGHT + 2, 16777215);
+            if (YedelConfig.getInstance().playAgainItem == YedelConfig.getInstance().returnToLobbyItem) {
                 fontRenderer.drawStringWithShadow("§c§lYour clickables are conflicting! Change them in the config.", (float) (width - 351) / 2, 30 + 2 * (fontRenderer.FONT_HEIGHT + 2), 16777215);
             }
         }
@@ -75,11 +79,11 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
-        if (!playingTag || !YedelConfig.bountyHunting) return;
-        int y = YedelConfig.bhDisplayY;
+        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
+        int y = YedelConfig.getInstance().bhDisplayY;
         FontRenderer fontRenderer = minecraft.fontRendererObj;
         for (String line: lines) {
-            fontRenderer.drawStringWithShadow(line, YedelConfig.bhDisplayX, y, 16777215);
+            fontRenderer.drawStringWithShadow(line, YedelConfig.getInstance().bhDisplayX, y, 16777215);
             y += fontRenderer.FONT_HEIGHT + 2;
         }
     }
@@ -87,47 +91,47 @@ public class TNTTag {
     @SubscribeEvent
     public void onTNTTagJoin(GameJoinEvent.TNTJoinEvent event) {
         playingTag = true;
-        if (!YedelConfig.bountyHunting) return;
+        if (!YedelConfig.getInstance().bountyHunting) return;
         playerName = minecraft.thePlayer.getName();
         dead = false;
         target = null;
         lines.set(0, "§c§lBounty §f§lHunting");
-        lines.set(1, "§a" + YedelConfig.points + " points");
-        lines.set(2, "§a" + YedelConfig.kills + " kills");
+        lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
+        lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
         lines.set(3, "");
-        if (YedelConfig.bhFirst) {
-            Chat.display(Messages.firstTime);
-            YedelConfig.bhFirst = false;
-            YedelConfig.save();
+        if (YedelConfig.getInstance().bhFirst) {
+            Chat.display(messages.firstTime);
+            YedelConfig.getInstance().bhFirst = false;
+            YedelConfig.getInstance().save();
         }
     }
 
     @SubscribeEvent
     public void onRoundStarted(ClientChatReceivedEvent event) {
-        if (!YedelConfig.bountyHunting || !playingTag || !event.message.getUnformattedText().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || !playingTag || !event.message.getUnformattedText().endsWith("has started!"))
             return;
         players.clear();
-        if (YedelConfig.bhClickables) {
-            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.playAgainItem - 1, playItemStack);
-            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.returnToLobbyItem - 1, leaveGameStack);
+        if (YedelConfig.getInstance().bhClickables) {
+            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.getInstance().playAgainItem - 1, playItemStack);
+            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.getInstance().returnToLobbyItem - 1, leaveGameStack);
         }
         for (NetworkPlayerInfo playerInfo: minecraft.getNetHandler().getPlayerInfoMap()) {
             players.add(playerInfo.getGameProfile().getName());
         }
         players.remove(playerName);
-        players.remove(YedelConfig.nick);
+        players.remove(YedelConfig.getInstance().nick);
         target = players.get((int) Math.floor(Math.random() * players.size()));
         whoCheck = true;
         Chat.command("who");
-        if (YedelConfig.bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
-        lines.set(1, "§a" + YedelConfig.points + " points");
-        lines.set(2, "§a" + YedelConfig.kills + " kills");
+        if (YedelConfig.getInstance().bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
+        lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
+        lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
     }
 
     @SubscribeEvent
     public void onWhoMessage(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.bountyHunting || !playingTag)
+        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.getInstance().bountyHunting || !playingTag)
             return;
         whoCheck = false;
         event.setCanceled(true);
@@ -148,17 +152,17 @@ public class TNTTag {
     @SubscribeEvent
     public void onFightMessages(ClientChatReceivedEvent event) {
         String msg = event.message.getUnformattedText();
-        if (!playingTag || !YedelConfig.bountyHunting) return;
+        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
         Matcher tagOtherMatcher = tagOtherRegex.matcher(msg);
         while (tagOtherMatcher.find()) {
-            if (Objects.equals(tagOtherMatcher.group(1), target)) {
+            if (tagOtherMatcher.group(1).equals(target)) {
                 fightingTarget = true;
             }
         }
 
         Matcher personIsItMatcher = personIsItRegex.matcher(msg);
         while (personIsItMatcher.find()) {
-            if (Objects.equals(personIsItMatcher.group(1), target) && !dead) {
+            if (personIsItMatcher.group(1).equals(target) && !dead) {
                 fightingTarget = false;
             }
         }
@@ -166,18 +170,18 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent event) {
-        if (Objects.equals(event.target.getName(), target) && !dead) {
+        if (event.target.getName().equals(target) && !dead) {
             fightingTarget = true;
         }
     }
 
     @SubscribeEvent
     public void onRenderTarget(RenderPlayerEvent.Pre event) {
-        if (!playingTag || !YedelConfig.bountyHunting || !YedelConfig.bhDisplay) return;
+        if (!playingTag || !YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().bhDisplay) return;
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = minecraft.thePlayer;
         if (
-                Objects.equals(targetPlayer.getName(), target)
+                targetPlayer.getName().equals(target)
                         && player.canEntityBeSeen(event.entityPlayer)
                         && !targetPlayer.isInvisible()
         ) {
@@ -189,15 +193,15 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onInteractHoldingClickables(PlayerInteractEvent event) {
-        if (!playingTag || !YedelConfig.bhClickables) return;
+        if (!playingTag || !YedelConfig.getInstance().bhClickables) return;
         ItemStack item = minecraft.thePlayer.getHeldItem();
         if (item == null) return;
         String itemName = item.getDisplayName();
-        if (Objects.equals(itemName, "§b§lPlay Again §r§7(Right Click)")) {
+        if (itemName.equals("§b§lPlay Again §r§7(Right Click)")) {
             Chat.command("play tnt_tntag");
             event.setCanceled(true);
         }
-        else if (Objects.equals(itemName, "§r§c§lReturn To Lobby §r§7(Right Click)")) {
+        else if (itemName.equals("§r§c§lReturn To Lobby §r§7(Right Click)")) {
             Chat.command("lobby");
             event.setCanceled(true);
         }
@@ -215,26 +219,27 @@ public class TNTTag {
     @SubscribeEvent
     public void onRoundEnd(ClientChatReceivedEvent event) {
         String msg = event.message.getUnformattedText();
-        if (!playingTag || !YedelConfig.bountyHunting) return;
+        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
         Matcher peopleDeathMatcher = peopleDeathPattern.matcher(msg);
         while (peopleDeathMatcher.find()) {
             String personDied = peopleDeathMatcher.group(1);
-            if (Objects.equals(personDied, playerName)) {
+            if (personDied.equals(playerName)) {
                 dead = true;
                 target = null;
                 lines.set(3, "");
             }
-            if (Objects.equals(personDied, target) && fightingTarget) {
+            if (personDied.equals(target) && fightingTarget) {
                 ThreadManager.scheduleOnce(() -> {
                     // Half points if you died while killing your target
                     int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
-                    YedelConfig.points += pointIncrease;
-                    YedelConfig.kills += 1;
-                    lines.set(1, "§a" + YedelConfig.points + " points (+" + pointIncrease + ")");
-                    lines.set(2, "§a" + YedelConfig.kills + " kills (+1)");
+                    YedelConfig.getInstance().points += pointIncrease;
+                    YedelConfig.getInstance().kills += 1;
+                    lines.set(1, "§a" + YedelConfig.getInstance().points + " points (+" + pointIncrease + ")");
+                    lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills (+1)");
                     lines.set(3, "§cYou killed your target!");
-                    if (YedelConfig.bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
-                    YedelConfig.save();
+                    if (YedelConfig.getInstance().bhSounds)
+                        minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
+                    YedelConfig.getInstance().save();
                 }, 500);
             }
         }
@@ -242,8 +247,8 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
-        if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.bountyHunting) {
-            Chat.display(Messages.pleaseChangeNick);
+        if (event.message.getUnformattedText().equals("Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
+            Chat.display(messages.pleaseChangeNick);
         }
     }
 

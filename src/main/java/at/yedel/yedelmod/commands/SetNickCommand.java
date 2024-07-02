@@ -6,7 +6,7 @@ import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,13 +28,13 @@ public class SetNickCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            Chat.display(Messages.enterValidNick);
+            Chat.display(messages.enterValidNick);
             return;
         }
         String nick = args[0];
         Chat.display("&6&l[BountyHunting] §eSet nick to " + nick + "§e!");
-        YedelConfig.nick = nick;
-        YedelConfig.save();
+        YedelConfig.getInstance().nick = nick;
+        YedelConfig.getInstance().save();
     }
 
     @Override

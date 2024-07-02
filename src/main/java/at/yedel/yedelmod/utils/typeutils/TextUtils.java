@@ -24,7 +24,7 @@ public class TextUtils {
         return string.replaceAll("&.", "");
     }
 
-    public static Pattern pattern = Pattern.compile("&(?!\\s)");
+    private static final Pattern pattern = Pattern.compile("&(?!\\s)");
     public static String replaceAmpersand(String string) {
         return pattern.matcher(string).replaceAll("§");
     }

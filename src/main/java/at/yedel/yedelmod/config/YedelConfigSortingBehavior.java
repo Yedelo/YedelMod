@@ -9,12 +9,11 @@ import java.util.Map;
 
 import gg.essential.vigilance.data.PropertyData;
 import gg.essential.vigilance.data.SortingBehavior;
-import org.jetbrains.annotations.NotNull;
 
 
 
 public class YedelConfigSortingBehavior extends SortingBehavior {
-    public @NotNull Comparator<? super Map.Entry<String, ? extends List<PropertyData>>> getSubcategoryComparator() {
+    public Comparator<? super Map.Entry<String, ? extends List<PropertyData>>> getSubcategoryComparator() {
         ArrayList<String> subcategories = new ArrayList<>();
         subcategories.add("Features");
         subcategories.add("Customization");

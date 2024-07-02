@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,6 +18,8 @@ public class YedelCheck {
     // YedelUtils makes this boolean true if it loads
     // alreadyWarned is not supposed to be saved
 
+    // note: i dont want to change this class at all
+
     // Also used for the first time message
     public static YedelCheck instance = new YedelCheck();
     public static boolean YedelUtils = false;
@@ -27,14 +29,14 @@ public class YedelCheck {
     public void onServerChange(JoinGamePacketEvent event) {
         if (YedelUtils && !alreadyWarned) {
             ThreadManager.scheduleOnce(() -> {
-                Chat.display(Messages.YedelUtilsMessage);
+                Chat.display(messages.YedelUtilsMessage);
             }, 3, TimeUnit.SECONDS);
             alreadyWarned = false;
         }
-        if (YedelConfig.first) {
-            Chat.display(Messages.welcomeMessage);
-            YedelConfig.first = false;
-            YedelConfig.save();
+        if (YedelConfig.getInstance().first) {
+            Chat.display(messages.welcomeMessage);
+            YedelConfig.getInstance().first = false;
+            YedelConfig.getInstance().save();
         }
     }
 }

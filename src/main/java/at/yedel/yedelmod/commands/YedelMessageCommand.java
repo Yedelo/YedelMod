@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Constants.messages;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.command.CommandBase;
@@ -54,12 +54,12 @@ public class YedelMessageCommand extends CommandBase {
                 }
                 JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
                 String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
-                Chat.display(Messages.messageFromYedel);
+                Chat.display(messages.messageFromYedel);
                 Chat.display(formattedMessage);
             }
             catch (Exception e) {
                 LogManager.getLogger("Mod Message").error("Couldn't get mod message");
-                Chat.display(Messages.couldntGetMessage);
+                Chat.display(messages.couldntGetMessage);
             }
         }, "YedelMod").start();
     }

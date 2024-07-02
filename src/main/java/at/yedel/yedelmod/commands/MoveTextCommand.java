@@ -11,6 +11,8 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 
+import static at.yedel.yedelmod.YedelMod.minecraft;
+
 
 
 public class MoveTextCommand extends CommandBase {
@@ -26,7 +28,7 @@ public class MoveTextCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        Functions.displayScreen(MoveTextGui.instance);
+        Functions.displayScreen(new MoveTextGui(minecraft.currentScreen));
     }
 
     @Override

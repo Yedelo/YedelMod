@@ -13,13 +13,37 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class CustomText {
-    public static final CustomText instance = new CustomText();
-    public String displayedText = YedelConfig.displayedText;
-    public int x = YedelConfig.displayX;
-    public int y = YedelConfig.displayY;
-    public boolean shouldDisplay = true;
+    private static final CustomText instance = new CustomText();
 
-    public final void setShouldDisplay(boolean shouldDisplay) {
+    public static CustomText getInstance() {
+        return instance;
+    }
+
+    private String displayedText = YedelConfig.getInstance().displayedText;
+
+    public String getDisplayedText() {
+        return displayedText;
+    }
+
+    public void setDisplayedText(String displayedText) {
+        this.displayedText = displayedText;
+    }
+
+    private int x = YedelConfig.getInstance().displayX;
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    private int y = YedelConfig.getInstance().displayY;
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    private boolean shouldDisplay = true;
+
+    public void setShouldDisplay(boolean shouldDisplay) {
         this.shouldDisplay = shouldDisplay;
     }
 
