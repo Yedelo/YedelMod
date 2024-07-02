@@ -38,7 +38,7 @@ public class YedelCheck {
                 Chat.display(messages.welcomeMessage);
                 YedelConfig.getInstance().first = false;
                 YedelConfig.getInstance().save();
-            }, 1000, TimeUnit.SECONDS);
+            }, 1000, TimeUnit.MILLISECONDS);
         }
     }
 }
