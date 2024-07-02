@@ -35,7 +35,7 @@ public class MarketSearch {
 
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
-        if (YedelMod.getInstance().getAhSearch().isPressed()) {
+        if (YedelMod.getInstance().getAhSearchKeybind().isPressed()) {
             if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
@@ -47,7 +47,7 @@ public class MarketSearch {
                 }
             }
         }
-        else if (YedelMod.getInstance().getBzSearch().isPressed()) {
+        else if (YedelMod.getInstance().getBzSearchKeybind().isPressed()) {
             if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {

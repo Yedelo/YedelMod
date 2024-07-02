@@ -78,31 +78,31 @@ public class YedelMod {
         return modConfigurationFactory;
     }
 
-    private KeyBinding ahSearch;
+    private KeyBinding ahSearchKeybind;
 
-    public KeyBinding getAhSearch() {
-        return ahSearch;
+    public KeyBinding getAhSearchKeybind() {
+        return ahSearchKeybind;
     }
 
-    private KeyBinding bzSearch;
+    private KeyBinding bzSearchKeybind;
 
-    public KeyBinding getBzSearch() {
-        return bzSearch;
+    public KeyBinding getBzSearchKeybind() {
+        return bzSearchKeybind;
     }
 
-    private KeyBinding insufficient;
+    private KeyBinding insufficientKeybind;
 
-    public KeyBinding getInsufficient() {
-        return insufficient;
+    public KeyBinding getInsufficientKeybind() {
+        return insufficientKeybind;
     }
 
-    private KeyBinding sufficient;
+    private KeyBinding sufficientKeybind;
 
-    public KeyBinding getSufficient() {
-        return sufficient;
+    public KeyBinding getSufficientKeybind() {
+        return sufficientKeybind;
     }
 
-    @Mod.EventHandler
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         modConfigurationFactory = event.getModConfigurationDirectory();
     }
@@ -146,14 +146,14 @@ public class YedelMod {
 
         new PlaytimeSchedule().startSchedule();
 
-        ahSearch = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
-        bzSearch = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
-        insufficient = new KeyBinding("Insufficient Evidence", 24, "YedelMod | Atlas");
-        sufficient = new KeyBinding("Evidence Without Doubt", 25, "YedelMod | Atlas");
-        ClientRegistry.registerKeyBinding(ahSearch);
-        ClientRegistry.registerKeyBinding(bzSearch);
-        ClientRegistry.registerKeyBinding(insufficient);
-        ClientRegistry.registerKeyBinding(sufficient);
+        ahSearchKeybind = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
+        bzSearchKeybind = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
+        insufficientKeybind = new KeyBinding("Insufficient Evidence", 24, "YedelMod | Atlas");
+        sufficientKeybind = new KeyBinding("Evidence Without Doubt", 25, "YedelMod | Atlas");
+        ClientRegistry.registerKeyBinding(ahSearchKeybind);
+        ClientRegistry.registerKeyBinding(bzSearchKeybind);
+        ClientRegistry.registerKeyBinding(insufficientKeybind);
+        ClientRegistry.registerKeyBinding(sufficientKeybind);
     }
 
     @EventHandler

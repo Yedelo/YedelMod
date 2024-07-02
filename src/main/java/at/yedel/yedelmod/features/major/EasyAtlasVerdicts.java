@@ -12,12 +12,10 @@ import at.yedel.yedelmod.utils.InventoryClicker;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -45,7 +43,7 @@ public class EasyAtlasVerdicts {
     @SubscribeEvent
     public void onAtlasKeys(KeyInputEvent event) {
         EntityPlayerSP player = minecraft.thePlayer;
-        if (YedelMod.getInstance().getInsufficient().isPressed()) {
+        if (YedelMod.getInstance().getInsufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
             Chat.display(messages.insufficientEvidence);
             player.inventory.currentItem = 7;
@@ -56,7 +54,7 @@ public class EasyAtlasVerdicts {
                 InventoryClicker.getInstance().setupTimeout();
             }, (int) (NumberUtils.randomRange(158, 301)));
         }
-        else if (YedelMod.getInstance().getSufficient().isPressed()) {
+        else if (YedelMod.getInstance().getSufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
             Chat.display(messages.evidenceWithoutDoubt);
             player.inventory.currentItem = 7;
