@@ -18,6 +18,7 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.common.Loader;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -28,6 +29,8 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 // "instance needs to be at the bottom or the default values take priority" - patcher
 // i messed up
 public class YedelConfig extends Vigilant {
+    private GuiScreen parentScreen;
+
     private final URI video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
     @Property(
             type = PropertyType.SELECTOR,
@@ -608,5 +611,9 @@ public class YedelConfig extends Vigilant {
 
     public static YedelConfig getInstance() {
         return instance;
+    }
+
+    public void setParentScreen(GuiScreen parentScreen) {
+        this.parentScreen = parentScreen;
     }
 }

@@ -58,11 +58,11 @@ public class MoveHuntingTextGui extends GuiScreen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (mouseButton == 0) {
             YedelConfig.getInstance().bhDisplayX = mouseX;
             YedelConfig.getInstance().bhDisplayY = mouseY;
         }
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     @Override

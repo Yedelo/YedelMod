@@ -31,7 +31,6 @@ public class YedelGuiConfig extends GuiConfig {
                 false,
                 "YedelMod"
         );
-
     }
 
     public void initGui() {

@@ -5,7 +5,6 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.network;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.events.PacketEvent;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S01PacketJoinGame;
@@ -18,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(NetworkManager.class)
-public abstract class MixinNetworkManager extends SimpleChannelInboundHandler {
+public abstract class MixinNetworkManager {
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void yedelmod$onReceivePacket(ChannelHandlerContext context, Packet<?> packet, CallbackInfo ci) {
         if (MinecraftForge.EVENT_BUS.post(new PacketEvent.ReceiveEvent(packet))) ci.cancel();

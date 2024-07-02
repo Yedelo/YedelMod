@@ -54,11 +54,11 @@ public class MoveTextGui extends GuiScreen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
         if (mouseButton == 0) {
             currentX = mouseX;
             currentY = mouseY;
         }
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     @Override

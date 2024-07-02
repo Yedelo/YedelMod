@@ -4,7 +4,7 @@
     "name": "YedelMod",
     "description": "QOL mod for small features related to the general game and larger features for Hypixel\nUse /yedel or the config button for settings and more info.\nUse /yedelupdate or the check for update button in the settings menu to check for updates on Modrinth or GitHub.",
     "version": "${version}",
-    "mcversion": "${mcversion}",
+    "mcversion": "1.8.9",
     "url": "https://modrinth.com/mod/yedelmod",
     "updateUrl": "https://github.com/Yedelo/YedelMod",
     "authorList": [

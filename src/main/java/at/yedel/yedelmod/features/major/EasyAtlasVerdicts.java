@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
+import at.yedel.yedelmod.mixins.net.minecraft.client.InvokerMinecraft;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.InventoryClicker;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
@@ -41,14 +43,14 @@ public class EasyAtlasVerdicts {
     }
 
     @SubscribeEvent
-    public void onAtlasKeys(InputEvent.KeyInputEvent event) {
+    public void onAtlasKeys(KeyInputEvent event) {
         EntityPlayerSP player = minecraft.thePlayer;
         if (YedelMod.getInstance().getInsufficient().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
             Chat.display(messages.insufficientEvidence);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
-                KeyBinding.onTick(minecraft.gameSettings.keyBindUseItem.getKeyCode()); // click
+                ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();
                 InventoryClicker.getInstance().setSlot(30);
                 MinecraftForge.EVENT_BUS.register(InventoryClicker.getInstance());
                 InventoryClicker.getInstance().setupTimeout();
@@ -59,7 +61,7 @@ public class EasyAtlasVerdicts {
             Chat.display(messages.evidenceWithoutDoubt);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
-                KeyBinding.onTick(minecraft.gameSettings.keyBindUseItem.getKeyCode());
+                ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();
                 InventoryClicker.getInstance().setSlot(32);
                 MinecraftForge.EVENT_BUS.register(InventoryClicker.getInstance());
                 InventoryClicker.getInstance().setupTimeout();
