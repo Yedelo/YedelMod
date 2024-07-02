@@ -34,9 +34,11 @@ public class YedelCheck {
             alreadyWarned = false;
         }
         if (YedelConfig.getInstance().first) {
-            Chat.display(messages.welcomeMessage);
-            YedelConfig.getInstance().first = false;
-            YedelConfig.getInstance().save();
+            ThreadManager.scheduleOnce(() -> {
+                Chat.display(messages.welcomeMessage);
+                YedelConfig.getInstance().first = false;
+                YedelConfig.getInstance().save();
+            }, 1000, TimeUnit.SECONDS);
         }
     }
 }

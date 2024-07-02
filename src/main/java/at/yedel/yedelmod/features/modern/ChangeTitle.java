@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import org.lwjgl.opengl.Display;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -44,5 +45,14 @@ public class ChangeTitle {
                 Display.setTitle("Minecraft 1.8.9 - " + serverData.serverName + " - " + serverData.serverIP);
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onDisconnectFromServer(ClientDisconnectionFromServerEvent event) {
+        minecraft.addScheduledTask(() -> {
+            if (YedelConfig.getInstance().changeTitle || !Display.getTitle().equals("Minecraft 1.8.9")) {
+                Display.setTitle("Minecraft 1.8.9");
+            }
+        });
     }
 }
