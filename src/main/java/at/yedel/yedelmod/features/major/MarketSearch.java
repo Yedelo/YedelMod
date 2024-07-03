@@ -2,6 +2,8 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import java.util.Objects;
+
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.messages;
@@ -40,7 +42,7 @@ public class MarketSearch {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
-                    if (itemName.equals("§aSkyBlock Menu §7(Click)")) return;
+                    if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     ahSearching = true;
                     Chat.logoDisplay("&eSearching the auction house for " + itemName + "&e...");
                     Chat.command("ahs " + TextUtils.removeAmpersand(itemName));
@@ -52,7 +54,7 @@ public class MarketSearch {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = TextUtils.removeFormatting(heldItem.getDisplayName());
-                    if (itemName.equals("§aSkyBlock Menu §7(Click)")) return;
+                    if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     bzSearching = true;
                     Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
                     Chat.command("bz " + itemName);
@@ -71,7 +73,7 @@ public class MarketSearch {
                 Chat.display(messages.noCookieBuff);
             }
         }
-        else if (msg.equals("Obtain a Booster Cookie from the community shop in the hub!")) {
+        else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
                 ahSearching = false;

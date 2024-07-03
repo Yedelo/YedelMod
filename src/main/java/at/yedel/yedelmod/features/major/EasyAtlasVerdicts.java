@@ -2,6 +2,8 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import java.util.Objects;
+
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
@@ -34,10 +36,10 @@ public class EasyAtlasVerdicts {
     @SubscribeEvent
     public void onSuspectTeleport(ClientChatReceivedEvent event) {
         String text = event.message.getUnformattedText();
-        if (text.equals("Teleporting you to suspect")) {
+        if (Objects.equals(text, "Teleporting you to suspect")) {
             inAtlas = true;
         }
-        else if (text.equals("Atlas verdict submitted! Thank you :)")) inAtlas = false;
+        else if (Objects.equals(text, "Atlas verdict submitted! Thank you :)")) inAtlas = false;
     }
 
     @SubscribeEvent

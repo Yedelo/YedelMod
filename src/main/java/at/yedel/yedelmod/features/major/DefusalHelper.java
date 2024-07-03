@@ -3,6 +3,7 @@ package at.yedel.yedelmod.features.major;
 
 
 import java.awt.Color;
+import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
@@ -34,7 +35,7 @@ public class DefusalHelper {
     public void onOpenDefusalWindow(PacketEvent.ReceiveEvent event) {
         if (YedelConfig.getInstance().defusalHelper) {
             if (event.getPacket() instanceof S2DPacketOpenWindow) {
-                if (((S2DPacketOpenWindow) (event.getPacket())).getWindowTitle().getUnformattedText().equals("C4 (Click REDSTONE)")) {
+                if (Objects.equals(((S2DPacketOpenWindow) (event.getPacket())).getWindowTitle().getUnformattedText(), "C4 (Click REDSTONE)")) {
                     inDefusal = true;
                 }
             }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.utils.Chat;
@@ -92,12 +93,12 @@ public class UpdateManager {
                 version = String.valueOf(jsonResult.get("tag_name")).replaceAll("\"", "");
                 if (version.equals("null")) version = null;
             }
-            if (type.equals("chat")) {
-                if (!version.equals(YedelMod.version)) sendUpdateMessage(source, version);
+            if (Objects.equals(type, "chat")) {
+                if (!Objects.equals(version, YedelMod.version)) sendUpdateMessage(source, version);
                 else Chat.display(messages.latestVersion);
             }
             else {
-                if (!version.equals(YedelMod.version)) sendUpdateNotification(source, version);
+                if (!Objects.equals(version, YedelMod.version)) sendUpdateNotification(source, version);
                 else Constants.notifications.push("YedelMod", "You are already on the latest version!");
             }
         }
@@ -132,7 +133,7 @@ public class UpdateManager {
 
     private void handleUpdateError(Exception error, String type, String sourceName) throws Exception {
         updateLogger.error("Couldn't check for updates");
-        if (type.equals("chat")) Chat.logoDisplay("&cCouldn't check for updates on " + sourceName + "!");
+        if (Objects.equals(type, "chat")) Chat.logoDisplay("&cCouldn't check for updates on " + sourceName + "!");
         else Constants.notifications.push("YedelMod", "Couldn't check for updates on " + sourceName + "!");
         throw error;
     }

@@ -3,6 +3,7 @@ package at.yedel.yedelmod.commands;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.update.UpdateManager;
@@ -32,10 +33,10 @@ public class YedelUpdateCommand extends CommandBase {
             return;
         }
         String arg = args[0];
-        if (arg.equals("modrinth")) {
+        if (Objects.equals(arg, "modrinth")) {
             UpdateManager.getInstance().checkVersion(UpdateSource.MODRINTH, "chat");
         }
-        else if (arg.equals("github")) {
+        else if (Objects.equals(arg, "github")) {
             UpdateManager.getInstance().checkVersion(UpdateSource.GITHUB, "chat");
         }
         else {

@@ -4,6 +4,7 @@ package at.yedel.yedelmod.commands;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.utils.Chat;
@@ -32,19 +33,19 @@ public class PingCommand extends CommandBase {
             return;
         }
         String arg = args[0];
-        if (arg.equals("ping") || arg.equals("p")) {
+        if (Objects.equals(arg, "ping") || Objects.equals(arg, "p")) {
             Chat.command("ping");
         }
-        else if (arg.equals("command") || arg.equals("c")) {
+        else if (Objects.equals(arg, "command") || Objects.equals(arg, "c")) {
             PingSender.getInstance().commandPing();
         }
-        else if (arg.equals("tab") || arg.equals("t")) {
+        else if (Objects.equals(arg, "tab") || Objects.equals(arg, "t")) {
             PingSender.getInstance().tabPing();
         }
-        else if (arg.equals("stats") || arg.equals("s")) {
+        else if (Objects.equals(arg, "stats") || Objects.equals(arg, "s")) {
             PingSender.getInstance().statsPing();
         }
-        else if (arg.equals("list") || arg.equals("l")) {
+        else if (Objects.equals(arg, "list") || Objects.equals(arg, "l")) {
             PingSender.getInstance().serverListPing();
         }
         else {

@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features.modern;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.ducks.SwingItemDuck;
@@ -54,7 +55,7 @@ public class ItemSwings {
         Item item = stack.getItem();
         String registryName = item.getRegistryName();
         if (swingItems.contains(registryName)) {
-            if (registryName.equals("minecraft:potion")) {
+            if (Objects.equals(registryName, "minecraft:potion")) {
                 if (!ItemPotion.isSplash(stack.getMetadata())) return;
             }
             else if (registryName.contains("bucket")) {
@@ -62,7 +63,7 @@ public class ItemSwings {
                 if (type == MovingObjectPosition.MovingObjectType.ENTITY || type == MovingObjectPosition.MovingObjectType.MISS)
                     return;
             }
-            else if (registryName.equals("minecraft:ender_pearl")) {
+            else if (Objects.equals(registryName, "minecraft:ender_pearl")) {
                 if (minecraft.playerController.isInCreativeMode()) return;
             }
             swing();

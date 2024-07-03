@@ -3,6 +3,7 @@ package at.yedel.yedelmod.features.major;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,7 +67,7 @@ public class TNTTag {
     @SubscribeEvent
     public void onRenderTagLayoutEdtior(GuiScreenEvent.BackgroundDrawnEvent event) {
         if (!(event.gui instanceof GuiContainer)) return;
-        if (((GuiContainer) event.gui).inventorySlots.getSlot(0).inventory.getName().equals("Layout Editor - TNT Tag") && YedelConfig.getInstance().bhClickables) {
+        if (Objects.equals(((GuiContainer) event.gui).inventorySlots.getSlot(0).inventory.getName(), "Layout Editor - TNT Tag") && YedelConfig.getInstance().bhClickables) {
             int width = event.gui.width;
             FontRenderer fontRenderer = minecraft.fontRendererObj;
             fontRenderer.drawStringWithShadow("§r§b§lPlay Again §r§7(Right Click) §r| Slot " + YedelConfig.getInstance().playAgainItem, (float) (width - 165) / 2, 30, 16777215);
@@ -155,14 +156,14 @@ public class TNTTag {
         if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
         Matcher tagOtherMatcher = tagOtherRegex.matcher(msg);
         while (tagOtherMatcher.find()) {
-            if (tagOtherMatcher.group(1).equals(target)) {
+            if (Objects.equals(tagOtherMatcher.group(1), target)) {
                 fightingTarget = true;
             }
         }
 
         Matcher personIsItMatcher = personIsItRegex.matcher(msg);
         while (personIsItMatcher.find()) {
-            if (personIsItMatcher.group(1).equals(target) && !dead) {
+            if (Objects.equals(personIsItMatcher.group(1), target) && !dead) {
                 fightingTarget = false;
             }
         }
@@ -170,7 +171,7 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onAttackEntity(AttackEntityEvent event) {
-        if (event.target.getName().equals(target) && !dead) {
+        if (Objects.equals(event.target.getName(), target) && !dead) {
             fightingTarget = true;
         }
     }
@@ -181,7 +182,7 @@ public class TNTTag {
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = minecraft.thePlayer;
         if (
-                targetPlayer.getName().equals(target)
+                Objects.equals(targetPlayer.getName(), target)
                         && player.canEntityBeSeen(event.entityPlayer)
                         && !targetPlayer.isInvisible()
         ) {
@@ -197,11 +198,11 @@ public class TNTTag {
         ItemStack item = minecraft.thePlayer.getHeldItem();
         if (item == null) return;
         String itemName = item.getDisplayName();
-        if (itemName.equals("§b§lPlay Again §r§7(Right Click)")) {
+        if (Objects.equals(itemName, "§b§lPlay Again §r§7(Right Click)")) {
             Chat.command("play tnt_tntag");
             event.setCanceled(true);
         }
-        else if (itemName.equals("§r§c§lReturn To Lobby §r§7(Right Click)")) {
+        else if (Objects.equals(itemName, "§r§c§lReturn To Lobby §r§7(Right Click)")) {
             Chat.command("lobby");
             event.setCanceled(true);
         }
@@ -223,12 +224,12 @@ public class TNTTag {
         Matcher peopleDeathMatcher = peopleDeathPattern.matcher(msg);
         while (peopleDeathMatcher.find()) {
             String personDied = peopleDeathMatcher.group(1);
-            if (personDied.equals(playerName)) {
+            if (Objects.equals(personDied, playerName)) {
                 dead = true;
                 target = null;
                 lines.set(3, "");
             }
-            if (personDied.equals(target) && fightingTarget) {
+            if (Objects.equals(personDied, target) && fightingTarget) {
                 ThreadManager.scheduleOnce(() -> {
                     // Half points if you died while killing your target
                     int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
@@ -247,7 +248,7 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().equals("Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
+        if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
             Chat.display(messages.pleaseChangeNick);
         }
     }

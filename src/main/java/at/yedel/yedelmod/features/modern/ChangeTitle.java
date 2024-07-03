@@ -2,6 +2,8 @@ package at.yedel.yedelmod.features.modern;
 
 
 
+import java.util.Objects;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -38,7 +40,7 @@ public class ChangeTitle {
         if (local) Display.setTitle("Minecraft 1.8.9 - Singleplayer");
         else {
             ServerData serverData = minecraft.getCurrentServerData();
-            if (serverData.serverName.equals("Minecraft Server")) { // Direct connect
+            if (Objects.equals(serverData.serverName, "Minecraft Server")) { // Direct connect
                 Display.setTitle("Minecraft 1.8.9 - " + serverData.serverIP);
             }
             else {
@@ -50,7 +52,7 @@ public class ChangeTitle {
     @SubscribeEvent
     public void onDisconnectFromServer(ClientDisconnectionFromServerEvent event) {
         minecraft.addScheduledTask(() -> {
-            if (YedelConfig.getInstance().changeTitle || !Display.getTitle().equals("Minecraft 1.8.9")) {
+            if (YedelConfig.getInstance().changeTitle || !Objects.equals(Display.getTitle(), "Minecraft 1.8.9")) {
                 Display.setTitle("Minecraft 1.8.9");
             }
         });
