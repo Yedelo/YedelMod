@@ -33,8 +33,8 @@ public class DefusalHelper {
     @SubscribeEvent
     public void onOpenDefusalWindow(PacketEvent.ReceiveEvent event) {
         if (YedelConfig.getInstance().defusalHelper) {
-            if (event.packet instanceof S2DPacketOpenWindow) {
-                if (((S2DPacketOpenWindow) (event.packet)).getWindowTitle().getUnformattedText().equals("C4 (Click REDSTONE)")) {
+            if (event.getPacket() instanceof S2DPacketOpenWindow) {
+                if (((S2DPacketOpenWindow) (event.getPacket())).getWindowTitle().getUnformattedText().equals("C4 (Click REDSTONE)")) {
                     inDefusal = true;
                 }
             }
@@ -44,7 +44,7 @@ public class DefusalHelper {
     @SubscribeEvent
     public void onResetItems(PacketEvent.ReceiveEvent event) {
         if (!YedelConfig.getInstance().defusalHelper) return;
-        if (event.packet instanceof S2FPacketSetSlot) {
+        if (event.getPacket() instanceof S2FPacketSetSlot) {
             if (minecraft.currentScreen instanceof GuiContainer) {
                 if (((GuiContainer) minecraft.currentScreen).inventorySlots.getSlot(0).inventory.getName().contains("REDSTONE")) {
                     inDefusal = true;
@@ -56,7 +56,7 @@ public class DefusalHelper {
     @SubscribeEvent
     public void onRenderRedstones(DrawSlotEvent event) {
         if (!YedelConfig.getInstance().defusalHelper) return;
-        Slot slot = event.slotIn;
+        Slot slot = event.getSlot();
         if (slot.getStack() == null) return;
         if (slot.getStack().getItem() == Items.redstone && inDefusal) {
             RenderUtils.highlightItem(slot, red);

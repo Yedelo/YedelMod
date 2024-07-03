@@ -36,7 +36,7 @@ public class PingResponse {
     @SubscribeEvent
     public void onStatsPacket(PacketEvent.ReceiveEvent event) {
         if (!PingSender.getInstance().statsCheck) return;
-        if (event.packet instanceof S37PacketStatistics) {
+        if (event.getPacket() instanceof S37PacketStatistics) {
             float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
             Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(stats)");
             minecraft.thePlayer.playSound("random.successful_hit", (float) 10, (float) (delay * -0.006 + 2));
@@ -47,7 +47,7 @@ public class PingResponse {
     @SubscribeEvent
     public void onTabPacket(PacketEvent.ReceiveEvent event) {
         if (!PingSender.getInstance().tabCheck) return;
-        if (event.packet instanceof S3APacketTabComplete) {
+        if (event.getPacket() instanceof S3APacketTabComplete) {
             float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
             Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(tab)");
             minecraft.thePlayer.playSound("random.successful_hit", (float) 10, (float) (delay * -0.006 + 2));

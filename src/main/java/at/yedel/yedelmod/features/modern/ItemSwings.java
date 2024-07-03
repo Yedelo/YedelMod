@@ -77,8 +77,8 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void onDropPacket(PacketEvent.SendEvent event) {
-        if (event.packet instanceof C07PacketPlayerDigging) {
-            C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
+        if (event.getPacket() instanceof C07PacketPlayerDigging) {
+            C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
             if (action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) {
                 if (YedelConfig.getInstance().dropSwings) swing();
             }

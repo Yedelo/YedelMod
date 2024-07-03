@@ -9,23 +9,62 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 
 public class RenderScoreEvent extends Event {
-    public RenderPlayer renderer;
-    public AbstractClientPlayer entity;
-    public double x;
-    public double y;
-    public double z;
-    public String string;
-    public float increment;
-    public double distanceSqToEntity;
+    private final RenderPlayer renderPlayer;
 
-    public RenderScoreEvent(RenderPlayer renderer, AbstractClientPlayer entityIn, double x, double y, double z, String str, float p1770699, double p17706910) {
-        this.renderer = renderer;
-        this.entity = entityIn;
+    public RenderPlayer getRenderPlayer() {
+        return renderPlayer;
+    }
+
+    private final AbstractClientPlayer player;
+
+    public AbstractClientPlayer getPlayer() {
+        return player;
+    }
+
+    private final double x;
+
+    public double getX() {
+        return x;
+    }
+
+    private final double y;
+
+    public double getY() {
+        return y;
+    }
+
+    private final double z;
+
+    public double getZ() {
+        return z;
+    }
+
+    private final String string;
+
+    public String getString() {
+        return string;
+    }
+
+    private final float increment;
+
+    public float getIncrement() {
+        return increment;
+    }
+
+    private final double distanceSqToEntity;
+
+    public double getDistanceSqToEntity() {
+        return distanceSqToEntity;
+    }
+
+    public RenderScoreEvent(RenderPlayer renderPlayer, AbstractClientPlayer player, double x, double y, double z, String string, float increment, double distanceSqToEntity) {
+        this.renderPlayer = renderPlayer;
+        this.player = player;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.string = str;
-        this.increment = p1770699;
-        this.distanceSqToEntity = p17706910;
+        this.string = string;
+        this.increment = increment;
+        this.distanceSqToEntity = distanceSqToEntity;
     }
 }

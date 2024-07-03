@@ -59,7 +59,7 @@ public class ScoreboardName {
     private class Events {
         @SubscribeEvent
         public void onScoreboardPacket(PacketEvent.ReceiveEvent event) {
-            if (event.packet instanceof S3BPacketScoreboardObjective) {
+            if (event.getPacket() instanceof S3BPacketScoreboardObjective) {
                 scoreboardName = Functions.getScoreboardName();
                 boolean notPreviouslyTNTTag = !Boolean.valueOf(inTNTTag);
                 inTNTTag = scoreboardName.contains("TNT TAG");

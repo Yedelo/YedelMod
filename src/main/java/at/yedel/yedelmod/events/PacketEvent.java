@@ -11,19 +11,27 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 public class PacketEvent extends Event {
     @Cancelable
     public static class SendEvent extends Event {
-        public Packet packet;
+        private final Packet packet;
 
-        public SendEvent(Packet packetIn) {
-            this.packet = packetIn;
+        public Packet getPacket() {
+            return packet;
+        }
+
+        public SendEvent(Packet packet) {
+            this.packet = packet;
         }
     }
 
     @Cancelable
     public static class ReceiveEvent extends Event {
-        public Packet packet;
+        private final Packet packet;
 
-        public ReceiveEvent(Packet packetIn) {
-            this.packet = packetIn;
+        public Packet getPacket() {
+            return packet;
+        }
+
+        public ReceiveEvent(Packet packet) {
+            this.packet = packet;
         }
     }
 }

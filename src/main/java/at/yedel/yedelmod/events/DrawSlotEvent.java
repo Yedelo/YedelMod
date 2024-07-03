@@ -8,9 +8,13 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 
 public class DrawSlotEvent extends Event {
-    public Slot slotIn;
+    private final Slot slot;
 
-    public DrawSlotEvent(Slot slotIn) {
-        this.slotIn = slotIn;
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public DrawSlotEvent(Slot slot) {
+        this.slot = slot;
     }
 }

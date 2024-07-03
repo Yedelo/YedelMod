@@ -104,13 +104,13 @@ public class StrengthIndicators {
     @SubscribeEvent
     public void onRenderStrengthPlayer_HealthTag(RenderScoreEvent event) {
         if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
-        EntityPlayer entityPlayer = event.entity;
+        EntityPlayer entityPlayer = event.getPlayer();
         String entityName = entityPlayer.getName();
         boolean inStart = startStrengthPlayers.contains(entityName);
-        RenderPlayer renderer = event.renderer;
+        RenderPlayer renderer = event.getRenderPlayer();
         if (!inStart && !endStrengthPlayers.contains(entityName)) return;
         String color = inStart ? colorMap.get(YedelConfig.getInstance().startStrengthColor) : colorMap.get(YedelConfig.getInstance().endStrengthColor);
         String text = color + "Strength - " + strengthPlayers.get(entityName) + "s";
-        ((InvokerRender) renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55, event.z, 64);
+        ((InvokerRender) renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.getX(), event.getY() + 0.55, event.getZ(), 64);
     }
 }
