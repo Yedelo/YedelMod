@@ -13,7 +13,6 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -71,11 +70,6 @@ public class ItemSwings {
     }
 
     @SubscribeEvent
-    public void onDropItem(ItemTossEvent event) { // rework
-        if (YedelConfig.getInstance().dropSwings) swing();
-    }
-
-    @SubscribeEvent
     public void onDropPacket(PacketEvent.SendEvent event) {
         if (event.getPacket() instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
@@ -83,6 +77,5 @@ public class ItemSwings {
                 if (YedelConfig.getInstance().dropSwings) swing();
             }
         }
-
     }
 }
