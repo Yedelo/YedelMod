@@ -18,12 +18,15 @@ public class YedelCheck {
     // YedelUtils makes this boolean true if it loads
     // alreadyWarned is not supposed to be saved
 
-    // note: i dont want to change this class at all
-
     // Also used for the first time message
-    public static YedelCheck instance = new YedelCheck();
+    private static YedelCheck instance = new YedelCheck();
+
+    public static YedelCheck getInstance() {
+        return instance;
+    }
+
     public static boolean YedelUtils = false;
-    public static boolean alreadyWarned = true;
+    private boolean alreadyWarned = true;
 
     @SubscribeEvent
     public void onServerChange(JoinGamePacketEvent event) {

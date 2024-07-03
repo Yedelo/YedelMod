@@ -31,7 +31,7 @@ public class MoveTextGui extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.buttonList.add(reset = new GuiButton(0, (width / 2) - 50, 40, 100, 20, "Reset (R)"));
+        this.buttonList.add(reset = new GuiButton(0, width / 2 - 50, 40, 100, 20, "Reset (R)"));
         this.buttonList.add(close = new GuiButton(1, width - 30, 10, 20, 20, "X"));
         this.buttonList.add(centerHorizontally = new GuiButton(2, width - 140, height - 29, 131, 20, "Center Horizontally (H)"));
         this.buttonList.add(centerVertically = new GuiButton(3, width - 140, height - 53, 131, 20, "Center Vertically (V)"));

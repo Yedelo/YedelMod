@@ -142,7 +142,7 @@ public class YedelMod {
         MinecraftForge.EVENT_BUS.register(ScoreboardName.getInstance().getEvents());
         MinecraftForge.EVENT_BUS.register(StrengthIndicators.getInstance());
         MinecraftForge.EVENT_BUS.register(TNTTag.getInstance());
-        MinecraftForge.EVENT_BUS.register(YedelCheck.instance);
+        MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
 
         new PlaytimeSchedule().startSchedule();
 
