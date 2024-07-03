@@ -61,7 +61,7 @@ public class ScoreboardName {
         public void onScoreboardPacket(PacketEvent.ReceiveEvent event) {
             if (event.getPacket() instanceof S3BPacketScoreboardObjective) {
                 scoreboardName = Functions.getScoreboardName();
-                boolean notPreviouslyTNTTag = !Boolean.valueOf(inTNTTag);
+                boolean notPreviouslyTNTTag = !inTNTTag;
                 inTNTTag = scoreboardName.contains("TNT TAG");
                 if (inTNTTag && notPreviouslyTNTTag) {
                     MinecraftForge.EVENT_BUS.post(new GameJoinEvent.TNTJoinEvent());
