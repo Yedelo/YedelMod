@@ -13,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -58,11 +57,6 @@ public class ItemSwings {
             if (Objects.equals(registryName, "minecraft:potion")) {
                 if (!ItemPotion.isSplash(stack.getMetadata())) return;
             }
-            else if (registryName.contains("bucket")) {
-                MovingObjectPosition.MovingObjectType type = minecraft.objectMouseOver.typeOfHit;
-                if (type == MovingObjectPosition.MovingObjectType.ENTITY || type == MovingObjectPosition.MovingObjectType.MISS)
-                    return;
-            }
             else if (Objects.equals(registryName, "minecraft:ender_pearl")) {
                 if (minecraft.playerController.isInCreativeMode()) return;
             }
@@ -72,10 +66,11 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void onDropPacket(PacketEvent.SendEvent event) {
+        if (! YedelConfig.getInstance().dropSwings) return;
         if (event.getPacket() instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
             if (action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) {
-                if (YedelConfig.getInstance().dropSwings) swing();
+                swing();
             }
         }
     }
