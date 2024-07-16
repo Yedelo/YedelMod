@@ -56,7 +56,7 @@ public class ScoreboardName {
         return inTNTRun;
     }
 
-    private class Events {
+    public class Events {
         @SubscribeEvent
         public void onScoreboardPacket(PacketEvent.ReceiveEvent event) {
             if (event.getPacket() instanceof S3BPacketScoreboardObjective) {

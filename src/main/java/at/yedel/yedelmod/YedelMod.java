@@ -38,6 +38,7 @@ import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.update.UpdateManager;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ScoreboardName;
+import at.yedel.yedelmod.utils.YedelModPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -49,6 +50,8 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import org.lwjgl.input.Keyboard;
 
 
@@ -127,6 +130,7 @@ public class YedelMod {
         ClientCommandHandler.instance.registerCommand(new YedelCommand());
         ClientCommandHandler.instance.registerCommand(new YedelMessageCommand());
 
+        MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());
         MinecraftForge.EVENT_BUS.register(ChangeTitle.getInstance());
         MinecraftForge.EVENT_BUS.register(CustomText.getInstance());
@@ -156,6 +160,11 @@ public class YedelMod {
         ClientRegistry.registerKeyBinding(bzSearchKeybind);
         ClientRegistry.registerKeyBinding(insufficientKeybind);
         ClientRegistry.registerKeyBinding(sufficientKeybind);
+    }
+
+    @SubscribeEvent
+    public void onServerConnect(ClientConnectedToServerEvent event) {
+        event.manager.channel().pipeline().addBefore("packet_handler", "yedelmod_packet_handler", new YedelModPacketHandler());
     }
 
     @EventHandler

@@ -2,7 +2,6 @@ import dev.architectury.pack200.java.Pack200Adapter
 
 
 plugins {
-    kotlin("jvm")
     id("gg.essential.loom")
     id("io.github.juuxel.loom-quiltflower")
     id("dev.architectury.architectury-pack200")

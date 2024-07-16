@@ -37,7 +37,7 @@ public class Functions {
         screenToOpen = screen;
     }
 
-    private class Events {
+    public class Events {
         @SubscribeEvent
         public void onTickEnd(TickEvent event) {
             if (screenToOpen != null) {

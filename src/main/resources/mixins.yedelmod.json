@@ -6,7 +6,6 @@
     "net.minecraft.client.entity.MixinEntityPlayerSP",
     "net.minecraft.client.gui.MixinGuiNewChat",
     "net.minecraft.client.gui.inventory.MixinGuiContainer",
-    "net.minecraft.client.network.MixinNetworkManager",
     "net.minecraft.client.renderer.MixinEntityRenderer",
     "net.minecraft.client.renderer.entity.InvokerRender",
     "net.minecraft.client.renderer.entity.MixinRenderPlayer"
