@@ -23,6 +23,7 @@ import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
 import at.yedel.yedelmod.features.DropperGG;
+import at.yedel.yedelmod.features.FavoriteServerButton;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.PlaytimeSchedule;
 import at.yedel.yedelmod.features.SacrificeDisplay;
@@ -133,6 +134,7 @@ public class YedelMod {
         MinecraftForge.EVENT_BUS.register(DrawBookBackground.getInstance());
         MinecraftForge.EVENT_BUS.register(DropperGG.getInstance());
         MinecraftForge.EVENT_BUS.register(EasyAtlasVerdicts.getInstance());
+        MinecraftForge.EVENT_BUS.register(FavoriteServerButton.getInstance());
         MinecraftForge.EVENT_BUS.register(Functions.getInstance().getEvents());
         MinecraftForge.EVENT_BUS.register(ItemSwings.getInstance());
         MinecraftForge.EVENT_BUS.register(LimboCreativeCheck.getInstance());

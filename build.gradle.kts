@@ -58,10 +58,12 @@ tasks {
 
         manifest.attributes(
             mapOf(
-                "ModSide" to "CLIENT",
+                "FMLCorePluginContainsCorePlugin" to "Yes, yes it does",
+                "ForceLoadAsMod" to "true",
                 "Main-Class" to "at.yedel.yedelmod.utils.YedelWindow",
-                "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker", //
-                "MixinConfigs" to "mixins.examplemod.json",
+                "MixinConfigs" to "mixins.yedelmod.json",
+                "ModSide" to "CLIENT",
+                "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker" //
             )
         )
     }
