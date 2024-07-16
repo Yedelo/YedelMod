@@ -11,7 +11,7 @@
       "Yedel"
     ],
     "credits": "Debuggings for a good example mod",
-    "logoFile": "yedelmod.png",
+    "logoFile": "assets/yedelmod/yedelmod.png",
     "screenshots": [],
     "dependencies": []
   }
