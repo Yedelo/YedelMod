@@ -5,15 +5,15 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.renderer;
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 
 
 @Mixin(EntityRenderer.class)
 public abstract class MixinEntityRenderer {
-    @ModifyConstant(method = "hurtCameraEffect", constant = @Constant(floatValue = 14.0f))
-    private float yedelmod$hurtCameraEffect(float constant) {
-        return constant * YedelConfig.getInstance().damageTiltStrength;
+    @ModifyArg(method = "hurtCameraEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;rotate(FFFF)V", ordinal = 2), index = 0)
+    private float antimations$changeHurtcamIntensity(float original) {
+        return original * YedelConfig.getInstance().damageTiltStrength;
     }
 }
