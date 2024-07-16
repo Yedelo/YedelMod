@@ -9,6 +9,5 @@
     "net.minecraft.client.renderer.MixinEntityRenderer",
     "net.minecraft.client.renderer.entity.InvokerRender",
     "net.minecraft.client.renderer.entity.MixinRenderPlayer"
-  ],
-  "verbose": true
+  ]
 }
