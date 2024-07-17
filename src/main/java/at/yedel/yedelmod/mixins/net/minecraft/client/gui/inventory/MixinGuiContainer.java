@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiContainer.class)
 public abstract class MixinGuiContainer {
-    @Inject(method = "drawSlot", at = @At("HEAD"))
-    private void yedelmod$postDrawSlotEvent(Slot slotIn, CallbackInfo ci) {
-        MinecraftForge.EVENT_BUS.post(new DrawSlotEvent(slotIn));
-    }
+	@Inject(method = "drawSlot", at = @At("HEAD"))
+	public void yedelmod$postDrawSlotEvent(Slot slotIn, CallbackInfo ci) {
+		MinecraftForge.EVENT_BUS.post(new DrawSlotEvent((GuiContainer) (Object) this, slotIn));
+	}
 }

@@ -162,15 +162,15 @@ public class YedelMod {
         ClientRegistry.registerKeyBinding(sufficientKeybind);
     }
 
-    @SubscribeEvent
-    public void onServerConnect(ClientConnectedToServerEvent event) {
-        event.manager.channel().pipeline().addBefore("packet_handler", "yedelmod_packet_handler", new YedelModPacketHandler());
-    }
-
     @EventHandler
     public void checkForUpdates(FMLLoadCompleteEvent event) {
         if (YedelConfig.getInstance().autoCheckUpdates) {
             UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "notification");
         }
+    }
+
+    @SubscribeEvent
+    public void onServerConnect(ClientConnectedToServerEvent event) {
+        event.manager.channel().pipeline().addBefore("packet_handler", "yedelmod_packet_handler", new YedelModPacketHandler());
     }
 }
