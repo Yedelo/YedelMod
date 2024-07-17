@@ -612,8 +612,4 @@ public class YedelConfig extends Vigilant {
     public static YedelConfig getInstance() {
         return instance;
     }
-
-    public void setParentScreen(GuiScreen parentScreen) {
-        this.parentScreen = parentScreen;
-    }
 }
