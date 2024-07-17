@@ -234,7 +234,7 @@ public class YedelConfig extends Vigilant {
     @Property(
             type = PropertyType.TEXT,
             name = "Random placeholder",
-            description = "When this is typed in chat, it will be replaced with a random string.",
+		description = "When this is typed in chat, it will be replaced with a random string. &cBe careful not to use short placeholders to not spam excessively.",
             category = "General",
             subcategory = "Customization",
             placeholder = "//r"
