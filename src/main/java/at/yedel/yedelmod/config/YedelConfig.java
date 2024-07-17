@@ -142,8 +142,8 @@ public class YedelConfig extends Vigilant {
             type = PropertyType.SWITCH,
             name = "Book background",
             description = "Draws the default dark background in book GUIs",
-            category = "General",
-            subcategory = "Features"
+        category = "Modern Features",
+        subcategory = "General"
     )
     public boolean drawBookBackground = true;
     @Property(
