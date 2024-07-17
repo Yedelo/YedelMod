@@ -158,8 +158,8 @@ public class YedelConfig extends Vigilant {
             type = PropertyType.SWITCH,
             name = "Keep chat history on chat clear",
             description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
-            category = "General",
-            subcategory = "Features"
+        category = "Modern Features",
+        subcategory = "General"
     )
     public boolean keepChatHistory = true;
     @Property(
