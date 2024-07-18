@@ -18,7 +18,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import gg.essential.loader.stage0.EssentialSetupTweaker;
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,7 +60,7 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 						String modid = modObject.get("modid").getAsString();
 						if (Objects.equals(modid, "hypixel_mod_api")) {
 							foundModApi = true;
-							celebrateModApi(modObject);
+							logger.info("Found Hypixel Mod API {} ({})", modObject.get("version"), modFile.getName());
 						}
 					}
 				}
@@ -71,20 +70,11 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 			}
 		}
 		if (! foundModApi) {
-			haltGame();
+			logger.fatal("YedelMod was not able to find the Hypixel Mod API, so it cannot continue loading!");
+			logger.fatal("Please download the mod with the instructions given in the prompt!");
+			showSomeDialogBox();
+			throw new RuntimeException("Hypixel Mod API not found");
 		}
-	}
-
-	private void celebrateModApi(JsonObject modApiModObject) {
-		logger.info("Found Hypixel Mod API, YedelMod can continue loading:");
-		logger.info("- Version: {}", modApiModObject.get("version"));
-	}
-
-	private void haltGame() {
-		logger.fatal("The Hypixel Mod API was not found.");
-		logger.fatal("YedelMod depends on this mod, so the game will halt.");
-		showSomeDialogBox();
-		FMLClientHandler.instance().haltGame("YedelMod is missing the Hypixel Mod API!", new RuntimeException());
 	}
 
 	private void showSomeDialogBox() {
