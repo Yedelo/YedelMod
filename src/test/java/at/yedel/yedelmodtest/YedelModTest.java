@@ -38,9 +38,5 @@ public class YedelModTest {
 			TextUtils.replaceAmpersand("&cBad text in red &eDecent text in yellow &a&lReally good text in bold and green"),
 			"§cBad text in red §eDecent text in yellow §a§lReally good text in bold and green"
 		);
-
-		// ---
-
-
 	}
 }
