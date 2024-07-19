@@ -46,7 +46,7 @@ public class YedelCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return "Usage /yedel (subcommand)";
+		return "Usage: /yedel (subcommand)";
 	}
 
 	@Override

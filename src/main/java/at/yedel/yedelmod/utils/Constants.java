@@ -31,7 +31,7 @@ public class Constants {
         public static ChatComponentText pingIs0 = new ChatComponentText(logo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         public static ChatComponentText enterValidText = new ChatComponentText(logo + " §cYou must enter valid text!");
         public static ChatComponentText enterValidTitle = new ChatComponentText(logo + " §cYou must enter a valid title!");
-        public static ChatComponentText enterValidNick = new ChatComponentText(logo + "§cYou must enter a valid nick!");
+        public static ChatComponentText enterValidNick = new ChatComponentText(logo + " §cYou must enter a valid nick!");
         public static ChatComponentText couldntGetMessage = new ChatComponentText(logo + " §cCouldn't get mod message!");
         public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
     }

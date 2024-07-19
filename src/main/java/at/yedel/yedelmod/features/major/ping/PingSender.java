@@ -90,7 +90,7 @@ public class PingSender {
 
     public void tabPing() {
         lastTime = System.nanoTime();
-        minecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("YedelMod"));
+		minecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"));
         tabCheck = true;
     }
 
