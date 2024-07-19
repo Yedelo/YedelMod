@@ -20,7 +20,6 @@ import at.yedel.yedelmod.update.UpdateSource;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.Functions;
-import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -69,10 +68,6 @@ public class YedelCommand extends CommandBase {
 			case "limbo":
 			case "li":
 				Chat.say("§");
-				ThreadManager.scheduleOnce(() -> {
-					if (! minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */)
-						Chat.say("§");
-				}, 500);
 				break;
 			case "limbocreative":
 			case "limbogmc":
