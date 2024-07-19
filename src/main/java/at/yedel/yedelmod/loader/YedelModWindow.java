@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.utils;
+package at.yedel.yedelmod.loader;
 
 
 
@@ -20,7 +20,7 @@ public class YedelModWindow {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception whatever) {
-            System.exit(0);
+            throw new RuntimeException(whatever);
         }
         int option = JOptionPane.showOptionDialog(
                 null,

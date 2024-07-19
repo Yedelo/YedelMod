@@ -60,7 +60,7 @@ tasks {
             mapOf(
                 "FMLCorePluginContainsCorePlugin" to "Yes, yes it does",
                 "ForceLoadAsMod" to "true",
-                "Main-Class" to "at.yedel.yedelmod.utils.YedelWindow",
+                "Main-Class" to "at.yedel.yedelmod.loader.YedelModWindow",
                 "MixinConfigs" to "mixins.yedelmod.json",
                 "ModSide" to "CLIENT",
                 "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker"

@@ -2,17 +2,22 @@ package at.yedel.yedelmod.loader;
 
 
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,6 +30,9 @@ import org.apache.logging.log4j.Logger;
 
 public class YedelModTweaker extends EssentialSetupTweaker {
 	public static final Logger logger = LogManager.getLogger("YedelModTweaker");
+	private final URI hypixelModApiUri = new URI("https://modrinth.com/mod/hypixel-mod-api");
+
+	public YedelModTweaker() throws URISyntaxException {}
 
 	@Override
 	public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
@@ -70,15 +78,39 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 			}
 		}
 		if (! foundModApi) {
-			logger.fatal("YedelMod was not able to find the Hypixel Mod API, so it cannot continue loading!");
-			logger.fatal("Please download the mod with the instructions given in the prompt!");
+			logger.fatal("YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!");
+			logger.fatal("Please download the mod at https://modrinth.com/mod/hypixel-mod-api.");
 			showSomeDialogBox();
-			throw new RuntimeException("Hypixel Mod API not found");
+			// exit the game here
 		}
 	}
 
 	private void showSomeDialogBox() {
-		// do some cool stuff here, show a modrinth link to the mod, say final goodbyes
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		int option = JOptionPane.showOptionDialog(
+			null,
+			"YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!" +
+				"\nPlease download the mod at https://modrinth.com/mod/hypixel-mod-api.",
+			"YedelMod",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			null,
+			new String[] {"Open Modrinth Link", "Close"},
+			"Open Modrinth Link"
+		);
+		if (option == JOptionPane.YES_OPTION) {
+			try {
+				Desktop.getDesktop().browse(hypixelModApiUri);
+			}
+			catch (IOException e) {
+
+			}
+		}
 	}
 
 	@Override
