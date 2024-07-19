@@ -1,4 +1,6 @@
 import dev.architectury.pack200.java.Pack200Adapter
+import java.nio.file.Files
+import java.nio.file.Path
 
 
 plugins {
@@ -23,6 +25,10 @@ loom {
         getByName("client") {
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
+            if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) arg(
+                "--resourcePackDir",
+                "../../../../Desktop/resourcepackfolder"
+            )
         }
     }
 
