@@ -2,15 +2,38 @@ package at.yedel.yedelmod.commands;
 
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.features.CustomText;
+import at.yedel.yedelmod.features.LimboCreativeCheck;
+import at.yedel.yedelmod.features.major.ping.PingSender;
+import at.yedel.yedelmod.gui.MoveHuntingTextGui;
+import at.yedel.yedelmod.gui.MoveTextGui;
+import at.yedel.yedelmod.update.UpdateManager;
+import at.yedel.yedelmod.update.UpdateSource;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.Functions;
+import at.yedel.yedelmod.utils.ThreadManager;
+import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.logging.log4j.LogManager;
+import org.lwjgl.opengl.Display;
+
+import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
@@ -22,12 +45,137 @@ public class YedelCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return null;
+        return "Usage /yedel (subcommand)";
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        Functions.displayScreen(YedelConfig.getInstance().gui());
+    public void processCommand(ICommandSender sender, String[] args) {
+        if (args.length == 0) {
+            Functions.displayScreen(YedelConfig.getInstance().gui());
+            return;
+        }
+        String firstArg = args[0];
+        String secondArg = null;
+        if (args.length > 1) secondArg = args[1];
+        boolean noSecondArg = secondArg == null;
+        switch (firstArg) {
+            case "cleartext":
+                CustomText.getInstance().setDisplayedText("");
+                YedelConfig.getInstance().displayedText = "";
+                YedelConfig.getInstance().save();
+                Chat.display(messages.clearedDisplayText);
+                break;
+            case "limbo":
+            case "li":
+                Chat.say("§");
+                ThreadManager.scheduleOnce(() -> {
+                    if (! minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */)
+                        Chat.say("§");
+                }, 500);
+                break;
+            case "limbocreative":
+            case "limbogmc":
+            case "lgmc":
+                LimboCreativeCheck.getInstance().checkLimbo();
+                break;
+            case "movehuntingtext":
+                Functions.displayScreen(new MoveHuntingTextGui(minecraft.currentScreen));
+                break;
+            case "movetext":
+                Functions.displayScreen(new MoveTextGui(minecraft.currentScreen));
+                break;
+            case "ping":
+                PingSender.getInstance().processPingCommand(secondArg);
+                break;
+            case "playtime":
+            case "pt":
+                int minutes = YedelConfig.getInstance().playtimeMinutes;
+                Chat.logoDisplay("&ePlaytime: &6" + minutes / 60 + " hours &eand &6" + minutes % 60 + " minutes");
+                break;
+            case "setnick":
+                if (noSecondArg) {
+                    Chat.display(messages.enterValidNick);
+                    return;
+                }
+                Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
+                YedelConfig.getInstance().nick = secondArg;
+                YedelConfig.getInstance().save();
+                break;
+            case "settext":
+                if (noSecondArg) {
+                    Chat.display(messages.enterValidText);
+                    return;
+                }
+                String displayText = TextUtils.joinArgs(args).substring(8);
+                displayText = displayText.replaceAll("&", "§");
+                CustomText.getInstance().setDisplayedText(displayText);
+                YedelConfig.getInstance().displayedText = displayText;
+                YedelConfig.getInstance().save();
+                Chat.logoDisplay("&eSet displayed text to \"&r" + displayText + "&e\"!");
+                break;
+            case "settitle":
+                if (noSecondArg) {
+                    Chat.display(messages.enterValidTitle);
+                    return;
+                }
+                String title = TextUtils.joinArgs(args).substring(9);
+                Chat.logoDisplay("&eSet display title to \"&f" + title + "&e\"!");
+                Display.setTitle(title);
+                break;
+            case "simulatechat":
+            case "simc":
+                String[] newArray = new String[args.length - 1];
+                System.arraycopy(args, 1, newArray, 0, newArray.length);
+                String message = TextUtils.joinArgs(newArray);
+                Chat.display(message);
+                break;
+            case "update":
+                if (noSecondArg) {
+                    UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+                    return;
+                }
+                if (secondArg.equals("modrinth")) {
+                    UpdateManager.getInstance().checkVersion(UpdateSource.MODRINTH, "chat");
+                }
+                else if (secondArg.equals("github")) {
+                    UpdateManager.getInstance().checkVersion(UpdateSource.GITHUB, "chat");
+                }
+                else {
+                    UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+                }
+                break;
+            case "yedelmessage":
+            case "message":
+                new Thread(() -> {
+                    try {
+                        CloseableHttpClient client = HttpClients.createDefault();
+                        HttpGet request = new HttpGet("https://yedelo.github.io/yedelmod.json");
+                        request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
+
+                        HttpResponse response;
+                        response = client.execute(request);
+
+                        BufferedReader reader;
+                        reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                        StringBuffer result = new StringBuffer();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+                        JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
+                        String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
+                        Chat.display(messages.messageFromYedel);
+                        Chat.display(formattedMessage);
+                    }
+                    catch (Exception e) {
+                        LogManager.getLogger("Mod Message").error("Couldn't get mod message");
+                        Chat.display(messages.couldntGetMessage);
+                    }
+                }, "YedelMod").start();
+                break;
+            default:
+                Chat.display(messages.unknownSubcommandMessage);
+        }
     }
 
     @Override
@@ -42,6 +190,37 @@ public class YedelCommand extends CommandBase {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+        System.out.println("args.length: " + args.length);
+        for (String arg: args) {
+            System.out.println("an arg: " + arg);
+        }
+        String firstArg = args[0];
+        if (firstArg.equals("ping")) {
+            System.out.println("the ping recommendations");
+            return getListOfStringsMatchingLastWord(args, "ping", "command", "tab", "stats", "list");
+        }
+        else if (firstArg.equals("update")) {
+            System.out.println("the update recommendations");
+            return getListOfStringsMatchingLastWord(args, "modrinth", "github");
+        }
+        else if (firstArg.isEmpty()) {
+            System.out.println("the main command recommendations");
+            return getListOfStringsMatchingLastWord(args,
+                "cleartext",
+                "limbo",
+                "limbocreative",
+                "movehuntingtext",
+                "movetext",
+                "ping",
+                "playtime",
+                "setnick",
+                "settext",
+                "settitle",
+                "simulatechat",
+                "update",
+                "yedelmessage"
+            );
+        }
         return null;
     }
 }

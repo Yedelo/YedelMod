@@ -13,6 +13,7 @@ public class Constants {
     public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
 
     public static class messages { // To avoid making the same ChatComponentTexts every time the message is displayed
+        public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
         public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
         public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
         public static ChatComponentText latestVersion = new ChatComponentText(logo + " §cYou are already on the latest version!");

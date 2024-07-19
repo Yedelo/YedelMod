@@ -4,20 +4,7 @@ package at.yedel.yedelmod;
 
 import java.io.File;
 
-import at.yedel.yedelmod.commands.ClearTextCommand;
-import at.yedel.yedelmod.commands.LimboCommand;
-import at.yedel.yedelmod.commands.LimboCreativeCommand;
-import at.yedel.yedelmod.commands.MoveHuntingTextCommand;
-import at.yedel.yedelmod.commands.MoveTextCommand;
-import at.yedel.yedelmod.commands.PingCommand;
-import at.yedel.yedelmod.commands.PlaytimeCommand;
-import at.yedel.yedelmod.commands.SetNickCommand;
-import at.yedel.yedelmod.commands.SetTextCommand;
-import at.yedel.yedelmod.commands.SetTitleCommand;
-import at.yedel.yedelmod.commands.SimulateChatCommand;
 import at.yedel.yedelmod.commands.YedelCommand;
-import at.yedel.yedelmod.commands.YedelMessageCommand;
-import at.yedel.yedelmod.commands.YedelUpdateCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.CustomText;
@@ -115,20 +102,7 @@ public class YedelMod {
     public void init(FMLInitializationEvent event) {
         YedelConfig.getInstance().preload();
 
-        ClientCommandHandler.instance.registerCommand(new YedelUpdateCommand());
-        ClientCommandHandler.instance.registerCommand(new ClearTextCommand());
-        ClientCommandHandler.instance.registerCommand(new LimboCommand());
-        ClientCommandHandler.instance.registerCommand(new LimboCreativeCommand());
-        ClientCommandHandler.instance.registerCommand(new MoveHuntingTextCommand());
-        ClientCommandHandler.instance.registerCommand(new MoveTextCommand());
-        ClientCommandHandler.instance.registerCommand(new PingCommand());
-        ClientCommandHandler.instance.registerCommand(new PlaytimeCommand());
-        ClientCommandHandler.instance.registerCommand(new SetNickCommand());
-        ClientCommandHandler.instance.registerCommand(new SetTextCommand());
-        ClientCommandHandler.instance.registerCommand(new SetTitleCommand());
-        ClientCommandHandler.instance.registerCommand(new SimulateChatCommand());
         ClientCommandHandler.instance.registerCommand(new YedelCommand());
-        ClientCommandHandler.instance.registerCommand(new YedelMessageCommand());
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());

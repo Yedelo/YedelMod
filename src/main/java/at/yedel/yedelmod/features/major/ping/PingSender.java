@@ -26,6 +26,38 @@ public class PingSender {
     public boolean tabCheck = false;
     public long lastTime;
 
+    public void processPingCommand(String pingArg) {
+        if (pingArg == null) {
+            defaultMethodPing();
+            return;
+        }
+        switch (pingArg) {
+            case "ping":
+            case "p":
+                Chat.command("ping");
+                break;
+            case "command":
+            case "c":
+                commandPing();
+                break;
+            case "tab":
+            case "t":
+                tabPing();
+                break;
+            case "stats":
+            case "s":
+                statsPing();
+                break;
+            case "list":
+            case "l":
+                serverListPing();
+                break;
+            default:
+                defaultMethodPing();
+                break;
+        }
+    }
+
     public void defaultMethodPing() {
         switch (YedelConfig.getInstance().pingMethod) {
             case 0:
