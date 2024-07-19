@@ -14,23 +14,23 @@ import static at.yedel.yedelmod.utils.Constants.logo;
 public class Chat {
     public static void display(Object message) {
         String string = TextUtils.replaceAmpersand(message.toString());
-        minecraft.thePlayer.addChatMessage(new ChatComponentText(string));
+        if (minecraft.thePlayer != null) minecraft.thePlayer.addChatMessage(new ChatComponentText(string));
     }
 
     public static void logoDisplay(Object message) {
         String string = TextUtils.replaceAmpersand(message.toString());
-        minecraft.thePlayer.addChatMessage(new ChatComponentText(logo + " " + string));
+        if (minecraft.thePlayer != null) minecraft.thePlayer.addChatMessage(new ChatComponentText(logo + " " + string));
     }
 
     public static void display(IChatComponent message) {
-        minecraft.thePlayer.addChatMessage(message);
+        if (minecraft.thePlayer != null) minecraft.thePlayer.addChatMessage(message);
     }
 
     public static void say(String message) {
-        minecraft.thePlayer.sendChatMessage(message);
+        if (minecraft.thePlayer != null) minecraft.thePlayer.sendChatMessage(message);
     }
 
     public static void command(String command) {
-        minecraft.thePlayer.sendChatMessage('/' + command);
+        if (minecraft.thePlayer != null) minecraft.thePlayer.sendChatMessage('/' + command);
     }
 }

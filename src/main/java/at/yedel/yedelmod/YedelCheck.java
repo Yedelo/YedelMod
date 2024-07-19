@@ -19,7 +19,7 @@ public class YedelCheck {
     // alreadyWarned is not supposed to be saved
 
     // Also used for the first time message
-    private static YedelCheck instance = new YedelCheck();
+    private static final YedelCheck instance = new YedelCheck();
 
     public static YedelCheck getInstance() {
         return instance;

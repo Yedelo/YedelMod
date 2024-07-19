@@ -83,8 +83,8 @@ public class StrengthIndicators {
     public void onKillMessage(ClientChatReceivedEvent event) {
         if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
         String message = event.message.getUnformattedText();
-        for (String killMessage: Constants.killMessages) {
-            Matcher messageMatcher = Pattern.compile(killMessage).matcher(message);
+        for (Pattern killMessage: Constants.killMessages) {
+            Matcher messageMatcher = killMessage.matcher(message);
             if (messageMatcher.find()) {
                 triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
             }

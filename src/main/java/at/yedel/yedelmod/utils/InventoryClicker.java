@@ -38,8 +38,6 @@ public class InventoryClicker {
     }
 
     public void setupTimeout() { // Unregisters this after 1.5s so that in case of error, it doesn't randomly click the next inventory
-        ThreadManager.scheduleOnce(() -> {
-            MinecraftForge.EVENT_BUS.unregister(this);
-        }, 1500);
+        ThreadManager.scheduleOnce(() -> MinecraftForge.EVENT_BUS.unregister(this), 1500);
     }
 }

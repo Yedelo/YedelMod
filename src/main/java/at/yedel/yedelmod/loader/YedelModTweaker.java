@@ -107,7 +107,7 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 			try {
 				Desktop.getDesktop().browse(hypixelModApiUri);
 			}
-			catch (IOException e) {
+			catch (IOException ignored) {
 
 			}
 		}
