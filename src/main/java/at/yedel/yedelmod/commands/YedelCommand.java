@@ -4,8 +4,10 @@ package at.yedel.yedelmod.commands;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.CustomText;
@@ -38,189 +40,194 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class YedelCommand extends CommandBase {
-    @Override
-    public String getCommandName() {
-        return "yedel";
-    }
+	@Override
+	public String getCommandName() {
+		return "yedel";
+	}
 
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "Usage /yedel (subcommand)";
-    }
+	@Override
+	public String getCommandUsage(ICommandSender sender) {
+		return "Usage /yedel (subcommand)";
+	}
 
-    @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length == 0) {
-            Functions.displayScreen(YedelConfig.getInstance().gui());
-            return;
-        }
-        String firstArg = args[0];
-        String secondArg = null;
-        if (args.length > 1) secondArg = args[1];
-        boolean noSecondArg = secondArg == null;
-        switch (firstArg) {
-            case "cleartext":
-                CustomText.getInstance().setDisplayedText("");
-                YedelConfig.getInstance().displayedText = "";
-                YedelConfig.getInstance().save();
-                Chat.display(messages.clearedDisplayText);
-                break;
-            case "limbo":
-            case "li":
-                Chat.say("§");
-                ThreadManager.scheduleOnce(() -> {
-                    if (! minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */)
-                        Chat.say("§");
-                }, 500);
-                break;
-            case "limbocreative":
-            case "limbogmc":
-            case "lgmc":
-                LimboCreativeCheck.getInstance().checkLimbo();
-                break;
-            case "movehuntingtext":
-                Functions.displayScreen(new MoveHuntingTextGui(minecraft.currentScreen));
-                break;
-            case "movetext":
-                Functions.displayScreen(new MoveTextGui(minecraft.currentScreen));
-                break;
-            case "ping":
-                PingSender.getInstance().processPingCommand(secondArg);
-                break;
-            case "playtime":
-            case "pt":
-                int minutes = YedelConfig.getInstance().playtimeMinutes;
-                Chat.logoDisplay("&ePlaytime: &6" + minutes / 60 + " hours &eand &6" + minutes % 60 + " minutes");
-                break;
-            case "setnick":
-                if (noSecondArg) {
-                    Chat.display(messages.enterValidNick);
-                    return;
-                }
-                Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
-                YedelConfig.getInstance().nick = secondArg;
-                YedelConfig.getInstance().save();
-                break;
-            case "settext":
-                if (noSecondArg) {
-                    Chat.display(messages.enterValidText);
-                    return;
-                }
-                String displayText = TextUtils.joinArgs(args).substring(8);
-                displayText = displayText.replaceAll("&", "§");
-                CustomText.getInstance().setDisplayedText(displayText);
-                YedelConfig.getInstance().displayedText = displayText;
-                YedelConfig.getInstance().save();
-                Chat.logoDisplay("&eSet displayed text to \"&r" + displayText + "&e\"!");
-                break;
-            case "settitle":
-                if (noSecondArg) {
-                    Chat.display(messages.enterValidTitle);
-                    return;
-                }
-                String title = TextUtils.joinArgs(args).substring(9);
-                Chat.logoDisplay("&eSet display title to \"&f" + title + "&e\"!");
-                Display.setTitle(title);
-                break;
-            case "simulatechat":
-            case "simc":
-                String[] newArray = new String[args.length - 1];
-                System.arraycopy(args, 1, newArray, 0, newArray.length);
-                String message = TextUtils.joinArgs(newArray);
-                Chat.display(message);
-                break;
-            case "update":
-                if (noSecondArg) {
-                    UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
-                    return;
-                }
-                if (secondArg.equals("modrinth")) {
-                    UpdateManager.getInstance().checkVersion(UpdateSource.MODRINTH, "chat");
-                }
-                else if (secondArg.equals("github")) {
-                    UpdateManager.getInstance().checkVersion(UpdateSource.GITHUB, "chat");
-                }
-                else {
-                    UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
-                }
-                break;
-            case "yedelmessage":
-            case "message":
-                new Thread(() -> {
-                    try {
-                        CloseableHttpClient client = HttpClients.createDefault();
-                        HttpGet request = new HttpGet("https://yedelo.github.io/yedelmod.json");
-                        request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
+	@Override
+	public void processCommand(ICommandSender sender, String[] args) {
+		if (args.length == 0) {
+			Functions.displayScreen(YedelConfig.getInstance().gui());
+			return;
+		}
+		String firstArg = args[0];
+		String secondArg = args.length > 1? args[1] : null;
+		boolean noSecondArg = secondArg == null;
+		switch (firstArg) {
+			case "cleartext":
+				CustomText.getInstance().setDisplayedText("");
+				YedelConfig.getInstance().displayedText = "";
+				YedelConfig.getInstance().save();
+				Chat.display(messages.clearedDisplayText);
+				break;
+			case "limbo":
+			case "li":
+				Chat.say("§");
+				ThreadManager.scheduleOnce(() -> {
+					if (! minecraft.theWorld.getScoreboard().getScores().isEmpty() /* if no scoreboard */)
+						Chat.say("§");
+				}, 500);
+				break;
+			case "limbocreative":
+			case "limbogmc":
+			case "lgmc":
+				LimboCreativeCheck.getInstance().checkLimbo();
+				break;
+			case "movehuntingtext":
+				Functions.displayScreen(new MoveHuntingTextGui(minecraft.currentScreen));
+				break;
+			case "movetext":
+				Functions.displayScreen(new MoveTextGui(minecraft.currentScreen));
+				break;
+			case "ping":
+				PingSender.getInstance().processPingCommand(secondArg);
+				break;
+			case "playtime":
+			case "pt":
+				int minutes = YedelConfig.getInstance().playtimeMinutes;
+				Chat.logoDisplay("&ePlaytime: &6" + minutes / 60 + " hours &eand &6" + minutes % 60 + " minutes");
+				break;
+			case "setnick":
+				if (noSecondArg) {
+					Chat.display(messages.enterValidNick);
+					return;
+				}
+				Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
+				YedelConfig.getInstance().nick = secondArg;
+				YedelConfig.getInstance().save();
+				break;
+			case "settext":
+				if (noSecondArg) {
+					Chat.display(messages.enterValidText);
+					return;
+				}
+				String displayText = TextUtils.joinArgs(args).substring(8);
+				displayText = displayText.replaceAll("&", "§");
+				CustomText.getInstance().setDisplayedText(displayText);
+				YedelConfig.getInstance().displayedText = displayText;
+				YedelConfig.getInstance().save();
+				Chat.logoDisplay("&eSet displayed text to \"&r" + displayText + "&e\"!");
+				break;
+			case "settitle":
+				if (noSecondArg) {
+					Chat.display(messages.enterValidTitle);
+					return;
+				}
+				String title = TextUtils.joinArgs(args).substring(9);
+				Chat.logoDisplay("&eSet display title to \"&f" + title + "&e\"!");
+				Display.setTitle(title);
+				break;
+			case "simulatechat":
+			case "simc":
+				String[] newArray = new String[args.length - 1];
+				System.arraycopy(args, 1, newArray, 0, newArray.length);
+				String message = TextUtils.joinArgs(newArray);
+				Chat.display(message);
+				break;
+			case "update":
+				if (noSecondArg) {
+					UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+					return;
+				}
+				if (secondArg.equals("modrinth")) {
+					UpdateManager.getInstance().checkVersion(UpdateSource.MODRINTH, "chat");
+				}
+				else if (secondArg.equals("github")) {
+					UpdateManager.getInstance().checkVersion(UpdateSource.GITHUB, "chat");
+				}
+				else {
+					UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+				}
+				break;
+			case "yedelmessage":
+			case "message":
+				new Thread(() -> {
+					try {
+						CloseableHttpClient client = HttpClients.createDefault();
+						HttpGet request = new HttpGet("https://yedelo.github.io/yedelmod.json");
+						request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
 
-                        HttpResponse response;
-                        response = client.execute(request);
+						HttpResponse response;
+						response = client.execute(request);
 
-                        BufferedReader reader;
-                        reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                        StringBuffer result = new StringBuffer();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            result.append(line);
-                        }
-                        JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
-                        String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
-                        Chat.display(messages.messageFromYedel);
-                        Chat.display(formattedMessage);
-                    }
-                    catch (Exception e) {
-                        LogManager.getLogger("Mod Message").error("Couldn't get mod message");
-                        Chat.display(messages.couldntGetMessage);
-                    }
-                }, "YedelMod").start();
-                break;
-            default:
-                Chat.display(messages.unknownSubcommandMessage);
-        }
-    }
+						BufferedReader reader;
+						reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+						StringBuilder result = new StringBuilder();
+						String line;
+						while ((line = reader.readLine()) != null) {
+							result.append(line);
+						}
+						JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
+						String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
+						Chat.display(messages.messageFromYedel);
+						Chat.display(formattedMessage);
+					}
+					catch (Exception e) {
+						LogManager.getLogger("Mod Message").error("Couldn't get mod message");
+						Chat.display(messages.couldntGetMessage);
+					}
+				}, "YedelMod").start();
+				break;
+			default:
+				Chat.display(messages.unknownSubcommandMessage);
+		}
+	}
 
-    @Override
-    public List<String> getCommandAliases() {
-        return Collections.singletonList("yedelmod");
-    }
+	@Override
+	public List<String> getCommandAliases() {
+		return Collections.singletonList("yedelmod");
+	}
 
-    @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
-        return true;
-    }
+	@Override
+	public boolean canCommandSenderUseCommand(ICommandSender sender) {
+		return true;
+	}
 
-    @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        System.out.println("args.length: " + args.length);
-        for (String arg: args) {
-            System.out.println("an arg: " + arg);
-        }
-        String firstArg = args[0];
-        if (firstArg.equals("ping")) {
-            System.out.println("the ping recommendations");
-            return getListOfStringsMatchingLastWord(args, "ping", "command", "tab", "stats", "list");
-        }
-        else if (firstArg.equals("update")) {
-            System.out.println("the update recommendations");
-            return getListOfStringsMatchingLastWord(args, "modrinth", "github");
-        }
-        else if (firstArg.isEmpty()) {
-            System.out.println("the main command recommendations");
-            return getListOfStringsMatchingLastWord(args,
-                "cleartext",
-                "limbo",
-                "limbocreative",
-                "movehuntingtext",
-                "movetext",
-                "ping",
-                "playtime",
-                "setnick",
-                "settext",
-                "settitle",
-                "simulatechat",
-                "update",
-                "yedelmessage"
-            );
-        }
-        return null;
-    }
+	private final String[] baseTabCompletions = new String[] {
+		"cleartext", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
+	};
+	private final String[] pingTabCompletions = new String[] {
+		"ping", "command", "tab", "stats", "list"
+	};
+	private final String[] updateTabCompletions = new String[] {
+		"modrinth", "github"
+	};
+
+	@Override
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+		String firstArg = args.length > 0? args[0] : null;
+		String secondArg = args.length > 1? args[1] : null;
+		if (firstArg == null || firstArg.isEmpty()) {
+			return Arrays.asList(baseTabCompletions);
+		}
+		else if (firstArg.equals("ping")) {
+			if (secondArg != null) {
+				return Arrays.stream(pingTabCompletions).filter(tabCompletion -> tabCompletion.startsWith(secondArg)).collect(Collectors.toList());
+			}
+			else {
+				return Arrays.asList(pingTabCompletions);
+			}
+		}
+
+		else if (firstArg.equals("update")) {
+			if (secondArg != null) {
+				return Arrays.stream(updateTabCompletions).filter(tabCompletion -> tabCompletion.startsWith(secondArg)).collect(Collectors.toList());
+			}
+			else {
+				return Arrays.asList(updateTabCompletions);
+			}
+		}
+		else if (secondArg == null) {
+			return Arrays.stream(baseTabCompletions).filter(tabCompletion ->
+				TextUtils.removeFormatting(tabCompletion).startsWith(firstArg) // This is my own array. Why does it have formatting???
+			).collect(Collectors.toList());
+		}
+		return null;
+	}
 }
