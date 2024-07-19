@@ -24,9 +24,10 @@ public class TextUtils {
         return string.replaceAll("&.", "");
     }
 
-    private static final Pattern pattern = Pattern.compile("&(?!\\s)");
+    private static final Pattern ampersandFormattingPattern = Pattern.compile("&(?!\\s)");
+
     public static String replaceAmpersand(String string) {
-        return pattern.matcher(string).replaceAll("§");
+        return ampersandFormattingPattern.matcher(string).replaceAll("§");
     }
 
     public static String randomUuid(int length) {

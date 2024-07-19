@@ -45,9 +45,9 @@ public class TNTTag {
     private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
     private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");
     private final ArrayList<String> lines = new ArrayList<>(4); // Display
-    private final Pattern tagOtherRegex = Pattern.compile("You tagged ([^\\s!]+)!");
-    private final Pattern personIsItRegex = Pattern.compile("^(\\w+) is IT!");
-    private final Pattern peopleDeathPattern = Pattern.compile("^(\\w+) blew up!");
+    private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
+    private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
+    private final Pattern personBlewUpRegex = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
     private boolean playingTag;
     private String target;
     private String targetRanked;
@@ -152,18 +152,18 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onFightMessages(ClientChatReceivedEvent event) {
-        String msg = event.message.getUnformattedText();
         if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
-        Matcher tagOtherMatcher = tagOtherRegex.matcher(msg);
+        String msg = event.message.getUnformattedText();
+        Matcher tagOtherMatcher = youTaggedPersonRegex.matcher(msg);
         while (tagOtherMatcher.find()) {
-            if (Objects.equals(tagOtherMatcher.group(1), target)) {
+            if (Objects.equals(tagOtherMatcher.group("personThatYouTagged"), target)) {
                 fightingTarget = true;
             }
         }
 
         Matcher personIsItMatcher = personIsItRegex.matcher(msg);
         while (personIsItMatcher.find()) {
-            if (Objects.equals(personIsItMatcher.group(1), target) && !dead) {
+            if (Objects.equals(personIsItMatcher.group("personThatIsIt"), target) && ! dead) {
                 fightingTarget = false;
             }
         }
@@ -221,9 +221,9 @@ public class TNTTag {
     public void onRoundEnd(ClientChatReceivedEvent event) {
         String msg = event.message.getUnformattedText();
         if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
-        Matcher peopleDeathMatcher = peopleDeathPattern.matcher(msg);
+        Matcher peopleDeathMatcher = personBlewUpRegex.matcher(msg);
         while (peopleDeathMatcher.find()) {
-            String personDied = peopleDeathMatcher.group(1);
+            String personDied = peopleDeathMatcher.group("personThatBlewUp");
             if (Objects.equals(personDied, playerName)) {
                 dead = true;
                 target = null;

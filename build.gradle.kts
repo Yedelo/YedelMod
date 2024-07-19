@@ -45,6 +45,9 @@ dependencies {
 
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 }
 
 repositories {
@@ -79,4 +82,8 @@ tasks {
     withType<JavaCompile> {
         options.release.set(8)
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
