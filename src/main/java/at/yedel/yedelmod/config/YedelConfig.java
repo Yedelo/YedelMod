@@ -32,13 +32,14 @@ public class YedelConfig extends Vigilant {
 
 	/* General */
 
-	//
+	// Updates
 
 	@Property(
 		type = PropertyType.SELECTOR,
 		name = "§9Update source",
 		description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
 		category = "General",
+		subcategory = "Updates",
 		options = {"Modrinth", "GitHub"}
 	)
 	public int updateSource = 0;
@@ -47,7 +48,8 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "§9Automatically check for updates",
 		description = "Checks for updates on game load",
-		category = "General"
+		category = "General",
+		subcategory = "Updates"
 	)
 	public boolean autoCheckUpdates = true;
 
@@ -56,6 +58,7 @@ public class YedelConfig extends Vigilant {
 		name = "§9Modrinth link",
 		description = "Click to open the Modrinth site",
 		category = "General",
+		subcategory = "Updates",
 		placeholder = "Open"
 	)
 	public void openModrinthLink() throws IOException, URISyntaxException {
@@ -69,6 +72,7 @@ public class YedelConfig extends Vigilant {
 		name = "§9GitHub link",
 		description = "Click to open the GitHub repository",
 		category = "General",
+		subcategory = "Updates",
 		placeholder = "Open"
 	)
 	public void openGitHubRepository() throws IOException, URISyntaxException {
@@ -82,11 +86,14 @@ public class YedelConfig extends Vigilant {
 		name = "§9Check for updates",
 		description = "Check for updates with the selected source",
 		category = "General",
+		subcategory = "Updates",
 		placeholder = "Check"
 	)
 	public void checkForUpdates() {
 		UpdateManager.getInstance().checkVersion(getUpdateSource(), "notification");
 	}
+
+	/* Features */
 
 	// Features
 
@@ -96,7 +103,7 @@ public class YedelConfig extends Vigilant {
 		description = "Automatically welcomes new guild members with a custom message, customize below." +
 			"\n§a[VIP] Yedelos §ejoined the guild!" +
 			"\n§2Guild > §b[MVP§8+§b] Yedel §6[Yedel]§f: Welcome, Yedelos!",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean guildWelcome = false;
@@ -106,7 +113,7 @@ public class YedelConfig extends Vigilant {
 		name = "Dropper AutoGG",
 		description = "AutoGG for dropper, will be removed when it is added to Sk1er's AutoGG." +
 			"\n§eNote: This only says gg at the end of the game, not when you finish.",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean dropperGG = isAutoGGLoaded();
@@ -115,7 +122,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "SkyWars strength indicators",
 		description = "Shows people's strength above their nametags. Accounts for Apothecary.",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean strengthIndicators = true;
@@ -124,7 +131,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Easy atlas verdicts",
 		description = "Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is §cuse at your own risk.",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean autoAtlas = false;
@@ -133,7 +140,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Kuudra sacrifice display",
 		description = "Shows the coins needed to get the Kuudra Follower Helmet from the Kuudra Believer.",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean sacrificeDisplay = true;
@@ -142,7 +149,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "BedWars defusal helper",
 		description = "Highlights redstone for the BedWars defusal challenge.",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean defusalHelper = true;
@@ -152,7 +159,7 @@ public class YedelConfig extends Vigilant {
 		name = "Limbo creative mode",
 		description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
 			"Use /lgmc in limbo if it doesn't work the first time",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean limboCreative = true;
@@ -160,17 +167,18 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Favorite server button",
 		description = "Adds a button to the main menu to join a server, specified below",
-		category = "General",
+		category = "Features",
 		subcategory = "Features"
 	)
 	public boolean buttonFavoriteServer = true;
 
 	// Customization
+
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Guild welcome message",
 		description = "Message for new guild members. Use [player] for the new player.",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization"
 	)
 	public String guildWelcomeMessage = "Welcome, [player]!";
@@ -178,7 +186,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SLIDER,
 		name = "Delay",
 		description = "Delay for AutoGG, measured in seconds",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		max = 5
 	)
@@ -187,7 +195,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SELECTOR,
 		name = "Strength color",
 		description = "Color for strength indicators (5.5s - 0.5s)",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		options = {
 			"§4Dark Red",
@@ -213,7 +221,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SELECTOR,
 		name = "Sub strength color",
 		description = "Color for strength indicators (0.5s - end)",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		options = {
 			"§4Dark Red",
@@ -239,7 +247,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.TEXT,
 		name = "Random placeholder",
 		description = "When this is typed in chat, it will be replaced with a random string. §cBe careful not to use short placeholders to not spam excessively.",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		placeholder = "//r"
 	)
@@ -253,7 +261,7 @@ public class YedelConfig extends Vigilant {
 				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
 				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
 				"\n§9Server list (default): §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
 	)
@@ -262,7 +270,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.TEXT,
 		name = "Specified server",
 		description = "Server joined with button",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization"
 	)
 	public String favoriteServer = "yedelmod.hypixel.net";
@@ -271,7 +279,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.BUTTON,
 		name = "Customize display text",
 		description = "Customize the display text position, can also be done with /movetext.",
-		category = "General",
+		category = "Features",
 		subcategory = "Customization",
 		placeholder = "Open GUI"
 	)
