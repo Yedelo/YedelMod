@@ -261,7 +261,7 @@ public class YedelConfig extends Vigilant {
 				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
 				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
 				"\n§9Server list (default): §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
-		category = "Features",
+		category = "Commands",
 		subcategory = "Customization",
 		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
 	)
@@ -286,6 +286,138 @@ public class YedelConfig extends Vigilant {
 	private void openMoveTextGui() {
 		minecraft.displayGuiScreen(new MoveTextGui(minecraft.currentScreen));
 	}
+
+	/* Commands */
+
+	// Commands
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "/yedel (/yedelmod)",
+		description = "The main command, hosting all subcommands. When used with no arguments, opens this config screen.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$yedel;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- cleartext",
+		description = "Clears the currently set display text.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$cleartext;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- limbo (li)",
+		description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$limbo;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- limbocreative (limbogmc, lgmc)",
+		description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$limbocreative;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- movehuntingtext",
+		description = "Opens the GUI to move the Bounty Hunting display text.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$movehuntingtext;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- movetext",
+		description = "Opens the GUI to move the display text.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$movetext;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- ping [method]",
+		description =
+			"Shows your ping to the server in chat, using several methods. Without an argument, uses the default method customized below." +
+				"Refer to this option for different methods that can be used as an argument.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$ping;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- playtime (pt)",
+		description = "Shows your total playtime (while playing on servers) in hours and minutes.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$playtime;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- setnick [nick]",
+		description = "Sets your nick for Bounty Hunting to not select yourself as the target.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$setnick;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- settext [text]",
+		description = "Sets the display text. This supports color codes with ampersands (&).",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$settext;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- settitle [title]",
+		description = "Sets the title of the game window.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$settitle;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- simulatechat (simc) [text]",
+		description = "Simulates a chat message, also supports color codes with ampersands (&).",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$simulatechat;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- update [platform]",
+		description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$update;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- yedelmessage (message)",
+		description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
+		category = "Commands",
+		subcategory = "Commands",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$yedelmessage;
 
 	/* Modern Features */
 
@@ -572,16 +704,6 @@ public class YedelConfig extends Vigilant {
 		initialize();
 		setCategoryDescription("General",
 			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel" +
-				"\n" +
-				"\n§nCommands:" +
-				"\n" +
-				"\n§9/simulatechat (/simc): §7Simulates a given chat message, supports ampersauds for formatting." +
-				"\n§9/settext: §7Adds custom display text, move with §9/movetext §7and remove with §9/cleartext " +
-				"\n§9/settitle: §7Sets the title of the game window." +
-				"\n§9/yedelplaytime (/ypt, /yedelpt): §7Shows your playtime in hours and minutes" +
-				"\n§9/yedelli (/yli, /li): §7Sends you to the lobby/limbo for an invalid character (disconnects on most other servers)" +
-				"\n§9/yping (/yp): §7Shows an estimation of your ping using your selected method (customize below)" +
-				"\n" +
 				"\n\n§nKeybinds: " +
 
 				"\n\n§9Market searches:" +

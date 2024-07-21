@@ -19,6 +19,7 @@ public class YedelConfigSortingBehavior extends SortingBehavior {
         ArrayList<String> categories = new ArrayList<>();
         categories.add("General");
         categories.add("Features");
+        categories.add("Commands");
         categories.add("Modern Features");
         categories.add("TNT Tag");
         return (a, b) -> {
@@ -31,6 +32,7 @@ public class YedelConfigSortingBehavior extends SortingBehavior {
     public @NotNull Comparator<? super Entry<String, ? extends List<PropertyData>>> getSubcategoryComparator() {
         ArrayList<String> subcategories = new ArrayList<>();
         subcategories.add("Features");
+        subcategories.add("Commands");
         subcategories.add("Customization");
         return (a, b) -> {
             String firstSubcategory = a.getValue().get(0).getAttributesExt().getSubcategory();
