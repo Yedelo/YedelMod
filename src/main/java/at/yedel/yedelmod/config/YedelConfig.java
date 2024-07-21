@@ -36,7 +36,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SELECTOR,
-		name = "&9Update source",
+		name = "§9Update source",
 		description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
 		category = "General",
 		options = {"Modrinth", "GitHub"}
@@ -45,7 +45,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "&9Automatically check for updates",
+		name = "§9Automatically check for updates",
 		description = "Checks for updates on game load",
 		category = "General"
 	)
@@ -53,7 +53,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "&9Modrinth link",
+		name = "§9Modrinth link",
 		description = "Click to open the Modrinth site",
 		category = "General",
 		placeholder = "Open"
@@ -66,7 +66,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "&9GitHub link",
+		name = "§9GitHub link",
 		description = "Click to open the GitHub repository",
 		category = "General",
 		placeholder = "Open"
@@ -79,7 +79,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "&9Check for updates",
+		name = "§9Check for updates",
 		description = "Check for updates with the selected source",
 		category = "General",
 		placeholder = "Check"
@@ -94,7 +94,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Auto welcome guild members",
 		description = "Automatically welcomes new guild members with a custom message, customize below." +
-			"\n&a[VIP] Yedelos &ejoined the guild!" +
+			"\n§a[VIP] Yedelos §ejoined the guild!" +
 			"\n§2Guild > §b[MVP§8+§b] Yedel §6[Yedel]§f: Welcome, Yedelos!",
 		category = "General",
 		subcategory = "Features"
