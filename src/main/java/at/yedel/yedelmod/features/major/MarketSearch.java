@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.major;
 import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
+import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.messages;
 import at.yedel.yedelmod.utils.ScoreboardName;
@@ -19,8 +20,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
-
-;
 
 
 
@@ -37,7 +36,7 @@ public class MarketSearch {
 
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
-        if (YedelMod.getInstance().getAhSearchKeybind().isPressed()) {
+        if (YedelMod.getInstance().getAhSearchKeybind().isPressed() && YedelConfig.getInstance().ahSearch) {
             if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
@@ -49,7 +48,7 @@ public class MarketSearch {
                 }
             }
         }
-        else if (YedelMod.getInstance().getBzSearchKeybind().isPressed()) {
+        else if (YedelMod.getInstance().getBzSearchKeybind().isPressed() && YedelConfig.getInstance().bzSearch) {
             if (ScoreboardName.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {

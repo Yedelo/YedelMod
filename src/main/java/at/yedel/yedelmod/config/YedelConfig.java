@@ -129,15 +129,6 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Easy atlas verdicts",
-		description = "Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is §cuse at your own risk.",
-		category = "Features",
-		subcategory = "Features"
-	)
-	public boolean autoAtlas = false;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Kuudra sacrifice display",
 		description = "Shows the coins needed to get the Kuudra Follower Helmet from the Kuudra Believer.",
 		category = "Features",
@@ -419,13 +410,48 @@ public class YedelConfig extends Vigilant {
 	)
 	public Object command$yedelmessage;
 
+	/* Keybinds */
+
+	// Keybinds
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Search the auction house for your held item",
+		description =
+			"Searches the auction house for your currently held item's name, you may need to switch categories to see your item." +
+				"\nBound to §9K §7by default.",
+		category = "Keybinds",
+		subcategory = "Keybinds"
+	)
+	public boolean ahSearch = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Search the bazaar for your held item",
+		description =
+			"Searches the bazaar for your currently held item's name." +
+				"\nBound to §9L §7by default.",
+		category = "Keybinds",
+		subcategory = "Keybinds"
+	)
+	public boolean bzSearch = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Easy atlas verdicts",
+		description =
+			"Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is §cuse at your own risk." +
+				"\n§7Insufficient Evidence: Bound to §9O §7by default." +
+				"\nEvidence Without Doubt: Bound to §9P §7by default.",
+		category = "Keybinds",
+		subcategory = "Keybinds"
+	)
+	public boolean easyAtlasVerdicts = false;
+
 	/* Modern Features */
 
 	// General
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Book background",
+		name = "Book background (1.14+)",
 		description = "Draws the default dark background in book GUIs",
 		category = "Modern Features",
 		subcategory = "General"
@@ -434,7 +460,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Keep chat history on chat clear",
+		name = "Keep chat history on chat clear (1.15.2+)",
 		description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
 		category = "Modern Features",
 		subcategory = "General"
@@ -443,8 +469,8 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Change window title",
-		description = "Changes the window title on world join. \nYou can manually do this with /settitle",
+		name = "Change window title (1.15.2+)",
+		description = "Changes the window title on world and server join. \nYou can manually do this with /settitle",
 		category = "Modern Features",
 		subcategory = "General"
 	)
@@ -454,7 +480,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Projectile throws",
+		name = "Projectile throws (1.15.2+)",
 		description = "Swings your hand when using certain items, such as a snowball or water bucket (on the ground)",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
@@ -463,7 +489,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Item drops",
+		name = "Item drops (1.15.2+)",
 		description = "Swings your hand when dropping an item",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
@@ -473,7 +499,7 @@ public class YedelConfig extends Vigilant {
 	// Customization
 	@Property(
 		type = PropertyType.PERCENT_SLIDER,
-		name = "Damage Tilt",
+		name = "Damage Tilt (1.19.4+)",
 		description = "The amount of camera shake caused by being hurt.",
 		category = "Modern Features",
 		subcategory = "Customization"
@@ -703,18 +729,15 @@ public class YedelConfig extends Vigilant {
 		);
 		initialize();
 		setCategoryDescription("General",
-			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel" +
-				"\n\n§nKeybinds: " +
-
-				"\n\n§9Market searches:" +
-				"\n§7Search the auction house for your currently held item: Bound to §9K §7by default" +
-				"\n§7Search the bazaar for your currently held item: Bound to §9L §7by default" +
-
-				"\n\n§9Easy atlas verdicts (toggleable below):" +
-				"\n§7Insufficient Evidence: Bound to §9O §7by default" +
-				"\n§7Evidence Without Doubt: Bound to §9P §7by default" +
-				"\n"
+			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel"
 		);
+		setCategoryDescription("Commands",
+			"Description of this mod's subcommands, all under /yedel. " +
+				"\nFormat: §9- command (any aliases) [arguments]" +
+				"\nExample: §9- simulatechat (simc) [text] -> /yedel simc Hi!"
+		);
+		setCategoryDescription("Modern Features", "Features backported from newer versions of the game.");
+		setCategoryDescription("TNT Tag", "Features relating to TNT Tag, mainly bounty hunting.");
 		addDependencies();
 	}
 

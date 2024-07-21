@@ -46,7 +46,7 @@ public class EasyAtlasVerdicts {
     public void onAtlasKeys(KeyInputEvent event) {
         EntityPlayerSP player = minecraft.thePlayer;
         if (YedelMod.getInstance().getInsufficientKeybind().isPressed()) {
-            if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
+            if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
             Chat.display(messages.insufficientEvidence);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
@@ -57,7 +57,7 @@ public class EasyAtlasVerdicts {
             }, (int) (NumberUtils.randomRange(158, 301)));
         }
         else if (YedelMod.getInstance().getSufficientKeybind().isPressed()) {
-            if (!inAtlas || !YedelConfig.getInstance().autoAtlas) return;
+            if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
             Chat.display(messages.evidenceWithoutDoubt);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
