@@ -24,11 +24,16 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
-// the order of everything here keeps getting reset its very annoying
-// "instance needs to be at the bottom or the default values take priority" - patcher
-// i messed up
 public class YedelConfig extends Vigilant {
 	private final URI video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
+
+	// Start of config
+	// Start of visible config
+
+	/* General */
+
+	//
+
 	@Property(
 		type = PropertyType.SELECTOR,
 		name = "&9Update source",
@@ -37,6 +42,7 @@ public class YedelConfig extends Vigilant {
 		options = {"Modrinth", "GitHub"}
 	)
 	public int updateSource = 0;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "&9Automatically check for updates",
@@ -72,6 +78,19 @@ public class YedelConfig extends Vigilant {
 	}
 
 	@Property(
+		type = PropertyType.BUTTON,
+		name = "&9Check for updates",
+		description = "Check for updates with the selected source",
+		category = "General",
+		placeholder = "Check"
+	)
+	public void checkForUpdates() {
+		UpdateManager.getInstance().checkVersion(getUpdateSource(), "notification");
+	}
+
+	// Features
+
+	@Property(
 		type = PropertyType.SWITCH,
 		name = "Auto welcome guild members",
 		description = "Automatically welcomes new guild members with a custom message, customize below." +
@@ -81,6 +100,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean guildWelcome = false;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Dropper AutoGG",
@@ -90,6 +110,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean dropperGG = isAutoGGLoaded();
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "SkyWars strength indicators",
@@ -98,6 +119,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean strengthIndicators = true;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Easy atlas verdicts",
@@ -106,7 +128,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean autoAtlas = false;
-	// Start of config
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Kuudra sacrifice display",
@@ -115,6 +137,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean sacrificeDisplay = true;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "BedWars defusal helper",
@@ -123,25 +146,16 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean defusalHelper = true;
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Limbo creative mode",
-		description = "Automatically gives creative mode in limbo, not bannable because the server does not listen to anything happening. " +
+		description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
 			"Use /lgmc in limbo if it doesn't work the first time",
 		category = "General",
 		subcategory = "Features"
 	)
 	public boolean limboCreative = true;
-	/* General */
-	// Features
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Book background",
-		description = "Draws the default dark background in book GUIs",
-		category = "Modern Features",
-		subcategory = "General"
-	)
-	public boolean drawBookBackground = true;
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Favorite server button",
@@ -150,14 +164,8 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean buttonFavoriteServer = true;
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Keep chat history on chat clear",
-		description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
-		category = "Modern Features",
-		subcategory = "General"
-	)
-	public boolean keepChatHistory = true;
+
+	// Customization
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Guild welcome message",
@@ -258,7 +266,84 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Customization"
 	)
 	public String favoriteServer = "yedelmod.hypixel.net";
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Customize display text",
+		description = "Customize the display text position, can also be done with /movetext.",
+		category = "General",
+		subcategory = "Customization",
+		placeholder = "Open GUI"
+	)
+	private void openMoveTextGui() {
+		minecraft.displayGuiScreen(new MoveTextGui(minecraft.currentScreen));
+	}
+
+	/* Modern Features */
+
+	// General
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Book background",
+		description = "Draws the default dark background in book GUIs",
+		category = "Modern Features",
+		subcategory = "General"
+	)
+	public boolean drawBookBackground = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Keep chat history on chat clear",
+		description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
+		category = "Modern Features",
+		subcategory = "General"
+	)
+	public boolean keepChatHistory = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Change window title",
+		description = "Changes the window title on world join. \nYou can manually do this with /settitle",
+		category = "Modern Features",
+		subcategory = "General"
+	)
+	public boolean changeTitle = true;
+
+	// Hand Swings
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Projectile throws",
+		description = "Swings your hand when using certain items, such as a snowball or water bucket (on the ground)",
+		category = "Modern Features",
+		subcategory = "Hand Swings"
+	)
+	public boolean itemSwings = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Item drops",
+		description = "Swings your hand when dropping an item",
+		category = "Modern Features",
+		subcategory = "Hand Swings"
+	)
+	public boolean dropSwings = false;
+
 	// Customization
+	@Property(
+		type = PropertyType.PERCENT_SLIDER,
+		name = "Damage Tilt",
+		description = "The amount of camera shake caused by being hurt.",
+		category = "Modern Features",
+		subcategory = "Customization"
+	)
+	public float damageTiltStrength = 1f;
+
+	/* TNT Tag */
+
+	//
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Bounty Hunting",
@@ -266,6 +351,37 @@ public class YedelConfig extends Vigilant {
 		category = "TNT Tag"
 	)
 	public boolean bountyHunting = true;
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "&cReset stats",
+		category = "TNT Tag",
+		placeholder = "Reset"
+	)
+	private void resetConfirmation() {
+		Constants.notifications.push("Bounty Hunting", "Are you sure you want to reset your stats? (click)", 3, () -> {
+			points = 0;
+			kills = 0;
+			Constants.notifications.push("Bounty Hunting", "Reset stats!", 3);
+			return null;
+		});
+	}
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Video",
+		description = "This is a complicated feature, watch my video for help!",
+		category = "TNT Tag",
+		placeholder = "Open video"
+	)
+	private void watchVideo() throws IOException {
+		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			Desktop.getDesktop().browse(video);
+		}
+	}
+
+	// Features
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Highlight target and show distance",
@@ -290,6 +406,47 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean bhClickables = true;
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Target selection sound",
+		description = "Sound: random.successful_hit at 10 volume and 0.8 pitch.",
+		category = "TNT Tag",
+		subcategory = "Features",
+		placeholder = "Play sound"
+	)
+	private void playSelection() {
+		if (minecraft.theWorld == null) return;
+		minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
+	}
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Kill sound",
+		description = "Sound: random.successful_hit at 10 volume and 1.04 pitch.",
+		category = "TNT Tag",
+		subcategory = "Features",
+		placeholder = "Play sound"
+	)
+	private void playKill() {
+		if (minecraft.theWorld == null) return;
+		minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
+	}
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Customize display",
+		description = "Customize the bounty hunting display, can also be done with /movehuntingtext.",
+		category = "TNT Tag",
+		subcategory = "Features",
+		placeholder = "Open GUI"
+	)
+	private void openHuntingGui() {
+		minecraft.displayGuiScreen(new MoveHuntingTextGui(minecraft.currentScreen));
+	}
+
+	// Customization
+
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Current nick",
@@ -319,40 +476,11 @@ public class YedelConfig extends Vigilant {
 		max = 9
 	)
 	public int returnToLobbyItem = 9;
-	/* TNT Tag */
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Change window title",
-		description = "Changes the window title on world join. \nYou can manually do this with /settitle",
-		category = "Modern Features",
-		subcategory = "General"
-	)
-	public boolean changeTitle = true;
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Projectile throws",
-		description = "Swings your hand when using certain items, such as a snowball or water bucket (on the ground)",
-		category = "Modern Features",
-		subcategory = "Hand Swings"
-	)
-	public boolean itemSwings = false;
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Item drops",
-		description = "Swings your hand when dropping an item",
-		category = "Modern Features",
-		subcategory = "Hand Swings"
-	)
-	public boolean dropSwings = false;
-	@Property(
-		type = PropertyType.PERCENT_SLIDER,
-		name = "Damage Tilt",
-		description = "The amount of camera shake caused by being hurt.",
-		category = "Modern Features",
-		subcategory = "Other"
-	)
-	public float damageTiltStrength = 1f;
-	// Features
+
+	// End of visible config
+
+	// Hidden variables for data
+
 	@Property(
 		type = PropertyType.NUMBER,
 		category = "storage",
@@ -374,7 +502,6 @@ public class YedelConfig extends Vigilant {
 		hidden = true
 	)
 	public int displayX = 5;
-	// Customization
 	@Property(
 		type = PropertyType.NUMBER,
 		category = "storage",
@@ -425,13 +552,7 @@ public class YedelConfig extends Vigilant {
 	)
 	public boolean bhFirst = true;
 
-	/* Modern features */
-
-	// General
-
-
-
-	// Hand Swings
+	// End of config
 
 	public YedelConfig() throws URISyntaxException {
 		super(
@@ -472,25 +593,12 @@ public class YedelConfig extends Vigilant {
 		instance.writeData();
 	}
 
-	// Variables stored but hidden in this config
-
 	private boolean isAutoGGLoaded() {
 		return Loader.isModLoaded("autogg");
 	}
 
 	public UpdateSource getUpdateSource() {
 		return updateSource == 0? UpdateSource.MODRINTH : UpdateSource.GITHUB;
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "&9Check for updates",
-		description = "Check for updates with the selected source",
-		category = "General",
-		placeholder = "Check"
-	)
-	public void checkForUpdates() {
-		UpdateManager.getInstance().checkVersion(getUpdateSource(), "notification");
 	}
 
 	public void addDependencies() {
@@ -510,85 +618,6 @@ public class YedelConfig extends Vigilant {
 		addDependency("returnToLobbyItem", "bountyHunting");
 	}
 
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Video",
-		description = "This is a complicated feature, watch my video for help!",
-		category = "TNT Tag",
-		placeholder = "Open video"
-	)
-	private void watchVideo() throws IOException {
-		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-			Desktop.getDesktop().browse(video);
-		}
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "&cReset stats",
-		category = "TNT Tag",
-		placeholder = "Reset"
-	)
-	private void resetConfirmation() {
-		Constants.notifications.push("Bounty Hunting", "Are you sure you want to reset your stats? (click)", 3, () -> {
-			points = 0;
-			kills = 0;
-			Constants.notifications.push("Bounty Hunting", "Reset stats!", 3);
-			return null;
-		});
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Customize display text",
-		description = "Customize the display text position, can also be done with /movetext.",
-		category = "General",
-		subcategory = "Customization",
-		placeholder = "Open GUI"
-	)
-	private void openGui() {
-		minecraft.displayGuiScreen(new MoveTextGui(minecraft.currentScreen));
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Customize display",
-		description = "Customize the bounty hunting display, can also be done with /movehuntingtext.",
-		category = "TNT Tag",
-		subcategory = "Features",
-		placeholder = "Open GUI"
-	)
-	private void openHuntingGui() {
-		minecraft.displayGuiScreen(new MoveHuntingTextGui(minecraft.currentScreen));
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Target selection sound",
-		description = "Sound: random.successful_hit at 10 volume and 0.8 pitch.",
-		category = "TNT Tag",
-		subcategory = "Features",
-		placeholder = "Play sound"
-	)
-	private void playSelection() {
-		if (minecraft.theWorld == null) return;
-		minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
-	}
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Kill sound",
-		description = "Sound: random.successful_hit at 10 volume and 1.04 pitch.",
-		category = "TNT Tag",
-		subcategory = "Features",
-		placeholder = "Play sound"
-	)
-	private void playKill() {
-		if (minecraft.theWorld == null) return;
-		minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
-	}
-
-	// End of configuration
 	private static final YedelConfig instance;
 
 	static {
