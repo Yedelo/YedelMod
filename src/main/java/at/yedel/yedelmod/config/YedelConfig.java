@@ -95,7 +95,7 @@ public class YedelConfig extends Vigilant {
 		name = "Auto welcome guild members",
 		description = "Automatically welcomes new guild members with a custom message, customize below." +
 			"\n&a[VIP] Yedelos &ejoined the guild!" +
-			"\n&2Guild > &b[MVP&8+&b] Yedel &6[Yedel]&f: Welcome, Yedelos!",
+			"\n§2Guild > §b[MVP§8+§b] Yedel §6[Yedel]§f: Welcome, Yedelos!",
 		category = "General",
 		subcategory = "Features"
 	)
@@ -105,7 +105,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Dropper AutoGG",
 		description = "AutoGG for dropper, will be removed when it is added to Sk1er's AutoGG." +
-			"\n&eNote: This only says gg at the end of the game, not when you finish.",
+			"\n§eNote: This only says gg at the end of the game, not when you finish.",
 		category = "General",
 		subcategory = "Features"
 	)
@@ -123,7 +123,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Easy atlas verdicts",
-		description = "Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is &cuse at your own risk.",
+		description = "Adds keybinds for the two atlas verdicts in your hotbar. \nThis automatically clicks for you, so it is §cuse at your own risk.",
 		category = "General",
 		subcategory = "Features"
 	)
@@ -238,7 +238,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Random placeholder",
-		description = "When this is typed in chat, it will be replaced with a random string. &cBe careful not to use short placeholders to not spam excessively.",
+		description = "When this is typed in chat, it will be replaced with a random string. §cBe careful not to use short placeholders to not spam excessively.",
 		category = "General",
 		subcategory = "Customization",
 		placeholder = "//r"
@@ -248,11 +248,11 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SELECTOR,
 		name = "Ping method",
 		description =
-			"&9Ping: &7Does /ping command. Works on very few servers." +
-				"\n&9Command: &7Enters a random command and waits for the unknown command response. Works on almost all servers." +
-				"\n&9Tab: &7Sends a tab completion packet and waits for the response. Works on all servers." +
-				"\n&9Stats: &7Sends a statistics packet and waits for the response. Works on all servers." +
-				"\n&9Server list (default): &7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
+			"§9Ping: §7Does /ping command. Works on very few servers." +
+				"\n§9Command: §7Enters a random command and waits for the unknown command response. Works on almost all servers." +
+				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
+				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
+				"\n§9Server list (default): §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
 		category = "General",
 		subcategory = "Customization",
 		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
@@ -354,7 +354,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "&cReset stats",
+		name = "§cReset stats",
 		category = "TNT Tag",
 		placeholder = "Reset"
 	)
@@ -469,7 +469,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SLIDER,
 		name = "Return to lobby item",
-		description = "Where the §c§lReturn To Lobby &ritem should be placed.",
+		description = "Where the §c§lReturn To Lobby §ritem should be placed.",
 		category = "TNT Tag",
 		subcategory = "Customization",
 		min = 1,
@@ -563,26 +563,26 @@ public class YedelConfig extends Vigilant {
 		);
 		initialize();
 		setCategoryDescription("General",
-			"&9&lYedel&7&lMod " + YedelMod.version + "\nDiscord: &9yedel" +
+			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel" +
 				"\n" +
-				"\n&nCommands:" +
+				"\n§nCommands:" +
 				"\n" +
-				"\n&9/simulatechat (/simc): &7Simulates a given chat message, supports ampersauds for formatting." +
-				"\n&9/settext: &7Adds custom display text, move with &9/movetext &7and remove with &9/cleartext " +
-				"\n&9/settitle: &7Sets the title of the game window." +
-				"\n&9/yedelplaytime (/ypt, /yedelpt): &7Shows your playtime in hours and minutes" +
-				"\n&9/yedelli (/yli, /li): &7Sends you to the lobby/limbo for an invalid character (disconnects on most other servers)" +
-				"\n&9/yping (/yp): &7Shows an estimation of your ping using your selected method (customize below)" +
+				"\n§9/simulatechat (/simc): §7Simulates a given chat message, supports ampersauds for formatting." +
+				"\n§9/settext: §7Adds custom display text, move with §9/movetext §7and remove with §9/cleartext " +
+				"\n§9/settitle: §7Sets the title of the game window." +
+				"\n§9/yedelplaytime (/ypt, /yedelpt): §7Shows your playtime in hours and minutes" +
+				"\n§9/yedelli (/yli, /li): §7Sends you to the lobby/limbo for an invalid character (disconnects on most other servers)" +
+				"\n§9/yping (/yp): §7Shows an estimation of your ping using your selected method (customize below)" +
 				"\n" +
-				"\n\n&nKeybinds: " +
+				"\n\n§nKeybinds: " +
 
-				"\n\n&9Market searches:" +
-				"\n&7Search the auction house for your currently held item: Bound to &9K &7by default" +
-				"\n&7Search the bazaar for your currently held item: Bound to &9L &7by default" +
+				"\n\n§9Market searches:" +
+				"\n§7Search the auction house for your currently held item: Bound to §9K §7by default" +
+				"\n§7Search the bazaar for your currently held item: Bound to §9L §7by default" +
 
-				"\n\n&9Easy atlas verdicts (toggleable below):" +
-				"\n&7Insufficient Evidence: Bound to &9O &7by default" +
-				"\n&7Evidence Without Doubt: Bound to &9P &7by default" +
+				"\n\n§9Easy atlas verdicts (toggleable below):" +
+				"\n§7Insufficient Evidence: Bound to §9O §7by default" +
+				"\n§7Evidence Without Doubt: Bound to §9P §7by default" +
 				"\n"
 		);
 		addDependencies();
