@@ -480,8 +480,8 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Projectile throws (1.15.2+)",
-		description = "Swings your hand when using certain items, such as a snowball or water bucket (on the ground)",
+		name = "Projectile throws (1.15+)",
+		description = "Swings your hand when using certain items, such as snowballs and eggs.",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
 	)
@@ -489,7 +489,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Item drops (1.15.2+)",
+		name = "Item drops (1.15+)",
 		description = "Swings your hand when dropping an item",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
