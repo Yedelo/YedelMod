@@ -243,20 +243,7 @@ public class YedelConfig extends Vigilant {
 		placeholder = "//r"
 	)
 	public String randomString = "//r";
-	@Property(
-		type = PropertyType.SELECTOR,
-		name = "Ping method",
-		description =
-			"§9Ping: §7Does /ping command. Works on very few servers." +
-				"\n§9Command: §7Enters a random command and waits for the unknown command response. Works on almost all servers." +
-				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
-				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
-				"\n§9Server list (default): §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
-		category = "Commands",
-		subcategory = "Customization",
-		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
-	)
-	public int pingMethod = 4;
+
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Specified server",
@@ -409,6 +396,22 @@ public class YedelConfig extends Vigilant {
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$yedelmessage;
+
+	// Customization
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Ping method",
+		description =
+			"§9Ping: §7Does /ping command. Works on very few servers." +
+				"\n§9Command: §7Enters a random command and waits for the unknown command response. Works on almost all servers." +
+				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
+				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
+				"\n§9Server list (default): §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect. ",
+		category = "Commands",
+		subcategory = "Customization",
+		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)"}
+	)
+	public int pingMethod = 4;
 
 	/* Keybinds */
 
