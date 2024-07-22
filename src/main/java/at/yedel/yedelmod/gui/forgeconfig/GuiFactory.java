@@ -16,7 +16,7 @@ public class GuiFactory implements IModGuiFactory {
 
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return YedelGuiConfig.class;
+        return YedelConfigBridge.class;
     }
 
     @Override
@@ -34,6 +34,6 @@ public class GuiFactory implements IModGuiFactory {
     }
 
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new YedelGuiConfig(parentScreen);
+        return new YedelConfigBridge(parentScreen);
     }
 }

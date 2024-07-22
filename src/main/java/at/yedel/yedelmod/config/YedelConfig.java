@@ -294,7 +294,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$yedel;
+	public Object command$yedel = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- cleartext",
@@ -303,7 +303,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$cleartext;
+	public Object command$cleartext = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- limbo (li)",
@@ -312,7 +312,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$limbo;
+	public Object command$limbo = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- limbocreative (limbogmc, lgmc)",
@@ -321,7 +321,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$limbocreative;
+	public Object command$limbocreative = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- movehuntingtext",
@@ -330,7 +330,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$movehuntingtext;
+	public Object command$movehuntingtext = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- movetext",
@@ -339,7 +339,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$movetext;
+	public Object command$movetext = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- ping [method]",
