@@ -26,6 +26,8 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 public class YedelConfig extends Vigilant {
 	private final URI video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
+	// Made so Vigilance doesn't complain in logs that properties are null
+	private static final Object object = new Object();
 
 	// Start of config
 	// Start of visible config
@@ -348,7 +350,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$ping;
+	public Object command$ping = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- playtime (pt)",
@@ -357,7 +359,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$playtime;
+	public Object command$playtime = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- setnick [nick]",
@@ -366,7 +368,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$setnick;
+	public Object command$setnick = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- settext [text]",
@@ -375,7 +377,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$settext;
+	public Object command$settext = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- settitle [title]",
@@ -384,7 +386,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$settitle;
+	public Object command$settitle = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- simulatechat (simc) [text]",
@@ -393,7 +395,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$simulatechat;
+	public Object command$simulatechat = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- update [platform]",
@@ -402,7 +404,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$update;
+	public Object command$update = object;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- yedelmessage (message)",
@@ -411,7 +413,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$yedelmessage;
+	public Object command$yedelmessage = object;
 
 	// Customization
 	@Property(
