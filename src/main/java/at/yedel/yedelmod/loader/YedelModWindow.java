@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -19,11 +20,12 @@ public class YedelModWindow {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch (Exception whatever) {
-            throw new RuntimeException(whatever);
+        catch (Exception e) {
+            e.printStackTrace();
         }
+        JFrame mainFrame = new JFrame();
         int option = JOptionPane.showOptionDialog(
-                null,
+            mainFrame,
                 "You launched YedelMod as a jar file! Do you want to copy the mod file?",
                 "YedelMod",
                 JOptionPane.YES_NO_OPTION,

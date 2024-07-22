@@ -23,12 +23,16 @@ loom {
 
     launchConfigs {
         getByName("client") {
+            // enable this when mod api is needed
+            // property("fml.coreMods.load", "at.yedel.yedelmod.loader.YedelModLoadingPlugin")
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
-            if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) arg(
-                "--resourcePackDir",
-                "../../../../Desktop/resourcepackfolder"
-            )
+            if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) {
+                arg(
+                    "--resourcePackDir",
+                    "../../../../Desktop/resourcepackfolder"
+                )
+            }
         }
     }
 
@@ -41,6 +45,12 @@ loom {
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
 
+repositories {
+    maven("https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.spongepowered.org/repository/maven-public")
+    // maven { url 'https://repo.hypixel.net/repository/Hypixel/' }
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
@@ -52,13 +62,10 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
+    // implementation("net.hypixel:mod-api:1.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
-}
-
-repositories {
-    maven("https://repo.essential.gg/repository/maven-public")
-    maven("https://repo.spongepowered.org/repository/maven-public")
 }
 
 tasks {
@@ -67,6 +74,8 @@ tasks {
 
         manifest.attributes(
             mapOf(
+                // enable this when mod api is needed
+                // "FMLCorePlugin" to "at.yedel.yedelmod.loader.YedelModLoadingPlugin",
                 "FMLCorePluginContainsCorePlugin" to "Yes, yes it does",
                 "ForceLoadAsMod" to "true",
                 "Main-Class" to "at.yedel.yedelmod.loader.YedelModWindow",

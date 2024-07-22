@@ -8,43 +8,64 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import gg.essential.loader.stage0.EssentialSetupTweaker;
-import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 
-public class YedelModTweaker extends EssentialSetupTweaker {
-	public static final Logger logger = LogManager.getLogger("YedelModTweaker");
+@Name("YedelMod Mod Detector")
+@MCVersion("1.8.9")
+public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
+	public static final Logger logger = LogManager.getLogger("YedelMod Mod Detector");
 	private final URI hypixelModApiUri = new URI("https://modrinth.com/mod/hypixel-mod-api");
+	private final boolean dontCrashGame = Boolean.getBoolean("yedelmod.modapi.disablecrash");
 
-	public YedelModTweaker() throws URISyntaxException {}
+	public YedelModLoadingPlugin() throws URISyntaxException {}
 
 	@Override
-	public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
-		super.acceptOptions(args, gameDir, assetsDir, profile);
+	public String[] getASMTransformerClass() {
+		return new String[0];
+	}
 
+	@Override
+	public String getModContainerClass() {
+		return null;
+	}
+
+	@Override
+	public String getSetupClass() {
+		return null;
+	}
+
+	@Override
+	public void injectData(Map<String, Object> map) {
 		boolean foundModApi = false;
 
 		FilenameFilter jarFilter = (dir, name) -> name.endsWith(".jar");
 
-		File modDir = new File(gameDir, "mods");
+		File modDir = new File(Launch.minecraftHome, "mods");
 		File deepModDir = new File(modDir, "1.8.9");
-
 		File[] modFiles = modDir.listFiles(jarFilter);
 		File[] deepModFiles = deepModDir.listFiles(jarFilter);
 
@@ -74,28 +95,46 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 				}
 			}
 			catch (IOException e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 		}
-		if (! foundModApi) {
+		if (!foundModApi) {
 			logger.fatal("YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!");
 			logger.fatal("Please download the mod at https://modrinth.com/mod/hypixel-mod-api.");
-			showSomeDialogBox();
-			// exit the game here
+			logger.fatal("If this was an error, message yedel on discord or make an issue on the GitHub page.");
+			logger.fatal("If you believe you can still run the game, use the -Dyedelmod.modapi.disablecrash flag on next launch.");
+			showErrorDialogBox();
+			if (!dontCrashGame) {
+				try {
+					Method exitJava = Class.forName("java.lang.Shutdown").getDeclaredMethod("exit", Integer.TYPE);
+					exitJava.setAccessible(true == true);
+					exitJava.invoke(null, 71400);
+				}
+				catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
+					   NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				logger.warn("- On property, skipping game crash! This can cause unexpected behavior!");
+			}
 		}
 	}
 
-	private void showSomeDialogBox() {
+	private void showErrorDialogBox() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		JFrame mainframe = new JFrame();
 		int option = JOptionPane.showOptionDialog(
-			null,
+			mainframe,
 			"YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!" +
-				"\nPlease download the mod at https://modrinth.com/mod/hypixel-mod-api.",
+				"\nPlease download the mod at https://modrinth.com/mod/hypixel-mod-api." +
+				"\nIf this was an error, message yedel on discord or make an issue on the GitHub page." +
+				"\nIf you believe you can still run the game, use the -Dyedelmod.modapi.disablecrash flag on next launch.",
 			"YedelMod",
 			JOptionPane.YES_NO_OPTION,
 			JOptionPane.ERROR_MESSAGE,
@@ -114,17 +153,7 @@ public class YedelModTweaker extends EssentialSetupTweaker {
 	}
 
 	@Override
-	public void injectIntoClassLoader(LaunchClassLoader classLoader) {
-		super.injectIntoClassLoader(classLoader);
-	}
-
-	@Override
-	public String getLaunchTarget() {
-		return super.getLaunchTarget();
-	}
-
-	@Override
-	public String[] getLaunchArguments() {
-		return super.getLaunchArguments();
+	public String getAccessTransformerClass() {
+		return null;
 	}
 }

@@ -59,7 +59,7 @@ public class UpdateManager {
                 checkVersionInThread(source, type);
             }
             catch (Exception e) {
-                throw new RuntimeException(e);
+				e.printStackTrace();
             }
         }, "YedelMod").start();
     }
@@ -124,7 +124,7 @@ public class UpdateManager {
                     Desktop.getDesktop().browse(new URI(source.link));
                 }
                 catch (IOException | URISyntaxException e) {
-                    throw new RuntimeException(e);
+					e.printStackTrace();
                 }
             }
             return null;
