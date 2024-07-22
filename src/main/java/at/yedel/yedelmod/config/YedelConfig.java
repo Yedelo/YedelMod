@@ -496,6 +496,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "General"
 	)
 	public boolean changeTitle = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Damage Tilt (1.19.4+)",
+		description = "Allows you to customize how much your screen hurts when being damaged.",
+		category = "Modern Features",
+		subcategory = "General"
+	)
+	public boolean damageTiltToggled;
 
 	// Hand Swings
 
@@ -520,7 +528,7 @@ public class YedelConfig extends Vigilant {
 	// Customization
 	@Property(
 		type = PropertyType.PERCENT_SLIDER,
-		name = "Damage Tilt (1.19.4+)",
+		name = "Damage Tilt Strength",
 		description = "The amount of camera shake caused by being hurt.",
 		category = "Modern Features",
 		subcategory = "Customization"
@@ -750,9 +758,12 @@ public class YedelConfig extends Vigilant {
 	public void addDependencies() {
 		addDependency("guildWelcomeMessage", "guildWelcome");
 		addDependency("dropperGGDelay", "dropperGG");
+		addDependency("randomString", "randomPlaceholderToggled");
 		addDependency("startStrengthColor", "strengthIndicators");
 		addDependency("endStrengthColor", "strengthIndicators");
 		addDependency("favoriteServer", "buttonFavoriteServer");
+
+		addDependency("damageTiltStrength", "damageTiltToggled");
 
 		addDependency("bhDisplay", "bountyHunting");
 		addDependency("bhSounds", "bountyHunting");
