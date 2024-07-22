@@ -26,6 +26,9 @@ public abstract class MixinEntityPlayerSP extends EntityLivingBase implements Sw
 
     @ModifyVariable(method = "sendChatMessage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private String yedelmod$replaceChat(String message) {
-        return message.replace(YedelConfig.getInstance().randomString, "@" + TextUtils.randomUuid(8));
+        if (YedelConfig.getInstance().randomPlaceholderToggled) {
+            return message.replace(YedelConfig.getInstance().randomString, "@" + TextUtils.randomUuid(8));
+        }
+        else return message;
     }
 }

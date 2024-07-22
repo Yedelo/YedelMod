@@ -107,6 +107,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean guildWelcome = false;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Display text",
+		description = "Show text which can be customized with /settext and cleared with /cleartext, supporting color codes with ampersands (&).",
+		category = "Features",
+		subcategory = "Features"
+	)
+	public boolean displayTextToggled;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -117,6 +125,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean dropperGG = isAutoGGLoaded();
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Random placeholder",
+		description = "Type a random placeholder (specified below) to replace it with a random string from a UUID.",
+		category = "Features",
+		subcategory = "Features"
+	)
+	public boolean randomPlaceholderToggled;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -236,7 +252,7 @@ public class YedelConfig extends Vigilant {
 	public int endStrengthColor = 2;
 	@Property(
 		type = PropertyType.TEXT,
-		name = "Random placeholder",
+		name = "Random placeholder text",
 		description = "When this is typed in chat, it will be replaced with a random string. §cBe careful not to use short placeholders to not spam excessively.",
 		category = "Features",
 		subcategory = "Customization",
@@ -567,14 +583,6 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean bhSounds = true;
-	@Property(
-		type = PropertyType.SWITCH,
-		name = "Give items to play again and leave the game",
-		description = "Mimics spectator items, useful if you have already lost.",
-		category = "TNT Tag",
-		subcategory = "Features"
-	)
-	public boolean bhClickables = true;
 
 	@Property(
 		type = PropertyType.BUTTON,
@@ -625,26 +633,6 @@ public class YedelConfig extends Vigilant {
 		placeholder = "Replace"
 	)
 	public String nick = "";
-	@Property(
-		type = PropertyType.SLIDER,
-		name = "Play again item",
-		description = "Where the §b§lPlay Again §ritem should be placed.",
-		category = "TNT Tag",
-		subcategory = "Customization",
-		min = 1,
-		max = 9
-	)
-	public int playAgainItem = 8;
-	@Property(
-		type = PropertyType.SLIDER,
-		name = "Return to lobby item",
-		description = "Where the §c§lReturn To Lobby §ritem should be placed.",
-		category = "TNT Tag",
-		subcategory = "Customization",
-		min = 1,
-		max = 9
-	)
-	public int returnToLobbyItem = 9;
 
 	// End of visible config
 
@@ -737,7 +725,7 @@ public class YedelConfig extends Vigilant {
 		setCategoryDescription("Commands",
 			"Description of this mod's subcommands, all under /yedel. " +
 				"\nFormat: §9- command (any aliases) [arguments]" +
-				"\nExample: §9- simulatechat (simc) [text] -> /yedel simc Hi!"
+				"\nExample: §9- simulatechat (simc) [text] §7-> §9/yedel simc Hi!"
 		);
 		setCategoryDescription("Modern Features", "Features backported from newer versions of the game.");
 		setCategoryDescription("TNT Tag", "Features relating to TNT Tag, mainly bounty hunting.");
@@ -766,12 +754,9 @@ public class YedelConfig extends Vigilant {
 
 		addDependency("bhDisplay", "bountyHunting");
 		addDependency("bhSounds", "bountyHunting");
-		addDependency("bhClickables", "bountyHunting");
 		addDependency("openHuntingGui", "bountyHunting");
 		addDependency("playSelection", "bountyHunting");
 		addDependency("playKill", "bountyHunting");
-		addDependency("playAgainItem", "bountyHunting");
-		addDependency("returnToLobbyItem", "bountyHunting");
 	}
 
 	private static final YedelConfig instance;

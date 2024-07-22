@@ -49,7 +49,7 @@ public class CustomText {
 
     @SubscribeEvent
     public void onRenderGame(RenderGameOverlayEvent.Text event) {
-        if (shouldDisplay) {
+        if (YedelConfig.getInstance().displayTextToggled && shouldDisplay) {
             minecraft.fontRendererObj.drawStringWithShadow(displayedText, x, y, 0xffffffff);
         }
     }

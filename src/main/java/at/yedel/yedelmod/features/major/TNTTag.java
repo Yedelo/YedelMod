@@ -16,17 +16,12 @@ import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -42,8 +37,6 @@ public class TNTTag {
     }
 
     private final ArrayList<String> players = new ArrayList<>();
-    private final ItemStack playItemStack = new ItemStack(Item.getByNameOrId("minecraft:paper")).setStackDisplayName("§b§lPlay Again §r§7(Right Click)");
-    private final ItemStack leaveGameStack = new ItemStack(Item.getByNameOrId("minecraft:bed")).setStackDisplayName("§r§c§lReturn To Lobby §r§7(Right Click)");
     private final ArrayList<String> lines = new ArrayList<>(4); // Display
     private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
@@ -62,20 +55,6 @@ public class TNTTag {
         lines.add("§a" + YedelConfig.getInstance().points + " points");
         lines.add("§a" + YedelConfig.getInstance().kills + " kills");
         lines.add("");
-    }
-
-    @SubscribeEvent
-    public void onRenderTagLayoutEdtior(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!(event.gui instanceof GuiContainer)) return;
-        if (Objects.equals(((GuiContainer) event.gui).inventorySlots.getSlot(0).inventory.getName(), "Layout Editor - TNT Tag") && YedelConfig.getInstance().bhClickables) {
-            int width = event.gui.width;
-            FontRenderer fontRenderer = minecraft.fontRendererObj;
-            fontRenderer.drawStringWithShadow("§r§b§lPlay Again §r§7(Right Click) §r| Slot " + YedelConfig.getInstance().playAgainItem, (float) (width - 165) / 2, 30, 16777215);
-            fontRenderer.drawStringWithShadow("§r§c§lReturn To Lobby §r§7(Right Click) §r| Slot " + YedelConfig.getInstance().returnToLobbyItem, (float) (width - 203) / 2, 30 + fontRenderer.FONT_HEIGHT + 2, 16777215);
-            if (YedelConfig.getInstance().playAgainItem == YedelConfig.getInstance().returnToLobbyItem) {
-                fontRenderer.drawStringWithShadow("§c§lYour clickables are conflicting! Change them in the config.", (float) (width - 351) / 2, 30 + 2 * (fontRenderer.FONT_HEIGHT + 2), 16777215);
-            }
-        }
     }
 
     @SubscribeEvent
@@ -112,10 +91,6 @@ public class TNTTag {
         if (!YedelConfig.getInstance().bountyHunting || !playingTag || !event.message.getUnformattedText().endsWith("has started!"))
             return;
         players.clear();
-        if (YedelConfig.getInstance().bhClickables) {
-            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.getInstance().playAgainItem - 1, playItemStack);
-            minecraft.thePlayer.inventory.setInventorySlotContents(YedelConfig.getInstance().returnToLobbyItem - 1, leaveGameStack);
-        }
         for (NetworkPlayerInfo playerInfo: minecraft.getNetHandler().getPlayerInfoMap()) {
             players.add(playerInfo.getGameProfile().getName());
         }
@@ -189,22 +164,6 @@ public class TNTTag {
             double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
             String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
             ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64); // make this 64 later change
-        }
-    }
-
-    @SubscribeEvent
-    public void onInteractHoldingClickables(PlayerInteractEvent event) {
-        if (!playingTag || !YedelConfig.getInstance().bhClickables) return;
-        ItemStack item = minecraft.thePlayer.getHeldItem();
-        if (item == null) return;
-        String itemName = item.getDisplayName();
-        if (Objects.equals(itemName, "§b§lPlay Again §r§7(Right Click)")) {
-            Chat.command("play tnt_tntag");
-            event.setCanceled(true);
-        }
-        else if (Objects.equals(itemName, "§r§c§lReturn To Lobby §r§7(Right Click)")) {
-            Chat.command("lobby");
-            event.setCanceled(true);
         }
     }
 
