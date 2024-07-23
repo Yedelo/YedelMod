@@ -18,7 +18,7 @@ import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.update.UpdateManager;
 import at.yedel.yedelmod.update.UpdateSource;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.messages;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import com.google.gson.JsonObject;
@@ -63,7 +63,7 @@ public class YedelCommand extends CommandBase {
 				CustomText.getInstance().setDisplayedText("");
 				YedelConfig.getInstance().displayedText = "";
 				YedelConfig.getInstance().save();
-				Chat.display(messages.clearedDisplayText);
+				Chat.display(Messages.clearedDisplayText);
 				break;
 			case "limbo":
 			case "li":
@@ -90,7 +90,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "setnick":
 				if (noSecondArg) {
-					Chat.display(messages.enterValidNick);
+					Chat.display(Messages.enterValidNick);
 					return;
 				}
 				Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
@@ -99,7 +99,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settext":
 				if (noSecondArg) {
-					Chat.display(messages.enterValidText);
+					Chat.display(Messages.enterValidText);
 					return;
 				}
 				String displayText = TextUtils.joinArgs(args).substring(8);
@@ -111,7 +111,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settitle":
 				if (noSecondArg) {
-					Chat.display(messages.enterValidTitle);
+					Chat.display(Messages.enterValidTitle);
 					return;
 				}
 				String title = TextUtils.joinArgs(args).substring(9);
@@ -160,17 +160,17 @@ public class YedelCommand extends CommandBase {
 						}
 						JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
 						String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
-						Chat.display(messages.messageFromYedel);
+						Chat.display(Messages.messageFromYedel);
 						Chat.display(formattedMessage);
 					}
 					catch (Exception e) {
 						LogManager.getLogger("Mod Message").error("Couldn't get mod message");
-						Chat.display(messages.couldntGetMessage);
+						Chat.display(Messages.couldntGetMessage);
 					}
 				}, "YedelMod").start();
 				break;
 			default:
-				Chat.display(messages.unknownSubcommandMessage);
+				Chat.display(Messages.unknownSubcommandMessage);
 		}
 	}
 
@@ -188,7 +188,7 @@ public class YedelCommand extends CommandBase {
 		"cleartext", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
 	};
 	private final String[] pingTabCompletions = new String[] {
-		"ping", "command", "tab", "stats", "list"
+		"ping", "command", "tab", "stats", "list", "hypixel"
 	};
 	private final String[] updateTabCompletions = new String[] {
 		"modrinth", "github"

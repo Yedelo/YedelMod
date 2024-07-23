@@ -17,6 +17,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class ChangeTitle {
+    private ChangeTitle() {}
     private static final ChangeTitle instance = new ChangeTitle();
 
     public static ChangeTitle getInstance() {

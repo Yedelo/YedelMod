@@ -19,6 +19,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class SacrificeDisplay {
+    private SacrificeDisplay() {}
     private static final SacrificeDisplay instance = new SacrificeDisplay();
 
     public static SacrificeDisplay getInstance() {

@@ -13,6 +13,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class CustomText {
+    private CustomText() {}
     private static final CustomText instance = new CustomText();
 
     public static CustomText getInstance() {

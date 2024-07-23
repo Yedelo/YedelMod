@@ -27,9 +27,9 @@ public class ItemSwings {
         return instance;
     }
 
-    private final List swingItems;
+    private final List<String> swingItems;
 
-    public ItemSwings() {
+    private ItemSwings() {
         swingItems = Arrays.asList(
                 "minecraft:egg",
                 "minecraft:ender_eye",

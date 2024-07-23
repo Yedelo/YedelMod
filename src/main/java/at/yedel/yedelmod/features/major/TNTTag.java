@@ -8,10 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.events.GameJoinEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.messages;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -50,7 +49,7 @@ public class TNTTag {
     private boolean dead;
     private String playerName;
 
-    public TNTTag() {
+    private TNTTag() {
         lines.add("§c§lBounty §f§lHunting");
         lines.add("§a" + YedelConfig.getInstance().points + " points");
         lines.add("§a" + YedelConfig.getInstance().kills + " kills");
@@ -68,8 +67,7 @@ public class TNTTag {
         }
     }
 
-    @SubscribeEvent
-    public void onTNTTagJoin(GameJoinEvent.TNTJoinEvent event) {
+    public void onTNTTagJoin() {
         playingTag = true;
         if (!YedelConfig.getInstance().bountyHunting) return;
         playerName = minecraft.thePlayer.getName();
@@ -80,7 +78,7 @@ public class TNTTag {
         lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
         lines.set(3, "");
         if (YedelConfig.getInstance().bhFirst) {
-            Chat.display(messages.firstTime);
+            Chat.display(Messages.firstTime);
             YedelConfig.getInstance().bhFirst = false;
             YedelConfig.getInstance().save();
         }
@@ -178,8 +176,8 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onRoundEnd(ClientChatReceivedEvent event) {
-        String msg = event.message.getUnformattedText();
         if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
+        String msg = event.message.getUnformattedText();
         Matcher peopleDeathMatcher = personBlewUpRegex.matcher(msg);
         while (peopleDeathMatcher.find()) {
             String personDied = peopleDeathMatcher.group("personThatBlewUp");
@@ -208,7 +206,7 @@ public class TNTTag {
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
         if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
-            Chat.display(messages.pleaseChangeNick);
+            Chat.display(Messages.pleaseChangeNick);
         }
     }
 

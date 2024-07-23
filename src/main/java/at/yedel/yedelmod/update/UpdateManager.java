@@ -13,7 +13,7 @@ import java.util.Objects;
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.Constants.messages;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,12 +27,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static at.yedel.yedelmod.YedelMod.minecraft;
 import static at.yedel.yedelmod.utils.Constants.logo;
 
 
 
 public class UpdateManager {
+    private UpdateManager() {}
     private static final UpdateManager instance = new UpdateManager();
 
     public static UpdateManager getInstance() {
@@ -95,7 +95,7 @@ public class UpdateManager {
             }
             if (Objects.equals(type, "chat")) {
                 if (!Objects.equals(version, YedelMod.version)) sendUpdateMessage(source, version);
-                else Chat.display(messages.latestVersion);
+                else Chat.display(Messages.latestVersion);
             }
             else {
                 if (!Objects.equals(version, YedelMod.version)) sendUpdateNotification(source, version);
@@ -108,12 +108,12 @@ public class UpdateManager {
     }
 
     private void sendUpdateMessage(UpdateSource source, String version) {
-        minecraft.thePlayer.addChatMessage(
-                new ChatComponentText(
-                        logo + " §eVersion " + version + " is avaliable on ")
-                        .appendSibling(source.msg)
-                        .appendSibling(new ChatComponentText(" §e§nClick to update.")
-                        )
+        Chat.display(
+            new ChatComponentText(
+                logo + " §eVersion " + version + " is avaliable on ")
+                .appendSibling(source.msg)
+                .appendSibling(new ChatComponentText(" §e§nClick to update.")
+                )
         );
     }
 

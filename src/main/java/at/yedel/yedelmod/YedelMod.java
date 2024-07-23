@@ -11,7 +11,6 @@ import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
-import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.PlaytimeSchedule;
 import at.yedel.yedelmod.features.SacrificeDisplay;
 import at.yedel.yedelmod.features.major.DefusalHelper;
@@ -22,10 +21,10 @@ import at.yedel.yedelmod.features.major.TNTTag;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.ItemSwings;
+import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.update.UpdateManager;
 import at.yedel.yedelmod.utils.Functions;
-import at.yedel.yedelmod.utils.ScoreboardName;
-import at.yedel.yedelmod.utils.YedelModPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -114,11 +113,9 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(FavoriteServerButton.getInstance());
 		MinecraftForge.EVENT_BUS.register(Functions.getInstance().getEvents());
 		MinecraftForge.EVENT_BUS.register(ItemSwings.getInstance());
-		MinecraftForge.EVENT_BUS.register(LimboCreativeCheck.getInstance());
 		MinecraftForge.EVENT_BUS.register(MarketSearch.getInstance());
 		MinecraftForge.EVENT_BUS.register(PingResponse.getInstance());
 		MinecraftForge.EVENT_BUS.register(SacrificeDisplay.getInstance());
-		MinecraftForge.EVENT_BUS.register(ScoreboardName.getInstance().getEvents());
 		MinecraftForge.EVENT_BUS.register(StrengthIndicators.getInstance());
 		MinecraftForge.EVENT_BUS.register(TNTTag.getInstance());
 		MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
@@ -133,6 +130,8 @@ public class YedelMod {
 		ClientRegistry.registerKeyBinding(bzSearchKeybind);
 		ClientRegistry.registerKeyBinding(insufficientKeybind);
 		ClientRegistry.registerKeyBinding(sufficientKeybind);
+
+		HypixelManager.getInstance().setup();
 	}
 
 	@EventHandler

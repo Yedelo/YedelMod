@@ -15,6 +15,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class PingResponse {
+    private PingResponse() {}
     private static final PingResponse instance = new PingResponse();
 
     public static PingResponse getInstance() {
@@ -28,7 +29,7 @@ public class PingResponse {
             event.setCanceled(true);
             float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
             Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(command)");
-            minecraft.thePlayer.playSound("random.successful_hit", (float) 10, (float) (delay * -0.006 + 2));
+            minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (delay * -0.006 + 2));
             PingSender.getInstance().commandCheck = false;
         }
     }
@@ -39,7 +40,7 @@ public class PingResponse {
         if (event.getPacket() instanceof S37PacketStatistics) {
             float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
             Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(stats)");
-            minecraft.thePlayer.playSound("random.successful_hit", (float) 10, (float) (delay * -0.006 + 2));
+            minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (delay * -0.006 + 2));
             PingSender.getInstance().statsCheck = false;
         }
     }
@@ -50,9 +51,17 @@ public class PingResponse {
         if (event.getPacket() instanceof S3APacketTabComplete) {
             float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
             Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(tab)");
-            minecraft.thePlayer.playSound("random.successful_hit", (float) 10, (float) (delay * -0.006 + 2));
+            minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (delay * -0.006 + 2));
             PingSender.getInstance().tabCheck = false;
         }
+    }
+
+    public void onHypixelPingPacket() {
+        if (!PingSender.getInstance().hypixelCheck) return;
+        float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+        Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(hypixel)");
+        minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (delay * -0.006 + 2));
+        PingSender.getInstance().hypixelCheck = false;
     }
 
     // Server list handled in ping sender

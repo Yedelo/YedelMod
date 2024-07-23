@@ -2,41 +2,34 @@ package at.yedel.yedelmod.features;
 
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-;
-
 
 
 public class AutoGuildWelcome {
+    private AutoGuildWelcome() {}
     private static final AutoGuildWelcome instance = new AutoGuildWelcome();
 
     public static AutoGuildWelcome getInstance() {
         return instance;
     }
 
+    public final Pattern guildJoinPattern = Pattern.compile("(?<newMember>\\w+) joined the guild!");
+
     @SubscribeEvent
     public void onGuildJoinMessage(ClientChatReceivedEvent event) {
         if (!YedelConfig.getInstance().guildWelcome) return;
         String msg = event.message.getUnformattedText();
-        if (!msg.endsWith("joined the guild!")) return;
-        if (msg.contains("[")) { // ranked
-            if (!msg.startsWith("[")) return; // fake messages ending in "joined the guild!"
+        Matcher guildJoinMatcher = guildJoinPattern.matcher(msg);
+        while (guildJoinMatcher.find()) {
+            String newMember = guildJoinMatcher.group("newMember");
+            Chat.command("gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
         }
-
-        String guildName;
-
-        int indexOfSpace = msg.indexOf(" ");
-        if (msg.contains("[")) {
-            int indexOfGuildJoin = msg.indexOf(" joined the guild!");
-            guildName = msg.substring(indexOfSpace + 1, indexOfGuildJoin);
-        }
-        else {
-            guildName = msg.substring(0, indexOfSpace);
-        }
-        Chat.command("gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", guildName));
     }
 }

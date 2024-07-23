@@ -14,6 +14,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class InventoryClicker {
+    private InventoryClicker() {}
     private static final InventoryClicker instance = new InventoryClicker();
 
     public static InventoryClicker getInstance() {

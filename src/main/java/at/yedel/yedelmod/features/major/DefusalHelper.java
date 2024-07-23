@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class DefusalHelper {
+    private DefusalHelper() {}
     private static final DefusalHelper instance = new DefusalHelper();
 
     public static DefusalHelper getInstance() {

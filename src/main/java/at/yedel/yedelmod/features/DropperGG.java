@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class DropperGG {
+    private DropperGG() {}
     private static final DropperGG instance = new DropperGG();
 
     public static DropperGG getInstance() {

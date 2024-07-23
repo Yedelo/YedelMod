@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.messages;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,6 +19,7 @@ public class YedelCheck {
     // alreadyWarned is not supposed to be saved
 
     // Also used for the first time message
+    private YedelCheck() {}
     private static final YedelCheck instance = new YedelCheck();
 
     public static YedelCheck getInstance() {
@@ -32,13 +33,13 @@ public class YedelCheck {
     public void onServerChange(JoinGamePacketEvent event) {
         if (YedelUtils && !alreadyWarned) {
             ThreadManager.scheduleOnce(() -> {
-                Chat.display(messages.YedelUtilsMessage);
+                Chat.display(Messages.YedelUtilsMessage);
             }, 3, TimeUnit.SECONDS);
             alreadyWarned = false;
         }
         if (YedelConfig.getInstance().first) {
             ThreadManager.scheduleOnce(() -> {
-                Chat.display(messages.welcomeMessage);
+                Chat.display(Messages.welcomeMessage);
                 YedelConfig.getInstance().first = false;
                 YedelConfig.getInstance().save();
             }, 1000, TimeUnit.MILLISECONDS);

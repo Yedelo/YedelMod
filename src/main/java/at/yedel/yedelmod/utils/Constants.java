@@ -14,7 +14,7 @@ public class Constants {
     public static Notifications notifications = EssentialAPI.getNotifications();
     public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
 
-    public static class messages { // To avoid making the same ChatComponentTexts every time the message is displayed
+    public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
         public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
         public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
@@ -36,6 +36,8 @@ public class Constants {
         public static ChatComponentText enterValidNick = new ChatComponentText(logo + " §cYou must enter a valid nick!");
         public static ChatComponentText couldntGetMessage = new ChatComponentText(logo + " §cCouldn't get mod message!");
         public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
+        public static ChatComponentText notOnHypixel = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
+        public static ChatComponentText hypixelRateLimited = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
     }
 
     public static final Pattern[] skywarsKillPatterns = {

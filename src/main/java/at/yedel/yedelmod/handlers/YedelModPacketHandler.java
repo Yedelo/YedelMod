@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.utils;
+package at.yedel.yedelmod.handlers;
 
 
 

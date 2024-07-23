@@ -23,10 +23,14 @@ loom {
 
     launchConfigs {
         getByName("client") {
-            // enable this when mod api is needed
-            // property("fml.coreMods.load", "at.yedel.yedelmod.loader.YedelModLoadingPlugin")
+            property(
+                "fml.coreMods.load",
+                "at.yedel.yedelmod.loader.YedelModLoadingPlugin"
+            ) // forge in dev doesn't pick this up from the mod
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
+            arg("--version", "YedelMod environment") // UnknownFMLProfile looks pretty bad so replacing it
+            // this is just for me to used shared resource packs with other instances
             if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) {
                 arg(
                     "--resourcePackDir",
@@ -48,7 +52,7 @@ configurations.implementation.get().extendsFrom(embed)
 repositories {
     maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.spongepowered.org/repository/maven-public")
-    // maven { url 'https://repo.hypixel.net/repository/Hypixel/' }
+    maven("https://repo.hypixel.net/repository/Hypixel/")
 }
 
 dependencies {
@@ -62,7 +66,7 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
-    // implementation("net.hypixel:mod-api:1.0")
+    implementation("net.hypixel:mod-api:1.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
@@ -74,8 +78,7 @@ tasks {
 
         manifest.attributes(
             mapOf(
-                // enable this when mod api is needed
-                // "FMLCorePlugin" to "at.yedel.yedelmod.loader.YedelModLoadingPlugin",
+                "FMLCorePlugin" to "at.yedel.yedelmod.loader.YedelModLoadingPlugin",
                 "FMLCorePluginContainsCorePlugin" to "Yes, yes it does",
                 "ForceLoadAsMod" to "true",
                 "Main-Class" to "at.yedel.yedelmod.loader.YedelModWindow",

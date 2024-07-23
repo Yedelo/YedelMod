@@ -12,6 +12,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class Functions {
+    private Functions() {}
     private static final Functions instance = new Functions();
 
     public static Functions getInstance() {
@@ -37,7 +38,7 @@ public class Functions {
         screenToOpen = screen;
     }
 
-    public class Events {
+    public static class Events {
         @SubscribeEvent
         public void onTickEnd(TickEvent event) {
             if (screenToOpen != null) {

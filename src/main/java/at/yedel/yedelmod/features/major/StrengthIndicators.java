@@ -5,15 +5,16 @@ package at.yedel.yedelmod.features.major;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.events.RenderScoreEvent;
+import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.ScoreboardName;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import com.google.common.collect.Maps;
@@ -37,7 +38,7 @@ public class StrengthIndicators {
 
     private final Map<Integer, String> colorMap = new HashMap<>(); // Config array values -> color codes
 
-    public StrengthIndicators() {
+    private StrengthIndicators() {
         colorMap.put(0, "§4");
         colorMap.put(1, "§c");
         colorMap.put(2, "§6");
@@ -55,7 +56,6 @@ public class StrengthIndicators {
         colorMap.put(14, "§8");
         colorMap.put(15, "§0");
         ThreadManager.scheduleRepeat(() -> {
-            if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
             for (Map.Entry<String, Double> entry: strengthPlayers.entrySet()) {
                 String player = entry.getKey();
                 Double seconds = entry.getValue();
@@ -69,7 +69,7 @@ public class StrengthIndicators {
                     endStrengthPlayers.remove(player);
                 }
             }
-        }, 100);
+        }, 100, TimeUnit.MILLISECONDS);
     }
 
     @SubscribeEvent
@@ -81,7 +81,7 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void onKillMessage(ClientChatReceivedEvent event) {
-        if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
+        if (!YedelConfig.getInstance().strengthIndicators || !HypixelManager.getInstance().getInSkywars()) return;
         String message = event.message.getUnformattedText();
         for (Pattern killPattern: Constants.skywarsKillPatterns) {
             Matcher messageMatcher = killPattern.matcher(message);
@@ -103,7 +103,6 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void onRenderStrengthPlayer_HealthTag(RenderScoreEvent event) {
-        if (!YedelConfig.getInstance().strengthIndicators || !ScoreboardName.getInstance().getInSkywars()) return;
         EntityPlayer entityPlayer = event.getPlayer();
         String entityName = entityPlayer.getName();
         boolean inStart = startStrengthPlayers.contains(entityName);

@@ -4,8 +4,11 @@ package at.yedel.yedelmod.features.major.ping;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.messages;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import gg.essential.api.EssentialAPI;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 
@@ -14,6 +17,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class PingSender {
+    private PingSender() {}
     private static final PingSender instance = new PingSender();
 
     public static PingSender getInstance() {
@@ -24,6 +28,7 @@ public class PingSender {
     public boolean commandCheck = false;
     public boolean statsCheck = false;
     public boolean tabCheck = false;
+    public boolean hypixelCheck = false;
     public long lastTime;
 
     public void processPingCommand(String pingArg) {
@@ -52,6 +57,10 @@ public class PingSender {
             case "l":
                 serverListPing();
                 break;
+            case "hypixel":
+            case "h":
+                hypixelPing();
+                break;
             default:
                 defaultMethodPing();
                 break;
@@ -72,6 +81,10 @@ public class PingSender {
             case 3:
                 statsPing();
                 break;
+            case 5:
+                hypixelPing();
+                break;
+            case 4:
             default:
                 serverListPing();
                 break;
@@ -100,11 +113,21 @@ public class PingSender {
         statsCheck = true;
     }
 
+    public void hypixelPing() {
+        // Yedel uses essential features ???
+        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+            lastTime = System.nanoTime();
+            HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
+            hypixelCheck = true;
+        }
+        else Chat.display(Messages.notOnHypixel);
+    }
+
     public void serverListPing() {
-        if (minecraft.isSingleplayer()) Chat.display(messages.listPingInSingleplayer);
+        if (minecraft.isSingleplayer()) Chat.display(Messages.listPingInSingleplayer);
         float ping = (float) minecraft.getCurrentServerData().pingToServer;
         if (ping == 0)
-            Chat.display(messages.pingIs0);
+            Chat.display(Messages.pingIs0);
         else {
             Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
             minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (ping * -0.006 + 2));

@@ -6,9 +6,9 @@ import java.util.Objects;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.messages;
-import at.yedel.yedelmod.utils.ScoreboardName;
+import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -24,6 +24,7 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 public class MarketSearch {
+    private MarketSearch() {}
     private static final MarketSearch instance = new MarketSearch();
 
     public static MarketSearch getInstance() {
@@ -37,7 +38,7 @@ public class MarketSearch {
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
         if (YedelMod.getInstance().getAhSearchKeybind().isPressed() && YedelConfig.getInstance().ahSearch) {
-            if (ScoreboardName.getInstance().getInSkyblock()) {
+            if (HypixelManager.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
@@ -49,7 +50,7 @@ public class MarketSearch {
             }
         }
         else if (YedelMod.getInstance().getBzSearchKeybind().isPressed() && YedelConfig.getInstance().bzSearch) {
-            if (ScoreboardName.getInstance().getInSkyblock()) {
+            if (HypixelManager.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = TextUtils.removeFormatting(heldItem.getDisplayName());
@@ -69,7 +70,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                Chat.display(messages.noCookieBuff);
+                Chat.display(Messages.noCookieBuff);
             }
         }
         else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {
@@ -92,7 +93,7 @@ public class MarketSearch {
                 if (itemName.contains("No Product Found")) {
                     bzSearchingClose = false;
                     minecraft.thePlayer.closeScreen();
-                    Chat.display(messages.noItemFound);
+                    Chat.display(Messages.noItemFound);
                 }
             }
         }

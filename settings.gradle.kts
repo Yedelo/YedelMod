@@ -1,7 +1,6 @@
 rootProject.name = "YedelMod"
 
 pluginManagement {
-
     repositories {
         gradlePluginPortal()
         mavenCentral()

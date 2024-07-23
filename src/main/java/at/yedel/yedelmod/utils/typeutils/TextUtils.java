@@ -13,21 +13,21 @@ public class TextUtils {
     }
 
     public static String removeFormatting(String string) {
-        return string.replaceAll("[&§].", "");
+        return string.replaceAll("[&§][0123456789abcdefklnor]", "");
     }
 
     public static String removeSection(String string) {
-        return string.replaceAll("§.", "");
+        return string.replaceAll("§[0123456789abcdefklnor]", "");
     }
 
     public static String removeAmpersand(String string) {
-        return string.replaceAll("&.", "");
+        return string.replaceAll("&[0123456789abcdefklnor]", "");
     }
 
-    private static final Pattern ampersandFormattingPattern = Pattern.compile("&(?!\\s)");
+    private static final Pattern ampersandFormattingPattern = Pattern.compile("&([0123456789abcdefklnor])");
 
     public static String replaceAmpersand(String string) {
-        return ampersandFormattingPattern.matcher(string).replaceAll("§");
+        return ampersandFormattingPattern.matcher(string).replaceAll("§$1");
     }
 
     public static String randomUuid(int length) {
