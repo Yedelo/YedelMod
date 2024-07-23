@@ -147,15 +147,6 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Kuudra sacrifice display",
-		description = "Shows the coins needed to get the Kuudra Follower Helmet from the Kuudra Believer.",
-		category = "Features",
-		subcategory = "Features"
-	)
-	public boolean sacrificeDisplay = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "BedWars defusal helper",
 		description = "Highlights redstone for the BedWars defusal challenge.",
 		category = "Features",
