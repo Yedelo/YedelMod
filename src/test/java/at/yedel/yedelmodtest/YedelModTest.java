@@ -4,7 +4,7 @@ package at.yedel.yedelmodtest;
 
 import java.net.URI;
 
-import at.yedel.yedelmod.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

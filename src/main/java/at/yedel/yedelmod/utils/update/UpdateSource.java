@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.update;
+package at.yedel.yedelmod.utils.update;
 
 
 
