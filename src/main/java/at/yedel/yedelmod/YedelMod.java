@@ -3,6 +3,7 @@ package at.yedel.yedelmod;
 
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
@@ -11,7 +12,6 @@ import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
-import at.yedel.yedelmod.features.PlaytimeSchedule;
 import at.yedel.yedelmod.features.major.DefusalHelper;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.MarketSearch;
@@ -23,6 +23,7 @@ import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.utils.Functions;
+import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -118,7 +119,12 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(TNTTag.getInstance());
 		MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
 
-		new PlaytimeSchedule().startSchedule();
+		ThreadManager.scheduleRepeat(() -> {
+			if (minecraft.theWorld != null) {
+				YedelConfig.getInstance().playtimeMinutes++;
+				YedelConfig.getInstance().save();
+			}
+		}, 1, TimeUnit.MINUTES);
 
 		ahSearchKeybind = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
 		bzSearchKeybind = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
