@@ -52,7 +52,7 @@ import org.lwjgl.input.Keyboard;
 public class YedelMod {
 	public static final String modid = "yedelmod";
 	public static final String name = "YedelMod";
-	public static final String version = "1.1.0";
+	public static final String version = "1.2.0";
 	public static final Minecraft minecraft = Minecraft.getMinecraft();
 	@Instance
 	private static YedelMod instance;

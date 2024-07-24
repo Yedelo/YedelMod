@@ -38,7 +38,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SELECTOR,
-		name = "§9Update source",
+		name = "Update source",
 		description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
 		category = "General",
 		subcategory = "Updates",
@@ -48,7 +48,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "§9Automatically check for updates",
+		name = "Automatically check for updates",
 		description = "Checks for updates on game load",
 		category = "General",
 		subcategory = "Updates"
@@ -57,7 +57,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "§9Modrinth link",
+		name = "Modrinth link",
 		description = "Click to open the Modrinth site",
 		category = "General",
 		subcategory = "Updates",
@@ -71,7 +71,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "§9GitHub link",
+		name = "GitHub link",
 		description = "Click to open the GitHub repository",
 		category = "General",
 		subcategory = "Updates",
@@ -85,7 +85,7 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "§9Check for updates",
+		name = "Check for updates",
 		description = "Check for updates with the selected source",
 		category = "General",
 		subcategory = "Updates",
@@ -102,7 +102,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Auto welcome guild members",
-		description = "Automatically welcomes new guild members with a custom message, customize below." +
+		description = "Automatically welcomes new guild members with a customizable message." +
 			"\n§a[VIP] Yedelos §ejoined the guild!" +
 			"\n§2Guild > §b[MVP§8+§b] Yedel §6[Yedel]§f: Welcome, Yedelos!",
 		category = "Features",
@@ -112,7 +112,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Display text",
-		description = "Show text which can be customized with /settext and cleared with /cleartext, supporting color codes with ampersands (&).",
+		description = "Show text which can be customized with -settext and cleared with -cleartext, supporting color codes with ampersands (&).",
 		category = "Features",
 		subcategory = "Features"
 	)
@@ -130,7 +130,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Random placeholder",
-		description = "Type a random placeholder (specified below) to replace it with a random string from a UUID.",
+		description = "Type a customizable placeholder to replace it with a random string from a UUID.",
 		category = "Features",
 		subcategory = "Features"
 	)
@@ -139,7 +139,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "SkyWars strength indicators",
-		description = "Shows people's strength above their nametags. Accounts for Apothecary.",
+		description = "Shows people's strength above their nametags with customizable colors. Accounts for Apothecary.",
 		category = "Features",
 		subcategory = "Features"
 	)
@@ -158,7 +158,7 @@ public class YedelConfig extends Vigilant {
 		type = PropertyType.SWITCH,
 		name = "Limbo creative mode",
 		description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
-			"Use /lgmc in limbo if it doesn't work the first time",
+			"Use -lgmc in limbo if it doesn't work the first time.",
 		category = "Features",
 		subcategory = "Features"
 	)
@@ -166,7 +166,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Favorite server button",
-		description = "Adds a button to the main menu to join a server, specified below",
+		description = "Adds a button to the main menu to join a customizable server address.",
 		category = "Features",
 		subcategory = "Features"
 	)
@@ -185,7 +185,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SLIDER,
 		name = "Delay",
-		description = "Delay for AutoGG, measured in seconds",
+		description = "Delay for AutoGG, measured in seconds.",
 		category = "Features",
 		subcategory = "Customization",
 		max = 5
@@ -265,7 +265,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Customize display text",
-		description = "Customize the display text position, can also be done with /movetext.",
+		description = "Customize the display text position, can also be done with -movetext.",
 		category = "Features",
 		subcategory = "Customization",
 		placeholder = "Open GUI"
@@ -334,9 +334,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- ping [method]",
-		description =
-			"Shows your ping to the server in chat, using several methods. Without an argument, uses the default method customized below." +
-				"Refer to this option for different methods that can be used as an argument.",
+		description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method which can be customized.",
 		category = "Commands",
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
@@ -363,7 +361,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- settext [text]",
-		description = "Sets the display text. This supports color codes with ampersands (&).",
+		description = "Sets the display text, supporting color codes with ampersands (&).",
 		category = "Commands",
 		subcategory = "Commands",
 		customPropertyInfo = EmptyProperty.class
@@ -465,7 +463,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Book background (1.14+)",
-		description = "Draws the default dark background in book GUIs",
+		description = "Draws the default dark background in book GUIs.",
 		category = "Modern Features",
 		subcategory = "General"
 	)
@@ -474,7 +472,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Keep chat history on chat clear (1.15.2+)",
-		description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key)",
+		description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key).",
 		category = "Modern Features",
 		subcategory = "General"
 	)
@@ -483,7 +481,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Change window title (1.15.2+)",
-		description = "Changes the window title on world and server join. \nYou can manually do this with /settitle",
+		description = "Changes the window title on world and server join. \nYou can manually do this with -settitle.",
 		category = "Modern Features",
 		subcategory = "General"
 	)
@@ -511,7 +509,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Item drops (1.15+)",
-		description = "Swings your hand when dropping an item",
+		description = "Swings your hand when dropping an item.",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
 	)
@@ -534,14 +532,14 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Bounty Hunting",
-		description = "Enables bounty hunting",
+		description = "Adds a bounty hunting minigame to TNT Tag.",
 		category = "TNT Tag"
 	)
 	public boolean bountyHunting = true;
 
 	@Property(
 		type = PropertyType.BUTTON,
-		name = "§cReset stats",
+		name = "Reset stats",
 		category = "TNT Tag",
 		placeholder = "Reset"
 	)
@@ -557,7 +555,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Video",
-		description = "This is a complicated feature, watch my video for help!",
+		description = "This is a complicated feature, watch my video if you need help!",
 		category = "TNT Tag",
 		placeholder = "Open video"
 	)
@@ -615,7 +613,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Customize display",
-		description = "Customize the bounty hunting display, can also be done with /movehuntingtext.",
+		description = "Customize the bounty hunting display, can also be done with -movehuntingtext.",
 		category = "TNT Tag",
 		subcategory = "Features",
 		placeholder = "Open GUI"
@@ -730,6 +728,7 @@ public class YedelConfig extends Vigilant {
 				"\nExample: §9- simulatechat (simc) [text] §7-> §9/yedel simc Hi!"
 		);
 		setCategoryDescription("Modern Features", "Features backported from newer versions of the game.");
+		setSubcategoryDescription("Modern Features", "Hand Swings", "Features that add extra hand swings on certain actions. Note: this only swings your hand client-side.");
 		setCategoryDescription("TNT Tag", "Features relating to TNT Tag, mainly bounty hunting.");
 		addDependencies();
 	}
