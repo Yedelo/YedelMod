@@ -10,6 +10,8 @@ Use /yedel (/yedelmod) or the config button in the mod menu for settings and mor
 Use /yedel update or the check for update button in the settings menu to check for updates on Modrinth or GitHub.
 Use /yedel yedelmessage for messages from me regarding the mod. These are usually tips or bug notices.
 
+From version 1.2.0, this mod requires the Hypixel Mod API which can be found [here](https://modrinth.com/mod/hypixel-mod-api). If you do not have the mod, a popup window will appear with instructions to install it.
+
 # Features
 
 <details><summary>Auto welcome guild members</summary>
