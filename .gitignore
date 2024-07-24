@@ -21,3 +21,4 @@ eclipse
 run
 build
 .gradle
+logs
