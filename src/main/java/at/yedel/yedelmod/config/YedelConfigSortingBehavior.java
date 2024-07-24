@@ -33,6 +33,7 @@ public class YedelConfigSortingBehavior extends SortingBehavior {
     public @NotNull Comparator<? super Entry<String, ? extends List<PropertyData>>> getSubcategoryComparator() {
         ArrayList<String> subcategories = new ArrayList<>();
         subcategories.add("Features");
+        subcategories.add("Tweaks");
         subcategories.add("Commands");
         subcategories.add("Keybinds");
         subcategories.add("Customization");

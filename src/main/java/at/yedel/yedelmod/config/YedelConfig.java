@@ -172,6 +172,16 @@ public class YedelConfig extends Vigilant {
 	)
 	public boolean buttonFavoriteServer = true;
 
+	// Tweaks
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Hide missing signature errors",
+		description = "Hide \"Signature is missing from textures payload\" errors from being logged.",
+		category = "Features",
+		subcategory = "Tweaks"
+	)
+	public boolean hideMissingSignatureErrors = true;
+
 	// Customization
 
 	@Property(
@@ -721,6 +731,9 @@ public class YedelConfig extends Vigilant {
 		initialize();
 		setCategoryDescription("General",
 			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel"
+		);
+		setSubcategoryDescription("Features", "Tweaks",
+			"Smaller features that change the game, similar to features in Patcher."
 		);
 		setCategoryDescription("Commands",
 			"Description of this mod's subcommands, all under /yedel. " +
