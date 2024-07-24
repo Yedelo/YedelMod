@@ -175,6 +175,15 @@ public class YedelConfig extends Vigilant {
 	// Tweaks
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Unformat chat logs",
+		description = "Remove formatting that was not removed from chat logs.",
+		category = "Features",
+		subcategory = "Tweaks"
+	)
+	public boolean unformatChatLogs = true;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Hide missing signature errors",
 		description = "Hide \"Signature is missing from textures payload\" errors from being logged.",
 		category = "Features",
