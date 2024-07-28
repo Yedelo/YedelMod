@@ -2,8 +2,9 @@ package at.yedel.yedelmod.commands;
 
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,28 +19,32 @@ import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
+import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.lwjgl.opengl.Display;
 
-import static at.yedel.yedelmod.YedelMod.logger;
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
 public class YedelCommand extends CommandBase {
+	private static final URL modJsonUri;
+
+	static {
+		try {
+			modJsonUri = new URL("https://yedelo.github.io/yedelmod.json");
+		}
+		catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	public String getCommandName() {
 		return "yedel";
@@ -145,30 +150,18 @@ public class YedelCommand extends CommandBase {
 			case "message":
 				new Thread(() -> {
 					try {
-						CloseableHttpClient client = HttpClients.createDefault();
-						HttpGet request = new HttpGet("https://yedelo.github.io/yedelmod.json");
-						request.addHeader("User-Agent", HttpHeaders.USER_AGENT);
-
-						HttpResponse response;
-						response = client.execute(request);
-
-						BufferedReader reader;
-						reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-						StringBuilder result = new StringBuilder();
-						String line;
-						while ((line = reader.readLine()) != null) {
-							result.append(line);
-						}
-						JsonObject jsonResult = new JsonParser().parse(String.valueOf(result)).getAsJsonObject();
-						String formattedMessage = String.valueOf(jsonResult.get("yedelmod-message-formatted")).replaceAll("\"", "");
+						String yedelMessage = Requests.getJsonObject(modJsonUri).
+							getAsJsonObject().
+							get("yedelmod-message-formatted").
+							getAsString();
 						Chat.display(Messages.messageFromYedel);
-						Chat.display(formattedMessage);
+						Chat.display(yedelMessage);
 					}
-					catch (Exception e) {
-						logger.error("Couldn't get mod message", e);
+					catch (IOException e) {
 						Chat.display(Messages.couldntGetMessage);
+						e.printStackTrace();
 					}
-				}, "YedelMod").start();
+				}, "YedelMod Message").start();
 				break;
 			default:
 				Chat.display(Messages.unknownSubcommandMessage);
