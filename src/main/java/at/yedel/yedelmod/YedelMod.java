@@ -25,6 +25,7 @@ import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -38,6 +39,8 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 
@@ -54,8 +57,10 @@ public class YedelMod {
 	public static final String name = "YedelMod";
 	public static final String version = "1.2.0";
 	public static final Minecraft minecraft = Minecraft.getMinecraft();
+
 	@Instance
 	private static YedelMod instance;
+	public static Logger logger = LogManager.getLogger("YedelMod");
 
 	public static YedelMod getInstance() {
 		return instance;
@@ -141,7 +146,7 @@ public class YedelMod {
 	@EventHandler
 	public void checkForUpdates(FMLLoadCompleteEvent event) {
 		if (YedelConfig.getInstance().autoCheckUpdates) {
-			UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "notification");
+			UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 		}
 	}
 

@@ -34,9 +34,9 @@ public abstract class MixinGuiNewChat {
         return !YedelConfig.getInstance().keepChatHistory;
     }
 
-    @ModifyArg(method = "printChatMessageWithOptionalDeletion", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V"))
+    @ModifyArg(method = "printChatMessageWithOptionalDeletion", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V", remap = false))
     private String yedelmod$unformatChatLogs(String message) {
         if (YedelConfig.getInstance().unformatChatLogs) return TextUtils.removeSection(message);
-        return message;
+        else return message;
     }
 }

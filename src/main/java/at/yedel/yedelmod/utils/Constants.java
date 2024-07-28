@@ -2,6 +2,8 @@ package at.yedel.yedelmod.utils;
 
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.regex.Pattern;
 
 import gg.essential.api.EssentialAPI;
@@ -11,14 +13,27 @@ import net.minecraft.util.ChatComponentText;
 
 
 public class Constants {
-    public static Notifications notifications = EssentialAPI.getNotifications();
+	public static final Notifications notifications = EssentialAPI.getNotifications();
     public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
+	public static final URL modrinthApiUrl;
+	public static final URL githubApiUrl;
 
-    public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
+	static {
+		try {
+			modrinthApiUrl = new URL("https://api.modrinth.com/v2/project/yedelmod/version");
+			githubApiUrl = new URL("https://api.github.com/repos/yedelo/yedelmod/releases/latest");
+		}
+		catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
         public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
         public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-        public static ChatComponentText latestVersion = new ChatComponentText(logo + " §cYou are already on the latest version!");
+		public static ChatComponentText upToDateOnModrinth = new ChatComponentText(logo + "§cYou are up to date with the mod on §aModrinth!");
+		public static ChatComponentText upToDateOnGithub = new ChatComponentText(logo + " §cYou are up to date with the mod on §9GitHub!");
         public static ChatComponentText firstTime = new ChatComponentText("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
         public static ChatComponentText pleaseChangeNick = new ChatComponentText("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
         public static ChatComponentText gamemodeCreative = new ChatComponentText(logo + " §eSet gamemode to creative!");

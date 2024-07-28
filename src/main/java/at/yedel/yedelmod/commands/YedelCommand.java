@@ -20,6 +20,7 @@ import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -31,9 +32,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.logging.log4j.LogManager;
 import org.lwjgl.opengl.Display;
 
+import static at.yedel.yedelmod.YedelMod.logger;
 import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
@@ -127,17 +128,17 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "update":
 				if (noSecondArg) {
-					UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+					UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.CHAT);
 					return;
 				}
 				if (secondArg.equals("modrinth")) {
-					UpdateManager.getInstance().checkVersion(UpdateSource.MODRINTH, "chat");
+					UpdateManager.getInstance().checkForUpdates(UpdateSource.MODRINTH, FeedbackMethod.CHAT);
 				}
 				else if (secondArg.equals("github")) {
-					UpdateManager.getInstance().checkVersion(UpdateSource.GITHUB, "chat");
+					UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, FeedbackMethod.CHAT);
 				}
 				else {
-					UpdateManager.getInstance().checkVersion(YedelConfig.getInstance().getUpdateSource(), "chat");
+					UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.CHAT);
 				}
 				break;
 			case "yedelmessage":
@@ -164,7 +165,7 @@ public class YedelCommand extends CommandBase {
 						Chat.display(formattedMessage);
 					}
 					catch (Exception e) {
-						LogManager.getLogger("Mod Message").error("Couldn't get mod message");
+						logger.error("Couldn't get mod message", e);
 						Chat.display(Messages.couldntGetMessage);
 					}
 				}, "YedelMod").start();

@@ -13,6 +13,7 @@ import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
@@ -46,6 +47,11 @@ public class YedelConfig extends Vigilant {
 	)
 	public int updateSource = 0;
 
+	public UpdateSource getUpdateSource() {
+		if (updateSource == 0) return UpdateSource.MODRINTH;
+		else return UpdateSource.GITHUB;
+	}
+
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Automatically check for updates",
@@ -63,9 +69,13 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Updates",
 		placeholder = "Open"
 	)
-	public void openModrinthLink() throws IOException, URISyntaxException {
-		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-			Desktop.getDesktop().browse(new URI(UpdateSource.MODRINTH.link));
+	public void openModrinthLink() {
+		try {
+			Desktop.getDesktop().browse(UpdateSource.MODRINTH.uri);
+		}
+		catch (IOException e) {
+			Constants.notifications.push("YedelMod", "Couldn't open modrinth link!");
+			e.printStackTrace();
 		}
 	}
 
@@ -77,9 +87,13 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Updates",
 		placeholder = "Open"
 	)
-	public void openGitHubRepository() throws IOException, URISyntaxException {
-		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-			Desktop.getDesktop().browse(new URI(UpdateSource.GITHUB.link));
+	public void openGitHubRepository() {
+		try {
+			Desktop.getDesktop().browse(UpdateSource.GITHUB.uri);
+		}
+		catch (IOException e) {
+			Constants.notifications.push("YedelMod", "Couldn't open github link!");
+			e.printStackTrace();
 		}
 	}
 
@@ -92,7 +106,7 @@ public class YedelConfig extends Vigilant {
 		placeholder = "Check"
 	)
 	public void checkForUpdates() {
-		UpdateManager.getInstance().checkVersion(getUpdateSource(), "notification");
+		UpdateManager.getInstance().checkForUpdates(getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 	}
 
 	/* Features */
@@ -578,9 +592,13 @@ public class YedelConfig extends Vigilant {
 		category = "TNT Tag",
 		placeholder = "Open video"
 	)
-	private void watchVideo() throws IOException {
-		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+	private void watchVideo() {
+		try {
 			Desktop.getDesktop().browse(video);
+		}
+		catch (IOException e) {
+			Constants.notifications.push("YedelMod", "Couldn't open video!");
+			e.printStackTrace();
 		}
 	}
 
@@ -762,10 +780,6 @@ public class YedelConfig extends Vigilant {
 
 	private boolean isAutoGGLoaded() {
 		return Loader.isModLoaded("autogg");
-	}
-
-	public UpdateSource getUpdateSource() {
-		return updateSource == 0? UpdateSource.MODRINTH : UpdateSource.GITHUB;
 	}
 
 	public void addDependencies() {

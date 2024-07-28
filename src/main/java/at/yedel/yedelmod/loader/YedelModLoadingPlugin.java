@@ -146,8 +146,8 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 			try {
 				Desktop.getDesktop().browse(hypixelModApiUri);
 			}
-			catch (IOException ignored) {
-
+			catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
