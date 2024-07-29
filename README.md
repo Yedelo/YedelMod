@@ -101,6 +101,22 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 </details>
 
+### Tweaks
+
+Smaller features that change the game, similar to features in Patcher.
+
+<details><summary>Unformat chat logs</summary>
+
+- Removes leftover formatting from chat messages in logs.
+
+</details>
+
+<details><summary>Hide missing signature errors</summary>
+
+- Hides "Signature is missing from textures payload" errors from logs.
+
+</details>
+
 ### TNT Tag
 
 <details><summary>Bounty hunting</summary>
@@ -126,6 +142,12 @@ All commands are under the /yedel command. For example:
 <details><summary>-cleartext</summary>
 
 - Clears the currently set display text.
+
+</details>
+
+<details><summary>-formatting</summary>
+
+- Shows a formatting guide with color and style codes.
 
 </details>
 
