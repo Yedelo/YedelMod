@@ -8,7 +8,10 @@ import java.util.regex.Pattern;
 
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.gui.Notifications;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 
 
 
@@ -32,8 +35,6 @@ public class Constants {
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
         public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
         public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-		public static ChatComponentText upToDateOnModrinth = new ChatComponentText(logo + "§cYou are up to date with the mod on §aModrinth!");
-		public static ChatComponentText upToDateOnGithub = new ChatComponentText(logo + " §cYou are up to date with the mod on §9GitHub!");
         public static ChatComponentText firstTime = new ChatComponentText("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
         public static ChatComponentText pleaseChangeNick = new ChatComponentText("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
         public static ChatComponentText gamemodeCreative = new ChatComponentText(logo + " §eSet gamemode to creative!");
@@ -53,6 +54,28 @@ public class Constants {
         public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
         public static ChatComponentText notOnHypixel = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
         public static ChatComponentText hypixelRateLimited = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
+		private static ChatComponentText formattingCodes =
+			new ChatComponentText(
+				"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:"
+					"\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
+					"\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
+					"\n§8Dark Gray: §8&8     §9Blue: §9&9     §aGreen: §a&a     §bAqua: §b&b" +
+					"\n§cRed: §c&c     §dLight Purple: §d&d     §eYellow: §e&e     §fWhite: §f&f" +
+					"\n" +
+					"\n§lStyle §ncodes§r:" +
+					"\nObfuscated: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
+					"\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
+			);
+		public static IChatComponent formattingGuideMessage = new ChatComponentText(logo + " §e§nHover to view the formatting guide.").
+			setChatStyle(
+				new ChatStyle().
+					setChatHoverEvent(
+						new HoverEvent(
+							HoverEvent.Action.SHOW_TEXT,
+							formattingCodes
+						)
+					)
+			);
     }
 
     public static final Pattern[] skywarsKillPatterns = {

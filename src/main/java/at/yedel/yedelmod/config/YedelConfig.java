@@ -308,14 +308,13 @@ public class YedelConfig extends Vigilant {
 	}
 
 	/* Commands */
-
-	// Commands
+	// Index
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "/yedel (/yedelmod)",
 		description = "The main command, hosting all subcommands. When used with no arguments, opens this config screen.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$yedel = object;
@@ -324,16 +323,26 @@ public class YedelConfig extends Vigilant {
 		name = "- cleartext",
 		description = "Clears the currently set display text.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$cleartext = object;
 	@Property(
 		type = PropertyType.CUSTOM,
+		name = "- formatting",
+		description = "Shows a formatting guide with color and style codes.",
+		category = "Commands",
+		subcategory = "Index",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public Object command$formatting = object;
+
+	@Property(
+		type = PropertyType.CUSTOM,
 		name = "- limbo (li)",
 		description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$limbo = object;
@@ -342,7 +351,7 @@ public class YedelConfig extends Vigilant {
 		name = "- limbocreative (limbogmc, lgmc)",
 		description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$limbocreative = object;
@@ -351,7 +360,7 @@ public class YedelConfig extends Vigilant {
 		name = "- movehuntingtext",
 		description = "Opens the GUI to move the Bounty Hunting display text.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$movehuntingtext = object;
@@ -360,7 +369,7 @@ public class YedelConfig extends Vigilant {
 		name = "- movetext",
 		description = "Opens the GUI to move the display text.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$movetext = object;
@@ -369,7 +378,7 @@ public class YedelConfig extends Vigilant {
 		name = "- ping [method]",
 		description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method which can be customized.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$ping = object;
@@ -378,7 +387,7 @@ public class YedelConfig extends Vigilant {
 		name = "- playtime (pt)",
 		description = "Shows your total playtime (while playing on servers) in hours and minutes.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$playtime = object;
@@ -387,7 +396,7 @@ public class YedelConfig extends Vigilant {
 		name = "- setnick [nick]",
 		description = "Sets your nick for Bounty Hunting to not select yourself as the target.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$setnick = object;
@@ -396,7 +405,7 @@ public class YedelConfig extends Vigilant {
 		name = "- settext [text]",
 		description = "Sets the display text, supporting color codes with ampersands (&).",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$settext = object;
@@ -405,7 +414,7 @@ public class YedelConfig extends Vigilant {
 		name = "- settitle [title]",
 		description = "Sets the title of the game window.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$settitle = object;
@@ -414,7 +423,7 @@ public class YedelConfig extends Vigilant {
 		name = "- simulatechat (simc) [text]",
 		description = "Simulates a chat message, also supports color codes with ampersands (&).",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$simulatechat = object;
@@ -423,7 +432,7 @@ public class YedelConfig extends Vigilant {
 		name = "- update [platform]",
 		description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$update = object;
@@ -432,7 +441,7 @@ public class YedelConfig extends Vigilant {
 		name = "- yedelmessage (message)",
 		description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
 		category = "Commands",
-		subcategory = "Commands",
+		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
 	public Object command$yedelmessage = object;

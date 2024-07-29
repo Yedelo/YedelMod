@@ -71,6 +71,9 @@ public class YedelCommand extends CommandBase {
 				YedelConfig.getInstance().save();
 				Chat.display(Messages.clearedDisplayText);
 				break;
+			case "formatting":
+				Chat.display(Messages.formattingGuideMessage);
+				break;
 			case "limbo":
 			case "li":
 				Chat.say("§");
@@ -179,7 +182,7 @@ public class YedelCommand extends CommandBase {
 	}
 
 	private final String[] baseTabCompletions = new String[] {
-		"cleartext", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
+		"cleartext", "formatting", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
 	};
 	private final String[] pingTabCompletions = new String[] {
 		"ping", "command", "tab", "stats", "list", "hypixel"
@@ -215,6 +218,7 @@ public class YedelCommand extends CommandBase {
 		else if (secondArg == null) {
 			return Arrays.stream(baseTabCompletions).filter(tabCompletion ->
 				TextUtils.removeFormatting(tabCompletion).startsWith(firstArg) // This is my own array. Why does it have formatting???
+				// i think because the tab completion text is gray (stupid)
 			).collect(Collectors.toList());
 		}
 		return null;
