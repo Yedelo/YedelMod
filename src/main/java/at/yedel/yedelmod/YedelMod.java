@@ -2,7 +2,6 @@ package at.yedel.yedelmod;
 
 
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.commands.YedelCommand;
@@ -36,7 +35,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import org.apache.logging.log4j.LogManager;
@@ -66,12 +64,6 @@ public class YedelMod {
 		return instance;
 	}
 
-	private File modConfigurationFactory;
-
-	public File getModConfigurationFactory() {
-		return modConfigurationFactory;
-	}
-
 	private KeyBinding ahSearchKeybind;
 
 	public KeyBinding getAhSearchKeybind() {
@@ -94,11 +86,6 @@ public class YedelMod {
 
 	public KeyBinding getSufficientKeybind() {
 		return sufficientKeybind;
-	}
-
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		modConfigurationFactory = event.getModConfigurationDirectory();
 	}
 
 	@EventHandler
