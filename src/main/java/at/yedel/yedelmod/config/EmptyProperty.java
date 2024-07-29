@@ -10,9 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class EmptyProperty extends PropertyInfo {
-	@NotNull
 	@Override
-	public SettingComponent createSettingComponent(@Nullable Object object) {
+	public @NotNull SettingComponent createSettingComponent(@Nullable Object object) {
 		return new EmptySettingComponent();
 	}
 
