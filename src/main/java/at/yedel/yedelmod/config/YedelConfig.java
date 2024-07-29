@@ -11,10 +11,10 @@ import java.net.URISyntaxException;
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.gui.MoveTextGui;
-import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
+import gg.essential.api.EssentialAPI;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
 import gg.essential.vigilance.data.Property;
@@ -74,7 +74,7 @@ public class YedelConfig extends Vigilant {
 			Desktop.getDesktop().browse(UpdateSource.MODRINTH.uri);
 		}
 		catch (IOException e) {
-			Constants.notifications.push("YedelMod", "Couldn't open modrinth link!");
+			EssentialAPI.getNotifications().push("YedelMod", "Couldn't open modrinth link!");
 			e.printStackTrace();
 		}
 	}
@@ -92,7 +92,7 @@ public class YedelConfig extends Vigilant {
 			Desktop.getDesktop().browse(UpdateSource.GITHUB.uri);
 		}
 		catch (IOException e) {
-			Constants.notifications.push("YedelMod", "Couldn't open github link!");
+			EssentialAPI.getNotifications().push("YedelMod", "Couldn't open github link!");
 			e.printStackTrace();
 		}
 	}
@@ -586,10 +586,10 @@ public class YedelConfig extends Vigilant {
 		placeholder = "Reset"
 	)
 	private void resetConfirmation() {
-		Constants.notifications.push("Bounty Hunting", "Are you sure you want to reset your stats? (click)", 3, () -> {
+		EssentialAPI.getNotifications().push("Bounty Hunting", "Are you sure you want to reset your stats? (click)", 3, () -> {
 			points = 0;
 			kills = 0;
-			Constants.notifications.push("Bounty Hunting", "Reset stats!", 3);
+			EssentialAPI.getNotifications().push("Bounty Hunting", "Reset stats!", 3);
 			return null;
 		});
 	}
@@ -606,7 +606,7 @@ public class YedelConfig extends Vigilant {
 			Desktop.getDesktop().browse(video);
 		}
 		catch (IOException e) {
-			Constants.notifications.push("YedelMod", "Couldn't open video!");
+			EssentialAPI.getNotifications().push("YedelMod", "Couldn't open video!");
 			e.printStackTrace();
 		}
 	}

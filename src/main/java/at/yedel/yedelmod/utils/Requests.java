@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -57,6 +58,6 @@ public class Requests {
 	}
 
 	public static JsonObject getJsonObject(URL url) throws IOException {
-		return gson.fromJson(new InputStreamReader(openURLConnection(url).getInputStream()), JsonObject.class);
+		return gson.fromJson(new InputStreamReader(openURLConnection(url).getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
 	}
 }

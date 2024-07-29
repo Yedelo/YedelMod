@@ -2,12 +2,8 @@ package at.yedel.yedelmod.utils;
 
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.regex.Pattern;
 
-import gg.essential.api.EssentialAPI;
-import gg.essential.api.gui.Notifications;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
@@ -16,20 +12,7 @@ import net.minecraft.util.IChatComponent;
 
 
 public class Constants {
-	public static final Notifications notifications = EssentialAPI.getNotifications();
     public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
-	public static final URL modrinthApiUrl;
-	public static final URL githubApiUrl;
-
-	static {
-		try {
-			modrinthApiUrl = new URL("https://api.modrinth.com/v2/project/yedelmod/version");
-			githubApiUrl = new URL("https://api.github.com/repos/yedelo/yedelmod/releases/latest");
-		}
-		catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
