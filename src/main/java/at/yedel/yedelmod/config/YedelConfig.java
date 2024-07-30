@@ -27,8 +27,6 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 public class YedelConfig extends Vigilant {
 	private final URI video = new URI("https://www.youtube.com/watch?v=-z_AZR35ozI");
-	// Made so Vigilance doesn't complain in logs that properties are null
-	private static final Object object = new Object();
 
 	// Start of config
 	// Start of visible config
@@ -308,7 +306,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$yedel = object;
+	public int command$yedel = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- cleartext",
@@ -317,7 +315,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$cleartext = object;
+	public int command$cleartext = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- formatting",
@@ -326,7 +324,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$formatting = object;
+	public int command$formatting = 1;
 
 	@Property(
 		type = PropertyType.CUSTOM,
@@ -336,7 +334,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$limbo = object;
+	public int command$limbo = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- limbocreative (limbogmc, lgmc)",
@@ -345,7 +343,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$limbocreative = object;
+	public int command$limbocreative = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- movehuntingtext",
@@ -354,7 +352,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$movehuntingtext = object;
+	public int command$movehuntingtext = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- movetext",
@@ -363,7 +361,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$movetext = object;
+	public int command$movetext = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- ping [method]",
@@ -372,7 +370,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$ping = object;
+	public int command$ping = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- playtime (pt)",
@@ -381,7 +379,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$playtime = object;
+	public int command$playtime = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- setnick [nick]",
@@ -390,7 +388,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$setnick = object;
+	public int command$setnick = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- settext [text]",
@@ -399,7 +397,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$settext = object;
+	public int command$settext = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- settitle [title]",
@@ -408,7 +406,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$settitle = object;
+	public int command$settitle = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- simulatechat (simc) [text]",
@@ -417,7 +415,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$simulatechat = object;
+	public int command$simulatechat = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- update [platform]",
@@ -426,7 +424,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$update = object;
+	public int command$update = 1;
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- yedelmessage (message)",
@@ -435,7 +433,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Index",
 		customPropertyInfo = EmptyProperty.class
 	)
-	public Object command$yedelmessage = object;
+	public int command$yedelmessage = 1;
 
 	// Customization
 	@Property(
@@ -574,7 +572,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.CHECKBOX,
 		name = "Light green token messages",
-		description = "Make token messages §alight green §7instead of §2green (only in bedwars) §7to make them appear different from emerald messages.",
+		description = "Make token messages §alight green §7instead of §2green §7(only in bedwars) to make them appear different from emerald messages.",
 		category = "BedWars",
 		subcategory = "Chat"
 	)
