@@ -589,6 +589,14 @@ public class YedelConfig extends Vigilant {
 	public boolean hideItemPickupMessages = false;
 	@Property(
 		type = PropertyType.CHECKBOX,
+		name = "Hide silver coin count",
+		description = "Hide the silver coin count from item purchase messages.",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean hideSilverCoinCount = false;
+	@Property(
+		type = PropertyType.CHECKBOX,
 		name = "Hide comfy pillow messages",
 		description = "Hides the following messages:" +
 			"\n\"§aYou are now carrying §ex1 Comfy Pillows§a, bring it back to your shop keeper!\"" +

@@ -54,6 +54,16 @@ public class BedwarsChat {
 	}
 
 	@SubscribeEvent
+	public void onSilverCoinCountMessage(ClientChatReceivedEvent event) {
+		if (YedelConfig.getInstance().hideSilverCoinCount) {
+			String message = event.message.getFormattedText();
+			if (message.startsWith("§r§aYou purchased §r§6") && message.contains("§r§7(+1 Silver Coin [")) {
+				event.message = new ChatComponentText(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public void onComfyPillowMessages(ClientChatReceivedEvent event) {
 		if (YedelConfig.getInstance().hideComfyPillowMessages) {
 			if (comfyPillowMessages.contains(event.message.getUnformattedText())) {
