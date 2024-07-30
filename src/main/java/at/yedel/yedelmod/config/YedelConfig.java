@@ -574,11 +574,19 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Light green token messages",
-		description = "Make token messages §alight green §7instead of §2green §7to make them appear different from emerald messages.",
+		description = "Make token messages §alight green §7instead of §2green (only in bedwars) §7to make them appear different from emerald messages.",
 		category = "BedWars",
 		subcategory = "Chat"
 	)
 	public boolean lightGreenTokenMessages = false;
+	@Property(
+		type = PropertyType.CHECKBOX,
+		name = "Hide item pickup messages",
+		description = "Hide \"§oYou picked up: ...\" messages.",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean hideItemPickupMessages = false;
 	@Property(
 		type = PropertyType.CHECKBOX,
 		name = "Hide comfy pillow messages",
@@ -591,7 +599,6 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Chat"
 	)
 	public boolean hideComfyPillowMessages = false;
-
 	@Property(
 		type = PropertyType.CHECKBOX,
 		name = "Hide dreamer's soul fragment messages",

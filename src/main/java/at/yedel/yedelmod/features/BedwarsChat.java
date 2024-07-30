@@ -45,6 +45,15 @@ public class BedwarsChat {
 	}
 
 	@SubscribeEvent
+	public void onItemPickupMessage(ClientChatReceivedEvent event) {
+		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().getInBedwars()) {
+			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
+				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public void onComfyPillowMessages(ClientChatReceivedEvent event) {
 		if (YedelConfig.getInstance().hideComfyPillowMessages) {
 			if (comfyPillowMessages.contains(event.message.getUnformattedText())) {
