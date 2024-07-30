@@ -581,8 +581,21 @@ public class YedelConfig extends Vigilant {
 	public boolean lightGreenTokenMessages = false;
 	@Property(
 		type = PropertyType.CHECKBOX,
+		name = "Hide comfy pillow messages",
+		description = "Hides the following messages:" +
+			"\n\"§aYou are now carrying §ex1 Comfy Pillows§a, bring it back to your shop keeper!\"" +
+			"\n\"§cYou cannot return items to another team's Shopkeeper!\"" +
+			"\n\"§cYou cannot carry any more Comfy Pillows!\"" +
+			"\n\"§cYou died while carrying §e1x Comfy Pillows§c!\"",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean hideComfyPillowMessages = false;
+
+	@Property(
+		type = PropertyType.CHECKBOX,
 		name = "Hide dreamer's soul fragment messages",
-		description = "Hide \"§e+1 §cDreamer's Soul Fragment§e!§7\" messages",
+		description = "Hide \"§e+1 §cDreamer's Soul Fragment§e!§7\" messages.",
 		category = "BedWars",
 		subcategory = "Chat"
 	)
