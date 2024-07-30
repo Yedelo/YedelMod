@@ -572,7 +572,7 @@ public class YedelConfig extends Vigilant {
 
 	// Chat
 	@Property(
-		type = PropertyType.SWITCH,
+		type = PropertyType.CHECKBOX,
 		name = "Light green token messages",
 		description = "Make token messages §alight green §7instead of §2green (only in bedwars) §7to make them appear different from emerald messages.",
 		category = "BedWars",
