@@ -161,15 +161,6 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "BedWars defusal helper",
-		description = "Highlights redstone for the BedWars defusal challenge.",
-		category = "Features",
-		subcategory = "Features"
-	)
-	public boolean defusalHelper = true;
-
-	@Property(
-		type = PropertyType.SWITCH,
 		name = "Limbo creative mode",
 		description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
 			"Use -lgmc in limbo if it doesn't work the first time.",
@@ -566,6 +557,28 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Customization"
 	)
 	public float damageTiltStrength = 1f;
+
+	/* BedWars */
+
+	// Challenges
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "BedWars defusal helper",
+		description = "Highlights redstone for the BedWars defusal challenge.",
+		category = "BedWars",
+		subcategory = "Challenges"
+	)
+	public boolean defusalHelper = true;
+
+	// Chat
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Light green token messages",
+		description = "Make token messages §alight green §7instead of §2green §7to make them appear different from emerald messages.",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean lightGreenTokenMessages = false;
 
 	/* TNT Tag */
 

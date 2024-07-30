@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
+import at.yedel.yedelmod.features.BedwarsChat;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
 import at.yedel.yedelmod.features.DropperGG;
@@ -96,6 +97,7 @@ public class YedelMod {
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());
+		MinecraftForge.EVENT_BUS.register(BedwarsChat.getInstance());
 		MinecraftForge.EVENT_BUS.register(ChangeTitle.getInstance());
 		MinecraftForge.EVENT_BUS.register(CustomText.getInstance());
 		MinecraftForge.EVENT_BUS.register(DefusalHelper.getInstance());

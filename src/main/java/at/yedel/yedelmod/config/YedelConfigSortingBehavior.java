@@ -22,6 +22,7 @@ public class YedelConfigSortingBehavior extends SortingBehavior {
         categories.add("Commands");
         categories.add("Keybinds");
         categories.add("Modern Features");
+        categories.add("BedWars");
         categories.add("TNT Tag");
         return (a, b) -> {
             String firstCategory = a.getName();

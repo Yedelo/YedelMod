@@ -43,8 +43,8 @@ public class HypixelManager {
 
 		HypixelModAPI.getInstance().registerHandler(ClientboundHelloPacket.class, this::onHelloPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::onPingPacket);
-		HypixelModAPI.getInstance().registerHandler(ClientboundPartyInfoPacket.class, this::onPartyInfoPacket);
-		HypixelModAPI.getInstance().registerHandler(ClientboundPlayerInfoPacket.class, this::onPlayerInfoPacket);
+		// HypixelModAPI.getInstance().registerHandler(ClientboundPartyInfoPacket.class, this::onPartyInfoPacket);
+		// HypixelModAPI.getInstance().registerHandler(ClientboundPlayerInfoPacket.class, this::onPlayerInfoPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::onLocationPacket);
 
 		// Unfortunately there doesn't seem to be any other way to catch exceptions.
@@ -83,6 +83,12 @@ public class HypixelManager {
 		return inLimbo;
 	}
 
+	public boolean inBedwars;
+
+	public boolean getInBedwars() {
+		return inBedwars;
+	}
+
 	private void onHelloPacket(ClientboundHelloPacket helloPacket) {
 		HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
 	}
@@ -104,10 +110,12 @@ public class HypixelManager {
 		inLimbo = Objects.equals(locationPacket.getServerName(), "limbo");
 		inSkywars = false;
 		inSkyblock = false;
+		inBedwars = false;
 		if (locationPacket.getServerType().isPresent()) {
 			ServerType serverType = locationPacket.getServerType().get();
 			inSkywars = serverType == GameType.SKYWARS;
 			inSkyblock = serverType == GameType.SKYBLOCK;
+			inBedwars = serverType == GameType.BEDWARS;
 		}
 		if (locationPacket.getMode().isPresent() && Objects.equals(locationPacket.getMode().get(), "TNTAG")) {
 			TNTTag.getInstance().onTNTTagJoin();
