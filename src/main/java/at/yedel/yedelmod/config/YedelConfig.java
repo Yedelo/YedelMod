@@ -579,6 +579,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Chat"
 	)
 	public boolean lightGreenTokenMessages = false;
+	@Property(
+		type = PropertyType.CHECKBOX,
+		name = "Hide dreamer's soul fragment messages",
+		description = "Hide \"§e+1 §cDreamer's Soul Fragment§e!§7\" messages",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean hideDreamerSoulFragmentMessages = false;
 
 	/* TNT Tag */
 

@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +32,13 @@ public class BedwarsChat {
 		Matcher matcher = tokenMessagePattern.matcher(message);
 		while (matcher.find()) {
 			event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
+		}
+	}
+
+	@SubscribeEvent
+	public void onDreamersSoulFragmentMessage(ClientChatReceivedEvent event) {
+		if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
+			event.setCanceled(true);
 		}
 	}
 }
