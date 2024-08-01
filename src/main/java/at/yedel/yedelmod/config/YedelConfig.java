@@ -821,7 +821,8 @@ public class YedelConfig extends Vigilant {
 		);
 		initialize();
 		setCategoryDescription("General",
-			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel"
+			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel" +
+				"\n§7Some properties may mention subcommands with -(the subcommand). They refer to using /yedel (the subcommand)."
 		);
 		setSubcategoryDescription("Features", "Tweaks",
 			"Smaller features that change the game, similar to features in Patcher."
