@@ -579,6 +579,14 @@ public class YedelConfig extends Vigilant {
 	public boolean lightGreenTokenMessages = false;
 	@Property(
 		type = PropertyType.CHECKBOX,
+		name = "Hide slumber ticket messages",
+		description = "Hide slumber ticket messages in-game from things like kills and wins.",
+		category = "BedWars",
+		subcategory = "Chat"
+	)
+	public boolean hideSlumberTicketMessages = false;
+	@Property(
+		type = PropertyType.CHECKBOX,
 		name = "Hide item pickup messages",
 		description = "Hide \"§oYou picked up: ...\" messages.",
 		category = "BedWars",

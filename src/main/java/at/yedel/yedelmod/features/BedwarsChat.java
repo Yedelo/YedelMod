@@ -25,13 +25,14 @@ public class BedwarsChat {
 	}
 
 	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
+	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
 	private static final List<String> comfyPillowMessages = new ArrayList<>();
 
 	static {
 		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
 		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
 		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
-		comfyPillowMessages.add("You died while carrying 1x Comfy Pillows!");
+		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
 	}
 
 	@SubscribeEvent
@@ -41,6 +42,17 @@ public class BedwarsChat {
 		Matcher matcher = tokenMessagePattern.matcher(message);
 		while (matcher.find()) {
 			event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
+		}
+	}
+
+	@SubscribeEvent
+	public void onSlumberTicketMessage(ClientChatReceivedEvent event) {
+		if (!YedelConfig.getInstance().hideSlumberTicketMessages || !HypixelManager.getInstance().getInBedwars())
+			return;
+		String message = event.message.getUnformattedText();
+		Matcher matcher = slumberTicketMessagePattern.matcher(message);
+		while (matcher.find()) {
+			event.setCanceled(true);
 		}
 	}
 
