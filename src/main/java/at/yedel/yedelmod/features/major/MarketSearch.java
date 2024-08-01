@@ -43,9 +43,10 @@ public class MarketSearch {
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
+                    String unformattedItemName = TextUtils.removeFormatting(itemName);
                     ahSearching = true;
                     Chat.logoDisplay("&eSearching the auction house for " + itemName + "&e...");
-                    Chat.command("ahs " + TextUtils.removeAmpersand(itemName));
+                    Chat.command("ahs " + unformattedItemName);
                 }
             }
         }
@@ -53,11 +54,12 @@ public class MarketSearch {
             if (HypixelManager.getInstance().getInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
-                    String itemName = TextUtils.removeFormatting(heldItem.getDisplayName());
+                    String itemName = heldItem.getDisplayName();
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
+                    String unformattedItemName = TextUtils.removeFormatting(itemName);
                     bzSearching = true;
                     Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
-                    Chat.command("bz " + itemName);
+                    Chat.command("bz " + unformattedItemName);
                     bzSearchingClose = true;
                 }
             }
