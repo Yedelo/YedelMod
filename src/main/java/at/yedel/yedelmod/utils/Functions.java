@@ -30,6 +30,10 @@ public class Functions {
         screenToOpen = screen;
     }
 
+    public static void safelyPlaySound(String name, float volume, float pitch) {
+        if (minecraft.thePlayer != null) minecraft.thePlayer.playSound(name, volume, pitch);
+    }
+
     public static class Events {
         @SubscribeEvent
         public void onTickEnd(TickEvent event) {

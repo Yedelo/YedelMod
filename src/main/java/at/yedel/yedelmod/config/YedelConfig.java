@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.gui.MoveTextGui;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
@@ -694,8 +695,7 @@ public class YedelConfig extends Vigilant {
 		placeholder = "Play sound"
 	)
 	private void playSelection() {
-		if (minecraft.theWorld == null) return;
-		minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
+		Functions.safelyPlaySound("random.successful_hit", 10, 0.8F);
 	}
 
 	@Property(
@@ -707,8 +707,7 @@ public class YedelConfig extends Vigilant {
 		placeholder = "Play sound"
 	)
 	private void playKill() {
-		if (minecraft.theWorld == null) return;
-		minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
+		Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
 	}
 
 	@Property(

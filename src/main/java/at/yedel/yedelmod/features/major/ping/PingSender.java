@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.major.ping;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import gg.essential.api.EssentialAPI;
 import net.hypixel.modapi.HypixelModAPI;
@@ -130,7 +131,7 @@ public class PingSender {
             Chat.display(Messages.pingIs0);
         else {
             Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
-            minecraft.thePlayer.playSound("random.successful_hit", 10, (float) (ping * -0.006 + 2));
+            Functions.safelyPlaySound("random.successful_hit", 10, (float) (ping * -0.006 + 2));
         }
     }
 }

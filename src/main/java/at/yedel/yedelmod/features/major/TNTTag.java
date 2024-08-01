@@ -11,6 +11,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -97,7 +98,7 @@ public class TNTTag {
         target = players.get((int) Math.floor(Math.random() * players.size()));
         whoCheck = true;
         Chat.command("who");
-        if (YedelConfig.getInstance().bhSounds) minecraft.thePlayer.playSound("random.successful_hit", 10, 0.8F);
+		if (YedelConfig.getInstance().bhSounds) Functions.safelyPlaySound("random.successful_hit", 10, 0.8F);
         lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
         lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
     }
@@ -196,7 +197,7 @@ public class TNTTag {
                     lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills (+1)");
                     lines.set(3, "§cYou killed your target!");
                     if (YedelConfig.getInstance().bhSounds)
-                        minecraft.thePlayer.playSound("random.successful_hit", 10, 1.04F);
+						Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
                     YedelConfig.getInstance().save();
                 }, 500);
             }
