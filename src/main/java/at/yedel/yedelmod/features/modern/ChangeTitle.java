@@ -29,24 +29,26 @@ public class ChangeTitle {
 
     @SubscribeEvent
     public void onServerJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
-        if (!YedelConfig.getInstance().changeTitle) return;
-        setDisplay = true;
-        local = event.isLocal;
+        if (YedelConfig.getInstance().changeTitle) {
+            setDisplay = true;
+            local = event.isLocal;
+        }
     }
 
     @SubscribeEvent
     public void onRenderGame(RenderGameOverlayEvent event) {
         if (!setDisplay) return;
         setDisplay = false;
-        if (local) Display.setTitle("Minecraft 1.8.9 - Singleplayer");
+        if (local) {
+            Display.setTitle("Minecraft 1.8.9 - Singleplayer");
+            return;
+        }
+        ServerData serverData = minecraft.getCurrentServerData();
+        if (Objects.equals(serverData.serverName, "Minecraft Server")) { // Direct connect
+            Display.setTitle("Minecraft 1.8.9 - " + serverData.serverIP);
+        }
         else {
-            ServerData serverData = minecraft.getCurrentServerData();
-            if (Objects.equals(serverData.serverName, "Minecraft Server")) { // Direct connect
-                Display.setTitle("Minecraft 1.8.9 - " + serverData.serverIP);
-            }
-            else {
-                Display.setTitle("Minecraft 1.8.9 - " + serverData.serverName + " - " + serverData.serverIP);
-            }
+            Display.setTitle("Minecraft 1.8.9 - " + serverData.serverName + " - " + serverData.serverIP);
         }
     }
 

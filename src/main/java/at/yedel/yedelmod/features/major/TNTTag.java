@@ -70,18 +70,19 @@ public class TNTTag {
 
     public void onTNTTagJoin() {
         playingTag = true;
-        if (!YedelConfig.getInstance().bountyHunting) return;
-        playerName = minecraft.thePlayer.getName();
-        dead = false;
-        target = null;
-        lines.set(0, "§c§lBounty §f§lHunting");
-        lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
-        lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
-        lines.set(3, "");
-        if (YedelConfig.getInstance().bhFirst) {
-            Chat.display(Messages.firstTime);
-            YedelConfig.getInstance().bhFirst = false;
-            YedelConfig.getInstance().save();
+        if (YedelConfig.getInstance().bountyHunting) {
+            playerName = minecraft.thePlayer.getName();
+            dead = false;
+            target = null;
+            lines.set(0, "§c§lBounty §f§lHunting");
+            lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
+            lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
+            lines.set(3, "");
+            if (YedelConfig.getInstance().bhFirst) {
+                Chat.display(Messages.firstTime);
+                YedelConfig.getInstance().bhFirst = false;
+                YedelConfig.getInstance().save();
+            }
         }
     }
 

@@ -37,22 +37,23 @@ public class BedwarsChat {
 
 	@SubscribeEvent
 	public void onTokenMessage(ClientChatReceivedEvent event) {
-		if (!YedelConfig.getInstance().lightGreenTokenMessages || !HypixelManager.getInstance().getInBedwars()) return;
-		String message = event.message.getUnformattedText();
-		Matcher matcher = tokenMessagePattern.matcher(message);
-		while (matcher.find()) {
-			event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
+		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().getInBedwars()) {
+			String message = event.message.getUnformattedText();
+			Matcher matcher = tokenMessagePattern.matcher(message);
+			while (matcher.find()) {
+				event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onSlumberTicketMessage(ClientChatReceivedEvent event) {
-		if (!YedelConfig.getInstance().hideSlumberTicketMessages || !HypixelManager.getInstance().getInBedwars())
-			return;
-		String message = event.message.getUnformattedText();
-		Matcher matcher = slumberTicketMessagePattern.matcher(message);
-		while (matcher.find()) {
-			event.setCanceled(true);
+		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().getInBedwars()) {
+			String message = event.message.getUnformattedText();
+			Matcher matcher = slumberTicketMessagePattern.matcher(message);
+			while (matcher.find()) {
+				event.setCanceled(true);
+			}
 		}
 	}
 

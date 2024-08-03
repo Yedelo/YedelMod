@@ -24,12 +24,13 @@ public class AutoGuildWelcome {
 
     @SubscribeEvent
     public void onGuildJoinMessage(ClientChatReceivedEvent event) {
-        if (!YedelConfig.getInstance().guildWelcome) return;
-        String msg = event.message.getUnformattedText();
-        Matcher guildJoinMatcher = guildJoinPattern.matcher(msg);
-        while (guildJoinMatcher.find()) {
-            String newMember = guildJoinMatcher.group("newMember");
-            Chat.command("gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
-        }
-    }
+		if (YedelConfig.getInstance().guildWelcome) {
+			String msg = event.message.getUnformattedText();
+			Matcher guildJoinMatcher = guildJoinPattern.matcher(msg);
+			while (guildJoinMatcher.find()) {
+				String newMember = guildJoinMatcher.group("newMember");
+				Chat.command("gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
+			}
+		}
+	}
 }

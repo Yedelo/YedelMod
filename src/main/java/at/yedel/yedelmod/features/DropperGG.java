@@ -24,10 +24,11 @@ public class DropperGG {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!YedelConfig.getInstance().dropperGG) return;
-        String msg = event.message.getUnformattedText();
-        if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {
-            ThreadManager.scheduleOnce(() -> Chat.command("ac gg"), YedelConfig.getInstance().dropperGGDelay, TimeUnit.SECONDS);
-        }
-    }
+		if (YedelConfig.getInstance().dropperGG) {
+			String msg = event.message.getUnformattedText();
+			if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {
+				ThreadManager.scheduleOnce(() -> Chat.command("ac gg"), YedelConfig.getInstance().dropperGGDelay, TimeUnit.SECONDS);
+			}
+		}
+	}
 }
