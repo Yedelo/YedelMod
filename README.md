@@ -46,12 +46,6 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 </details>
 
-<details><summary>BedWars defusal helper</summary>
-
-- Highlights redstone for the BedWars defusal challenge.
-
-</details>
-
 <details><summary>Limbo creative mode</summary>
 
 - Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything
@@ -114,6 +108,59 @@ Smaller features that change the game, similar to features in Patcher.
 <details><summary>Hide missing signature errors</summary>
 
 - Hides "Signature is missing from textures payload" errors from logs.
+
+</details>
+
+### BedWars
+
+#### Challenges
+
+<details><summary>BedWars defusal helper</summary>
+
+- Highlights redstone for the BedWars defusal challenge.
+
+</details>
+
+#### Chat
+
+<details><summary>Light green token messages</summary>
+
+- Make token messages light green instead of green (only in bedwars) to make them appear different from emerald
+  messages.
+
+</details>
+
+<details><summary>Hide slumber ticket messages</summary>
+
+- Hide slumber ticket messages in-game from things like kills and wins.
+
+</details>
+
+<details><summary>Hide item pickup messages</summary>
+
+- Hide "_You picked up: ..._" messages.
+
+</details>
+
+<details><summary>Hide silver coin count</summary>
+
+- Hide the silver coin count from item purchase messages.
+
+</details>
+
+<details><summary>Hide comfy pillow messages</summary>
+
+- Hides the following messages:
+  - "You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!"
+  - "You cannot return items to another team's Shopkeeper!"
+  - "You cannot carry any more Comfy Pillows!"
+  - "You died while carrying 1x Comfy Pillows!"
+
+</details>
+
+<details><summary>Hide dreamer's soul fragment messages</summary>
+
+- Hide "+1 Dreamer's Soul Fragment!" messages.
 
 </details>
 

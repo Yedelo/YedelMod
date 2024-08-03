@@ -22,7 +22,7 @@ public class FeatureTest {
 			Assertions.assertEquals(newMember, "nonrankedperson");
 		}
 
-		String msg2 = "rankedperson joined the guild!";
+		String msg2 = "[MVP+] rankedperson joined the guild!";
 		Matcher guildJoinMatcher2 = guildJoinPattern.matcher(msg2);
 		while (guildJoinMatcher.find()) {
 			String newMember = guildJoinMatcher2.group("newMember");

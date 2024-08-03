@@ -92,15 +92,6 @@ public class UpdateManager {
 			replace("\"", "");
 	}
 
-	public String getModrinthChangelog(JsonArray modrinthApiInfo) {
-		String changelog = modrinthApiInfo.get(0).getAsJsonObject().get("changelog").getAsString().replace("'", "");
-		int indexOfChangelog = changelog.indexOf("The part below is for the in-game changelog, ignore this on the website!\n");
-		if (indexOfChangelog == -1) {
-			return "Changelog not found!";
-		}
-		else return changelog.substring(indexOfChangelog + 73);
-	}
-
 	public JsonObject getGithubApiInfo() throws IOException {
 		return Requests.getJsonObject(githubApiUrl);
 	}
@@ -111,15 +102,6 @@ public class UpdateManager {
 			get("tag_name").
 			getAsString().
 			replace("\"", "");
-	}
-
-	public String getGithubChangelog(JsonObject githubApiInfo) {
-		String body = githubApiInfo.get("body").getAsString().replace("'", "");
-		int indexOfChangelog = body.indexOf("The part below is for the in-game changelog, ignore this on the website!\r\n");
-		if (indexOfChangelog == -1) {
-			return "Changelog not found!";
-		}
-		else return body.substring(indexOfChangelog + 74);
 	}
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {

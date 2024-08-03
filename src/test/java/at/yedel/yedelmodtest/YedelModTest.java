@@ -18,9 +18,7 @@ public class YedelModTest {
 		try {
 			JsonArray modrinthApiInfo = UpdateManager.getInstance().getModrinthApiInfo();
 			String modrinthVersion = UpdateManager.getInstance().getModrinthVersion(modrinthApiInfo);
-			String modrinthChangelog = UpdateManager.getInstance().getModrinthChangelog(modrinthApiInfo);
 			System.out.println("Modrinth version: " + modrinthVersion);
-			System.out.println("Modrinth changelog: " + modrinthChangelog);
 		}
 		catch (IOException e) {
 			Assertions.fail(e);
@@ -28,9 +26,7 @@ public class YedelModTest {
 		try {
 			JsonObject githubApiInfo = UpdateManager.getInstance().getGithubApiInfo();
 			String githubVersion = UpdateManager.getInstance().getGithubVersion(githubApiInfo);
-			String githubChangelog = UpdateManager.getInstance().getGithubChangelog(githubApiInfo);
 			System.out.println("GitHub version: " + githubVersion);
-			System.out.println("GitHub changelog: " + githubChangelog);
 		}
 		catch (IOException e) {
 			Assertions.fail(e);
