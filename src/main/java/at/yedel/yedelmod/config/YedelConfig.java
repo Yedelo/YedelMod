@@ -142,6 +142,15 @@ public class YedelConfig extends Vigilant {
 	public boolean dropperGG = isAutoGGLoaded();
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Regex chat filter",
+		description = "Use a customizable regular expression to filter chat.",
+		category = "Features",
+		subcategory = "Features"
+	)
+	public boolean regexChatFilterToggled = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Random placeholder",
 		description = "Type a customizable placeholder to replace it with a random string from a UUID.",
 		category = "Features",
@@ -266,6 +275,15 @@ public class YedelConfig extends Vigilant {
 		}
 	)
 	public int endStrengthColor = 2;
+	@Property(
+		type = PropertyType.TEXT,
+		name = "Regex chat filter pattern",
+		description = "The pattern to use for regex chat filtering.",
+		category = "Features",
+		subcategory = "Customization"
+	)
+	public String regexChatFilterPattern = "";
+
 	@Property(
 		type = PropertyType.TEXT,
 		name = "Random placeholder text",
@@ -849,6 +867,7 @@ public class YedelConfig extends Vigilant {
 	public void addDependencies() {
 		addDependency("guildWelcomeMessage", "guildWelcome");
 		addDependency("dropperGGDelay", "dropperGG");
+		addDependency("regexChatFilterPattern", "regexChatFilterToggled");
 		addDependency("randomString", "randomPlaceholderToggled");
 		addDependency("startStrengthColor", "strengthIndicators");
 		addDependency("endStrengthColor", "strengthIndicators");

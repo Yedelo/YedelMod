@@ -12,6 +12,7 @@ import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DrawBookBackground;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
+import at.yedel.yedelmod.features.RegexChatFilter;
 import at.yedel.yedelmod.features.major.DefusalHelper;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.MarketSearch;
@@ -109,6 +110,7 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(ItemSwings.getInstance());
 		MinecraftForge.EVENT_BUS.register(MarketSearch.getInstance());
 		MinecraftForge.EVENT_BUS.register(PingResponse.getInstance());
+		MinecraftForge.EVENT_BUS.register(RegexChatFilter.getInstance());
 		MinecraftForge.EVENT_BUS.register(StrengthIndicators.getInstance());
 		MinecraftForge.EVENT_BUS.register(TNTTag.getInstance());
 		MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
