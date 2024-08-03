@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.features;
+package at.yedel.yedelmod.features.modern;
 
 
 
