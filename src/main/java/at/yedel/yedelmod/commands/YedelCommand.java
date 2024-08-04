@@ -60,10 +60,10 @@ public class YedelCommand extends CommandBase {
 			Functions.displayScreen(YedelConfig.getInstance().gui());
 			return;
 		}
-		String firstArg = args[0];
+		String subcommand = args[0];
 		String secondArg = args.length > 1? args[1] : null;
 		boolean noSecondArg = secondArg == null;
-		switch (firstArg) {
+		switch (subcommand.toLowerCase()) {
 			case "cleartext":
 				YedelConfig.getInstance().displayedText = "";
 				YedelConfig.getInstance().save();
