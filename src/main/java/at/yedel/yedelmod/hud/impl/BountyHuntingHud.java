@@ -2,7 +2,6 @@ package at.yedel.yedelmod.hud.impl;
 
 
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,6 @@ import at.yedel.yedelmod.hud.Hud;
 
 
 public class BountyHuntingHud extends Hud {
-	private static final int WHITE = Color.WHITE.getRGB();
-	private static final int CYAN = new Color(62, 94, 112).getRGB();
-
 	private BountyHuntingHud(int x, int y, int defaultX, int defaultY) {
 		super(x, y, defaultX, defaultY);
 	}
@@ -49,7 +45,7 @@ public class BountyHuntingHud extends Hud {
 	public void renderSample(boolean beingDragged) {
 		width = fontRenderer.getStringWidth("Your next target is Yedelos.");
 		height = 42;
-		if (beingDragged) drawRect(x, y, x + width, y + height, CYAN);
+		if (beingDragged) drawBackground();
 		fontRenderer.drawStringWithShadow("§c§lBounty §f§lHunting", x, y, WHITE);
 		fontRenderer.drawStringWithShadow("§a83 points", x, y + 11, WHITE);
 		fontRenderer.drawStringWithShadow("§a15 kills", x, y + 22, WHITE);

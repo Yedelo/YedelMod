@@ -2,6 +2,8 @@ package at.yedel.yedelmod.hud;
 
 
 
+import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -75,6 +77,19 @@ public abstract class Hud extends Gui {
 	 * Called when the HUD is rendered in-game.
 	 */
 	public abstract void render();
+
+	protected final int WHITE = Color.WHITE.getRGB();
+	private final int CYAN = new Color(52, 84, 102).getRGB();
+
+	/**
+	 * Draws a simple background to the HUD in the move hud gui.
+	 * Call after setting the width and height, and before rendering the main content.
+	 *
+	 * @param beingDragged whether the HUD is being dragged
+	 */
+	protected void drawBackground() {
+		drawRect(x, y, x + width, y + height, CYAN);
+	}
 
 	/**
 	 * Used to determine whether the HUD should render. Called in HudManager, do not use this in render().

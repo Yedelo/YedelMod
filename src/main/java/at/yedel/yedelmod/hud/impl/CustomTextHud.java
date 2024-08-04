@@ -2,8 +2,6 @@ package at.yedel.yedelmod.hud.impl;
 
 
 
-import java.awt.Color;
-
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.hud.Hud;
 
@@ -20,9 +18,6 @@ public class CustomTextHud extends Hud {
 		return instance;
 	}
 
-	private static final int WHITE = Color.WHITE.getRGB();
-	private static final int CYAN = new Color(62, 94, 112).getRGB();
-
 	@Override
 	public void render() {
 		fontRenderer.drawStringWithShadow(YedelConfig.getInstance().displayedText, x, y, WHITE);
@@ -37,7 +32,7 @@ public class CustomTextHud extends Hud {
 	public void renderSample(boolean beingDragged) {
 		width = fontRenderer.getStringWidth("Example text");
 		height = fontRenderer.FONT_HEIGHT;
-		if (beingDragged) drawRect(x, y, x + width, y + height, CYAN);
+		if (beingDragged) drawBackground();
 		fontRenderer.drawStringWithShadow("Example text", x, y, WHITE);
 	}
 
