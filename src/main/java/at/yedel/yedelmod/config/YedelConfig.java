@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.gui.MoveHudGui;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
-import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
@@ -334,18 +333,6 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Customization"
 	)
 	public String favoriteServer = "yedelmod.hypixel.net";
-
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Customize display text",
-		description = "Customize the display text position, can also be done with -movetext.",
-		category = "Features",
-		subcategory = "Customization",
-		placeholder = "Open GUI"
-	)
-	private void openMoveTextGui() {
-		minecraft.displayGuiScreen(new MoveTextGui(minecraft.currentScreen));
-	}
 
 	/* Commands */
 	// Index

@@ -9,12 +9,18 @@ import at.yedel.yedelmod.hud.Hud;
 
 
 public class PlayerUsernameHud extends Hud {
-	private static final int WHITE = Color.WHITE.getRGB();
-	private static final int CYAN = new Color(62, 94, 112).getRGB();
-
-	public PlayerUsernameHud(int x, int y, int defaultX, int defaultY) {
+	private PlayerUsernameHud(int x, int y, int defaultX, int defaultY) {
 		super(x, y, defaultX, defaultY);
 	}
+
+	private static final PlayerUsernameHud instance = new PlayerUsernameHud(5, 5, 5, 5);
+
+	public static PlayerUsernameHud getInstance() {
+		return instance;
+	}
+
+	private static final int WHITE = Color.WHITE.getRGB();
+	private static final int CYAN = new Color(62, 94, 112).getRGB();
 
 	@Override
 	public void render() {

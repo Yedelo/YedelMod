@@ -11,12 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.gui.MoveHudGui;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
-import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
@@ -67,7 +65,6 @@ public class YedelCommand extends CommandBase {
 		boolean noSecondArg = secondArg == null;
 		switch (firstArg) {
 			case "cleartext":
-				CustomText.getInstance().setDisplayedText("");
 				YedelConfig.getInstance().displayedText = "";
 				YedelConfig.getInstance().save();
 				Chat.display(Messages.clearedDisplayText);
@@ -89,9 +86,6 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "movehuntingtext":
 				Functions.displayScreen(new MoveHuntingTextGui(minecraft.currentScreen));
-				break;
-			case "movetext":
-				Functions.displayScreen(new MoveTextGui(minecraft.currentScreen));
 				break;
 			case "ping":
 				PingSender.getInstance().processPingCommand(secondArg);
@@ -115,9 +109,7 @@ public class YedelCommand extends CommandBase {
 					Chat.display(Messages.enterValidText);
 					return;
 				}
-				String displayText = TextUtils.joinArgs(args).substring(8);
-				displayText = displayText.replaceAll("&", "§");
-				CustomText.getInstance().setDisplayedText(displayText);
+				String displayText = TextUtils.replaceAmpersand(TextUtils.joinArgs(args).substring(8));
 				YedelConfig.getInstance().displayedText = displayText;
 				YedelConfig.getInstance().save();
 				Chat.logoDisplay("&eSet displayed text to \"&r" + displayText + "&e\"!");
@@ -186,7 +178,7 @@ public class YedelCommand extends CommandBase {
 	}
 
 	private final String[] baseTabCompletions = new String[] {
-		"cleartext", "formatting", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehud", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
+		"cleartext", "formatting", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehud", "movehuntingtext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
 	};
 	private final String[] pingTabCompletions = new String[] {
 		"ping", "command", "tab", "stats", "list", "hypixel"

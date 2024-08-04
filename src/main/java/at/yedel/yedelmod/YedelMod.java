@@ -8,7 +8,6 @@ import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.BedwarsChat;
-import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
 import at.yedel.yedelmod.features.RegexChatFilter;
@@ -24,6 +23,7 @@ import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.hud.HudManager;
+import at.yedel.yedelmod.hud.impl.CustomTextHud;
 import at.yedel.yedelmod.hud.impl.PlayerUsernameHud;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
@@ -102,7 +102,6 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());
 		MinecraftForge.EVENT_BUS.register(BedwarsChat.getInstance());
 		MinecraftForge.EVENT_BUS.register(ChangeTitle.getInstance());
-		MinecraftForge.EVENT_BUS.register(CustomText.getInstance());
 		MinecraftForge.EVENT_BUS.register(DefusalHelper.getInstance());
 		MinecraftForge.EVENT_BUS.register(DrawBookBackground.getInstance());
 		MinecraftForge.EVENT_BUS.register(DropperGG.getInstance());
@@ -136,7 +135,8 @@ public class YedelMod {
 		HypixelManager.getInstance().setup();
 
 		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
-		HudManager.getInstance().addHud(new PlayerUsernameHud(5, 5, 5, 5));
+		HudManager.getInstance().addHud(PlayerUsernameHud.getInstance());
+		HudManager.getInstance().addHud(CustomTextHud.getInstance());
 	}
 
 	@EventHandler
