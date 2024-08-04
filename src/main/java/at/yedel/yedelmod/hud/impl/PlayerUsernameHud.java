@@ -6,8 +6,6 @@ import java.awt.Color;
 
 import at.yedel.yedelmod.hud.Hud;
 
-import static at.yedel.yedelmod.YedelMod.minecraft;
-
 
 
 public class PlayerUsernameHud extends Hud {
@@ -20,7 +18,7 @@ public class PlayerUsernameHud extends Hud {
 
 	@Override
 	public void render() {
-		minecraft.fontRendererObj.drawStringWithShadow(minecraft.getSession().getUsername(), x, y, WHITE);
+		fontRenderer.drawStringWithShadow(minecraft.getSession().getUsername(), x, y, WHITE);
 	}
 
 	@Override
@@ -30,10 +28,10 @@ public class PlayerUsernameHud extends Hud {
 
 	@Override
 	public void renderSample(boolean beingDragged) {
-		width = minecraft.fontRendererObj.getStringWidth("Username");
-		height = minecraft.fontRendererObj.FONT_HEIGHT;
+		width = fontRenderer.getStringWidth("Username");
+		height = fontRenderer.FONT_HEIGHT;
 		if (beingDragged) drawRect(x, y, x + width, y + height, CYAN);
-		minecraft.fontRendererObj.drawStringWithShadow("Username", x, y, WHITE);
+		fontRenderer.drawStringWithShadow("Username", x, y, WHITE);
 	}
 
 	@Override
