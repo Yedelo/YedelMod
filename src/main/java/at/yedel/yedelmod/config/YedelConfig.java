@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import at.yedel.yedelmod.YedelMod;
+import at.yedel.yedelmod.gui.MoveHudGui;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Functions;
@@ -107,6 +108,37 @@ public class YedelConfig extends Vigilant {
 	public void checkForUpdates() {
 		UpdateManager.getInstance().checkForUpdates(getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 	}
+
+	// HUDs
+
+	@Property(
+		type = PropertyType.BUTTON,
+		name = "Customize HUDs",
+		description = "Customize the position of different HUDs.",
+		category = "General",
+		subcategory = "HUDs",
+		placeholder = "Open GUI"
+	)
+	public void openMoveHudGui() {
+		minecraft.displayGuiScreen(new MoveHudGui(minecraft.currentScreen));
+	}
+
+	@Property(
+		type = PropertyType.CHECKBOX,
+		name = "Render HUDs in screens",
+		description = "Render HUDs (custom text, bounty hunting text, etc) while in another GUI.",
+		category = "General",
+		subcategory = "HUDs"
+	)
+	public boolean renderHudsInScreens = false;
+	@Property(
+		type = PropertyType.CHECKBOX,
+		name = "Render HUDs in F3 menu",
+		description = "Render HUDs (custom text, bounty hunting text, etc) while the debug screen is open.",
+		category = "General",
+		subcategory = "HUDs"
+	)
+	public boolean renderHudsInDebug = false;
 
 	/* Features */
 
@@ -363,6 +395,16 @@ public class YedelConfig extends Vigilant {
 		customPropertyInfo = EmptyProperty.class
 	)
 	public int command$limbocreative = 1;
+	@Property(
+		type = PropertyType.CUSTOM,
+		name = "- movehud",
+		description = "Opens the HUD customization screen.",
+		category = "Commands",
+		subcategory = "Index",
+		customPropertyInfo = EmptyProperty.class
+	)
+	public int command$movehud = 1;
+
 	@Property(
 		type = PropertyType.CUSTOM,
 		name = "- movehuntingtext",

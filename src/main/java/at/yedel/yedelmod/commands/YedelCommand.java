@@ -14,6 +14,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.CustomText;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.ping.PingSender;
+import at.yedel.yedelmod.gui.MoveHudGui;
 import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.gui.MoveTextGui;
 import at.yedel.yedelmod.utils.Chat;
@@ -82,6 +83,9 @@ public class YedelCommand extends CommandBase {
 			case "limbogmc":
 			case "lgmc":
 				LimboCreativeCheck.getInstance().checkLimbo();
+				break;
+			case "movehud":
+				Functions.displayScreen(new MoveHudGui(minecraft.currentScreen));
 				break;
 			case "movehuntingtext":
 				Functions.displayScreen(new MoveHuntingTextGui(minecraft.currentScreen));
@@ -182,7 +186,7 @@ public class YedelCommand extends CommandBase {
 	}
 
 	private final String[] baseTabCompletions = new String[] {
-		"cleartext", "formatting", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
+		"cleartext", "formatting", "limbo", "li", "limbocreative", "limbogmc", "lgmc", "movehud", "movehuntingtext", "movetext", "ping", "playtime", "pt", "setnick", "settext", "settitle", "simulatechat", "simc", "update", "yedelmessage", "message"
 	};
 	private final String[] pingTabCompletions = new String[] {
 		"ping", "command", "tab", "stats", "list", "hypixel"

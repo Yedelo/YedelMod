@@ -23,6 +23,8 @@ import at.yedel.yedelmod.features.modern.DrawBookBackground;
 import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.handlers.YedelModPacketHandler;
+import at.yedel.yedelmod.hud.HudManager;
+import at.yedel.yedelmod.hud.impl.PlayerUsernameHud;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -132,6 +134,9 @@ public class YedelMod {
 		ClientRegistry.registerKeyBinding(sufficientKeybind);
 
 		HypixelManager.getInstance().setup();
+
+		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
+		HudManager.getInstance().addHud(new PlayerUsernameHud(5, 5, 5, 5));
 	}
 
 	@EventHandler
