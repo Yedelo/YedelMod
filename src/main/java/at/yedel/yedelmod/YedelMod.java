@@ -23,6 +23,7 @@ import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.hud.HudManager;
+import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.hud.impl.CustomTextHud;
 import at.yedel.yedelmod.hud.impl.PlayerUsernameHud;
 import at.yedel.yedelmod.utils.Functions;
@@ -137,6 +138,7 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
 		HudManager.getInstance().addHud(PlayerUsernameHud.getInstance());
 		HudManager.getInstance().addHud(CustomTextHud.getInstance());
+		HudManager.getInstance().addHud(BountyHuntingHud.getInstance());
 	}
 
 	@EventHandler

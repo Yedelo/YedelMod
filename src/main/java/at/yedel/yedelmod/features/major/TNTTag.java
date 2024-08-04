@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
@@ -15,7 +16,6 @@ import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -37,11 +37,15 @@ public class TNTTag {
     }
 
     private final ArrayList<String> players = new ArrayList<>();
-    private final ArrayList<String> lines = new ArrayList<>(4); // Display
     private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private final Pattern personBlewUpRegex = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
     private boolean playingTag;
+
+    public boolean getPlayingTag() {
+        return playingTag;
+    }
+
     private String target;
     private String targetRanked;
     private boolean whoCheck;
@@ -51,21 +55,16 @@ public class TNTTag {
     private String playerName;
 
     private TNTTag() {
-        lines.add("§c§lBounty §f§lHunting");
-        lines.add("§a" + YedelConfig.getInstance().points + " points");
-        lines.add("§a" + YedelConfig.getInstance().kills + " kills");
-        lines.add("");
+        BountyHuntingHud.getInstance().getLines().add("§c§lBounty §f§lHunting");
+        BountyHuntingHud.getInstance().getLines().add("§a" + YedelConfig.getInstance().points + " points");
+        BountyHuntingHud.getInstance().getLines().add("§a" + YedelConfig.getInstance().kills + " kills");
+        BountyHuntingHud.getInstance().getLines().add("");
     }
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
-        int y = YedelConfig.getInstance().bhDisplayY;
-        FontRenderer fontRenderer = minecraft.fontRendererObj;
-        for (String line: lines) {
-            fontRenderer.drawStringWithShadow(line, YedelConfig.getInstance().bhDisplayX, y, 16777215);
-            y += fontRenderer.FONT_HEIGHT + 2;
-        }
+
     }
 
     public void onTNTTagJoin() {
@@ -74,10 +73,10 @@ public class TNTTag {
             playerName = minecraft.thePlayer.getName();
             dead = false;
             target = null;
-            lines.set(0, "§c§lBounty §f§lHunting");
-            lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
-            lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
-            lines.set(3, "");
+            BountyHuntingHud.getInstance().getLines().set(0, "§c§lBounty §f§lHunting");
+            BountyHuntingHud.getInstance().getLines().set(1, "§a" + YedelConfig.getInstance().points + " points");
+            BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills");
+            BountyHuntingHud.getInstance().getLines().set(3, "");
             if (YedelConfig.getInstance().bhFirst) {
                 Chat.display(Messages.firstTime);
                 YedelConfig.getInstance().bhFirst = false;
@@ -100,8 +99,8 @@ public class TNTTag {
         whoCheck = true;
         Chat.command("who");
 		if (YedelConfig.getInstance().bhSounds) Functions.safelyPlaySound("random.successful_hit", 10, 0.8F);
-        lines.set(1, "§a" + YedelConfig.getInstance().points + " points");
-        lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills");
+        BountyHuntingHud.getInstance().getLines().set(1, "§a" + YedelConfig.getInstance().points + " points");
+        BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills");
     }
 
     @SubscribeEvent
@@ -117,7 +116,7 @@ public class TNTTag {
                 targetRanked = player;
             }
         }
-        lines.set(3, "§cYour next target is " + targetRanked + ".");
+        BountyHuntingHud.getInstance().getLines().set(3, "§cYour next target is " + targetRanked + ".");
         if (targetRanked.startsWith("§r§7")) targetRankColor = RankColor.GRAY;
         else if (targetRanked.startsWith("§r§a")) targetRankColor = RankColor.GREEN;
         else if (targetRanked.startsWith("§r§b")) targetRankColor = RankColor.AQUA;
@@ -157,13 +156,13 @@ public class TNTTag {
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = minecraft.thePlayer;
         if (
-                Objects.equals(targetPlayer.getName(), target)
-                        && player.canEntityBeSeen(event.entityPlayer)
-                        && !targetPlayer.isInvisible()
+            Objects.equals(targetPlayer.getName(), target)
+                && player.canEntityBeSeen(event.entityPlayer)
+                && !targetPlayer.isInvisible()
         ) {
             double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
             String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
-            ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64); // make this 64 later change
+            ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
         }
     }
 
@@ -172,7 +171,7 @@ public class TNTTag {
         if (event.message.getUnformattedText().startsWith("You were blown up by") && playingTag) {
             target = null;
             dead = true;
-            lines.set(3, "");
+            BountyHuntingHud.getInstance().getLines().set(3, "");
         }
     }
 
@@ -186,7 +185,7 @@ public class TNTTag {
             if (Objects.equals(personDied, playerName)) {
                 dead = true;
                 target = null;
-                lines.set(3, "");
+                BountyHuntingHud.getInstance().getLines().set(3, "");
             }
             if (Objects.equals(personDied, target) && fightingTarget) {
                 ThreadManager.scheduleOnce(() -> {
@@ -194,9 +193,9 @@ public class TNTTag {
                     int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
                     YedelConfig.getInstance().points += pointIncrease;
                     YedelConfig.getInstance().kills += 1;
-                    lines.set(1, "§a" + YedelConfig.getInstance().points + " points (+" + pointIncrease + ")");
-                    lines.set(2, "§a" + YedelConfig.getInstance().kills + " kills (+1)");
-                    lines.set(3, "§cYou killed your target!");
+                    BountyHuntingHud.getInstance().getLines().set(1, "§a" + YedelConfig.getInstance().points + " points (+" + pointIncrease + ")");
+                    BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills (+1)");
+                    BountyHuntingHud.getInstance().getLines().set(3, "§cYou killed your target!");
                     if (YedelConfig.getInstance().bhSounds)
 						Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
                     YedelConfig.getInstance().save();
@@ -214,9 +213,9 @@ public class TNTTag {
 
     @SubscribeEvent
     public void onLeaveTag(WorldEvent.Unload event) {
-        lines.set(0, "");
-        lines.set(1, "");
-        lines.set(2, "");
-        lines.set(3, "");
+        BountyHuntingHud.getInstance().getLines().set(0, "");
+        BountyHuntingHud.getInstance().getLines().set(1, "");
+        BountyHuntingHud.getInstance().getLines().set(2, "");
+        BountyHuntingHud.getInstance().getLines().set(3, "");
     }
 }

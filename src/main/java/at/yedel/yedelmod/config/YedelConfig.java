@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.gui.MoveHudGui;
-import at.yedel.yedelmod.gui.MoveHuntingTextGui;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
@@ -394,24 +393,6 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.CUSTOM,
-		name = "- movehuntingtext",
-		description = "Opens the GUI to move the Bounty Hunting display text.",
-		category = "Commands",
-		subcategory = "Index",
-		customPropertyInfo = EmptyProperty.class
-	)
-	public int command$movehuntingtext = 1;
-	@Property(
-		type = PropertyType.CUSTOM,
-		name = "- movetext",
-		description = "Opens the GUI to move the display text.",
-		category = "Commands",
-		subcategory = "Index",
-		customPropertyInfo = EmptyProperty.class
-	)
-	public int command$movetext = 1;
-	@Property(
-		type = PropertyType.CUSTOM,
 		name = "- ping [method]",
 		description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method which can be customized.",
 		category = "Commands",
@@ -757,18 +738,6 @@ public class YedelConfig extends Vigilant {
 		Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
 	}
 
-	@Property(
-		type = PropertyType.BUTTON,
-		name = "Customize display",
-		description = "Customize the bounty hunting display, can also be done with -movehuntingtext.",
-		category = "TNT Tag",
-		subcategory = "Features",
-		placeholder = "Open GUI"
-	)
-	private void openHuntingGui() {
-		minecraft.displayGuiScreen(new MoveHuntingTextGui(minecraft.currentScreen));
-	}
-
 	// Customization
 
 	@Property(
@@ -906,7 +875,6 @@ public class YedelConfig extends Vigilant {
 
 		addDependency("bhDisplay", "bountyHunting");
 		addDependency("bhSounds", "bountyHunting");
-		addDependency("openHuntingGui", "bountyHunting");
 		addDependency("playSelection", "bountyHunting");
 		addDependency("playKill", "bountyHunting");
 	}
