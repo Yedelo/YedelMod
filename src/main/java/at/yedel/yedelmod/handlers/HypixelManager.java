@@ -19,9 +19,7 @@ import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ModAPIException;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket;
-import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
-import net.hypixel.modapi.packet.impl.clientbound.ClientboundPlayerInfoPacket;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 
@@ -43,11 +41,10 @@ public class HypixelManager {
 
 		HypixelModAPI.getInstance().registerHandler(ClientboundHelloPacket.class, this::onHelloPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::onPingPacket);
-		// HypixelModAPI.getInstance().registerHandler(ClientboundPartyInfoPacket.class, this::onPartyInfoPacket);
-		// HypixelModAPI.getInstance().registerHandler(ClientboundPlayerInfoPacket.class, this::onPlayerInfoPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::onLocationPacket);
 
-		// Unfortunately there doesn't seem to be any other way to catch exceptions.
+		// This was made before Connor added error handling to ClientboundPacketHandlers.
+		// This feature is not released yet, not significant to my use and would require a newer version of the Mod API in the future.
 		Logger.getLogger("HypixelModAPI").addHandler(new Handler() {
 			@Override
 			public void publish(LogRecord record) {
@@ -61,7 +58,7 @@ public class HypixelManager {
 			public void flush() {}
 
 			@Override
-			public void close() throws SecurityException {}
+			public void close() {}
 		});
 	}
 
@@ -97,27 +94,16 @@ public class HypixelManager {
 		PingResponse.getInstance().onHypixelPingPacket();
 	}
 
-	private void onPartyInfoPacket(ClientboundPartyInfoPacket partyInfoPacket) {
-
-	}
-
-	private void onPlayerInfoPacket(ClientboundPlayerInfoPacket playerInfoPacket) {
-
-	}
-
 	// I do not like Optional
 	private void onLocationPacket(ClientboundLocationPacket locationPacket) {
 		inLimbo = Objects.equals(locationPacket.getServerName(), "limbo");
-		inSkywars = false;
-		inSkyblock = false;
-		inBedwars = false;
 		if (locationPacket.getServerType().isPresent()) {
 			ServerType serverType = locationPacket.getServerType().get();
 			inSkywars = serverType == GameType.SKYWARS;
 			inSkyblock = serverType == GameType.SKYBLOCK;
 			inBedwars = serverType == GameType.BEDWARS;
 		}
-		if (locationPacket.getMode().isPresent() && Objects.equals(locationPacket.getMode().get(), "TNTAG")) {
+		if (locationPacket.getMode().isPresent() && locationPacket.getMode().get().equals("TNTAG")) {
 			TNTTag.getInstance().onTNTTagJoin();
 		}
 		if (inLimbo && YedelConfig.getInstance().limboCreative) {
