@@ -2,6 +2,8 @@ package at.yedel.yedelmod.gui;
 
 
 
+import java.awt.Color;
+
 import at.yedel.yedelmod.hud.Hud;
 import at.yedel.yedelmod.hud.HudManager;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,11 +15,19 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 public class MoveHudGui extends GuiScreen {
 	private final GuiScreen parentScreen;
-	private Hud selectedHud;
-	private boolean dragging;
 
 	public MoveHudGui(GuiScreen parentScreen) {
 		this.parentScreen = parentScreen;
+	}
+
+	private Hud selectedHud;
+	private boolean dragging;
+	private boolean keyGuideToggled;
+	private static final int WHITE = Color.WHITE.getRGB();
+
+	@Override
+	public void initGui() {
+		Keyboard.enableRepeatEvents(true);
 	}
 
 	@Override
@@ -37,9 +47,22 @@ public class MoveHudGui extends GuiScreen {
 				)
 			);
 		}
-		for (Hud hud: HudManager.getInstance().getHuds()) {
-			hud.renderSample(hud == selectedHud);
+		fontRendererObj.drawStringWithShadow("§lQ §r- Toggle Key Guide", 5, height - 15, WHITE);
+		if (keyGuideToggled) {
+			fontRendererObj.drawStringWithShadow("§lW §r- Move 5 units up", 5, height - 95, WHITE);
+			fontRendererObj.drawStringWithShadow("§lA §r- Move 5 units left", 5, height - 85, WHITE);
+			fontRendererObj.drawStringWithShadow("§lS §r- Move 5 units down", 5, height - 75, WHITE);
+			fontRendererObj.drawStringWithShadow("§lD §r- Move 5 units right", 5, height - 65, WHITE);
+			fontRendererObj.drawStringWithShadow("§l↑ §r- Move 1 unit up", 5, height - 55, WHITE);
+			fontRendererObj.drawStringWithShadow("§l← §r- Move 1 unit left", 5, height - 45, WHITE);
+			fontRendererObj.drawStringWithShadow("§l↓ §r- Move 1 unit down", 5, height - 35, WHITE);
+			fontRendererObj.drawStringWithShadow("§l→ §r- Move 1 unit right", 5, height - 25, WHITE);
 		}
+		// Render the other HUDs first, then the selected one (for layering)
+		for (Hud hud: HudManager.getInstance().getHuds()) {
+			if (hud != selectedHud) hud.renderSample(false);
+		}
+		if (selectedHud != null) selectedHud.renderSample(true);
 	}
 
 	@Override
@@ -64,6 +87,9 @@ public class MoveHudGui extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) {
 		if (keyCode == Keyboard.KEY_ESCAPE) {
 			minecraft.displayGuiScreen(parentScreen);
+		}
+		else if (keyCode == Keyboard.KEY_Q) {
+			keyGuideToggled = !keyGuideToggled;
 		}
 		if (selectedHud == null) return;
 		switch (keyCode) {
@@ -139,6 +165,7 @@ public class MoveHudGui extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
+		Keyboard.enableRepeatEvents(false);
 		if (selectedHud != null) selectedHud.onUpdate();
 	}
 }

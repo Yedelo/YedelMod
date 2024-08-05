@@ -29,10 +29,10 @@ public class CustomTextHud extends Hud {
 	}
 
 	@Override
-	public void renderSample(boolean beingDragged) {
+	public void renderSample(boolean selected) {
 		width = fontRenderer.getStringWidth("Example text");
 		height = fontRenderer.FONT_HEIGHT;
-		if (beingDragged) drawBackground();
+		if (selected) drawBackground();
 		fontRenderer.drawStringWithShadow("Example text", x, y, WHITE);
 	}
 

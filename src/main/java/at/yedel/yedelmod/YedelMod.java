@@ -52,7 +52,7 @@ import org.lwjgl.input.Keyboard;
 	name = YedelMod.name,
 	version = YedelMod.version,
 	clientSideOnly = true,
-	guiFactory = "at.yedel.yedelmod.gui.forgeconfig.GuiFactory" // Overriden by main config (vigilance)
+	guiFactory = "at.yedel.yedelmod.config.forgeconfig.GuiFactory" // Overriden by main config (vigilance)
 )
 public class YedelMod {
 	public static final String modid = "yedelmod";

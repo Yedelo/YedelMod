@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.gui.forgeconfig;
+package at.yedel.yedelmod.config.forgeconfig;
 
 
 

@@ -84,8 +84,6 @@ public abstract class Hud extends Gui {
 	/**
 	 * Draws a simple background to the HUD in the move hud gui.
 	 * Call after setting the width and height, and before rendering the main content.
-	 *
-	 * @param beingDragged whether the HUD is being dragged
 	 */
 	protected void drawBackground() {
 		drawRect(x, y, x + width, y + height, CYAN);
@@ -101,11 +99,11 @@ public abstract class Hud extends Gui {
 
 	/**
 	 * Renders a sample of this HUD for the move hud gui.
-	 * This should have a background or another indicator showing if it's being dragged.
+	 * This should have a background or another indicator showing if it's selected.
 	 *
-	 * @param beingDragged whether the HUD is currently being dragged
+	 * @param selected whether the HUD is currently being selected
 	 */
-	public abstract void renderSample(boolean beingDragged);
+	public abstract void renderSample(boolean selected);
 
 	/**
 	 * Used to determine if the HUD is being hovered over in the move hud gui.

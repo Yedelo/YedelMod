@@ -30,7 +30,7 @@ public abstract class MixinGuiNewChat {
     }
 
     @WrapWithCondition(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2))
-    private boolean yedelmod$keepChatHistory(List sentMessages) {
+    private boolean yedelmod$keepChatHistory(List<String> sentMessages) {
         return !YedelConfig.getInstance().keepChatHistory;
     }
 
