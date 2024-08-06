@@ -753,76 +753,25 @@ public class YedelConfig extends Vigilant {
 	// End of visible config
 
 	// Hidden variables for data
-
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "playtimeMinutes",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "playtimeMinutes", hidden = true)
 	public int playtimeMinutes = 0;
-	@Property(
-		type = PropertyType.SWITCH,
-		category = "storage",
-		name = "first",
-		hidden = true
-	)
+	@Property(type = PropertyType.SWITCH, category = "storage", name = "first", hidden = true)
 	public boolean first = false;
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "displayX",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "displayX", hidden = true)
 	public int displayX = 5;
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "displayY",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "displayY", hidden = true)
 	public int displayY = 5;
-	@Property(
-		type = PropertyType.TEXT,
-		category = "storage",
-		name = "displayedText",
-		hidden = true
-	)
+	@Property(type = PropertyType.TEXT, category = "storage", name = "displayedText", hidden = true)
 	public String displayedText = "";
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "bhDisplayX",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayX", hidden = true)
 	public int bhDisplayX = 5;
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "bhDisplayY",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayY", hidden = true)
 	public int bhDisplayY = 5;
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "points",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "points", hidden = true)
 	public int points = 0;
-	@Property(
-		type = PropertyType.NUMBER,
-		category = "storage",
-		name = "kills",
-		hidden = true
-	)
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "kills", hidden = true)
 	public int kills = 0;
-	@Property(
-		type = PropertyType.CHECKBOX,
-		category = "storage",
-		name = "bhFirst",
-		hidden = true
-	)
+	@Property(type = PropertyType.CHECKBOX, category = "storage", name = "bhFirst", hidden = true)
 	public boolean bhFirst = true;
 
 	// End of config

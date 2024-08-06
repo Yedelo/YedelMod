@@ -121,7 +121,7 @@ public abstract class Hud extends Gui {
 	}
 
 	/**
-	 * Called when the HUD is moved in the move hud gui.
+	 * Called when the move hud gui is closed.
 	 * Should be used to save config values.
 	 */
 	public abstract void onUpdate();
