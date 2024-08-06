@@ -4,9 +4,10 @@ package at.yedel.yedelmod.hud;
 
 import java.awt.Color;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+
+import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
@@ -55,7 +56,6 @@ public abstract class Hud extends Gui {
 		return height;
 	}
 
-	protected Minecraft minecraft = Minecraft.getMinecraft();
 	protected FontRenderer fontRenderer = minecraft.fontRendererObj;
 
 	public Hud(int x, int y, int defaultX, int defaultY) {

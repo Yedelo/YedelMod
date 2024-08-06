@@ -18,20 +18,20 @@ import net.minecraftforge.common.MinecraftForge;
 public class YedelModPacketHandler extends ChannelDuplexHandler {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		if (msg instanceof Packet) {
-			if (MinecraftForge.EVENT_BUS.post(new PacketEvent.ReceiveEvent((Packet) msg))) return;
-		}
 		super.channelRead(ctx, msg);
+		if (msg instanceof Packet) {
+			MinecraftForge.EVENT_BUS.post(new PacketEvent.ReceiveEvent((Packet) msg));
+			if (msg instanceof S01PacketJoinGame) {
+				MinecraftForge.EVENT_BUS.post(new JoinGamePacketEvent());
+			}
+		}
 	}
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-		if (msg instanceof Packet) {
-			if (msg instanceof S01PacketJoinGame) {
-				MinecraftForge.EVENT_BUS.post(new JoinGamePacketEvent());
-			}
-			if (MinecraftForge.EVENT_BUS.post(new PacketEvent.SendEvent((Packet) msg))) return;
-		}
 		super.write(ctx, msg, promise);
+		if (msg instanceof Packet) {
+			MinecraftForge.EVENT_BUS.post(new PacketEvent.SendEvent((Packet) msg));
+		}
 	}
 }
