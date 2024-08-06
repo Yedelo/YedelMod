@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.major.TNTTag;
+import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.hud.Hud;
 
 
@@ -38,7 +38,7 @@ public class BountyHuntingHud extends Hud {
 
 	@Override
 	public boolean shouldRender() {
-		return YedelConfig.getInstance().bountyHunting && TNTTag.getInstance().getPlayingTag();
+		return YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().getPlayingTag();
 	}
 
 	@Override

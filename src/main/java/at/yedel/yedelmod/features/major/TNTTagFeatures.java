@@ -29,10 +29,10 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 
 
-public class TNTTag {
-    private static final TNTTag instance = new TNTTag();
+public class TNTTagFeatures {
+    private static final TNTTagFeatures instance = new TNTTagFeatures();
 
-    public static TNTTag getInstance() {
+    public static TNTTagFeatures getInstance() {
         return instance;
     }
 
@@ -54,7 +54,7 @@ public class TNTTag {
     private boolean dead;
     private String playerName;
 
-    private TNTTag() {
+    private TNTTagFeatures() {
         BountyHuntingHud.getInstance().getLines().add("§c§lBounty §f§lHunting");
         BountyHuntingHud.getInstance().getLines().add("§a" + YedelConfig.getInstance().points + " points");
         BountyHuntingHud.getInstance().getLines().add("§a" + YedelConfig.getInstance().kills + " kills");

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
-import at.yedel.yedelmod.features.major.TNTTag;
+import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.utils.Chat;
@@ -104,7 +104,7 @@ public class HypixelManager {
 			inBedwars = serverType == GameType.BEDWARS;
 		}
 		if (locationPacket.getMode().isPresent() && locationPacket.getMode().get().equals("TNTAG")) {
-			TNTTag.getInstance().onTNTTagJoin();
+			TNTTagFeatures.getInstance().onTNTTagJoin();
 		}
 		if (inLimbo && YedelConfig.getInstance().limboCreative) {
 			LimboCreativeCheck.getInstance().giveCreative();

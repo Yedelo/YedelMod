@@ -7,15 +7,14 @@ import java.util.concurrent.TimeUnit;
 import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
-import at.yedel.yedelmod.features.BedwarsChat;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
 import at.yedel.yedelmod.features.RegexChatFilter;
-import at.yedel.yedelmod.features.major.DefusalHelper;
+import at.yedel.yedelmod.features.major.BedwarsFeatures;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.MarketSearch;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
-import at.yedel.yedelmod.features.major.TNTTag;
+import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
@@ -100,9 +99,8 @@ public class YedelMod {
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());
-		MinecraftForge.EVENT_BUS.register(BedwarsChat.getInstance());
+		MinecraftForge.EVENT_BUS.register(BedwarsFeatures.getInstance());
 		MinecraftForge.EVENT_BUS.register(ChangeTitle.getInstance());
-		MinecraftForge.EVENT_BUS.register(DefusalHelper.getInstance());
 		MinecraftForge.EVENT_BUS.register(DrawBookBackground.getInstance());
 		MinecraftForge.EVENT_BUS.register(DropperGG.getInstance());
 		MinecraftForge.EVENT_BUS.register(EasyAtlasVerdicts.getInstance());
@@ -113,7 +111,7 @@ public class YedelMod {
 		MinecraftForge.EVENT_BUS.register(PingResponse.getInstance());
 		MinecraftForge.EVENT_BUS.register(RegexChatFilter.getInstance());
 		MinecraftForge.EVENT_BUS.register(StrengthIndicators.getInstance());
-		MinecraftForge.EVENT_BUS.register(TNTTag.getInstance());
+		MinecraftForge.EVENT_BUS.register(TNTTagFeatures.getInstance());
 		MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
 
 		ThreadManager.scheduleRepeat(() -> {

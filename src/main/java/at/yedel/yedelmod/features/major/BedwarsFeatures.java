@@ -1,7 +1,8 @@
-package at.yedel.yedelmod.features;
+package at.yedel.yedelmod.features.major;
 
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,18 +10,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.DrawSlotEvent;
 import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
+import at.yedel.yedelmod.utils.typeutils.RenderUtils;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 
-public class BedwarsChat {
-	private BedwarsChat() {}
-	private static final BedwarsChat instance = new BedwarsChat();
+public class BedwarsFeatures {
+	private BedwarsFeatures() {}
 
-	public static BedwarsChat getInstance() {
+	private static final BedwarsFeatures instance = new BedwarsFeatures();
+
+	public static BedwarsFeatures getInstance() {
 		return instance;
 	}
 
@@ -33,6 +42,23 @@ public class BedwarsChat {
 		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
 		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
 		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
+	}
+
+	private final int RED = new Color(246, 94, 94, 255).getRGB();
+
+	@SubscribeEvent
+	public void onRenderRedstones(DrawSlotEvent event) {
+		if (!YedelConfig.getInstance().defusalHelper) return;
+		ItemStack stack = event.getSlot().getStack();
+		if (stack == null) return;
+		if (stack.getItem() == Items.redstone) {
+			GuiContainer guiContainer = event.getGuiContainer();
+			if (guiContainer instanceof GuiChest) {
+				if (Objects.equals(((AccessorGuiChest) guiContainer).getLowerChestInventory().getName(), "§cC4 (Click §4§lREDSTONE§c)")) {
+					RenderUtils.highlightItem(event.getSlot(), RED);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
