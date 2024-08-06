@@ -45,7 +45,7 @@ public class BountyHuntingHud extends Hud {
 	public void renderSample(boolean selected) {
 		width = fontRenderer.getStringWidth("Your next target is Yedelos.");
 		height = 42;
-		if (selected) drawBackground();
+		if (selected) drawOutline(3);
 		fontRenderer.drawStringWithShadow("§c§lBounty §f§lHunting", x, y, WHITE);
 		fontRenderer.drawStringWithShadow("§a83 points", x, y + 11, WHITE);
 		fontRenderer.drawStringWithShadow("§a15 kills", x, y + 22, WHITE);

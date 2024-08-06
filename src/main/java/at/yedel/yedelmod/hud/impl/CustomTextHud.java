@@ -32,7 +32,7 @@ public class CustomTextHud extends Hud {
 	public void renderSample(boolean selected) {
 		width = fontRenderer.getStringWidth("Example text");
 		height = fontRenderer.FONT_HEIGHT;
-		if (selected) drawBackground();
+		if (selected) drawOutline(3);
 		fontRenderer.drawStringWithShadow("Example text", x, y, WHITE);
 	}
 
