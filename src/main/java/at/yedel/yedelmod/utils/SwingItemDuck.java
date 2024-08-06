@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.ducks;
+package at.yedel.yedelmod.utils;
 
 
 

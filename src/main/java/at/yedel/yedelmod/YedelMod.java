@@ -4,12 +4,12 @@ package at.yedel.yedelmod;
 
 import java.util.concurrent.TimeUnit;
 
-import at.yedel.yedelmod.commands.YedelCommand;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
 import at.yedel.yedelmod.features.RegexChatFilter;
+import at.yedel.yedelmod.features.YedelCommand;
 import at.yedel.yedelmod.features.major.BedwarsFeatures;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.MarketSearch;

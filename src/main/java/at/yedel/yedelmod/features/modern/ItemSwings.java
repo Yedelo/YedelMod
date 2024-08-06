@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.ducks.SwingItemDuck;
 import at.yedel.yedelmod.events.PacketEvent;
+import at.yedel.yedelmod.utils.SwingItemDuck;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;

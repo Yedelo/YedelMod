@@ -3,7 +3,7 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.entity;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.ducks.SwingItemDuck;
+import at.yedel.yedelmod.utils.SwingItemDuck;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
