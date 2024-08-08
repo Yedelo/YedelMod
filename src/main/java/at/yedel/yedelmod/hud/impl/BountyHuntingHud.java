@@ -16,7 +16,7 @@ public class BountyHuntingHud extends Hud {
 		super(x, y, defaultX, defaultY);
 	}
 
-	private static final BountyHuntingHud instance = new BountyHuntingHud(YedelConfig.getInstance().bhDisplayX, YedelConfig.getInstance().bhDisplayY, 5, 5);
+	private static final BountyHuntingHud instance = new BountyHuntingHud(YedelConfig.getInstance().bhDisplayX, YedelConfig.getInstance().bhDisplayY, 5, 25);
 
 	public static BountyHuntingHud getInstance() {
 		return instance;

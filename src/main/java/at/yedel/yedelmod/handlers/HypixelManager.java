@@ -18,17 +18,15 @@ import net.hypixel.data.type.GameType;
 import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ModAPIException;
-import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 
 
 
 public class HypixelManager {
 	private HypixelManager() {}
 
-	private static HypixelManager instance = new HypixelManager();
+	private static final HypixelManager instance = new HypixelManager();
 
 	public static HypixelManager getInstance() {
 		return instance;
@@ -39,7 +37,6 @@ public class HypixelManager {
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
 
-		HypixelModAPI.getInstance().registerHandler(ClientboundHelloPacket.class, this::onHelloPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::onPingPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::onLocationPacket);
 
@@ -86,10 +83,6 @@ public class HypixelManager {
 		return inBedwars;
 	}
 
-	private void onHelloPacket(ClientboundHelloPacket helloPacket) {
-		HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
-	}
-
 	private void onPingPacket(ClientboundPingPacket pingPacket) {
 		PingResponse.getInstance().onHypixelPingPacket();
 	}
@@ -101,7 +94,7 @@ public class HypixelManager {
 			ServerType serverType = locationPacket.getServerType().get();
 			inSkywars = serverType == GameType.SKYWARS;
 			inSkyblock = serverType == GameType.SKYBLOCK;
-			inBedwars = serverType == GameType.BEDWARS;
+			inBedwars = serverType == GameType.BEDWARS && !locationPacket.getLobbyName().isPresent(); // ok maybe it is good
 		}
 		if (locationPacket.getMode().isPresent() && locationPacket.getMode().get().equals("TNTAG")) {
 			TNTTagFeatures.getInstance().onTNTTagJoin();

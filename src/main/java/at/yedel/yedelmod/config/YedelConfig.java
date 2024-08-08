@@ -587,6 +587,16 @@ public class YedelConfig extends Vigilant {
 
 	/* BedWars */
 
+	// HUDs
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "XP display",
+		description = "Shows your experience out of 5,000. Inaccurate for lower levels (0-4).",
+		category = "BedWars",
+		subcategory = "HUDs"
+	)
+	public boolean xpDisplay = true;
+
 	// Challenges
 	@Property(
 		type = PropertyType.SWITCH,
@@ -763,10 +773,14 @@ public class YedelConfig extends Vigilant {
 	public int displayY = 5;
 	@Property(type = PropertyType.TEXT, category = "storage", name = "displayedText", hidden = true)
 	public String displayedText = "";
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "xpDisplayX", hidden = true)
+	public int xpDisplayX = 5;
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "xpDisplayY", hidden = true)
+	public int xpDisplayY = 15;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayX", hidden = true)
 	public int bhDisplayX = 5;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayY", hidden = true)
-	public int bhDisplayY = 5;
+	public int bhDisplayY = 25;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "points", hidden = true)
 	public int points = 0;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "kills", hidden = true)
