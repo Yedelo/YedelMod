@@ -97,23 +97,24 @@ public class YedelMod {
 		YedelConfig.getInstance().preload();
 
 		ClientCommandHandler.instance.registerCommand(new YedelCommand());
-
-		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.register(AutoGuildWelcome.getInstance());
-		MinecraftForge.EVENT_BUS.register(BedwarsFeatures.getInstance());
-		MinecraftForge.EVENT_BUS.register(ChangeTitle.getInstance());
-		MinecraftForge.EVENT_BUS.register(DrawBookBackground.getInstance());
-		MinecraftForge.EVENT_BUS.register(DropperGG.getInstance());
-		MinecraftForge.EVENT_BUS.register(EasyAtlasVerdicts.getInstance());
-		MinecraftForge.EVENT_BUS.register(FavoriteServerButton.getInstance());
-		MinecraftForge.EVENT_BUS.register(Functions.getInstance().getEvents());
-		MinecraftForge.EVENT_BUS.register(ItemSwings.getInstance());
-		MinecraftForge.EVENT_BUS.register(MarketSearch.getInstance());
-		MinecraftForge.EVENT_BUS.register(PingResponse.getInstance());
-		MinecraftForge.EVENT_BUS.register(RegexChatFilter.getInstance());
-		MinecraftForge.EVENT_BUS.register(StrengthIndicators.getInstance());
-		MinecraftForge.EVENT_BUS.register(TNTTagFeatures.getInstance());
-		MinecraftForge.EVENT_BUS.register(YedelCheck.getInstance());
+		registerEventListeners(
+			this,
+			AutoGuildWelcome.getInstance(),
+			BedwarsFeatures.getInstance(),
+			ChangeTitle.getInstance(),
+			DrawBookBackground.getInstance(),
+			DropperGG.getInstance(),
+			EasyAtlasVerdicts.getInstance(),
+			FavoriteServerButton.getInstance(),
+			Functions.getInstance().getEvents(),
+			ItemSwings.getInstance(),
+			MarketSearch.getInstance(),
+			PingResponse.getInstance(),
+			RegexChatFilter.getInstance(),
+			StrengthIndicators.getInstance(),
+			TNTTagFeatures.getInstance(),
+			YedelCheck.getInstance()
+		);
 
 		ThreadManager.scheduleRepeat(() -> {
 			if (minecraft.theWorld != null) {
@@ -149,5 +150,11 @@ public class YedelMod {
 	@SubscribeEvent
 	public void onServerConnect(ClientConnectedToServerEvent event) {
 		event.manager.channel().pipeline().addBefore("packet_handler", "yedelmod_packet_handler", new YedelModPacketHandler());
+	}
+
+	private void registerEventListeners(Object... eventListeners) {
+		for (Object eventListener: eventListeners) {
+			MinecraftForge.EVENT_BUS.register(eventListener);
+		}
 	}
 }
