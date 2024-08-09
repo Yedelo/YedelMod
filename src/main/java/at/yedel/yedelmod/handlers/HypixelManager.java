@@ -83,6 +83,12 @@ public class HypixelManager {
 		return inBedwars;
 	}
 
+	private boolean inTNTTag;
+
+	public boolean getInTNTTag() {
+		return inTNTTag;
+	}
+
 	private void onPingPacket(ClientboundPingPacket pingPacket) {
 		PingResponse.getInstance().onHypixelPingPacket();
 	}
@@ -97,7 +103,11 @@ public class HypixelManager {
 			inBedwars = serverType == GameType.BEDWARS && !locationPacket.getLobbyName().isPresent(); // ok maybe it is good
 		}
 		if (locationPacket.getMode().isPresent() && locationPacket.getMode().get().equals("TNTAG")) {
+			inTNTTag = true;
 			TNTTagFeatures.getInstance().onTNTTagJoin();
+		}
+		else {
+			inTNTTag = false;
 		}
 		if (inLimbo && YedelConfig.getInstance().limboCreative) {
 			LimboCreativeCheck.getInstance().giveCreative();

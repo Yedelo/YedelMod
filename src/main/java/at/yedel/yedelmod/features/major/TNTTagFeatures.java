@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
@@ -19,10 +20,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -40,11 +39,6 @@ public class TNTTagFeatures {
     private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private final Pattern personBlewUpRegex = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
-    private boolean playingTag;
-
-    public boolean getPlayingTag() {
-        return playingTag;
-    }
 
     private String target;
     private String targetRanked;
@@ -61,14 +55,7 @@ public class TNTTagFeatures {
         BountyHuntingHud.getInstance().getLines().add("");
     }
 
-    @SubscribeEvent
-    public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
-        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
-
-    }
-
     public void onTNTTagJoin() {
-        playingTag = true;
         if (YedelConfig.getInstance().bountyHunting) {
             playerName = minecraft.thePlayer.getName();
             dead = false;
@@ -87,7 +74,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onRoundStarted(ClientChatReceivedEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !playingTag || !event.message.getUnformattedText().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().getInTNTTag() || !event.message.getUnformattedText().endsWith("has started!"))
             return;
         players.clear();
         for (NetworkPlayerInfo playerInfo: minecraft.getNetHandler().getPlayerInfoMap()) {
@@ -106,8 +93,7 @@ public class TNTTagFeatures {
     @SubscribeEvent
     public void onWhoMessage(ClientChatReceivedEvent event) {
         String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck || !YedelConfig.getInstance().bountyHunting || !playingTag)
-            return;
+        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck) return;
         whoCheck = false;
         event.setCanceled(true);
         String[] playersArray = msg.substring(14).split("§r§7, ");
@@ -126,7 +112,6 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onFightMessages(ClientChatReceivedEvent event) {
-        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
         String msg = event.message.getUnformattedText();
         Matcher tagOtherMatcher = youTaggedPersonRegex.matcher(msg);
         while (tagOtherMatcher.find()) {
@@ -137,7 +122,7 @@ public class TNTTagFeatures {
 
         Matcher personIsItMatcher = personIsItRegex.matcher(msg);
         while (personIsItMatcher.find()) {
-            if (Objects.equals(personIsItMatcher.group("personThatIsIt"), target) && ! dead) {
+            if (Objects.equals(personIsItMatcher.group("personThatIsIt"), target) && !dead) {
                 fightingTarget = false;
             }
         }
@@ -152,7 +137,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onRenderTarget(RenderPlayerEvent.Pre event) {
-        if (!playingTag || !YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().bhDisplay) return;
+        if (!YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().bhDisplay) return;
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = minecraft.thePlayer;
         if (
@@ -168,7 +153,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onBlastRadiusDeath(ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().startsWith("You were blown up by") && playingTag) {
+        if (event.message.getUnformattedText().startsWith("You were blown up by")) {
             target = null;
             dead = true;
             BountyHuntingHud.getInstance().getLines().set(3, "");
@@ -177,7 +162,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onRoundEnd(ClientChatReceivedEvent event) {
-        if (!playingTag || !YedelConfig.getInstance().bountyHunting) return;
+        if (!YedelConfig.getInstance().bountyHunting) return;
         String msg = event.message.getUnformattedText();
         Matcher peopleDeathMatcher = personBlewUpRegex.matcher(msg);
         while (peopleDeathMatcher.find()) {
@@ -189,8 +174,8 @@ public class TNTTagFeatures {
             }
             if (Objects.equals(personDied, target) && fightingTarget) {
                 ThreadManager.scheduleOnce(() -> {
-                    // Half points if you died while killing your target
-                    int pointIncrease = (int) Math.ceil(dead ? players.size() * 0.8 : players.size() * 0.8 / 2);
+                    int pointIncrease = (int) Math.ceil(players.size() * 0.8);
+                    if (dead) pointIncrease /= 2;
                     YedelConfig.getInstance().points += pointIncrease;
                     YedelConfig.getInstance().kills += 1;
                     BountyHuntingHud.getInstance().getLines().set(1, "§a" + YedelConfig.getInstance().points + " points (+" + pointIncrease + ")");
@@ -209,13 +194,5 @@ public class TNTTagFeatures {
         if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
             Chat.display(Messages.pleaseChangeNick);
         }
-    }
-
-    @SubscribeEvent
-    public void onLeaveTag(WorldEvent.Unload event) {
-        BountyHuntingHud.getInstance().getLines().set(0, "");
-        BountyHuntingHud.getInstance().getLines().set(1, "");
-        BountyHuntingHud.getInstance().getLines().set(2, "");
-        BountyHuntingHud.getInstance().getLines().set(3, "");
     }
 }
