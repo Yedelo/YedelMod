@@ -115,7 +115,7 @@ public abstract class Hud extends Gui {
 	/**
 	 * Called when the HUD is reset (with the R key in move hud gui)
 	 */
-	public void onReset() {
+	public void reset() {
 		x = defaultX;
 		y = defaultY;
 	}
@@ -124,5 +124,5 @@ public abstract class Hud extends Gui {
 	 * Called when the move hud gui is closed.
 	 * Should be used to save config values.
 	 */
-	public abstract void onUpdate();
+	public abstract void update();
 }

@@ -37,7 +37,7 @@ public class CustomTextHud extends Hud {
 	}
 
 	@Override
-	public void onUpdate() {
+	public void update() {
 		YedelConfig.getInstance().displayX = x;
 		YedelConfig.getInstance().displayY = y;
 		YedelConfig.getInstance().save();

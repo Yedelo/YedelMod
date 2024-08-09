@@ -53,7 +53,7 @@ public class BountyHuntingHud extends Hud {
 	}
 
 	@Override
-	public void onUpdate() {
+	public void update() {
 		YedelConfig.getInstance().bhDisplayX = x;
 		YedelConfig.getInstance().bhDisplayY = y;
 		YedelConfig.getInstance().save();

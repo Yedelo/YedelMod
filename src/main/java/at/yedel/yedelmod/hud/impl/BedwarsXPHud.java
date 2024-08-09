@@ -45,7 +45,7 @@ public class BedwarsXPHud extends Hud {
 	}
 
 	@Override
-	public void onUpdate() {
+	public void update() {
 		YedelConfig.getInstance().xpDisplayX = x;
 		YedelConfig.getInstance().xpDisplayY = y;
 		YedelConfig.getInstance().save();

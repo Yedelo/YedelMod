@@ -94,7 +94,7 @@ public class MoveHudGui extends GuiScreen {
 		if (selectedHud == null) return;
 		switch (keyCode) {
 			case Keyboard.KEY_R:
-				selectedHud.onReset();
+				selectedHud.reset();
 				break;
 			case Keyboard.KEY_W:
 				selectedHud.setY(
@@ -166,6 +166,6 @@ public class MoveHudGui extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
-		if (selectedHud != null) selectedHud.onUpdate();
+		if (selectedHud != null) selectedHud.update();
 	}
 }
