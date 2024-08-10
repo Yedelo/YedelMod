@@ -9,15 +9,19 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
+import at.yedel.yedelmod.events.PacketEvent;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
+import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -38,14 +42,36 @@ public class BedwarsFeatures {
 	private static final List<String> comfyPillowMessages = new ArrayList<>();
 
 	static {
-		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
+		comfyPillowMessages.<YedelMod>add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
 		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
 		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
 		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
 	}
 
 	private final int RED = new Color(246, 94, 94, 255).getRGB();
+	private boolean hasExperience;
 
+	public boolean hasExperience() {
+		return hasExperience;
+	}
+
+	private String hudXPText;
+
+	public String getHudXPText() {
+		return hudXPText;
+	}
+
+	@SubscribeEvent
+	public void onExperiencePacket(PacketEvent.ReceiveEvent event) {
+		if (event.getPacket() instanceof S1FPacketSetExperience) {
+			float experience = ((S1FPacketSetExperience) event.getPacket()).func_149397_c();
+			hasExperience = experience > 0;
+			int bedwarsXP = (int) (experience * 5000);
+			hudXPText = "XP: §b" + TextUtils.commafy(bedwarsXP) + "§7/§a5,000";
+		}
+	}
+
+	//TODO use GuiScreenEvent.BackgroundDrawnEvent and remove draw slot event (if this is real)
 	@SubscribeEvent
 	public void onRenderRedstones(DrawSlotEvent event) {
 		if (!YedelConfig.getInstance().defusalHelper) return;

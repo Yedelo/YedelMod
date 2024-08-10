@@ -14,6 +14,7 @@ import at.yedel.yedelmod.hud.Hud;
 public class BountyHuntingHud extends Hud {
 	private BountyHuntingHud(int x, int y, int defaultX, int defaultY) {
 		super(x, y, defaultX, defaultY);
+		height = 42;
 	}
 
 	private static final BountyHuntingHud instance = new BountyHuntingHud(YedelConfig.getInstance().bhDisplayX, YedelConfig.getInstance().bhDisplayY, 5, 25);
@@ -44,7 +45,6 @@ public class BountyHuntingHud extends Hud {
 	@Override
 	public void renderSample(boolean selected) {
 		width = fontRenderer.getStringWidth("Your next target is Yedelos.");
-		height = 42;
 		if (selected) drawOutline(3);
 		fontRenderer.drawStringWithShadow("§c§lBounty §f§lHunting", x, y, WHITE);
 		fontRenderer.drawStringWithShadow("§a83 points", x, y + 11, WHITE);
