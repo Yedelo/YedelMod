@@ -6,13 +6,43 @@ import java.nio.file.Path
 plugins {
     kotlin("jvm")
     id("gg.essential.loom")
-    id("io.github.juuxel.loom-quiltflower")
     id("dev.architectury.architectury-pack200")
-    id("com.github.johnrengelman.shadow")
+    id("net.kyori.blossom") version "1.3.1"
 }
 
 group = "at.yedel"
 version = "1.3.0"
+
+val embed: Configuration by configurations.creating
+configurations.implementation.get().extendsFrom(embed)
+
+repositories {
+    maven("https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.spongepowered.org/repository/maven-public")
+    maven("https://repo.hypixel.net/repository/Hypixel/")
+}
+
+dependencies {
+    minecraft("com.mojang:minecraft:1.8.9")
+    mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
+    forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
+
+    compileOnly("gg.essential:essential-1.8.9-forge:4955+g395141645")
+    embed("gg.essential:loader-launchwrapper:1.1.3")
+
+    compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+
+    implementation("net.hypixel:mod-api:1.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+}
+
+blossom {
+    replaceTokenIn("src/main/java/at/yedel/yedelmod/YedelMod.java")
+    replaceToken("#version#", version)
+}
 
 loom {
     runConfigs {
@@ -46,33 +76,25 @@ loom {
     }
 }
 
-val embed: Configuration by configurations.creating
-configurations.implementation.get().extendsFrom(embed)
-
-repositories {
-    maven("https://repo.essential.gg/repository/maven-public")
-    maven("https://repo.spongepowered.org/repository/maven-public")
-    maven("https://repo.hypixel.net/repository/Hypixel/")
+tasks.test {
+    useJUnitPlatform()
 }
 
-dependencies {
-    minecraft("com.mojang:minecraft:1.8.9")
-    mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
-    forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    compileOnly("gg.essential:essential-1.8.9-forge:4955+g395141645")
-    embed("gg.essential:loader-launchwrapper:1.1.3")
-
-    compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-
-    implementation("net.hypixel:mod-api:1.0")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
-}
 
 tasks {
+    processResources {
+        inputs.property("version", project.version)
+        inputs.property("mcversion", "1.8.9")
+        filesMatching("mcmod.info") {
+            expand("version" to project.version)
+        }
+    }
+
+    withType<JavaCompile> {
+        options.release.set(8)
+    }
+
     jar {
         from(embed.files.map { zipTree(it) })
 
@@ -88,20 +110,6 @@ tasks {
             )
         )
     }
-
-    processResources {
-        inputs.property("version", project.version)
-        inputs.property("mcversion", "1.8.9")
-        filesMatching("mcmod.info") {
-            expand("version" to project.version)
-        }
-    }
-
-    withType<JavaCompile> {
-        options.release.set(8)
-    }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
+
