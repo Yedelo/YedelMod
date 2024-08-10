@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
 import at.yedel.yedelmod.events.PacketEvent;
@@ -42,7 +41,7 @@ public class BedwarsFeatures {
 	private static final List<String> comfyPillowMessages = new ArrayList<>();
 
 	static {
-		comfyPillowMessages.<YedelMod>add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
+		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
 		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
 		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
 		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
@@ -71,7 +70,6 @@ public class BedwarsFeatures {
 		}
 	}
 
-	//TODO use GuiScreenEvent.BackgroundDrawnEvent and remove draw slot event (if this is real)
 	@SubscribeEvent
 	public void onRenderRedstones(DrawSlotEvent event) {
 		if (!YedelConfig.getInstance().defusalHelper) return;
