@@ -10,8 +10,7 @@ plugins {
     id("net.kyori.blossom") version "1.3.1"
 }
 
-group = "at.yedel"
-version = "1.3.0"
+version = properties["mod_version"]!!
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
@@ -27,7 +26,7 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    compileOnly("gg.essential:essential-1.8.9-forge:4955+g395141645")
+    compileOnly("gg.essential:essential-1.8.9-forge:17141+gd6f4cfd3a8")
     embed("gg.essential:loader-launchwrapper:1.1.3")
 
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
@@ -49,6 +48,7 @@ loom {
         named("client") {
             ideConfigGenerated(true)
         }
+        remove(getByName("server"))
     }
 
     launchConfigs {
@@ -59,7 +59,7 @@ loom {
             ) // forge in dev doesn't pick this up from the mod
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
-            arg("--version", "YedelMod environment") // UnknownFMLProfile looks pretty bad so replacing it
+            arg("--version", "YedelMod") // UnknownFMLProfile looks pretty bad so replacing it
             // this is just for me to used shared resource packs with other instances
             if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) {
                 arg(
@@ -76,16 +76,8 @@ loom {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
-
-
 tasks {
     processResources {
-        inputs.property("version", project.version)
-        inputs.property("mcversion", "1.8.9")
         filesMatching("mcmod.info") {
             expand("version" to project.version)
         }
@@ -101,7 +93,7 @@ tasks {
         manifest.attributes(
             mapOf(
                 "FMLCorePlugin" to "at.yedel.yedelmod.loader.YedelModLoadingPlugin",
-                "FMLCorePluginContainsCorePlugin" to "Yes, yes it does",
+                "FMLCorePluginContainsFMLMod" to "fml core plugin does contain an fml mod",
                 "ForceLoadAsMod" to "true",
                 "Main-Class" to "at.yedel.yedelmod.loader.YedelModWindow",
                 "MixinConfigs" to "mixins.yedelmod.json",
@@ -109,6 +101,10 @@ tasks {
                 "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker"
             )
         )
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
