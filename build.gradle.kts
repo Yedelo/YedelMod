@@ -48,7 +48,6 @@ loom {
         named("client") {
             ideConfigGenerated(true)
         }
-        remove(getByName("server"))
     }
 
     launchConfigs {

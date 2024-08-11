@@ -70,7 +70,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 		File[] deepModFiles = deepModDir.listFiles(jarFilter);
 
 		List<File> allModFiles = new ArrayList<>();
-		if (modFiles != null) /* dev environment */ allModFiles.addAll(Arrays.asList(modFiles));
+		allModFiles.addAll(Arrays.asList(modFiles));
 		if (deepModFiles != null) allModFiles.addAll(Arrays.asList(deepModFiles));
 
 		for (File modFile: allModFiles) {
