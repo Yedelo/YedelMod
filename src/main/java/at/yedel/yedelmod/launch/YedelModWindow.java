@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.loader;
+package at.yedel.yedelmod.launch;
 
 
 

@@ -55,7 +55,7 @@ loom {
         getByName("client") {
             property(
                 "fml.coreMods.load",
-                "at.yedel.yedelmod.loader.YedelModLoadingPlugin"
+                "at.yedel.yedelmod.launch.YedelModLoadingPlugin"
             ) // forge in dev doesn't pick this up from the mod
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
@@ -92,10 +92,10 @@ tasks {
 
         manifest.attributes(
             mapOf(
-                "FMLCorePlugin" to "at.yedel.yedelmod.loader.YedelModLoadingPlugin",
+                "FMLCorePlugin" to "at.yedel.yedelmod.launch.YedelModLoadingPlugin",
                 "FMLCorePluginContainsFMLMod" to "fml core plugin does contain an fml mod",
                 "ForceLoadAsMod" to "true",
-                "Main-Class" to "at.yedel.yedelmod.loader.YedelModWindow",
+                "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow",
                 "MixinConfigs" to "mixins.yedelmod.json",
                 "ModSide" to "CLIENT",
                 "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker"
