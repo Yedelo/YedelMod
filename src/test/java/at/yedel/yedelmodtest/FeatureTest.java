@@ -29,4 +29,18 @@ public class FeatureTest {
 			Assertions.assertEquals(newMember, "rankedperson");
 		}
 	}
+
+	@Test
+	public void testTokenMessagePattern() {
+		String tokenMessagePattern = "\\+[0-9]+ tokens! .*";
+		Assertions.assertTrue("+20 tokens! (Final Kill)".matches(tokenMessagePattern));
+		Assertions.assertTrue("+9 tokens! (End of the world)".matches(tokenMessagePattern));
+	}
+
+	@Test
+	public void testSlumberTicketPattern() {
+		String slumberTicketPattern = "\\+[0-9]+ Slumber Tickets! .*";
+		Assertions.assertTrue("+50 Slumber Tickets! (Win)".matches(slumberTicketPattern));
+		Assertions.assertTrue("+19 Slumber Tickets! (Final Kill)".matches(slumberTicketPattern));
+	}
 }
