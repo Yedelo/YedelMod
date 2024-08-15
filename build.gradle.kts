@@ -11,6 +11,7 @@ plugins {
 }
 
 version = properties["mod_version"]!!
+val essentialVersion: String by project
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
@@ -26,7 +27,7 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    compileOnly("gg.essential:essential-1.8.9-forge:17141+gd6f4cfd3a8")
+    compileOnly("gg.essential:essential-1.8.9-forge:$essentialVersion")
     embed("gg.essential:loader-launchwrapper:1.1.3")
 
     compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
