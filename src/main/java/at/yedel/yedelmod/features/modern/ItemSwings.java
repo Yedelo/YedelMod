@@ -37,9 +37,7 @@ public class ItemSwings {
             "minecraft:egg",
             "minecraft:ender_eye",
             "minecraft:experience_bottle",
-            "minecraft:lava_bucket",
-            "minecraft:snowball",
-            "minecraft:water_bucket"
+            "minecraft:snowball"
         ));
     }
 
@@ -49,7 +47,7 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void onUseSwingable(PlayerInteractEvent event) {
-        if (!YedelConfig.getInstance().itemSwings) return;
+        if (!YedelConfig.getInstance().itemUseSwings) return;
         ItemStack itemStack = event.entityPlayer.getHeldItem();
         if (itemStack == null) return;
         Item item = itemStack.getItem();

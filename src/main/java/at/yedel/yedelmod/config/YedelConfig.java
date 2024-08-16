@@ -559,12 +559,12 @@ public class YedelConfig extends Vigilant {
 
 	@Property(
 		type = PropertyType.SWITCH,
-		name = "Projectile throws (1.15+)",
-		description = "Swings your hand when using certain items, such as snowballs and eggs.",
+		name = "Item uses (1.15+)",
+		description = "Swings your hand when using certain items, such as snowballs, eggs and armor.",
 		category = "Modern Features",
 		subcategory = "Hand Swings"
 	)
-	public boolean itemSwings = false;
+	public boolean itemUseSwings = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
