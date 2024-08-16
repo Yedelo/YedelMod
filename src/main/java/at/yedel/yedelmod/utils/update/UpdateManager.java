@@ -78,15 +78,13 @@ public class UpdateManager {
 	}
 
 	public JsonArray getModrinthApiInfo() throws IOException {
-		// Modrinth uses an array of releases at the top instead of an object at the top so we can't use getJsonObject
-		// And it took a while for me to figure this out because I thought everything had to be a JSON object
 		return Requests.gson.fromJson(new InputStreamReader(Requests.openURLConnection(modrinthApiUrl).getInputStream(), StandardCharsets.UTF_8), JsonArray.class);
 	}
 
 	public String getModrinthVersion(JsonArray modrinthApiInfo) {
 		return modrinthApiInfo.
-			get(0). // First element in array of releases (latest one)
-				getAsJsonObject().
+			get(0).
+			getAsJsonObject().
 			get("version_number").
 			getAsString().
 			replace("\"", "");

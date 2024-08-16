@@ -12,7 +12,7 @@ import net.minecraft.util.IChatComponent;
 
 
 public class Constants {
-    public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-";
+	public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-"; // "- YedelMod -"
 
 	public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
@@ -37,9 +37,9 @@ public class Constants {
         public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
         public static ChatComponentText notOnHypixel = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
         public static ChatComponentText hypixelRateLimited = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
-		private static ChatComponentText formattingCodes =
+		private static final ChatComponentText formattingCodes =
 			new ChatComponentText(
-				"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:"
+				"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
 					"\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
 					"\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
 					"\n§8Dark Gray: §8&8     §9Blue: §9&9     §aGreen: §a&a     §bAqua: §b&b" +

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiNewChat.class)
 public abstract class MixinGuiNewChat {
-    // Lan message is printed to the chat GUI, skips ClientChatReceivedEvent
+    // Lan message is printed to the chat GUI and skips ClientChatReceivedEvent. Listening to logs may be possible here
     @Inject(method = "printChatMessage", at = @At("HEAD"))
     private void yedelmod$onLanHost(IChatComponent chatComponent, CallbackInfo ci) {
         if (chatComponent.getUnformattedText().startsWith("Local game hosted on port")) {

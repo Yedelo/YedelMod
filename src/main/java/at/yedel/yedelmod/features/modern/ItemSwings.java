@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features.modern;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +10,9 @@ import java.util.Objects;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.PacketEvent;
 import at.yedel.yedelmod.utils.SwingItemDuck;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -27,46 +30,50 @@ public class ItemSwings {
         return instance;
     }
 
-    private final List<String> swingItems;
+    private final List<String> swingItems = new ArrayList<String>();
 
     private ItemSwings() {
-        swingItems = Arrays.asList(
-                "minecraft:egg",
-                "minecraft:ender_eye",
-                "minecraft:ender_pearl",
-                "minecraft:experience_bottle",
-                "minecraft:lava_bucket",
-                "minecraft:snowball",
-                "minecraft:water_bucket",
-                "minecraft:potion"
-        );
+        swingItems.addAll(Arrays.asList(
+            "minecraft:egg",
+            "minecraft:ender_eye",
+            "minecraft:experience_bottle",
+            "minecraft:lava_bucket",
+            "minecraft:snowball",
+            "minecraft:water_bucket"
+        ));
     }
 
-    public void swing() {
+    private void swing() {
         ((SwingItemDuck) minecraft.thePlayer).yedelmod$swingItemLocally();
     }
 
     @SubscribeEvent
     public void onUseSwingable(PlayerInteractEvent event) {
         if (!YedelConfig.getInstance().itemSwings) return;
-        ItemStack stack = minecraft.thePlayer.getHeldItem();
-        if (stack == null) return;
-        Item item = stack.getItem();
+        ItemStack itemStack = event.entityPlayer.getHeldItem();
+        if (itemStack == null) return;
+        Item item = itemStack.getItem();
         String registryName = item.getRegistryName();
         if (swingItems.contains(registryName)) {
-            if (Objects.equals(registryName, "minecraft:potion")) {
-                if (!ItemPotion.isSplash(stack.getMetadata())) return;
-            }
-            else if (Objects.equals(registryName, "minecraft:ender_pearl")) {
-                if (minecraft.playerController.isInCreativeMode()) return;
-            }
             swing();
+        }
+        else if (Objects.equals(registryName, "minecraft:potion") && ItemPotion.isSplash(itemStack.getMetadata())) {
+            swing();
+        }
+        else if (Objects.equals(registryName, "minecraft:ender_pearl") && !minecraft.playerController.isInCreativeMode()) {
+            swing();
+        }
+        else if (item instanceof ItemArmor) {
+            int slot = EntityLiving.getArmorPosition(itemStack) - 1;
+            if (event.entityPlayer.getCurrentArmor(slot) == null) {
+                swing();
+            }
         }
     }
 
     @SubscribeEvent
     public void onDropPacket(PacketEvent.SendEvent event) {
-        if (! YedelConfig.getInstance().dropSwings) return;
+        if (!YedelConfig.getInstance().dropSwings) return;
         if (event.getPacket() instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
             if (action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM && minecraft.thePlayer.getHeldItem() != null) {
