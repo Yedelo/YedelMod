@@ -12,7 +12,7 @@ import at.yedel.yedelmod.hud.Hud;
 public class BedwarsXPHud extends Hud {
 	private BedwarsXPHud(int x, int y, int defaultX, int defaultY) {
 		super(x, y, defaultX, defaultY);
-		height = fontRenderer.FONT_HEIGHT;
+		height = 8;
 	}
 
 	private static final BedwarsXPHud instance = new BedwarsXPHud(YedelConfig.getInstance().xpDisplayX, YedelConfig.getInstance().xpDisplayY, 5, 15);

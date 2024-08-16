@@ -17,7 +17,7 @@ public class BountyHuntingHud extends Hud {
 		height = 42;
 	}
 
-	private static final BountyHuntingHud instance = new BountyHuntingHud(YedelConfig.getInstance().bhDisplayX, YedelConfig.getInstance().bhDisplayY, 5, 25);
+	private static final BountyHuntingHud instance = new BountyHuntingHud(YedelConfig.getInstance().bhDisplayX, YedelConfig.getInstance().bhDisplayY, 5, 35);
 
 	public static BountyHuntingHud getInstance() {
 		return instance;

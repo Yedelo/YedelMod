@@ -25,6 +25,7 @@ import at.yedel.yedelmod.hud.HudManager;
 import at.yedel.yedelmod.hud.impl.BedwarsXPHud;
 import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.hud.impl.CustomTextHud;
+import at.yedel.yedelmod.hud.impl.MagicMilkTimeHud;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -123,6 +124,11 @@ public class YedelMod {
 			}
 		}, 1, TimeUnit.MINUTES);
 
+		ThreadManager.scheduleRepeat(() -> {
+			BedwarsFeatures.getInstance().decrementMagicMilkTime();
+			BedwarsFeatures.getInstance().setMagicMilkTimeText("Magic Milk: §b" + BedwarsFeatures.getInstance().getMagicMilkTime() + "§as");
+		}, 1, TimeUnit.SECONDS);
+
 		ahSearchKeybind = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
 		bzSearchKeybind = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
 		insufficientKeybind = new KeyBinding("Insufficient Evidence", Keyboard.KEY_O, "YedelMod | Atlas");
@@ -135,9 +141,10 @@ public class YedelMod {
 		HypixelManager.getInstance().setup();
 
 		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
-		HudManager.getInstance().addHud(CustomTextHud.getInstance());
-		HudManager.getInstance().addHud(BountyHuntingHud.getInstance());
 		HudManager.getInstance().addHud(BedwarsXPHud.getInstance());
+		HudManager.getInstance().addHud(BountyHuntingHud.getInstance());
+		HudManager.getInstance().addHud(CustomTextHud.getInstance());
+		HudManager.getInstance().addHud(MagicMilkTimeHud.getInstance());
 	}
 
 	@EventHandler

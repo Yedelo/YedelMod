@@ -596,6 +596,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "HUDs"
 	)
 	public boolean xpDisplay = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Magic milk display",
+		description = "Shows how long your Magic Milk will last for.",
+		category = "BedWars",
+		subcategory = "HUDs"
+	)
+	public boolean magicMilkDisplay = true;
 
 	// Challenges
 	@Property(
@@ -767,20 +775,24 @@ public class YedelConfig extends Vigilant {
 	public int playtimeMinutes = 0;
 	@Property(type = PropertyType.SWITCH, category = "storage", name = "first", hidden = true)
 	public boolean first = false;
+	@Property(type = PropertyType.TEXT, category = "storage", name = "displayedText", hidden = true)
+	public String displayedText = "";
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "displayX", hidden = true)
 	public int displayX = 5;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "displayY", hidden = true)
 	public int displayY = 5;
-	@Property(type = PropertyType.TEXT, category = "storage", name = "displayedText", hidden = true)
-	public String displayedText = "";
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "xpDisplayX", hidden = true)
 	public int xpDisplayX = 5;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "xpDisplayY", hidden = true)
 	public int xpDisplayY = 15;
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "magicMilkDisplayX", hidden = true)
+	public int magicMilkDisplayX = 5;
+	@Property(type = PropertyType.NUMBER, category = "storage", name = "magicMilkDisplayY", hidden = true)
+	public int magicMilkDisplayY = 25;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayX", hidden = true)
 	public int bhDisplayX = 5;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "bhDisplayY", hidden = true)
-	public int bhDisplayY = 25;
+	public int bhDisplayY = 35;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "points", hidden = true)
 	public int points = 0;
 	@Property(type = PropertyType.NUMBER, category = "storage", name = "kills", hidden = true)

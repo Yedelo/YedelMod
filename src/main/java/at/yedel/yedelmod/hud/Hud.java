@@ -63,7 +63,7 @@ public abstract class Hud extends Gui {
 		return height;
 	}
 
-	protected FontRenderer fontRenderer = minecraft.fontRendererObj;
+	protected final FontRenderer fontRenderer = minecraft.fontRendererObj;
 	protected final int WHITE = Color.WHITE.getRGB();
 
 	/**

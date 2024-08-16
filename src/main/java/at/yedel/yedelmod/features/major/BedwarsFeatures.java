@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
@@ -36,18 +37,6 @@ public class BedwarsFeatures {
 		return instance;
 	}
 
-	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
-	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
-	private static final List<String> comfyPillowMessages = new ArrayList<>();
-
-	static {
-		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
-		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
-		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
-		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
-	}
-
-	private final int RED = new Color(246, 94, 94, 255).getRGB();
 	private boolean hasExperience;
 
 	public boolean hasExperience() {
@@ -60,6 +49,39 @@ public class BedwarsFeatures {
 		return hudXPText;
 	}
 
+	private int magicMilkTime;
+
+	public int getMagicMilkTime() {
+		return magicMilkTime;
+	}
+
+	public void decrementMagicMilkTime() {
+		magicMilkTime--;
+	}
+
+	private String magicMilkTimeText;
+
+	public String getMagicMilkTimeText() {
+		return magicMilkTimeText;
+	}
+
+	public void setMagicMilkTimeText(String magicMilkTimeText) {
+		this.magicMilkTimeText = magicMilkTimeText;
+	}
+
+	private final int RED = new Color(246, 94, 94, 255).getRGB();
+
+	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
+	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
+	private static final List<String> comfyPillowMessages = new ArrayList<>();
+
+	static {
+		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
+		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
+		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
+		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
+	}
+
 	@SubscribeEvent
 	public void onExperiencePacket(PacketEvent.ReceiveEvent event) {
 		if (event.getPacket() instanceof S1FPacketSetExperience) {
@@ -67,6 +89,14 @@ public class BedwarsFeatures {
 			hasExperience = experience > 0;
 			int bedwarsXP = (int) (experience * 5000);
 			hudXPText = "XP: §b" + TextUtils.commafy(bedwarsXP) + "§7/§a5,000";
+		}
+	}
+
+	@SubscribeEvent
+	public void onDrinkMilk(PlayerUseItemEvent.Finish event) {
+		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().getInBedwars()) {
+			magicMilkTime = 30;
+			magicMilkTimeText = "Magic Milk: §b30§as";
 		}
 	}
 
