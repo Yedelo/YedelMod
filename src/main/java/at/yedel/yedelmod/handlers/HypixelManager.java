@@ -11,7 +11,6 @@ import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.major.ping.PingSender;
-import at.yedel.yedelmod.handlers.LogListenerFilter.Log4JEvent;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import net.hypixel.data.type.GameType;
@@ -20,8 +19,13 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ModAPIException;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.message.Message;
 
 
 
@@ -126,14 +130,41 @@ public class HypixelManager {
 			public void close() {}
 		});
 
-		// Forge Mod API 1.0.1.1 and after
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+		// Forge Mod API 1.0.1.1 and above
+		Logger logger = ((Logger) LogManager.getLogger("HypixelModAPI"));
+		logger.addFilter(new Filter() {
+			@Override
+			public Result getOnMismatch() {
+				return null;
+			}
 
-	@SubscribeEvent
-	public void onModAPIException(Log4JEvent event) {
-		if (event.getLogEvent().getThrown() instanceof ModAPIException) {
-			onException((ModAPIException) event.getLogEvent().getThrown());
-		}
+			@Override
+			public Result getOnMatch() {
+				return null;
+			}
+
+			@Override
+			public Result filter(Logger logger, Level level, Marker marker, String msg, Object... params) {
+				return null;
+			}
+
+			@Override
+			public Result filter(Logger logger, Level level, Marker marker, Object msg, Throwable t) {
+				return null;
+			}
+
+			@Override
+			public Result filter(Logger logger, Level level, Marker marker, Message msg, Throwable t) {
+				return null;
+			}
+
+			@Override
+			public Result filter(LogEvent event) {
+				if (event.getThrown() instanceof ModAPIException) {
+					onException((ModAPIException) event.getThrown());
+				}
+				return null;
+			}
+		});
 	}
 }

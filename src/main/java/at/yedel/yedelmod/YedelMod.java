@@ -8,7 +8,6 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
-import at.yedel.yedelmod.features.HideMissingSignatureErrors;
 import at.yedel.yedelmod.features.RegexChatFilter;
 import at.yedel.yedelmod.features.YedelCommand;
 import at.yedel.yedelmod.features.major.BedwarsFeatures;
@@ -21,7 +20,6 @@ import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
 import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.handlers.HypixelManager;
-import at.yedel.yedelmod.handlers.LogListenerFilter;
 import at.yedel.yedelmod.handlers.YedelModPacketHandler;
 import at.yedel.yedelmod.hud.HudManager;
 import at.yedel.yedelmod.hud.impl.BedwarsXPHud;
@@ -100,7 +98,6 @@ public class YedelMod {
 		YedelConfig.getInstance().preload();
 
 		ClientCommandHandler.instance.registerCommand(new YedelCommand());
-
 		registerEventListeners(
 			this,
 			AutoGuildWelcome.getInstance(),
@@ -111,7 +108,6 @@ public class YedelMod {
 			EasyAtlasVerdicts.getInstance(),
 			FavoriteServerButton.getInstance(),
 			Functions.getInstance().getEvents(),
-			HideMissingSignatureErrors.getInstance(),
 			ItemSwings.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
@@ -141,8 +137,6 @@ public class YedelMod {
 		ClientRegistry.registerKeyBinding(bzSearchKeybind);
 		ClientRegistry.registerKeyBinding(insufficientKeybind);
 		ClientRegistry.registerKeyBinding(sufficientKeybind);
-
-		((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(LogListenerFilter.getInstance());
 
 		HypixelManager.getInstance().setup();
 
