@@ -34,6 +34,12 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 </details>
 
+<details><summary>Regex chat filter</summary>
+
+- Use a customizable regular expression to filter chat.
+
+</details>
+
 <details><summary>Random placeholder</summary>
 
 - Type a customizable placeholder to replace it with a random string from a UUID.
@@ -91,7 +97,7 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 <details><summary>Hand swings (1.15+)</summary>
 
-- Swing your hand when doing numerous actions, such as dropping items or using projectiles.
+- Swing your hand when doing numerous actions, such as dropping items or using items like snowballs and armor.
 
 </details>
 
@@ -112,6 +118,21 @@ Smaller features that change the game, similar to features in Patcher.
 </details>
 
 ### BedWars
+
+#### HUDs
+
+<details><summary>XP display</summary>
+
+- Shows your experience out of 5,000.
+- Inaccurate for lower levels (0-4).
+
+</details>
+
+<details><summary>Magic milk display</summary>
+
+- Shows how long your Magic Milk will last for.
+
+</details>
 
 #### Challenges
 
@@ -211,15 +232,9 @@ All commands are under the /yedel command. For example:
 
 </details>
 
-<details><summary>- movehuntingtext</summary>
+<details><summary>- movehud</summary>
 
-- Opens the GUI to move the Bounty Hunting display text.
-
-</details>
-
-<details><summary>- movetext</summary>
-
-- Opens the GUI to move the display text.
+- Opens the HUD customization screen.
 
 </details>
 
