@@ -79,8 +79,9 @@ loom {
 tasks {
     processResources {
         filesMatching("mcmod.info") {
-            expand("version" to project.version)
+            expand("version" to version)
         }
+        outputs.upToDateWhen { false }
     }
 
     withType<JavaCompile> {
