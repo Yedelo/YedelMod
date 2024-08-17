@@ -18,7 +18,8 @@ import static at.yedel.yedelmod.YedelMod.minecraft;
 
 public class FavoriteServerButton {
 	private FavoriteServerButton() {}
-	private static FavoriteServerButton instance = new FavoriteServerButton();
+
+	private static final FavoriteServerButton instance = new FavoriteServerButton();
 
 	public static FavoriteServerButton getInstance() {
 		return instance;

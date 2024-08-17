@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class RegexChatFilter {
 	private RegexChatFilter() {}
 
-	private static RegexChatFilter instance = new RegexChatFilter();
+	private static final RegexChatFilter instance = new RegexChatFilter();
 
 	public static RegexChatFilter getInstance() {
 		return instance;

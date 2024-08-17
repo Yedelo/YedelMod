@@ -103,7 +103,7 @@ public class StrengthIndicators {
     }
 
     @SubscribeEvent
-    public void onRenderStrengthPlayer_HealthTag(RenderScoreEvent event) {
+    public void onRenderStrengthPlayerHealth(RenderScoreEvent event) {
         EntityPlayer entityPlayer = event.getPlayer();
         String entityName = entityPlayer.getName();
         boolean inStart = startStrengthPlayers.contains(entityName);
