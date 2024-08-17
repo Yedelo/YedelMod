@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.modern;
 import java.util.Objects;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.handlers.LogListenerFilter.Log4JEvent;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -59,5 +60,15 @@ public class ChangeTitle {
                 Display.setTitle("Minecraft 1.8.9");
             }
         });
+    }
+
+    @SubscribeEvent
+    public void onLanHost(Log4JEvent event) {
+        if (!YedelConfig.getInstance().changeTitle) return;
+        String message = event.getLogEvent().getMessage().getFormattedMessage();
+        if (message.startsWith("Started on ")) {
+            String port = message.substring(11);
+            Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
+        }
     }
 }

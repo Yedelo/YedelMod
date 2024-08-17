@@ -56,7 +56,7 @@ loom {
             property(
                 "fml.coreMods.load",
                 "at.yedel.yedelmod.launch.YedelModLoadingPlugin"
-            ) // forge in dev doesn't pick this up from the mod
+            )
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.yedelmod.json")
             arg("--version", "YedelMod") // UnknownFMLProfile looks pretty bad so replacing it
