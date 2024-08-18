@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.AutoGuildWelcome;
+import at.yedel.yedelmod.features.CustomHitParticles;
 import at.yedel.yedelmod.features.DropperGG;
 import at.yedel.yedelmod.features.FavoriteServerButton;
 import at.yedel.yedelmod.features.RegexChatFilter;
@@ -108,6 +109,7 @@ public class YedelMod {
 			EasyAtlasVerdicts.getInstance(),
 			FavoriteServerButton.getInstance(),
 			Functions.getInstance().getEvents(),
+			CustomHitParticles.getInstance(),
 			ItemSwings.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),

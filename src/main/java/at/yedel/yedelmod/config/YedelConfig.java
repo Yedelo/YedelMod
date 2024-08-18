@@ -19,6 +19,7 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.JVMAnnotationPropertyCollector;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.Loader;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -154,12 +155,21 @@ public class YedelConfig extends Vigilant {
 	public boolean guildWelcome = false;
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Custom hit particles",
+		description = "Spawns customizable particles when hitting entities.",
+		category = "Features",
+		subcategory = "Features"
+	)
+	public boolean customHitParticles = false;
+
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Display text",
 		description = "Show text which can be customized with -settext and cleared with -cleartext, supporting color codes with ampersands (&).",
 		category = "Features",
 		subcategory = "Features"
 	)
-	public boolean displayTextToggled;
+	public boolean displayTextToggled = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -245,8 +255,86 @@ public class YedelConfig extends Vigilant {
 	)
 	public String guildWelcomeMessage = "Welcome, [player]!";
 	@Property(
+		type = PropertyType.SWITCH,
+		name = "Only spawn custom particles on players",
+		category = "Features",
+		subcategory = "Customization"
+	)
+	public boolean onlySpawnCustomParticlesOnPlayers = false;
+	@Property(
 		type = PropertyType.SLIDER,
-		name = "Delay",
+		name = "Particle Y offset",
+		description = "Some particles (such as note) may not show well due to being in the player model. Use this for those particles.",
+		category = "Features",
+		subcategory = "Customization",
+		min = -1,
+		max = 2
+	)
+	public int hitParticleYOffset = 0;
+	@Property(
+		type = PropertyType.SELECTOR,
+		name = "Custom particle type",
+		description = "The custom particle to be spawned when attacking an entity.",
+		category = "Features",
+		subcategory = "Customization",
+		options = {
+			"Explosion (Normal)",
+			"Explosion (Large)",
+			"Explosion (Huge)",
+			"Fireworks Spark",
+			"Water Bubble",
+			"Water Splash",
+			"Water Wake",
+			"Suspended",
+			"Suspended Depth",
+			"Crit",
+			"Sharpness",
+			"Smoke (Normal)",
+			"Smoke (Large)",
+			"Spell",
+			"Instant Spell",
+			"Mod Spell",
+			"Ambient Mob Spell",
+			"Witch Spell",
+			"Water Drip",
+			"Lava Drip",
+			"Angry Villager",
+			"Happy Villager",
+			"Town Aura",
+			"Note",
+			"Portal",
+			"Enchantment Table",
+			"Flame",
+			"Lava",
+			"Footstep",
+			"Cloud",
+			"Redstone",
+			"Snowball",
+			"Snow Shovel",
+			"Slime",
+			"Heart",
+			"Barrier",
+			"Item Crack",
+			"Block Crack",
+			"Block Dust",
+			"Water Drop",
+			"Item Take",
+			"Guardian"
+		}
+	)
+	public int hitParticleType = EnumParticleTypes.NOTE.getParticleID();
+	@Property(
+		type = PropertyType.CHECKBOX,
+		name = "Random particle type",
+		description = "Spawns a random particle type on hit instead of the one chosen above.",
+		category = "Features",
+		subcategory = "Customization"
+	)
+	public boolean randomParticleType = false;
+
+	@Property(
+		type = PropertyType.SLIDER,
+		name = "AutoGG Delay",
 		description = "Delay for AutoGG, measured in seconds.",
 		category = "Features",
 		subcategory = "Customization",
@@ -840,6 +928,10 @@ public class YedelConfig extends Vigilant {
 	public void addDependencies() {
 		addDependency("guildWelcomeMessage", "guildWelcome");
 		addDependency("dropperGGDelay", "dropperGG");
+		addDependency("onlySpawnCustomParticlesOnPlayers", "customHitParticles");
+		addDependency("hitParticleType", "customHitParticles");
+		addDependency("randomParticleType", "customHitParticles");
+		addDependency("hitParticleYOffset", "customHitParticles");
 		addDependency("regexChatFilterPattern", "regexChatFilterToggled");
 		addDependency("randomString", "randomPlaceholderToggled");
 		addDependency("startStrengthColor", "strengthIndicators");
