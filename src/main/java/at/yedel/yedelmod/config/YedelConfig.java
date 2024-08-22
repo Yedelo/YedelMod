@@ -293,7 +293,7 @@ public class YedelConfig extends Vigilant {
 			"Smoke (Large)",
 			"Spell",
 			"Instant Spell",
-			"Mod Spell",
+			"Mob Spell",
 			"Ambient Mob Spell",
 			"Witch Spell",
 			"Water Drip",
