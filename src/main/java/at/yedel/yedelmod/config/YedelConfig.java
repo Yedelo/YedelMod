@@ -823,25 +823,25 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Target selection sound",
-		description = "Sound: random.successful_hit at 10 volume and 0.8 pitch.",
+		description = "Sound: random.successful_hit at 0.8 pitch.",
 		category = "TNT Tag",
 		subcategory = "Features",
 		placeholder = "Play sound"
 	)
 	private void playSelection() {
-		Functions.safelyPlaySound("random.successful_hit", 10, 0.8F);
+		Functions.playSound("random.successful_hit", 0.8F);
 	}
 
 	@Property(
 		type = PropertyType.BUTTON,
 		name = "Kill sound",
-		description = "Sound: random.successful_hit at 10 volume and 1.04 pitch.",
+		description = "Sound: random.successful_hit at 1.04 pitch.",
 		category = "TNT Tag",
 		subcategory = "Features",
 		placeholder = "Play sound"
 	)
 	private void playKill() {
-		Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
+		Functions.playSound("random.successful_hit", 1.04F);
 	}
 
 	// Customization

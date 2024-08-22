@@ -131,7 +131,7 @@ public class PingSender {
             Chat.display(Messages.pingIs0);
         else {
             Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
-            Functions.safelyPlaySound("random.successful_hit", 10, (float) (ping * -0.006 + 2));
+            Functions.playSound("random.successful_hit", (float) (ping * -0.006 + 2));
         }
     }
 }

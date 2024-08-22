@@ -2,7 +2,9 @@ package at.yedel.yedelmod.utils;
 
 
 
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -30,8 +32,8 @@ public class Functions {
         screenToOpen = screen;
     }
 
-    public static void safelyPlaySound(String name, float volume, float pitch) {
-        if (minecraft.thePlayer != null) minecraft.thePlayer.playSound(name, volume, pitch);
+    public static void playSound(String name, float pitch) {
+        minecraft.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation(name), pitch));
     }
 
     public static class Events {

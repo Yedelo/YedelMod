@@ -85,7 +85,7 @@ public class TNTTagFeatures {
         target = players.get((int) Math.floor(Math.random() * players.size()));
         whoCheck = true;
         Chat.command("who");
-		if (YedelConfig.getInstance().bhSounds) Functions.safelyPlaySound("random.successful_hit", 10, 0.8F);
+        if (YedelConfig.getInstance().bhSounds) Functions.playSound("random.successful_hit", 0.8F);
         BountyHuntingHud.getInstance().getLines().set(1, "§a" + YedelConfig.getInstance().points + " points");
         BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills");
     }
@@ -182,7 +182,7 @@ public class TNTTagFeatures {
                     BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills (+1)");
                     BountyHuntingHud.getInstance().getLines().set(3, "§cYou killed your target!");
                     if (YedelConfig.getInstance().bhSounds)
-						Functions.safelyPlaySound("random.successful_hit", 10, 1.04F);
+                        Functions.playSound("random.successful_hit", 1.04F);
                     YedelConfig.getInstance().save();
                 }, 500);
             }
