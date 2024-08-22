@@ -565,7 +565,7 @@ public class YedelConfig extends Vigilant {
 				"\n§9Hypixel: §7Uses the Hypixel ping packet and waits for the response. Only works on hypixel.",
 		category = "Commands",
 		subcategory = "Customization",
-		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)", "Hypixel"}
+		options = {"Ping", "Command", "Tab", "Stats", "Server list", "Hypixel"}
 	)
 	public int pingMethod = 1;
 
