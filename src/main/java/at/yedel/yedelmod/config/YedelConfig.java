@@ -129,7 +129,7 @@ public class YedelConfig extends Vigilant {
 		category = "General",
 		subcategory = "HUDs"
 	)
-	public boolean renderHudsInScreens = false;
+	public boolean renderHudsInScreens = true;
 	@Property(
 		type = PropertyType.CHECKBOX,
 		name = "Render HUDs in F3 menu",
@@ -152,7 +152,7 @@ public class YedelConfig extends Vigilant {
 		category = "Features",
 		subcategory = "Features"
 	)
-	public boolean guildWelcome = false;
+	public boolean guildWelcome = true;
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Custom hit particles",
@@ -196,7 +196,7 @@ public class YedelConfig extends Vigilant {
 		category = "Features",
 		subcategory = "Features"
 	)
-	public boolean randomPlaceholderToggled;
+	public boolean randomPlaceholderToggled = true;
 
 	@Property(
 		type = PropertyType.SWITCH,
@@ -223,7 +223,7 @@ public class YedelConfig extends Vigilant {
 		category = "Features",
 		subcategory = "Features"
 	)
-	public boolean buttonFavoriteServer = true;
+	public boolean buttonFavoriteServer = false;
 
 	// Tweaks
 	@Property(
@@ -340,7 +340,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Customization",
 		max = 5
 	)
-	public int dropperGGDelay = 1;
+	public int dropperGGDelay = 0;
 	@Property(
 		type = PropertyType.SELECTOR,
 		name = "Strength color",
@@ -419,7 +419,7 @@ public class YedelConfig extends Vigilant {
 		category = "Features",
 		subcategory = "Customization"
 	)
-	public String favoriteServer = "yedelmod.hypixel.net";
+	public String favoriteServer = "mc.hypixel.net";
 
 	/* Commands */
 	// Index
@@ -567,7 +567,7 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Customization",
 		options = {"Ping", "Command", "Tab", "Stats", "Server list (default)", "Hypixel"}
 	)
-	public int pingMethod = 5;
+	public int pingMethod = 1;
 
 	/* Keybinds */
 
@@ -633,7 +633,7 @@ public class YedelConfig extends Vigilant {
 		category = "Modern Features",
 		subcategory = "General"
 	)
-	public boolean changeTitle = true;
+	public boolean changeTitle = false;
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Damage Tilt (1.19.4+)",
@@ -641,7 +641,7 @@ public class YedelConfig extends Vigilant {
 		category = "Modern Features",
 		subcategory = "General"
 	)
-	public boolean damageTiltToggled;
+	public boolean damageTiltToggled = false;
 
 	// Hand Swings
 
@@ -843,7 +843,6 @@ public class YedelConfig extends Vigilant {
 	private void playKill() {
 		Functions.playSound("random.successful_hit", 1.04F);
 	}
-
 	// Customization
 
 	@Property(

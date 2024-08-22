@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class YedelModTest {
-	private static final Logger logger = LogManager.getLogger("YedelMod Test");
+	private static final Logger logger = LogManager.getLogger();
 
 	@Test
 	public void testUpdateManager() {
