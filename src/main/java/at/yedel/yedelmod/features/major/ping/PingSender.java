@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
+import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import gg.essential.api.EssentialAPI;
 import net.hypixel.modapi.HypixelModAPI;
@@ -100,19 +101,19 @@ public class PingSender {
     }
 
     public void commandPing() {
-        lastTime = System.nanoTime();
+        updateLastTime();
         Chat.command(TextUtils.randomUuid(8));
         commandCheck = true;
     }
 
     public void tabPing() {
-        lastTime = System.nanoTime();
+        updateLastTime();
 		minecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"));
         tabCheck = true;
     }
 
     public void statsPing() {
-        lastTime = System.nanoTime();
+        updateLastTime();
         minecraft.getNetHandler().addToSendQueue(new C16PacketClientStatus(EnumRequestStats));
         statsCheck = true;
     }
@@ -120,7 +121,7 @@ public class PingSender {
     public void hypixelPing() {
         // Yedel uses essential features ???
         if (EssentialAPI.getMinecraftUtil().isHypixel()) {
-            lastTime = System.nanoTime();
+            updateLastTime();
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
         }
@@ -128,14 +129,20 @@ public class PingSender {
     }
 
     public void serverListPing() {
-        try {
-            lastTime = System.nanoTime();
-            new OldServerPinger().ping(minecraft.getCurrentServerData());
+        ThreadManager.scheduleOnce(() -> {
+            updateLastTime();
+            try {
+                new OldServerPinger().ping(minecraft.getCurrentServerData());
+            }
+            catch (UnknownHostException e) {
+                Chat.display(Messages.failedServerPingMessage);
+                e.printStackTrace();
+            }
             serverListCheck = true;
-        }
-        catch (UnknownHostException e) {
-            Chat.display(Messages.failedServerPingMessage);
-            e.printStackTrace();
-        }
+        }, 0);
+    }
+
+    public void updateLastTime() {
+        lastTime = System.nanoTime();
     }
 }
