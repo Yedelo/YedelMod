@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.major.ping;
 import java.net.UnknownHostException;
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.handlers.OldServerPingResponder;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.ThreadManager;
@@ -12,7 +13,6 @@ import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import gg.essential.api.EssentialAPI;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
-import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 
@@ -130,15 +130,13 @@ public class PingSender {
 
     public void serverListPing() {
         ThreadManager.scheduleOnce(() -> {
-            updateLastTime();
             try {
-                new OldServerPinger().ping(minecraft.getCurrentServerData());
+                new OldServerPingResponder().ping(minecraft.getCurrentServerData());
             }
             catch (UnknownHostException e) {
                 Chat.display(Messages.failedServerPingMessage);
                 e.printStackTrace();
             }
-            serverListCheck = true;
         }, 0);
     }
 
