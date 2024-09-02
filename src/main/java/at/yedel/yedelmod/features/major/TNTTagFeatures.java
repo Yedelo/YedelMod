@@ -65,7 +65,7 @@ public class TNTTagFeatures {
             BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills");
             BountyHuntingHud.getInstance().getLines().set(3, "");
             if (YedelConfig.getInstance().bhFirst) {
-                Chat.display(Messages.firstTime);
+                Chat.display(Messages.firstTimeMessage);
                 YedelConfig.getInstance().bhFirst = false;
                 YedelConfig.getInstance().save();
             }
@@ -192,7 +192,7 @@ public class TNTTagFeatures {
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
         if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
-            Chat.display(Messages.pleaseChangeNick);
+            Chat.display(Messages.pleaseChangeNickMessage);
         }
     }
 }

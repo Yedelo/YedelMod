@@ -2,14 +2,16 @@ package at.yedel.yedelmod.features.major.ping;
 
 
 
+import java.net.UnknownHostException;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
-import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import gg.essential.api.EssentialAPI;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
+import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 
@@ -30,6 +32,7 @@ public class PingSender {
     public boolean statsCheck = false;
     public boolean tabCheck = false;
     public boolean hypixelCheck = false;
+    public boolean serverListCheck = false;
     public long lastTime;
 
     public void processPingCommand(String pingArg) {
@@ -121,17 +124,18 @@ public class PingSender {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
         }
-        else Chat.display(Messages.notOnHypixel);
+        else Chat.display(Messages.notOnHypixelMessage);
     }
 
     public void serverListPing() {
-        if (minecraft.isSingleplayer()) Chat.display(Messages.listPingInSingleplayer);
-        float ping = (float) minecraft.getCurrentServerData().pingToServer;
-        if (ping == 0)
-            Chat.display(Messages.pingIs0);
-        else {
-            Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
-            Functions.playSound("random.successful_hit", (float) (ping * -0.006 + 2));
+        try {
+            lastTime = System.nanoTime();
+            new OldServerPinger().ping(minecraft.getCurrentServerData());
+            serverListCheck = true;
+        }
+        catch (UnknownHostException e) {
+            Chat.display(Messages.failedServerPingMessage);
+            e.printStackTrace();
         }
     }
 }

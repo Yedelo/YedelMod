@@ -48,7 +48,7 @@ public class EasyAtlasVerdicts {
         EntityPlayerSP player = minecraft.thePlayer;
         if (YedelMod.getInstance().getInsufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
-            Chat.display(Messages.insufficientEvidence);
+            Chat.display(Messages.insufficientEvidenceMessage);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();
@@ -59,7 +59,7 @@ public class EasyAtlasVerdicts {
         }
         else if (YedelMod.getInstance().getSufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
-            Chat.display(Messages.evidenceWithoutDoubt);
+            Chat.display(Messages.evidenceWithoutDoubtMessage);
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();

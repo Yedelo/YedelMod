@@ -65,7 +65,7 @@ public class YedelCommand extends CommandBase {
 			case "cleartext":
 				YedelConfig.getInstance().displayedText = "";
 				YedelConfig.getInstance().save();
-				Chat.display(Messages.clearedDisplayText);
+				Chat.display(Messages.clearedDisplayTextMessage);
 				break;
 			case "formatting":
 				Chat.display(Messages.formattingGuideMessage);
@@ -92,7 +92,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "setnick":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidNick);
+					Chat.display(Messages.enterValidNickMessage);
 					return;
 				}
 				Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
@@ -101,7 +101,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settext":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidText);
+					Chat.display(Messages.enterValidTextMessage);
 					return;
 				}
 				String displayText = TextUtils.replaceAmpersand(TextUtils.joinArgs(args).substring(8));
@@ -111,7 +111,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settitle":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidTitle);
+					Chat.display(Messages.enterValidTitleMessage);
 					return;
 				}
 				String title = TextUtils.joinArgs(args).substring(9);
@@ -148,11 +148,11 @@ public class YedelCommand extends CommandBase {
 							getAsJsonObject().
 							get("yedelmod-message-formatted").
 							getAsString();
-						Chat.display(Messages.messageFromYedel);
+						Chat.display(Messages.messageFromYedelMessage);
 						Chat.display(yedelMessage);
 					}
 					catch (IOException e) {
-						Chat.display(Messages.couldntGetMessage);
+						Chat.display(Messages.couldntGetModMessageMessage);
 						e.printStackTrace();
 					}
 				}, "YedelMod Message").start();

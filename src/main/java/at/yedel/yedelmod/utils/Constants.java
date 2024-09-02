@@ -18,25 +18,23 @@ public class Constants {
         public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
         public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
         public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-        public static ChatComponentText firstTime = new ChatComponentText("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
-        public static ChatComponentText pleaseChangeNick = new ChatComponentText("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
-        public static ChatComponentText gamemodeCreative = new ChatComponentText(logo + " §eSet gamemode to creative!");
-        public static ChatComponentText insufficientEvidence = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
-        public static ChatComponentText evidenceWithoutDoubt = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
-        public static ChatComponentText listPingInSingleplayer = new ChatComponentText(logo + " §cThis method does not work in singleplayer!");
-        public static ChatComponentText noCookieBuff = new ChatComponentText(logo + " §r§cYou don't have the Cookie Buff!");
-        public static ChatComponentText noItemFound = new ChatComponentText(logo + " §cNo item in bazaar with this name!");
-        public static ChatComponentText clearedDisplayText = new ChatComponentText(logo + " §eCleared display text!");
-        public static ChatComponentText alreadyCreative = new ChatComponentText(logo + " §cYou are already in creative mode!");
-        public static ChatComponentText limboCheckFailed = new ChatComponentText(logo + " §cLimbo check failed, try again in a bit or rejoin!");
-        public static ChatComponentText pingIs0 = new ChatComponentText(logo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
-        public static ChatComponentText enterValidText = new ChatComponentText(logo + " §cYou must enter valid text!");
-        public static ChatComponentText enterValidTitle = new ChatComponentText(logo + " §cYou must enter a valid title!");
-        public static ChatComponentText enterValidNick = new ChatComponentText(logo + " §cYou must enter a valid nick!");
-        public static ChatComponentText couldntGetMessage = new ChatComponentText(logo + " §cCouldn't get mod message!");
-        public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
-        public static ChatComponentText notOnHypixel = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
-        public static ChatComponentText hypixelRateLimited = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
+		public static ChatComponentText firstTimeMessage = new ChatComponentText("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
+		public static ChatComponentText pleaseChangeNickMessage = new ChatComponentText("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
+		public static ChatComponentText gamemodeCreativeMessage = new ChatComponentText(logo + " §eSet gamemode to creative!");
+		public static ChatComponentText insufficientEvidenceMessage = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
+		public static ChatComponentText evidenceWithoutDoubtMessage = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
+		public static ChatComponentText noCookieBuffMessage = new ChatComponentText(logo + " §r§cYou don't have the Cookie Buff!");
+		public static ChatComponentText noItemFoundMessage = new ChatComponentText(logo + " §cNo item in bazaar with this name!");
+		public static ChatComponentText clearedDisplayTextMessage = new ChatComponentText(logo + " §eCleared display text!");
+		public static ChatComponentText alreadyCreativeMessage = new ChatComponentText(logo + " §cYou are already in creative mode!");
+		public static ChatComponentText limboCheckFailedMessage = new ChatComponentText(logo + " §cLimbo check failed, try again in a bit or rejoin!");
+		public static ChatComponentText enterValidTextMessage = new ChatComponentText(logo + " §cYou must enter valid text!");
+		public static ChatComponentText enterValidTitleMessage = new ChatComponentText(logo + " §cYou must enter a valid title!");
+		public static ChatComponentText enterValidNickMessage = new ChatComponentText(logo + " §cYou must enter a valid nick!");
+		public static ChatComponentText couldntGetModMessageMessage = new ChatComponentText(logo + " §cCouldn't get mod message!");
+		public static ChatComponentText messageFromYedelMessage = new ChatComponentText(logo + " §eMessage from Yedel:");
+		public static ChatComponentText notOnHypixelMessage = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
+		public static ChatComponentText hypixelRateLimitedMessage = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
 		private static final ChatComponentText formattingCodes =
 			new ChatComponentText(
 				"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
@@ -59,6 +57,7 @@ public class Constants {
 						)
 					)
 			);
+		public static ChatComponentText failedServerPingMessage = new ChatComponentText(logo + " §cFailed to get server list ping! Try another method.");
     }
 
     public static final Pattern[] skywarsKillPatterns = {
