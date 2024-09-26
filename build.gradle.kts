@@ -76,9 +76,18 @@ loom {
     }
 }
 
+sourceSets {
+    val dummy by creating
+    main {
+        dummy.compileClasspath += compileClasspath
+        compileClasspath += dummy.output
+        output.setResourcesDir(java.classesDirectory)
+    }
+}
+
 tasks {
     processResources {
-        filesMatching("mcmod.info") {
+        filesMatching(listOf("mcmod.info", "fabric.mod.json")) {
             expand("version" to version)
         }
         outputs.upToDateWhen { false }
