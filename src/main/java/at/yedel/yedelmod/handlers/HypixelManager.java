@@ -131,7 +131,7 @@ public class HypixelManager {
 		});
 
 		// Forge Mod API 1.0.1.1 and above
-		Logger logger = (Logger) LogManager.getLogger("HypixelModAPI");
+		Logger logger = ((Logger) LogManager.getLogger("HypixelModAPI"));
 		logger.addFilter(new Filter() {
 			@Override
 			public Result getOnMismatch() {
