@@ -26,7 +26,9 @@ public class PingResponse {
         if (!PingSender.getInstance().commandCheck) return;
         if (event.message.getUnformattedText().contains("Unknown command")) {
             event.setCanceled(true);
-            handlePingResponse("command");
+            float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+            Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(command)");
+            Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
             PingSender.getInstance().commandCheck = false;
         }
     }
@@ -35,7 +37,9 @@ public class PingResponse {
     public void onStatsPacket(PacketEvent.ReceiveEvent event) {
         if (!PingSender.getInstance().statsCheck) return;
         if (event.getPacket() instanceof S37PacketStatistics) {
-            handlePingResponse("stats");
+            float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+            Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(stats)");
+            Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
             PingSender.getInstance().statsCheck = false;
         }
     }
@@ -44,26 +48,26 @@ public class PingResponse {
     public void onTabPacket(PacketEvent.ReceiveEvent event) {
         if (!PingSender.getInstance().tabCheck) return;
         if (event.getPacket() instanceof S3APacketTabComplete) {
-            handlePingResponse("tab");
+            float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+            Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(tab)");
+            Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
             PingSender.getInstance().tabCheck = false;
         }
     }
 
     public void onHypixelPingPacket() {
         if (!PingSender.getInstance().hypixelCheck) return;
-        handlePingResponse("hypixel");
+        float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+        Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(hypixel)");
+        Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
         PingSender.getInstance().hypixelCheck = false;
     }
 
     public void onServerListResponse() {
         if (!PingSender.getInstance().serverListCheck) return;
-        handlePingResponse("server list");
-        PingSender.getInstance().serverListCheck = false;
-    }
-
-    public void handlePingResponse(String method) {
         float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
-        Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(" + method + ")");
+        Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(server list)");
         Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
+        PingSender.getInstance().serverListCheck = false;
     }
 }

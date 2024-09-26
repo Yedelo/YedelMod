@@ -561,7 +561,7 @@ public class YedelConfig extends Vigilant {
 				"\n§9Command (default): §7Enters a random command and waits for the unknown command response. Works on almost all servers." +
 				"\n§9Tab: §7Sends a tab completion packet and waits for the response. Works on all servers." +
 				"\n§9Stats: §7Sends a statistics packet and waits for the response. Works on all servers." +
-				"\n§9Server list: §7Sends a ping directly to the server address and returns it. Doesn't work in singleplayer." +
+				"\n§9Server list: §7Gets the ping displayed previously on the server list. Doesn't work on singleplayer and if you used Direct Connect." +
 				"\n§9Hypixel: §7Uses the Hypixel ping packet and waits for the response. Only works on hypixel.",
 		category = "Commands",
 		subcategory = "Customization",

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinOldServerPinger {
 	@Inject(method = "handleServerInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkManager;sendPacket(Lnet/minecraft/network/Packet;)V"))
 	private void yedelmod$handleServerConnection(S00PacketServerInfo packetIn, CallbackInfo ci) {
-		PingSender.getInstance().updateLastTime();
+		PingSender.getInstance().lastTime = System.nanoTime();
 	}
 
 	@Inject(method = "handlePong", at = @At("HEAD"))
