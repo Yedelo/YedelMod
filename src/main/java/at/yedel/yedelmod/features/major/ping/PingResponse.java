@@ -63,11 +63,5 @@ public class PingResponse {
         PingSender.getInstance().hypixelCheck = false;
     }
 
-    public void onServerListResponse() {
-        if (!PingSender.getInstance().serverListCheck) return;
-        float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
-        Chat.logoDisplay("&ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(server list)");
-        Functions.playSound("random.successful_hit", (float) (delay * -0.006 + 2));
-        PingSender.getInstance().serverListCheck = false;
-    }
+    // Server list handled in ping sender
 }

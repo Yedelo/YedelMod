@@ -8,7 +8,6 @@
     "net.minecraft.client.gui.MixinGuiNewChat",
     "net.minecraft.client.gui.inventory.AccessorGuiChest",
     "net.minecraft.client.gui.inventory.MixinGuiContainer",
-    "net.minecraft.client.network.MixinOldServerPinger",
     "net.minecraft.client.renderer.MixinEntityRenderer",
     "net.minecraft.client.renderer.entity.InvokerRender",
     "net.minecraft.client.renderer.entity.MixinRenderPlayer",

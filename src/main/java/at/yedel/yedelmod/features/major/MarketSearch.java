@@ -72,7 +72,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                Chat.display(Messages.noCookieBuffMessage);
+                Chat.display(Messages.noCookieBuff);
             }
         }
         else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {
@@ -95,7 +95,7 @@ public class MarketSearch {
                 if (itemName.contains("No Product Found")) {
                     bzSearchingClose = false;
                     minecraft.thePlayer.closeScreen();
-                    Chat.display(Messages.noItemFoundMessage);
+                    Chat.display(Messages.noItemFound);
                 }
             }
         }

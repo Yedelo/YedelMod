@@ -23,14 +23,14 @@ public class LimboCreativeCheck {
 
     public void checkLimbo() {
         if (HypixelManager.getInstance().getInLimbo()) {
-            if (minecraft.playerController.isInCreativeMode()) Chat.display(Messages.alreadyCreativeMessage);
+            if (minecraft.playerController.isInCreativeMode()) Chat.display(Messages.alreadyCreative);
             else giveCreative();
         }
-        else Chat.display(Messages.limboCheckFailedMessage);
+        else Chat.display(Messages.limboCheckFailed);
     }
 
     public void giveCreative() {
         minecraft.playerController.setGameType(creative);
-        Chat.display(Messages.gamemodeCreativeMessage);
+        Chat.display(Messages.gamemodeCreative);
     }
 }

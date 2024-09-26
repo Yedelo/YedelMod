@@ -108,7 +108,7 @@ public class HypixelManager {
 		if (Objects.equals(exception.getIdentifier(), pingPacketIdentifier)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				Chat.display(Messages.hypixelRateLimitedMessage);
+				Chat.display(Messages.hypixelRateLimited);
 			}
 		}
 	}
