@@ -74,7 +74,7 @@ public class ItemSwings {
         if (!YedelConfig.getInstance().dropSwings) return;
         if (event.getPacket() instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
-            if (action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM && minecraft.thePlayer.getHeldItem() != null) {
+            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && minecraft.thePlayer.getHeldItem() != null) {
                 swing();
             }
         }
