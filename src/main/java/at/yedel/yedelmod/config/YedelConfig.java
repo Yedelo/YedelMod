@@ -229,7 +229,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Unformat chat logs",
-		description = "Remove formatting that was not removed from chat logs.",
+		description = "Remove formatting that was not removed from chat logs.\n&cThis will be removed in a future update, use Finement to replace it.",
 		category = "Features",
 		subcategory = "Tweaks"
 	)
@@ -238,7 +238,7 @@ public class YedelConfig extends Vigilant {
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Hide missing signature errors",
-		description = "Hide \"Signature is missing from textures payload\" errors from being logged.",
+		description = "Hide \"Signature is missing from textures payload\" errors from being logged.\n&cThis will be removed in a future update, use Finement to replace it.",
 		category = "Features",
 		subcategory = "Tweaks"
 	)
