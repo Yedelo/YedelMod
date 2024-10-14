@@ -45,5 +45,6 @@ public class MagicMilkTimeHud extends Hud {
 	public void update() {
 		YedelConfig.getInstance().magicMilkDisplayX = x;
 		YedelConfig.getInstance().magicMilkDisplayY = y;
+		YedelConfig.getInstance().save();
 	}
 }
