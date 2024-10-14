@@ -143,10 +143,12 @@ public class YedelMod {
 		HypixelManager.getInstance().setup();
 
 		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
-		HudManager.getInstance().addHud(BedwarsXPHud.getInstance());
-		HudManager.getInstance().addHud(BountyHuntingHud.getInstance());
-		HudManager.getInstance().addHud(CustomTextHud.getInstance());
-		HudManager.getInstance().addHud(MagicMilkTimeHud.getInstance());
+		HudManager.getInstance().addHuds(
+			BedwarsXPHud.getInstance(),
+			BountyHuntingHud.getInstance(),
+			CustomTextHud.getInstance(),
+			MagicMilkTimeHud.getInstance()
+		);
 	}
 
 	@EventHandler

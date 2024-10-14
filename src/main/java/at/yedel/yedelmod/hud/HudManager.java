@@ -35,6 +35,12 @@ public class HudManager {
 		huds.add(hud);
 	}
 
+	public void addHuds(Hud... huds) {
+		for (Hud hud: huds) {
+			addHud(hud);
+		}
+	}
+
 	@SubscribeEvent
 	public void onRenderGame(RenderGameOverlayEvent event) {
 		if (event.type != ElementType.TEXT || minecraft.currentScreen instanceof MoveHudGui) return;
