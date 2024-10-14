@@ -22,7 +22,7 @@ public class LimboCreativeCheck {
     private final WorldSettings.GameType creative = WorldSettings.GameType.CREATIVE;
 
     public void checkLimbo() {
-        if (HypixelManager.getInstance().getInLimbo()) {
+        if (HypixelManager.getInstance().isInLimbo()) {
             if (minecraft.playerController.isInCreativeMode()) Chat.display(Messages.alreadyCreative);
             else giveCreative();
         }

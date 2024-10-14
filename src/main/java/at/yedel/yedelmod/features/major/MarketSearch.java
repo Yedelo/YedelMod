@@ -38,7 +38,7 @@ public class MarketSearch {
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
         if (YedelMod.getInstance().getAhSearchKeybind().isPressed() && YedelConfig.getInstance().ahSearch) {
-            if (HypixelManager.getInstance().getInSkyblock()) {
+            if (HypixelManager.getInstance().isInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
@@ -51,7 +51,7 @@ public class MarketSearch {
             }
         }
         else if (YedelMod.getInstance().getBzSearchKeybind().isPressed() && YedelConfig.getInstance().bzSearch) {
-            if (HypixelManager.getInstance().getInSkyblock()) {
+            if (HypixelManager.getInstance().isInSkyblock()) {
                 ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();

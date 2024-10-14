@@ -39,7 +39,7 @@ public class BountyHuntingHud extends Hud {
 
 	@Override
 	public boolean shouldRender() {
-		return YedelConfig.getInstance().bountyHunting && HypixelManager.getInstance().getInTNTTag();
+		return YedelConfig.getInstance().bountyHunting && HypixelManager.getInstance().isInTNTTag();
 	}
 
 	@Override

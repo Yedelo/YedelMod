@@ -81,7 +81,7 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void onKillMessage(ClientChatReceivedEvent event) {
-        if (YedelConfig.getInstance().strengthIndicators && HypixelManager.getInstance().getInSkywars()) {
+        if (YedelConfig.getInstance().strengthIndicators && HypixelManager.getInstance().isInSkywars()) {
             String message = event.message.getUnformattedText();
             for (Pattern killPattern: Constants.skywarsKillPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);

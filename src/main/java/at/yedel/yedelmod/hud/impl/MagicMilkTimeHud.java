@@ -23,7 +23,7 @@ public class MagicMilkTimeHud extends Hud {
 
 	@Override
 	public boolean shouldRender() {
-		return YedelConfig.getInstance().magicMilkDisplay && HypixelManager.getInstance().getInBedwars();
+		return YedelConfig.getInstance().magicMilkDisplay && HypixelManager.getInstance().isInBedwars();
 	}
 
 	@Override

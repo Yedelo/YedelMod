@@ -94,7 +94,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void onDrinkMilk(PlayerUseItemEvent.Finish event) {
-		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().getInBedwars()) {
+		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().isInBedwars()) {
 			magicMilkTime = 30;
 			magicMilkTimeText = "Magic Milk: §b30§as";
 		}
@@ -117,7 +117,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void onTokenMessage(ClientChatReceivedEvent event) {
-		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().getInBedwars()) {
+		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().isInBedwars()) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = tokenMessagePattern.matcher(message);
 			while (matcher.find()) {
@@ -128,7 +128,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void onSlumberTicketMessage(ClientChatReceivedEvent event) {
-		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().getInBedwars()) {
+		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().isInBedwars()) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = slumberTicketMessagePattern.matcher(message);
 			while (matcher.find()) {
@@ -139,7 +139,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void onItemPickupMessage(ClientChatReceivedEvent event) {
-		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().getInBedwars()) {
+		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().isInBedwars()) {
 			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
 				event.setCanceled(true);
 			}

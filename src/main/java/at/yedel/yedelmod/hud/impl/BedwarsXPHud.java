@@ -23,7 +23,7 @@ public class BedwarsXPHud extends Hud {
 
 	@Override
 	public boolean shouldRender() {
-		return YedelConfig.getInstance().xpDisplay && HypixelManager.getInstance().getInBedwars();
+		return YedelConfig.getInstance().xpDisplay && HypixelManager.getInstance().isInBedwars();
 	}
 
 	@Override

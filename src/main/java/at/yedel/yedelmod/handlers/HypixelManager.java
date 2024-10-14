@@ -51,31 +51,31 @@ public class HypixelManager {
 
 	private boolean inSkywars;
 
-	public boolean getInSkywars() {
+	public boolean isInSkywars() {
 		return inSkywars;
 	}
 
 	private boolean inSkyblock;
 
-	public boolean getInSkyblock() {
+	public boolean isInSkyblock() {
 		return inSkyblock;
 	}
 
 	private boolean inLimbo;
 
-	public boolean getInLimbo() {
+	public boolean isInLimbo() {
 		return inLimbo;
 	}
 
 	public boolean inBedwars;
 
-	public boolean getInBedwars() {
+	public boolean isInBedwars() {
 		return inBedwars;
 	}
 
 	private boolean inTNTTag;
 
-	public boolean getInTNTTag() {
+	public boolean isInTNTTag() {
 		return inTNTTag;
 	}
 

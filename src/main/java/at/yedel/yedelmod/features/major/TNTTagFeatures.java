@@ -74,7 +74,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void onRoundStarted(ClientChatReceivedEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().getInTNTTag() || !event.message.getUnformattedText().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().isInTNTTag() || !event.message.getUnformattedText().endsWith("has started!"))
             return;
         players.clear();
         for (NetworkPlayerInfo playerInfo: minecraft.getNetHandler().getPlayerInfoMap()) {
