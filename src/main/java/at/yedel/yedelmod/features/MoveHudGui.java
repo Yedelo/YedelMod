@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.gui;
+package at.yedel.yedelmod.features;
 
 
 

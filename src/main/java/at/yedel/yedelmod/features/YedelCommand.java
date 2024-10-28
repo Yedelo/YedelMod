@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.major.ping.PingSender;
-import at.yedel.yedelmod.gui.MoveHudGui;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;

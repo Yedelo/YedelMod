@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.gui.MoveHudGui;
+import at.yedel.yedelmod.features.MoveHudGui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;

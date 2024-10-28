@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import at.yedel.yedelmod.YedelMod;
-import at.yedel.yedelmod.gui.MoveHudGui;
+import at.yedel.yedelmod.features.MoveHudGui;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
