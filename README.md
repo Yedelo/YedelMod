@@ -20,6 +20,12 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 </details>
 
+<details><summary>Custom hit particles</summary>
+
+- Spawns customizable particles when hitting entities.
+
+</details>
+
 <details><summary>Display text</summary>
 
 - Show text which can be customized with /yedel settext and cleared with /yedel cleartext, supporting color codes with
