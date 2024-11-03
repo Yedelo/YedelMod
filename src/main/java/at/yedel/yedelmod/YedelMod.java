@@ -49,6 +49,7 @@ import org.lwjgl.input.Keyboard;
 
 
 
+// Mod!
 @Mod(
 	modid = YedelMod.modid,
 	name = YedelMod.name,
