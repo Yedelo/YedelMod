@@ -20,6 +20,7 @@ repositories {
     maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.spongepowered.org/repository/maven-public")
     maven("https://repo.hypixel.net/repository/Hypixel/")
+    maven("https://repo.polyfrost.cc/releases")
 }
 
 dependencies {
@@ -34,6 +35,9 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
     implementation("net.hypixel:mod-api:1.0")
+
+    compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.2-alpha+")
+    embed("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
