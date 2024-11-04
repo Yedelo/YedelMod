@@ -29,15 +29,14 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 
 
 
 @Name("YedelMod Mod Detector")
 @MCVersion("1.8.9")
 public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
-	private static final Logger logger = LogManager.getLogger("YedelMod Mod Detector");
 	private final URI hypixelModApiUri = new URI("https://modrinth.com/mod/hypixel-mod-api");
 	private final boolean dontCrashGame = System.getProperty("yedelmod.modapi.disablecrash") != null;
 	private static final String modApiVersionKey = "net.hypixel.mod-api.version:1";
@@ -62,13 +61,13 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 	@Override
 	public void injectData(Map<String, Object> map) {
 		if (!(isModApiInFolder() || isModApiTweakerPresent())) {
-			logger.fatal("YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!");
-			logger.fatal("Please download the mod at https://modrinth.com/mod/hypixel-mod-api.");
-			logger.fatal("If this was an error, message yedel on discord or make an issue on the GitHub page.");
-			logger.fatal("If you believe you can still run the game, use the -Dyedelmod.modapi.disablecrash flag on next launch.");
+			yedelog.fatal("YedelMod requires the Hypixel Mod API to work, but it was not found in your mods folder!");
+			yedelog.fatal("Please download the mod at https://modrinth.com/mod/hypixel-mod-api.");
+			yedelog.fatal("If this was an error, message yedel on discord or make an issue on the GitHub page.");
+			yedelog.fatal("If you believe you can still run the game, use the -Dyedelmod.modapi.disablecrash flag on next launch.");
 			showErrorDialogBox();
 			if (dontCrashGame) {
-				logger.warn("- On property, skipping game crash! This can cause unexpected behavior!");
+				yedelog.warn("- On property, skipping game crash! This can cause unexpected behavior!");
 				return;
 			}
 			try {
@@ -78,7 +77,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 			}
 			catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
 				   NoSuchMethodException e) {
-				logger.error("Couldn't close process!", e);
+				yedelog.error("Couldn't close process!", e);
 			}
 		}
 	}
@@ -108,14 +107,14 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 					String modid = modObject.get("modid").getAsString();
 					if (Objects.equals(modid, "hypixel_mod_api")) {
 						String version = modObject.get("version").getAsString();
-						logger.info("Found Hypixel Mod API {} ({})", version, modFile.getName());
+						yedelog.info("Found Hypixel Mod API {} ({})", version, modFile.getName());
 						offerBlackboardVersion(version);
 						return true;
 					}
 				}
 			}
 			catch (IOException e) {
-				logger.error("Couldn't find Hypixel Mod API in mods folder!", e);
+				yedelog.error("Couldn't find Hypixel Mod API in mods folder!", e);
 			}
 		}
 		return false;
@@ -124,7 +123,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 	private boolean isModApiTweakerPresent() {
 		Object modApiVersion = Launch.blackboard.get(modApiVersionKey);
 		if (modApiVersion != null) {
-			logger.info("Found Hypixel Mod API from tweaker and blackboard key ({})", modApiVersion);
+			yedelog.info("Found Hypixel Mod API from tweaker and blackboard key ({})", modApiVersion);
 			return true;
 		}
 		return false;
@@ -171,7 +170,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 				Desktop.getDesktop().browse(hypixelModApiUri);
 			}
 			catch (IOException e) {
-				logger.error("Couldn't open Hypixel Mod API URL!");
+				yedelog.error("Couldn't open Hypixel Mod API URL!");
 			}
 		}
 	}

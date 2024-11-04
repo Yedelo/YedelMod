@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.MoveHudGui;
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
@@ -898,7 +898,7 @@ public class YedelConfig extends Vigilant {
 		);
 		initialize();
 		setCategoryDescription("General",
-			"§9§lYedel§7§lMod " + YedelMod.version + "\nDiscord: §9yedel" +
+			"§9§lYedel§7§lMod " + YedelModConstants.version + "\nDiscord: §9yedel" +
 				"\n§7Some properties may mention subcommands with -(the subcommand). They refer to using /yedel (the subcommand)."
 		);
 		setSubcategoryDescription("Features", "Tweaks",

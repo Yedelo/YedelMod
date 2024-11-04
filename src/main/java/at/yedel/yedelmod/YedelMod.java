@@ -27,6 +27,7 @@ import at.yedel.yedelmod.hud.impl.BedwarsXPHud;
 import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.hud.impl.CustomTextHud;
 import at.yedel.yedelmod.hud.impl.MagicMilkTimeHud;
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -43,29 +44,23 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
 
 
 // Mod!
 @Mod(
-	modid = YedelMod.modid,
-	name = YedelMod.name,
-	version = YedelMod.version,
+	modid = YedelModConstants.modid,
+	name = YedelModConstants.name,
+	version = YedelModConstants.version,
 	clientSideOnly = true,
 	guiFactory = "at.yedel.yedelmod.config.forgeconfig.GuiFactory" // Overriden by main config (vigilance)
 )
 public class YedelMod {
-	public static final String modid = "yedelmod";
-	public static final String name = "YedelMod";
-	public static final String version = "#version#";
 	public static final Minecraft minecraft = Minecraft.getMinecraft();
 
 	@Instance
 	private static YedelMod instance;
-	public static Logger logger = LogManager.getLogger("YedelMod");
 
 	public static YedelMod getInstance() {
 		return instance;

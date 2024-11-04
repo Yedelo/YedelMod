@@ -10,7 +10,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import at.yedel.yedelmod.YedelMod;
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Requests;
 import com.google.gson.JsonArray;
@@ -32,7 +32,7 @@ public class UpdateManager {
 		return instance;
 	}
 
-	private static final String currentVersion = YedelMod.version;
+	private static final String currentVersion = YedelModConstants.version;
 	public static final URL modrinthApiUrl;
 	public static final URL githubApiUrl;
 

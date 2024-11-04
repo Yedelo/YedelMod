@@ -21,7 +21,7 @@ import javax.net.ssl.TrustManagerFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import static at.yedel.yedelmod.YedelMod.logger;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 
 
 
@@ -43,8 +43,8 @@ public class Requests {
 		}
 		catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException | UnrecoverableKeyException |
 			   IOException | CertificateException e) {
-			logger.error("Failed to load keystore! Update checking and my messages won't work on older java versions.", e);
-			logger.info("Current java version: {}", System.getProperty("java.version"));
+			yedelog.error("Failed to load keystore! Update checking and my messages won't work on older java versions.", e);
+			yedelog.info("Current java version: {}", System.getProperty("java.version"));
 			context = null;
 		}
 	}
