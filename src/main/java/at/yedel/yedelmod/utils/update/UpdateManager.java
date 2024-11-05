@@ -118,16 +118,19 @@ public class UpdateManager {
 			Chat.display(new ChatComponentText(logo + " §eVersion " + newVersion + " is avaliable on ").appendSibling(updateSource.chatComponent).appendText("§e!"));
 		}
 		else {
-			Notifications.INSTANCE.send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "§7! Click to open.", () -> {
-				try {
-					Desktop.getDesktop().browse(updateSource.uri);
+			Notifications.INSTANCE.send(
+				"YedelMod",
+				"Version " + newVersion + " is avaliable on " + updateSource.name + "§7! Click to open.",
+				() -> {
+					try {
+						Desktop.getDesktop().browse(updateSource.uri);
+					}
+					catch (IOException e) {
+						Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.seriousName + "!");
+						e.printStackTrace();
+					}
 				}
-				catch (IOException e) {
-					Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.seriousName + "!");
-					e.printStackTrace();
-				}
-				return null;
-			});
+			);
 		}
 	}
 

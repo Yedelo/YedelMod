@@ -53,8 +53,7 @@ import org.lwjgl.input.Keyboard;
 	modid = YedelModConstants.modid,
 	name = YedelModConstants.name,
 	version = YedelModConstants.version,
-	clientSideOnly = true,
-	guiFactory = "at.yedel.yedelmod.config.forgeconfig.GuiFactory" // Overriden by main config (vigilance)
+	clientSideOnly = true
 )
 public class YedelMod {
 	public static final Minecraft minecraft = Minecraft.getMinecraft();
@@ -92,7 +91,8 @@ public class YedelMod {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		YedelConfig.getInstance().preload();
+		// it's it
+		YedelConfig.getInstance();
 
 		ClientCommandHandler.instance.registerCommand(new YedelCommand());
 		registerEventListeners(

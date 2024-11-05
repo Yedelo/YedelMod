@@ -54,7 +54,7 @@ public class YedelCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		if (args.length == 0) {
-			Functions.displayScreen(YedelConfig.getInstance().gui());
+			YedelConfig.getInstance().openGui();
 			return;
 		}
 		String subcommand = args[0];
