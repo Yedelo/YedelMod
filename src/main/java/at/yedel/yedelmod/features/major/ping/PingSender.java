@@ -7,7 +7,7 @@ import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import gg.essential.api.EssentialAPI;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 import net.minecraft.network.play.client.C14PacketTabComplete;
@@ -115,8 +115,7 @@ public class PingSender {
     }
 
     public void hypixelPing() {
-        // Yedel uses essential features ???
-        if (EssentialAPI.getMinecraftUtil().isHypixel()) {
+        if (HypixelUtils.INSTANCE.isHypixel()) {
             lastTime = System.nanoTime();
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
