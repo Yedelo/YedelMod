@@ -32,9 +32,9 @@ import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -94,7 +94,7 @@ public class YedelMod {
 		// it's it
 		YedelConfig.getInstance();
 
-		ClientCommandHandler.instance.registerCommand(new YedelCommand());
+		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
 		registerEventListeners(
 			this,
 			AutoGuildWelcome.getInstance(),
