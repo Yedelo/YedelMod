@@ -61,7 +61,7 @@ loom {
                 "fml.coreMods.load",
                 "at.yedel.yedelmod.launch.YedelModLoadingPlugin"
             )
-            arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
+            arg("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
             arg("--mixin", "mixins.yedelmod.json")
             arg("--version", "YedelMod") // UnknownFMLProfile looks pretty bad so replacing it
             // this is just for me to used shared resource packs with other instances
@@ -112,7 +112,7 @@ tasks {
                 "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow",
                 "MixinConfigs" to "mixins.yedelmod.json",
                 "ModSide" to "CLIENT",
-                "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker"
+                "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker"
             )
         )
     }
