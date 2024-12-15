@@ -19,7 +19,7 @@ public abstract class MixinItemRenderer {
 	private ItemStack itemToRender;
 
 	@ModifyExpressionValue(method = "renderItemInFirstPerson", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;getItemInUseCount()I"))
-	private int yedelmod$clientSideAutoBlock(int original) {
+	private int yedelmod$firstPersonAutoBlock(int original) {
 		if (YedelConfig.getInstance().clientSideAutoBlock && itemToRender.getItemUseAction() == EnumAction.BLOCK)
 			return 1;
 		return original;

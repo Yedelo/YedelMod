@@ -5,7 +5,8 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.RenderScoreEvent;
 import gg.essential.lib.mixinextras.injector.ModifyExpressionValue;
-import gg.essential.lib.mixinextras.sugar.Local;
+import gg.essential.lib.mixinextras.sugar.Share;
+import gg.essential.lib.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.EnumAction;
@@ -25,9 +26,15 @@ public abstract class MixinRenderPlayer {
         MinecraftForge.EVENT_BUS.post(new RenderScoreEvent((RenderPlayer) (Object) this, entityIn, x, y, z, str, incrementIThink, distanceSqToEntityIThink));
     }
 
+    @Inject(method = "setModelVisibilities", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/InventoryPlayer;getCurrentItem()Lnet/minecraft/item/ItemStack;"))
+    private void yedelmod$saveHeldItem(AbstractClientPlayer clientPlayer, CallbackInfo ci, @Share("heldItem") LocalRef<ItemStack> heldItemRef) {
+        heldItemRef.set(clientPlayer.getHeldItem());
+    }
+
     @ModifyExpressionValue(method = "setModelVisibilities", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;getItemInUseCount()I"))
-    private int yedelmod$clientSideAutoBlock(int original, @Local ItemStack heldItem) {
-        if (YedelConfig.getInstance().clientSideAutoBlock && heldItem.getItemUseAction() == EnumAction.BLOCK) return 1;
+    private int yedelmod$thirdPersonAutoBlock(int original, @Share("heldItem") LocalRef<ItemStack> heldItemRef) {
+        if (YedelConfig.getInstance().clientSideAutoBlock && heldItemRef.get().getItemUseAction() == EnumAction.BLOCK)
+            return 1;
         return original;
     }
 }
