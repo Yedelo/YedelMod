@@ -40,7 +40,7 @@ dependencies {
 }
 
 blossom {
-    replaceTokenIn("src/main/java/at/yedel/yedelmod/YedelMod.java")
+    replaceTokenIn("src/main/java/at/yedel/yedelmod/launch/YedelModConstants.java")
     replaceToken("#version#", version)
 }
 
