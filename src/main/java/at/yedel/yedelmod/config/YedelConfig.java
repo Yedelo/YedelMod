@@ -206,6 +206,14 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean strengthIndicators = true;
+	@Property(
+		type = PropertyType.SWITCH,
+		name = "Client-side auto-block",
+		description = "Always shows the blocking animation client-side.",
+		category = "Features",
+		subcategory = "Features"
+	)
+	public boolean clientSideAutoBlock = false;
 
 	@Property(
 		type = PropertyType.SWITCH,
