@@ -9,12 +9,8 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
@@ -32,7 +28,6 @@ public class MarketSearch {
 
     private boolean ahSearching = false;
     private boolean bzSearching = false;
-    private boolean bzSearchingClose = false;
 
     @SubscribeEvent
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
@@ -59,7 +54,6 @@ public class MarketSearch {
                     bzSearching = true;
                     Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
                     Chat.command("bz " + unformattedItemName);
-                    bzSearchingClose = true;
                 }
             }
         }
@@ -79,23 +73,6 @@ public class MarketSearch {
                 event.setCanceled(true);
                 ahSearching = false;
                 bzSearching = false;
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onBazaarGUIOpen(GuiOpenEvent event) {
-        if (!bzSearchingClose) return;
-        Gui gui = event.gui;
-        if (gui instanceof GuiInventory) {
-            for (Slot slot: ((GuiInventory) gui).inventorySlots.inventorySlots) {
-                if (slot.slotNumber != 18) return;
-                String itemName = slot.getStack().getDisplayName();
-                if (itemName.contains("No Product Found")) {
-                    bzSearchingClose = false;
-                    minecraft.thePlayer.closeScreen();
-                    Chat.logoDisplay("§cNo item in bazaar with this name!");
-                }
             }
         }
     }
