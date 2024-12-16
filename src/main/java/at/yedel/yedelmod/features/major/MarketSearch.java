@@ -8,7 +8,6 @@ import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -72,7 +71,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                Chat.display(Messages.noCookieBuff);
+                Chat.logoDisplay("§r§cYou don't have the Cookie Buff!");
             }
         }
         else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {
@@ -95,7 +94,7 @@ public class MarketSearch {
                 if (itemName.contains("No Product Found")) {
                     bzSearchingClose = false;
                     minecraft.thePlayer.closeScreen();
-                    Chat.display(Messages.noItemFound);
+                    Chat.logoDisplay("§cNo item in bazaar with this name!");
                 }
             }
         }

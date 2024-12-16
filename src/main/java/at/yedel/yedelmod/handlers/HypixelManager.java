@@ -12,7 +12,6 @@ import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import net.hypixel.data.type.GameType;
 import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
@@ -108,7 +107,7 @@ public class HypixelManager {
 		if (Objects.equals(exception.getIdentifier(), pingPacketIdentifier)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				Chat.display(Messages.hypixelRateLimited);
+				Chat.logoDisplay("§cYou were rate limited while using this method!");
 			}
 		}
 	}

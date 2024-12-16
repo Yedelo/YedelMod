@@ -4,62 +4,10 @@ package at.yedel.yedelmod.utils;
 
 import java.util.regex.Pattern;
 
-import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
-
 
 
 public class Constants {
 	public static final String logo = "§8§l- §9§lYedel§7§lMod §8§l-"; // "- YedelMod -"
-
-	public static class Messages { // To avoid making the same ChatComponentTexts every time the message is displayed
-        public static ChatComponentText unknownSubcommandMessage = new ChatComponentText(logo + " §eUnknown subcommand, refer to the command index (/yedel).");
-        public static ChatComponentText YedelUtilsMessage = new ChatComponentText(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
-        public static ChatComponentText welcomeMessage = new ChatComponentText(logo + " §7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-        public static ChatComponentText firstTime = new ChatComponentText("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
-        public static ChatComponentText pleaseChangeNick = new ChatComponentText("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
-        public static ChatComponentText gamemodeCreative = new ChatComponentText(logo + " §eSet gamemode to creative!");
-        public static ChatComponentText insufficientEvidence = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
-        public static ChatComponentText evidenceWithoutDoubt = new ChatComponentText(logo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
-        public static ChatComponentText listPingInSingleplayer = new ChatComponentText(logo + " §cThis method does not work in singleplayer!");
-        public static ChatComponentText noCookieBuff = new ChatComponentText(logo + " §r§cYou don't have the Cookie Buff!");
-        public static ChatComponentText noItemFound = new ChatComponentText(logo + " §cNo item in bazaar with this name!");
-        public static ChatComponentText clearedDisplayText = new ChatComponentText(logo + " §eCleared display text!");
-        public static ChatComponentText alreadyCreative = new ChatComponentText(logo + " §cYou are already in creative mode!");
-        public static ChatComponentText limboCheckFailed = new ChatComponentText(logo + " §cLimbo check failed, try again in a bit or rejoin!");
-        public static ChatComponentText pingIs0 = new ChatComponentText(logo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
-        public static ChatComponentText enterValidText = new ChatComponentText(logo + " §cYou must enter valid text!");
-        public static ChatComponentText enterValidTitle = new ChatComponentText(logo + " §cYou must enter a valid title!");
-        public static ChatComponentText enterValidNick = new ChatComponentText(logo + " §cYou must enter a valid nick!");
-        public static ChatComponentText couldntGetMessage = new ChatComponentText(logo + " §cCouldn't get mod message!");
-        public static ChatComponentText messageFromYedel = new ChatComponentText(logo + " §eMessage from Yedel:");
-        public static ChatComponentText notOnHypixel = new ChatComponentText(logo + " §cYou must be on Hypixel to use this!");
-        public static ChatComponentText hypixelRateLimited = new ChatComponentText(logo + " §cYou were rate limited while using this method!");
-		private static final ChatComponentText formattingCodes =
-			new ChatComponentText(
-				"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
-					"\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
-					"\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
-					"\n§8Dark Gray: §8&8     §9Blue: §9&9     §aGreen: §a&a     §bAqua: §b&b" +
-					"\n§cRed: §c&c     §dLight Purple: §d&d     §eYellow: §e&e     §fWhite: §f&f" +
-					"\n" +
-					"\n§lStyle §ncodes§r:" +
-					"\nObfuscated: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
-					"\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
-			);
-		public static IChatComponent formattingGuideMessage = new ChatComponentText(logo + " §e§nHover to view the formatting guide.").
-			setChatStyle(
-				new ChatStyle().
-					setChatHoverEvent(
-						new HoverEvent(
-							HoverEvent.Action.SHOW_TEXT,
-							formattingCodes
-						)
-					)
-			);
-    }
 
     public static final Pattern[] skywarsKillPatterns = {
         Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was killed by (?<killer>[a-zA-Z0-9_]*)\\."),

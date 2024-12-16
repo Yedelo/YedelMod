@@ -4,7 +4,6 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import net.minecraft.world.WorldSettings;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
@@ -23,14 +22,14 @@ public class LimboCreativeCheck {
 
     public void checkLimbo() {
         if (HypixelManager.getInstance().isInLimbo()) {
-            if (minecraft.playerController.isInCreativeMode()) Chat.display(Messages.alreadyCreative);
+            if (minecraft.playerController.isInCreativeMode()) Chat.logoDisplay("§cYou are already in creative mode!");
             else giveCreative();
         }
-        else Chat.display(Messages.limboCheckFailed);
+        else Chat.logoDisplay("§cLimbo check failed, try again in a bit or rejoin!");
     }
 
     public void giveCreative() {
         minecraft.playerController.setGameType(creative);
-        Chat.display(Messages.gamemodeCreative);
+        Chat.logoDisplay("§eSet gamemode to creative!");
     }
 }

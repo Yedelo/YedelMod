@@ -12,7 +12,6 @@ import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.RankColor;
 import at.yedel.yedelmod.utils.ThreadManager;
@@ -65,7 +64,7 @@ public class TNTTagFeatures {
             BountyHuntingHud.getInstance().getLines().set(2, "§a" + YedelConfig.getInstance().kills + " kills");
             BountyHuntingHud.getInstance().getLines().set(3, "");
             if (YedelConfig.getInstance().bhFirst) {
-                Chat.display(Messages.firstTime);
+                Chat.logoDisplay("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/setnick§r§3.");
                 YedelConfig.getInstance().bhFirst = false;
                 YedelConfig.getInstance().save();
             }
@@ -192,7 +191,7 @@ public class TNTTagFeatures {
     @SubscribeEvent
     public void onNickChange(ClientChatReceivedEvent event) {
         if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
-            Chat.display(Messages.pleaseChangeNick);
+            Chat.display("§6§l[BountyHunting] §ePlease set your nick with /setnick or in the config.");
         }
     }
 }

@@ -9,7 +9,6 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.mixins.net.minecraft.client.InvokerMinecraft;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.InventoryClicker;
 import at.yedel.yedelmod.utils.ThreadManager;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
@@ -48,7 +47,7 @@ public class EasyAtlasVerdicts {
         EntityPlayerSP player = minecraft.thePlayer;
         if (YedelMod.getInstance().getInsufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
-            Chat.display(Messages.insufficientEvidence);
+            Chat.logoDisplay("§eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();
@@ -59,7 +58,7 @@ public class EasyAtlasVerdicts {
         }
         else if (YedelMod.getInstance().getSufficientKeybind().isPressed()) {
             if (!inAtlas || !YedelConfig.getInstance().easyAtlasVerdicts) return;
-            Chat.display(Messages.evidenceWithoutDoubt);
+            Chat.logoDisplay("§eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
             player.inventory.currentItem = 7;
             ThreadManager.scheduleOnce(() -> {
                 ((InvokerMinecraft) minecraft).yedelmod$rightClickMouse();

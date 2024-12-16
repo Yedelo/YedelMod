@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.JoinGamePacketEvent;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.ThreadManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -33,13 +32,13 @@ public class YedelCheck {
     public void onServerChange(JoinGamePacketEvent event) {
         if (YedelUtils && !alreadyWarned) {
             ThreadManager.scheduleOnce(() -> {
-                Chat.display(Messages.YedelUtilsMessage);
+                Chat.logoDisplay("§cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
             }, 3, TimeUnit.SECONDS);
             alreadyWarned = false;
         }
         if (YedelConfig.getInstance().first) {
             ThreadManager.scheduleOnce(() -> {
-                Chat.display(Messages.welcomeMessage);
+                Chat.display("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
                 YedelConfig.getInstance().first = false;
                 YedelConfig.getInstance().save();
             }, 1000, TimeUnit.MILLISECONDS);

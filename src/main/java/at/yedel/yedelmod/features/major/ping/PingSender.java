@@ -4,7 +4,6 @@ package at.yedel.yedelmod.features.major.ping;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import gg.essential.api.EssentialAPI;
@@ -121,14 +120,14 @@ public class PingSender {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
         }
-        else Chat.display(Messages.notOnHypixel);
+        else Chat.logoDisplay("§cYou must be on Hypixel to use this!");
     }
 
     public void serverListPing() {
-        if (minecraft.isSingleplayer()) Chat.display(Messages.listPingInSingleplayer);
+        if (minecraft.isSingleplayer()) Chat.logoDisplay("§cThis method does not work in singleplayer!");
         float ping = (float) minecraft.getCurrentServerData().pingToServer;
         if (ping == 0)
-            Chat.display(Messages.pingIs0);
+            Chat.logoDisplay("§cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         else {
             Chat.logoDisplay("&ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
             Functions.playSound("random.successful_hit", (float) (ping * -0.006 + 2));

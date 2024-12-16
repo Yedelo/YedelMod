@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.major.ping.PingSender;
 import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Constants.Messages;
 import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
@@ -22,10 +21,15 @@ import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
 import org.lwjgl.opengl.Display;
 
 import static at.yedel.yedelmod.YedelMod.minecraft;
+import static at.yedel.yedelmod.utils.Constants.logo;
 
 
 
@@ -40,6 +44,25 @@ public class YedelCommand extends CommandBase {
 			throw new RuntimeException(e);
 		}
 	}
+
+	private static final ChatComponentText formattingCodes =
+		new ChatComponentText(
+			"§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
+				"\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
+				"\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
+				"\n§8Dark Gray: §8&8     §9Blue: §9&9     §aGreen: §a&a     §bAqua: §b&b" +
+				"\n§cRed: §c&c     §dLight Purple: §d&d     §eYellow: §e&e     §fWhite: §f&f" +
+				"\n" +
+				"\n§lStyle §ncodes§r:" +
+				"\nObfuscated: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
+				"\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
+		);
+	public static IChatComponent formattingGuideMessage = new ChatComponentText(logo + " §e§nHover to view the formatting guide.")
+		.setChatStyle(
+			new ChatStyle().setChatHoverEvent(
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, formattingCodes)
+			)
+		);
 
 	@Override
 	public String getCommandName() {
@@ -64,10 +87,10 @@ public class YedelCommand extends CommandBase {
 			case "cleartext":
 				YedelConfig.getInstance().displayedText = "";
 				YedelConfig.getInstance().save();
-				Chat.display(Messages.clearedDisplayText);
+				Chat.logoDisplay("§eCleared display text!");
 				break;
 			case "formatting":
-				Chat.display(Messages.formattingGuideMessage);
+				Chat.display(formattingGuideMessage);
 				break;
 			case "limbo":
 			case "li":
@@ -91,7 +114,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "setnick":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidNick);
+					Chat.logoDisplay("§cYou must enter a valid nick!");
 					return;
 				}
 				Chat.display("&6&l[BountyHunting] §eSet nick to " + secondArg + "§e!");
@@ -100,7 +123,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settext":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidText);
+					Chat.logoDisplay("§cYou must enter valid text!");
 					return;
 				}
 				String displayText = TextUtils.replaceAmpersand(TextUtils.joinArgs(args).substring(8));
@@ -110,7 +133,7 @@ public class YedelCommand extends CommandBase {
 				break;
 			case "settitle":
 				if (noSecondArg) {
-					Chat.display(Messages.enterValidTitle);
+					Chat.logoDisplay("§cYou must enter a valid title!");
 					return;
 				}
 				String title = TextUtils.joinArgs(args).substring(9);
@@ -147,17 +170,17 @@ public class YedelCommand extends CommandBase {
 							getAsJsonObject().
 							get("yedelmod-message-formatted").
 							getAsString();
-						Chat.display(Messages.messageFromYedel);
+						Chat.logoDisplay("§eMessage from Yedel:");
 						Chat.display(yedelMessage);
 					}
 					catch (IOException e) {
-						Chat.display(Messages.couldntGetMessage);
+						Chat.logoDisplay("§cCouldn't get mod message!");
 						e.printStackTrace();
 					}
 				}, "YedelMod Message").start();
 				break;
 			default:
-				Chat.display(Messages.unknownSubcommandMessage);
+				Chat.logoDisplay("§eUnknown subcommand, refer to the command index (/yedel).");
 		}
 	}
 
