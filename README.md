@@ -58,6 +58,12 @@ From version 1.2.0, this mod requires the Hypixel Mod API which can be found [he
 
 </details>
 
+<details><summary>Client-side auto-block</summary>
+
+- Always shows the blocking animation client-side.
+
+</details>
+
 <details><summary>Limbo creative mode</summary>
 
 - Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything

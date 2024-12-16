@@ -214,7 +214,6 @@ public class YedelConfig extends Vigilant {
 		subcategory = "Features"
 	)
 	public boolean clientSideAutoBlock = false;
-
 	@Property(
 		type = PropertyType.SWITCH,
 		name = "Limbo creative mode",
