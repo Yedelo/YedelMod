@@ -216,6 +216,14 @@ public class YedelConfig extends Vigilant {
 	public boolean clientSideAutoBlock = false;
 	@Property(
 		type = PropertyType.SWITCH,
+		name = "Rotate sword in third person",
+		description = "Applies sword rotations for third-person auto-blocking. Potentially fixes rotation issues with OverflowAnimations.",
+		category = "Features",
+		subcategory = "Customization"
+	)
+	public boolean rotateThirdPersonBlock = true;
+	@Property(
+		type = PropertyType.SWITCH,
 		name = "Limbo creative mode",
 		description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
 			"Use -lgmc in limbo if it doesn't work the first time.",

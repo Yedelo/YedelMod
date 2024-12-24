@@ -12,6 +12,7 @@
     "net.minecraft.client.renderer.MixinItemRenderer",
     "net.minecraft.client.renderer.entity.InvokerRender",
     "net.minecraft.client.renderer.entity.MixinRenderPlayer",
+    "net.minecraft.client.renderer.entity.layers.MixinLayerHeldItem",
     "net.minecraft.item.MixinItemBucket"
   ],
   "minVersion": "0.8"
