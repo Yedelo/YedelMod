@@ -1,16 +1,13 @@
 package at.yedel.yedelmod.features;
 
 
-
-import java.util.concurrent.TimeUnit;
-
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.ThreadManager;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.Multithreading;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-;
+import java.util.concurrent.TimeUnit;
 
 
 
@@ -27,7 +24,7 @@ public class DropperGG {
 		if (YedelConfig.getInstance().dropperGG) {
 			String msg = event.message.getUnformattedText();
 			if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {
-				ThreadManager.scheduleOnce(() -> Chat.command("ac gg"), YedelConfig.getInstance().dropperGGDelay, TimeUnit.SECONDS);
+                Multithreading.schedule(() -> UChat.say("/ac gg"), YedelConfig.getInstance().dropperGGDelay, TimeUnit.SECONDS);
 			}
 		}
 	}

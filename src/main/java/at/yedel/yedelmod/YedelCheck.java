@@ -2,13 +2,15 @@ package at.yedel.yedelmod;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.events.PacketEvent;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.Multithreading;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import java.util.concurrent.TimeUnit;
 
-import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.events.JoinGamePacketEvent;
-import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.ThreadManager;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 
@@ -19,6 +21,7 @@ public class YedelCheck {
 
     // Also used for the first time message
     private YedelCheck() {}
+
     private static final YedelCheck instance = new YedelCheck();
 
     public static YedelCheck getInstance() {
@@ -29,19 +32,21 @@ public class YedelCheck {
     private boolean alreadyWarned = true;
 
     @SubscribeEvent
-    public void onServerChange(JoinGamePacketEvent event) {
-        if (YedelUtils && !alreadyWarned) {
-            ThreadManager.scheduleOnce(() -> {
-                Chat.logoDisplay("§cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
-            }, 3, TimeUnit.SECONDS);
-            alreadyWarned = false;
-        }
-        if (YedelConfig.getInstance().first) {
-            ThreadManager.scheduleOnce(() -> {
-                Chat.display("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-                YedelConfig.getInstance().first = false;
-                YedelConfig.getInstance().save();
-            }, 1000, TimeUnit.MILLISECONDS);
+    public void onServerChange(PacketEvent.ReceiveEvent event) {
+        if (event.isJoinGamePacket()) {
+            if (YedelUtils && !alreadyWarned) {
+                Multithreading.schedule(() -> {
+                    UChat.chat(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
+                }, 3, TimeUnit.SECONDS);
+                alreadyWarned = false;
+            }
+            if (YedelConfig.getInstance().first) {
+                Multithreading.schedule(() -> {
+                    UChat.chat("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
+                    YedelConfig.getInstance().first = false;
+                    YedelConfig.getInstance().save();
+                }, 1, TimeUnit.SECONDS);
+            }
         }
     }
 }

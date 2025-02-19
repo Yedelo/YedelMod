@@ -2,13 +2,10 @@ package at.yedel.yedelmod.utils.update;
 
 
 
-import java.net.URI;
-
-import net.minecraft.event.ClickEvent;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
+
+import java.net.URI;
 
 
 
@@ -16,38 +13,24 @@ public enum UpdateSource {
 	MODRINTH(
 		"§aModrinth",
 		"Modrinth",
-		new ChatComponentText("§aModrinth").setChatStyle(
-			new ChatStyle().setChatClickEvent(
-				new ClickEvent(
-					Action.OPEN_URL,
-					"https://modrinth.com/mod/yedelmod/versions"
-				)
-			)
-		),
+        new UTextComponent("§aModrinth").setClick(Action.OPEN_URL, "https://modrinth.com/mod/yedelmod/versions"),
 		URI.create("https://modrinth.com/mod/yedelmod/versions")
 	),
 	GITHUB(
 		"§9GitHub",
 		"GitHub",
-		new ChatComponentText("§9GitHub").setChatStyle(
-			new ChatStyle().setChatClickEvent(
-				new ClickEvent(
-					Action.OPEN_URL,
-					"https://github.com/Yedelo/YedelMod/releases"
-				)
-			)
-		),
+        new UTextComponent("§9GitHub").setClick(Action.OPEN_URL, "https://github.com/Yedelo/YedelMod/releases"),
 		URI.create("https://github.com/Yedelo/YedelMod/releases")
 	);
 	public final String name;
 	public final String seriousName;
-	public final IChatComponent chatComponent;
+    public final UTextComponent textComponent;
 	public final URI uri;
 
-	UpdateSource(String notificationString, String seriousName, IChatComponent chatComponent, URI uri) {
+    UpdateSource(String notificationString, String seriousName, UTextComponent textComponent, URI uri) {
 		this.name = notificationString;
 		this.seriousName = seriousName;
-		this.chatComponent = chatComponent;
+        this.textComponent = textComponent;
 		this.uri = uri;
 	}
 }

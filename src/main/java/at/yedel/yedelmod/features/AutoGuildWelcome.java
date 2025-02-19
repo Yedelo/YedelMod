@@ -1,14 +1,13 @@
 package at.yedel.yedelmod.features;
 
 
+import at.yedel.yedelmod.config.YedelConfig;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.Chat;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 
@@ -29,7 +28,7 @@ public class AutoGuildWelcome {
 			Matcher guildJoinMatcher = guildJoinPattern.matcher(msg);
 			while (guildJoinMatcher.find()) {
 				String newMember = guildJoinMatcher.group("newMember");
-				Chat.command("gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
+				UChat.say("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
 			}
 		}
 	}

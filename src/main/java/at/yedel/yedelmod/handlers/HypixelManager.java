@@ -2,16 +2,12 @@ package at.yedel.yedelmod.handlers;
 
 
 
-import java.util.Objects;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.features.major.ping.PingResponse;
-import at.yedel.yedelmod.features.major.ping.PingSender;
-import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.features.ping.PingResponse;
+import at.yedel.yedelmod.features.ping.PingSender;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import net.hypixel.data.type.GameType;
 import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
@@ -26,6 +22,11 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 
+import java.util.Objects;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class HypixelManager {
@@ -107,7 +108,7 @@ public class HypixelManager {
 		if (Objects.equals(exception.getIdentifier(), pingPacketIdentifier)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				Chat.logoDisplay("§cYou were rate limited while using this method!");
+				UChat.chat(logo + " §cYou were rate limited while using this method!");
 			}
 		}
 	}

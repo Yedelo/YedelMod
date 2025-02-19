@@ -1,12 +1,8 @@
 package at.yedel.yedelmod.mixins.net.minecraft.client.gui;
 
 
-
-import java.util.List;
-
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import gg.essential.lib.mixinextras.injector.WrapWithCondition;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.opengl.Display;
@@ -14,7 +10,10 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 
 
@@ -29,9 +28,14 @@ public abstract class MixinGuiNewChat {
         }
     }
 
-    @WrapWithCondition(method = "clearChatMessages", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2))
-    private boolean yedelmod$keepChatHistory(List<String> sentMessages) {
-        return !YedelConfig.getInstance().keepChatHistory;
+    @Redirect(method = "clearChatMessages",
+        at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2)
+    )
+    private void yedelmod$keepChatHistory(List<String> sentMessages) {
+        if (YedelConfig.getInstance().keepChatHistory) {
+            return;
+        }
+        sentMessages.clear();
     }
 
     @ModifyArg(method = "printChatMessageWithOptionalDeletion", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V", remap = false))
