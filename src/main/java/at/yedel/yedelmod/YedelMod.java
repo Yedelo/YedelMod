@@ -1,21 +1,9 @@
 package at.yedel.yedelmod;
 
 
-
-import java.util.concurrent.TimeUnit;
-
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.AutoGuildWelcome;
-import at.yedel.yedelmod.features.CustomHitParticles;
-import at.yedel.yedelmod.features.DropperGG;
-import at.yedel.yedelmod.features.FavoriteServerButton;
-import at.yedel.yedelmod.features.RegexChatFilter;
-import at.yedel.yedelmod.features.YedelCommand;
-import at.yedel.yedelmod.features.major.BedwarsFeatures;
-import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
-import at.yedel.yedelmod.features.major.MarketSearch;
-import at.yedel.yedelmod.features.major.StrengthIndicators;
-import at.yedel.yedelmod.features.major.TNTTagFeatures;
+import at.yedel.yedelmod.features.*;
+import at.yedel.yedelmod.features.major.*;
 import at.yedel.yedelmod.features.major.ping.PingResponse;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
@@ -46,9 +34,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import org.lwjgl.input.Keyboard;
 
+import java.util.concurrent.TimeUnit;
 
 
-// Mod!
+// Mod.
 @Mod(
 	modid = YedelModConstants.modid,
 	name = YedelModConstants.name,
