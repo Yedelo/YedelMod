@@ -39,6 +39,14 @@ public class TextUtilsTest {
 	}
 
 	@Test
+	public void testReplaceAmpersand() {
+		Assertions.assertEquals(TextUtils.replaceAmpersand("&aThis is my &ltest!"), "§aThis is my §ltest!");
+		Assertions.assertEquals(TextUtils.replaceAmpersand("Tom & Jerry"), "Tom & Jerry");
+		Assertions.assertEquals(TextUtils.replaceAmpersand("16 U.S.C. § 580p"), "16 U.S.C. § 580p");
+		Assertions.assertEquals(TextUtils.replaceAmpersand("&aThis is my §ltest!"), "§aThis is my §ltest!");
+	}
+
+	@Test
 	public void testRandomUuid() {
 		Assertions.assertNotEquals(TextUtils.randomUuid(5), TextUtils.randomUuid(5));
 	}

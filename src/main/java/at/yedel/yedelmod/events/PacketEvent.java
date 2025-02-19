@@ -3,7 +3,6 @@ package at.yedel.yedelmod.events;
 
 
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 
@@ -26,14 +25,8 @@ public class PacketEvent extends Event {
     }
 
     public static class ReceiveEvent extends PacketEvent {
-        private final boolean isJoinGamePacket;
         public ReceiveEvent(Packet packet) {
             super(packet);
-            this.isJoinGamePacket = packet instanceof S01PacketJoinGame;
-        }
-
-        public boolean isJoinGamePacket() {
-            return isJoinGamePacket;
         }
     }
 }

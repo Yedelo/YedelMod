@@ -3,6 +3,7 @@ package at.yedel.yedelmod.utils.typeutils;
 
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 
 
@@ -21,6 +22,12 @@ public class TextUtils {
 
     public static String removeAmpersand(String string) {
         return string.replaceAll("&[0123456789abcdefklnor]", "");
+    }
+
+    private static final Pattern ampersandFormattingPattern = Pattern.compile("&([0123456789abcdefklnor])");
+
+    public static String replaceAmpersand(String string) {
+        return ampersandFormattingPattern.matcher(string).replaceAll("§$1");
     }
 
     public static String randomUuid(int length) {

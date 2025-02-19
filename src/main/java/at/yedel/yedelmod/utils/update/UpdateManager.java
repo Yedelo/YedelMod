@@ -2,16 +2,7 @@ package at.yedel.yedelmod.utils.update;
 
 
 
-import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.Requests;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UScreen;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.Notifications;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -19,7 +10,16 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import at.yedel.yedelmod.launch.YedelModConstants;
+import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.utils.Requests;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import gg.essential.api.EssentialAPI;
+import net.minecraft.util.ChatComponentText;
+
+import static at.yedel.yedelmod.YedelMod.minecraft;
+import static at.yedel.yedelmod.utils.Constants.logo;
 
 
 
@@ -104,26 +104,26 @@ public class UpdateManager {
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat("§cYou are up to date with the mod version on " + updateSource + "!");
+			Chat.logoDisplay("§cYou are up to date with the mod version on " + updateSource + "!");
 		}
 		else {
-			if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
-				Notifications.INSTANCE.send("YedelMod", "You are up to date with the mod version on " + updateSource + "!");
+			if (minecraft.currentScreen != null) { // if this isn't at launch, for auto check updates
+				EssentialAPI.getNotifications().push("YedelMod", "You are up to date with the mod version on " + updateSource + "!");
 			}
 		}
 	}
 
 	private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on ").appendSibling(updateSource.textComponent).appendText("§e!"));
+			Chat.display(new ChatComponentText(logo + " §eVersion " + newVersion + " is avaliable on ").appendSibling(updateSource.chatComponent).appendText("§e!"));
 		}
 		else {
-			Notifications.INSTANCE.send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "§7! Click to open.", () -> {
+			EssentialAPI.getNotifications().push("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "§7! Click to open.", () -> {
 				try {
 					Desktop.getDesktop().browse(updateSource.uri);
 				}
 				catch (IOException e) {
-					Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.seriousName + "!");
+					EssentialAPI.getNotifications().push("YedelMod", "Couldn't open link for " + updateSource.seriousName + "!");
 					e.printStackTrace();
 				}
 				return null;
@@ -133,10 +133,10 @@ public class UpdateManager {
 
 	private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(logo + " §cCouldn't get update information from " + updateSource.seriousName + "!");
+			Chat.logoDisplay("§cCouldn't get update information from " + updateSource.seriousName + "!");
 		}
 		else {
-			Notifications.INSTANCE.send("YedelMod", "Couldn't get update information from " + updateSource.seriousName + "!");
+			EssentialAPI.getNotifications().push("YedelMod", "Couldn't get update information from " + updateSource.seriousName + "!");
 		}
 	}
 

@@ -2,6 +2,13 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.events.DrawSlotEvent;
 import at.yedel.yedelmod.events.PacketEvent;
@@ -9,23 +16,15 @@ import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 
@@ -101,16 +100,6 @@ public class BedwarsFeatures {
 		}
 	}
 
-	private int ticks;
-
-	@SubscribeEvent
-	public void decrementMagicMilkTime(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.START && ticks % 20 == 0) {
-			BedwarsFeatures.getInstance().decrementMagicMilkTime();
-			BedwarsFeatures.getInstance().setMagicMilkTimeText("Magic Milk: §b" + BedwarsFeatures.getInstance().getMagicMilkTime() + "§as");
-		}
-	}
-
 	@SubscribeEvent
 	public void onRenderRedstones(DrawSlotEvent event) {
 		if (!YedelConfig.getInstance().defusalHelper) return;
@@ -132,7 +121,7 @@ public class BedwarsFeatures {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = tokenMessagePattern.matcher(message);
 			while (matcher.find()) {
-				event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
+				event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
 			}
 		}
 	}
@@ -162,7 +151,7 @@ public class BedwarsFeatures {
 		if (YedelConfig.getInstance().hideSilverCoinCount) {
 			String message = event.message.getFormattedText();
 			if (message.startsWith("§r§aYou purchased §r§6") && message.contains("§r§7(+1 Silver Coin [")) {
-				event.message = new UTextComponent(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
+				event.message = new ChatComponentText(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
 			}
 		}
 	}

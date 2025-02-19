@@ -2,20 +2,20 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import java.util.Objects;
+
 import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.utils.Chat;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
-import java.util.Objects;
+import static at.yedel.yedelmod.YedelMod.minecraft;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class MarketSearch {
@@ -33,27 +33,27 @@ public class MarketSearch {
     public void onMarketSearchKeys(InputEvent.KeyInputEvent event) {
         if (YedelMod.getInstance().getAhSearchKeybind().isPressed() && YedelConfig.getInstance().ahSearch) {
             if (HypixelManager.getInstance().isInSkyblock()) {
-                ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
+                ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     String unformattedItemName = TextUtils.removeFormatting(itemName);
                     ahSearching = true;
-                    UChat.chat(logo + " &eSearching the auction house for " + itemName + "&e...");
-                    UChat.chat("/ahs " + unformattedItemName);
+                    Chat.logoDisplay("&eSearching the auction house for " + itemName + "&e...");
+                    Chat.command("ahs " + unformattedItemName);
                 }
             }
         }
         else if (YedelMod.getInstance().getBzSearchKeybind().isPressed() && YedelConfig.getInstance().bzSearch) {
             if (HypixelManager.getInstance().isInSkyblock()) {
-                ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
+                ItemStack heldItem = minecraft.thePlayer.getHeldItem();
                 if (heldItem != null) {
                     String itemName = heldItem.getDisplayName();
                     if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                     String unformattedItemName = TextUtils.removeFormatting(itemName);
                     bzSearching = true;
-                    UChat.chat(logo + " &eSearching the bazaar for " + itemName + "&e...");
-                    UChat.say("/bz " + unformattedItemName);
+                    Chat.logoDisplay("&eSearching the bazaar for " + itemName + "&e...");
+                    Chat.command("bz " + unformattedItemName);
                 }
             }
         }
@@ -65,7 +65,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.setCanceled(true);
-                UChat.chat(logo + " §r§cYou don't have the Cookie Buff!");
+                Chat.logoDisplay("§r§cYou don't have the Cookie Buff!");
             }
         }
         else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {
