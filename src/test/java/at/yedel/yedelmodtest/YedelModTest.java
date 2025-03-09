@@ -2,8 +2,6 @@ package at.yedel.yedelmodtest;
 
 
 
-import java.io.IOException;
-
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,10 +10,12 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 
 
 public class YedelModTest {
-	private static final Logger logger = LogManager.getLogger();
+	public static final Logger logger = LogManager.getLogger();
 
 	@Test
 	public void testUpdateManager() {

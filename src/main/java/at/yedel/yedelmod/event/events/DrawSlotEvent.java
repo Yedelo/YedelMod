@@ -1,14 +1,13 @@
-package at.yedel.yedelmod.events;
+package at.yedel.yedelmod.event.events;
 
 
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 
 
-public class DrawSlotEvent extends Event {
+public class DrawSlotEvent {
 	private final GuiContainer guiContainer;
 
 	public GuiContainer getGuiContainer() {

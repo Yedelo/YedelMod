@@ -11,7 +11,8 @@ plugins {
 }
 
 version = properties["mod_version"]!!
-val essentialVersion: String by project
+val oneconfigVersion: String by project
+val oneconfigWrapperVersion: String by project
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
@@ -20,6 +21,7 @@ repositories {
     maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.spongepowered.org/repository/maven-public")
     maven("https://repo.hypixel.net/repository/Hypixel/")
+    maven("https://repo.polyfrost.cc/releases")
 }
 
 dependencies {
@@ -27,10 +29,10 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    compileOnly("gg.essential:essential-1.8.9-forge:$essentialVersion")
-    embed("gg.essential:loader-launchwrapper:1.1.3")
+    compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:$oneconfigVersion")
+    embed("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
 
-    compileOnly("org.spongepowered:mixin:0.8.5-SNAPSHOT")
+    compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
     implementation("net.hypixel:mod-api:1.0")
@@ -57,9 +59,21 @@ loom {
                 "fml.coreMods.load",
                 "at.yedel.yedelmod.launch.YedelModLoadingPlugin"
             )
-            arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
+            // Normally we would need to use the OneConfig tweaker to load OneConfig
+            // This does work in our environment, but other mods don't load when we use this (?)
+            // We can instead let other mods using OneConfig load the tweaker, which loads them and us
+            // Only create this file if you have other mods using OneConfig (in run/mods)
+            if (!File("./dontuseoneconfigtweaker").exists()) {
+                println("Loading OneConfig tweaker with --tweakClass")
+                arg("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
+            } else {
+                println("-----------------------------------------------")
+                println("NOT loading OneConfig tweaker by user")
+                println("-----------------------------------------------")
+            }
             arg("--mixin", "mixins.yedelmod.json")
             arg("--version", "YedelMod") // UnknownFMLProfile looks pretty bad so replacing it
+
             // this is just for me to used shared resource packs with other instances
             if (Files.exists(Path.of("../../../Desktop/resourcepackfolder"))) {
                 arg(
@@ -95,6 +109,7 @@ tasks {
 
     withType<JavaCompile> {
         options.release.set(8)
+        options.encoding = "UTF-8"
     }
 
     jar {
@@ -104,11 +119,12 @@ tasks {
             mapOf(
                 "FMLCorePlugin" to "at.yedel.yedelmod.launch.YedelModLoadingPlugin",
                 "FMLCorePluginContainsFMLMod" to "fml core plugin does contain an fml mod",
-                "ForceLoadAsMod" to "true",
+                "ForceLoadAsMod" to true,
                 "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow",
                 "MixinConfigs" to "mixins.yedelmod.json",
                 "ModSide" to "CLIENT",
-                "TweakClass" to "gg.essential.loader.stage0.EssentialSetupTweaker"
+                "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
+                "TweakOrder" to 0
             )
         )
     }

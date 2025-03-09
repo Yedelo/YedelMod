@@ -2,24 +2,20 @@ package at.yedel.yedelmod.utils;
 
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
+import java.security.*;
 import java.security.cert.CertificateException;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 
@@ -28,7 +24,7 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 // Credit to nea89 (https://moddev.nea.moe/https/#bringing-your-own-certificates)
 public class Requests {
 	public static Gson gson = new Gson();
-	static SSLContext context;
+	public static SSLContext context;
 
 	static {
 		try {

@@ -2,33 +2,23 @@ package at.yedel.yedelmod.launch;
 
 
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.util.List;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 
@@ -37,11 +27,9 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 @Name("YedelMod Mod Detector")
 @MCVersion("1.8.9")
 public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
-	private final URI hypixelModApiUri = new URI("https://modrinth.com/mod/hypixel-mod-api");
+	private final URI hypixelModApiUri = URI.create("https://modrinth.com/mod/hypixel-mod-api");
 	private final boolean dontCrashGame = System.getProperty("yedelmod.modapi.disablecrash") != null;
 	private static final String modApiVersionKey = "net.hypixel.mod-api.version:1";
-
-	public YedelModLoadingPlugin() throws URISyntaxException {}
 
 	@Override
 	public String[] getASMTransformerClass() {

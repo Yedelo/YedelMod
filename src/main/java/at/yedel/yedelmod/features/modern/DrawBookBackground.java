@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DrawBookBackground {
     private DrawBookBackground() {}
+
     private static final DrawBookBackground instance = new DrawBookBackground();
 
     public static DrawBookBackground getInstance() {
@@ -19,9 +20,10 @@ public class DrawBookBackground {
     }
 
     @SubscribeEvent
-    public void onRenderBook(GuiScreenEvent.DrawScreenEvent.Pre event) {
+    public void renderBookBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
         Gui gui = event.gui;
-        if (YedelConfig.getInstance().drawBookBackground && gui instanceof GuiScreenBook)
+        if (YedelConfig.getInstance().bookBackground && gui instanceof GuiScreenBook) {
             ((GuiScreenBook) gui).drawWorldBackground(1);
+        }
     }
 }

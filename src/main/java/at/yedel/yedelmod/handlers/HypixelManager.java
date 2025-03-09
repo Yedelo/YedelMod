@@ -2,16 +2,12 @@ package at.yedel.yedelmod.handlers;
 
 
 
-import java.util.Objects;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.features.major.ping.PingResponse;
-import at.yedel.yedelmod.features.major.ping.PingSender;
-import at.yedel.yedelmod.utils.Chat;
+import at.yedel.yedelmod.features.ping.PingResponse;
+import at.yedel.yedelmod.features.ping.PingSender;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
 import net.hypixel.data.type.GameType;
 import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
@@ -26,6 +22,11 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 
+import java.util.Objects;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class HypixelManager {
@@ -42,8 +43,8 @@ public class HypixelManager {
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
 
-		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::onPingPacket);
-		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::onLocationPacket);
+		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handlePingPacket);
+		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 
 		setupLogHandlers();
 	}
@@ -78,12 +79,12 @@ public class HypixelManager {
 		return inTNTTag;
 	}
 
-	private void onPingPacket(ClientboundPingPacket pingPacket) {
-		PingResponse.getInstance().onHypixelPingPacket();
+	private void handlePingPacket(ClientboundPingPacket pingPacket) {
+		PingResponse.getInstance().handleHypixelPingResponse();
 	}
 
 	// I do not like Optional
-	private void onLocationPacket(ClientboundLocationPacket locationPacket) {
+	private void handleLocationPacket(ClientboundLocationPacket locationPacket) {
 		inLimbo = Objects.equals(locationPacket.getServerName(), "limbo");
 		if (locationPacket.getServerType().isPresent()) {
 			ServerType serverType = locationPacket.getServerType().get();
@@ -98,16 +99,16 @@ public class HypixelManager {
 		else {
 			inTNTTag = false;
 		}
-		if (inLimbo && YedelConfig.getInstance().limboCreative) {
+		if (inLimbo && YedelConfig.getInstance().limboCreativeMode) {
 			LimboCreativeCheck.getInstance().giveCreative();
 		}
 	}
 
-	private void onException(ModAPIException exception) {
+	private void handleException(ModAPIException exception) {
 		if (Objects.equals(exception.getIdentifier(), pingPacketIdentifier)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				Chat.logoDisplay("§cYou were rate limited while using this method!");
+				UChat.chat(logo + " §cYou were rate limited while using this method!");
 			}
 		}
 	}
@@ -118,7 +119,7 @@ public class HypixelManager {
 			@Override
 			public void publish(LogRecord record) {
 				if (record.getThrown() instanceof ModAPIException) {
-					onException((ModAPIException) record.getThrown());
+					handleException((ModAPIException) record.getThrown());
 				}
 			}
 
@@ -160,7 +161,7 @@ public class HypixelManager {
 			@Override
 			public Result filter(LogEvent event) {
 				if (event.getThrown() instanceof ModAPIException) {
-					onException((ModAPIException) event.getThrown());
+					handleException((ModAPIException) event.getThrown());
 				}
 				return null;
 			}
