@@ -20,7 +20,6 @@ plugins {
     id("dev.architectury.architectury-pack200") version "0.1.3"
 }
 
-version = properties["mod_version"]!!
 val oneconfigVersion: String by project
 val oneconfigWrapperVersion: String by project
 
