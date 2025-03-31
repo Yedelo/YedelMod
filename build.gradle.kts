@@ -2,12 +2,22 @@ import dev.architectury.pack200.java.Pack200Adapter
 import java.nio.file.Files
 import java.nio.file.Path
 
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+    mavenLocal()
+    maven("https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.polyfrost.cc/releases")
+    maven("https://repo.spongepowered.org/repository/maven-public")
+    maven("https://repo.hypixel.net/repository/Hypixel/")
+}
 
 plugins {
-    kotlin("jvm")
-    id("gg.essential.loom")
-    id("dev.architectury.architectury-pack200")
+    kotlin("jvm") version "1.7.10"
+    id("gg.essential.loom") version "0.10.0.3"
     id("net.kyori.blossom") version "1.3.1"
+    id("io.github.juuxel.loom-quiltflower") version "1.7.3"
+    id("dev.architectury.architectury-pack200") version "0.1.3"
 }
 
 version = properties["mod_version"]!!
@@ -16,13 +26,6 @@ val oneconfigWrapperVersion: String by project
 
 val embed: Configuration by configurations.creating
 configurations.implementation.get().extendsFrom(embed)
-
-repositories {
-    maven("https://repo.essential.gg/repository/maven-public")
-    maven("https://repo.spongepowered.org/repository/maven-public")
-    maven("https://repo.hypixel.net/repository/Hypixel/")
-    maven("https://repo.polyfrost.cc/releases")
-}
 
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
