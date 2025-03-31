@@ -28,7 +28,8 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import java.util.concurrent.TimeUnit;
 
 
-// Mod.
+
+// Mod...
 @Mod(
 	modid = YedelModConstants.modid,
 	name = YedelModConstants.name,
