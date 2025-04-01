@@ -1,6 +1,4 @@
 import dev.architectury.pack200.java.Pack200Adapter
-import java.nio.file.Files
-import java.nio.file.Path
 
 repositories {
     gradlePluginPortal()
@@ -14,7 +12,7 @@ repositories {
 
 plugins {
     kotlin("jvm") version "1.7.10"
-    id("gg.essential.loom") version "0.10.0.3"
+    id("gg.essential.loom") version "1.9.26"
     id("net.kyori.blossom") version "1.3.1"
     id("io.github.juuxel.loom-quiltflower") version "1.7.3"
     id("dev.architectury.architectury-pack200") version "0.1.3"
@@ -49,6 +47,32 @@ blossom {
 }
 
 loom {
+    runConfigs {
+        "client" {
+            ideConfigGenerated(true)
+            property("fml.coreMods.load", "at.yedel.yedelmod.launch.YedelModLoadingPlugin")
+
+            programArgs(
+                "--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
+                "--version", "YedelMod"
+            )
+            // this is my own variable key i made this now
+            val resourcePackDir: String? = System.getenv("minecraft.resourcePackDir")
+            if (!resourcePackDir.isNullOrBlank()) {
+                println("Using resource pack directory $resourcePackDir from environment variable minecraft.resourcePackDir")
+                programArgs("--resourcePackDir", resourcePackDir)
+            }
+        }
+        "server" {
+            ideConfigGenerated(false)
+        }
+    }
+
+    forge {
+        mixinConfig("mixins.yedelmod.json")
+        pack200Provider.set(Pack200Adapter())
+    }
+    /*
     runConfigs {
         named("client") {
             ideConfigGenerated(true)
@@ -90,6 +114,7 @@ loom {
         pack200Provider.set(Pack200Adapter())
         mixinConfig("mixins.yedelmod.json")
     }
+    */
 }
 
 sourceSets {
