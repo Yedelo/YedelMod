@@ -3,7 +3,6 @@ import dev.architectury.pack200.java.Pack200Adapter
 repositories {
     gradlePluginPortal()
     mavenCentral()
-    mavenLocal()
     maven("https://repo.essential.gg/repository/maven-public")
     maven("https://repo.polyfrost.cc/releases")
     maven("https://repo.spongepowered.org/repository/maven-public")
