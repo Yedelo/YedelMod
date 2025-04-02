@@ -19,8 +19,6 @@ plugins {
     id("dev.deftu.gradle.tools.minecraft.loom") version dgt
     id("dev.deftu.gradle.tools.bloom") version dgt
     id("dev.deftu.gradle.tools.shadow") version dgt
-
-    id("io.github.juuxel.loom-quiltflower") version "1.7.3"
 }
 
 bloom {
