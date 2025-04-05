@@ -8,6 +8,8 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +22,6 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
-
 
 
 @Name("YedelMod Mod Detector")
@@ -30,6 +30,8 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 	private final URI hypixelModApiUri = URI.create("https://modrinth.com/mod/hypixel-mod-api");
 	private final boolean dontCrashGame = System.getProperty("yedelmod.modapi.disablecrash") != null;
 	private static final String modApiVersionKey = "net.hypixel.mod-api.version:1";
+
+	private final Logger yedelog = LogManager.getLogger("YedelMod");
 
 	@Override
 	public String[] getASMTransformerClass() {

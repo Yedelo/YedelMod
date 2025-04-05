@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +45,8 @@ public class YedelMod {
 	public static YedelMod getInstance() {
 		return instance;
 	}
+
+	public static final Logger yedelog = LogManager.getLogger("YedelMod");
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
