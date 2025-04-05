@@ -34,7 +34,7 @@ public class UpdateManager {
 		return instance;
 	}
 
-	private static final String currentVersion = YedelModConstants.version;
+	private static final String currentVersion = YedelModConstants.MOD_VERSION;
 	public static final URL modrinthApiUrl;
 	public static final URL githubApiUrl;
 

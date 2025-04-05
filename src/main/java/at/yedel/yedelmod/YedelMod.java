@@ -33,9 +33,9 @@ import java.util.concurrent.TimeUnit;
 
 // Mod...
 @Mod(
-	modid = YedelModConstants.modid,
-	name = YedelModConstants.name,
-	version = YedelModConstants.version,
+	modid = YedelModConstants.MOD_ID,
+	name = YedelModConstants.MOD_NAME,
+	version = YedelModConstants.MOD_VERSION,
 	clientSideOnly = true
 )
 public class YedelMod {

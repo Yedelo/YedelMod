@@ -21,10 +21,6 @@ plugins {
     id("dev.deftu.gradle.tools.shadow") version dgt
 }
 
-bloom {
-    replacement("#version#", version)
-}
-
 dependencies {
     compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:$oneconfigVersion")
     shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
