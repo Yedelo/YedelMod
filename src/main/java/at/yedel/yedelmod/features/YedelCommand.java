@@ -24,8 +24,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import static at.yedel.yedelmod.YedelMod.yedelog;
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
-import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
 
 
 

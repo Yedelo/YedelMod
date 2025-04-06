@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.CertificateException;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.yedelog;
+import static at.yedel.yedelmod.YedelMod.yedelog;
 
 
 

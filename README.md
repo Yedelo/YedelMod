@@ -22,9 +22,7 @@ Use /yedel yedelmessage for messages from me regarding the mod. These are usuall
 
 This mod uses the OneConfig tweaker to load OneConfig, both in the development environment and in production (manifest).
 However, using the tweaker in development environment causes other OneConfig mods (in run/mods) to not load OneConfig.
-If other mods load the tweaker first instead of us loading it, our mod works fine.
-If you are using other OneConfig mods or the OneConfig bootstrap, make a file in this directory called "
-dontuseoneconfigtweaker".
+If you are using other OneConfig mods, remove the tweaker from the run config.
 
 ## Features
 
