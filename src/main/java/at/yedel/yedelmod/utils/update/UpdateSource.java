@@ -2,52 +2,28 @@ package at.yedel.yedelmod.utils.update;
 
 
 
-import java.net.URI;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
+import java.net.URI;
 
 
 
 public enum UpdateSource {
 	MODRINTH(
-		"§aModrinth",
-		"Modrinth",
-		new ChatComponentText("§aModrinth").setChatStyle(
-			new ChatStyle().setChatClickEvent(
-				new ClickEvent(
-					Action.OPEN_URL,
-					"https://modrinth.com/mod/yedelmod/versions"
-				)
-			)
-		),
+		"§a§nModrinth",
 		URI.create("https://modrinth.com/mod/yedelmod/versions")
 	),
 	GITHUB(
-		"§9GitHub",
-		"GitHub",
-		new ChatComponentText("§9GitHub").setChatStyle(
-			new ChatStyle().setChatClickEvent(
-				new ClickEvent(
-					Action.OPEN_URL,
-					"https://github.com/Yedelo/YedelMod/releases"
-				)
-			)
-		),
+		"§9§nGitHub",
 		URI.create("https://github.com/Yedelo/YedelMod/releases")
 	);
+	public final String coloredName;
 	public final String name;
-	public final String seriousName;
-	public final IChatComponent chatComponent;
 	public final URI uri;
 
-	UpdateSource(String notificationString, String seriousName, IChatComponent chatComponent, URI uri) {
-		this.name = notificationString;
-		this.seriousName = seriousName;
-		this.chatComponent = chatComponent;
+	UpdateSource(String coloredName, URI uri) {
+		this.coloredName = coloredName;
+		this.name = UTextComponent.Companion.stripFormatting(coloredName);
 		this.uri = uri;
 	}
 }

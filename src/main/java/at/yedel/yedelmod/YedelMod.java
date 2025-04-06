@@ -2,63 +2,43 @@ package at.yedel.yedelmod;
 
 
 
-import java.util.concurrent.TimeUnit;
-
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.AutoGuildWelcome;
-import at.yedel.yedelmod.features.CustomHitParticles;
-import at.yedel.yedelmod.features.DropperGG;
-import at.yedel.yedelmod.features.FavoriteServerButton;
-import at.yedel.yedelmod.features.RegexChatFilter;
-import at.yedel.yedelmod.features.YedelCommand;
-import at.yedel.yedelmod.features.major.BedwarsFeatures;
-import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
-import at.yedel.yedelmod.features.major.MarketSearch;
-import at.yedel.yedelmod.features.major.StrengthIndicators;
-import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.features.major.ping.PingResponse;
+import at.yedel.yedelmod.features.*;
+import at.yedel.yedelmod.features.major.*;
 import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
 import at.yedel.yedelmod.features.modern.ItemSwings;
+import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.handlers.HypixelManager;
-import at.yedel.yedelmod.handlers.YedelModPacketHandler;
-import at.yedel.yedelmod.hud.HudManager;
-import at.yedel.yedelmod.hud.impl.BedwarsXPHud;
-import at.yedel.yedelmod.hud.impl.BountyHuntingHud;
-import at.yedel.yedelmod.hud.impl.CustomTextHud;
-import at.yedel.yedelmod.hud.impl.MagicMilkTimeHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.Functions;
-import at.yedel.yedelmod.utils.ThreadManager;
+import at.yedel.yedelmod.utils.ClickNotifications;
+import at.yedel.yedelmod.utils.Threading;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.client.ClientCommandHandler;
+import cc.polyfrost.oneconfig.events.EventManager;
+import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import org.lwjgl.input.Keyboard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 
 
-// Mod!
+// Mod...
 @Mod(
-	modid = YedelModConstants.modid,
-	name = YedelModConstants.name,
-	version = YedelModConstants.version,
-	clientSideOnly = true,
-	guiFactory = "at.yedel.yedelmod.config.forgeconfig.GuiFactory" // Overriden by main config (vigilance)
+	modid = YedelModConstants.MOD_ID,
+	name = YedelModConstants.MOD_NAME,
+	version = YedelModConstants.MOD_VERSION,
+	clientSideOnly = true
 )
 public class YedelMod {
-	public static final Minecraft minecraft = Minecraft.getMinecraft();
-
 	@Instance
 	private static YedelMod instance;
 
@@ -66,35 +46,13 @@ public class YedelMod {
 		return instance;
 	}
 
-	private KeyBinding ahSearchKeybind;
-
-	public KeyBinding getAhSearchKeybind() {
-		return ahSearchKeybind;
-	}
-
-	private KeyBinding bzSearchKeybind;
-
-	public KeyBinding getBzSearchKeybind() {
-		return bzSearchKeybind;
-	}
-
-	private KeyBinding insufficientKeybind;
-
-	public KeyBinding getInsufficientKeybind() {
-		return insufficientKeybind;
-	}
-
-	private KeyBinding sufficientKeybind;
-
-	public KeyBinding getSufficientKeybind() {
-		return sufficientKeybind;
-	}
+	public static final Logger yedelog = LogManager.getLogger("YedelMod");
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		YedelConfig.getInstance().preload();
+		// Loads class. preload() exists for this but what ev
+		YedelConfig.getInstance();
 
-		ClientCommandHandler.instance.registerCommand(new YedelCommand());
 		registerEventListeners(
 			this,
 			AutoGuildWelcome.getInstance(),
@@ -104,64 +62,42 @@ public class YedelMod {
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			FavoriteServerButton.getInstance(),
-			Functions.getInstance().getEvents(),
 			CustomHitParticles.getInstance(),
 			ItemSwings.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
+			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
-			TNTTagFeatures.getInstance(),
+			TNTTagFeatures.getInstance()
+		);
+		registerEventListeners(
+			ClickNotifications.getInstance(),
 			YedelCheck.getInstance()
 		);
+		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
 
-		ThreadManager.scheduleRepeat(() -> {
-			if (minecraft.theWorld != null) {
+		Threading.scheduleRepeat(() -> {
+			if (UMinecraft.getWorld() != null) {
 				YedelConfig.getInstance().playtimeMinutes++;
 				YedelConfig.getInstance().save();
 			}
 		}, 1, TimeUnit.MINUTES);
 
-		ThreadManager.scheduleRepeat(() -> {
-			BedwarsFeatures.getInstance().decrementMagicMilkTime();
-			BedwarsFeatures.getInstance().setMagicMilkTimeText("Magic Milk: §b" + BedwarsFeatures.getInstance().getMagicMilkTime() + "§as");
-		}, 1, TimeUnit.SECONDS);
-
-		ahSearchKeybind = new KeyBinding("AH search your held item", Keyboard.KEY_K, "YedelMod | Market Searches");
-		bzSearchKeybind = new KeyBinding("BZ search your held item", Keyboard.KEY_L, "YedelMod | Market Searches");
-		insufficientKeybind = new KeyBinding("Insufficient Evidence", Keyboard.KEY_O, "YedelMod | Atlas");
-		sufficientKeybind = new KeyBinding("Evidence Without Doubt", Keyboard.KEY_P, "YedelMod | Atlas");
-		ClientRegistry.registerKeyBinding(ahSearchKeybind);
-		ClientRegistry.registerKeyBinding(bzSearchKeybind);
-		ClientRegistry.registerKeyBinding(insufficientKeybind);
-		ClientRegistry.registerKeyBinding(sufficientKeybind);
-
 		HypixelManager.getInstance().setup();
-
-		MinecraftForge.EVENT_BUS.register(HudManager.getInstance());
-		HudManager.getInstance().addHuds(
-			BedwarsXPHud.getInstance(),
-			BountyHuntingHud.getInstance(),
-			CustomTextHud.getInstance(),
-			MagicMilkTimeHud.getInstance()
-		);
 	}
 
 	@EventHandler
 	public void checkForUpdates(FMLLoadCompleteEvent event) {
-		if (YedelConfig.getInstance().autoCheckUpdates) {
+		if (YedelConfig.getInstance().automaticallyCheckForUpdates) {
 			UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 		}
-	}
-
-	@SubscribeEvent
-	public void onServerConnect(ClientConnectedToServerEvent event) {
-		event.manager.channel().pipeline().addBefore("packet_handler", "yedelmod_packet_handler", new YedelModPacketHandler());
 	}
 
 	private void registerEventListeners(Object... eventListeners) {
 		for (Object eventListener: eventListeners) {
 			MinecraftForge.EVENT_BUS.register(eventListener);
+			EventManager.INSTANCE.register(eventListener);
 		}
 	}
 }

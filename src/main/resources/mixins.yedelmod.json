@@ -2,7 +2,6 @@
   "compatibilityLevel": "JAVA_8",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
-    "com.mojang.authlib.yggdrasil.MixinYggdrasilMinecraftSessionService",
     "net.minecraft.client.InvokerMinecraft",
     "net.minecraft.client.entity.MixinEntityPlayerSP",
     "net.minecraft.client.gui.MixinGuiNewChat",
@@ -15,5 +14,5 @@
     "net.minecraft.client.renderer.entity.layers.MixinLayerHeldItem",
     "net.minecraft.item.MixinItemBucket"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.7.11"
 }

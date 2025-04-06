@@ -2,26 +2,26 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.utils.typeutils.NumberUtils;
+import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
+import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
+import cc.polyfrost.oneconfig.events.event.Stage;
+import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import com.google.common.collect.Maps;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.server.S01PacketJoinGame;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.events.JoinGamePacketEvent;
-import at.yedel.yedelmod.events.RenderScoreEvent;
-import at.yedel.yedelmod.handlers.HypixelManager;
-import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
-import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.ThreadManager;
-import at.yedel.yedelmod.utils.typeutils.NumberUtils;
-import com.google.common.collect.Maps;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 
@@ -55,35 +55,46 @@ public class StrengthIndicators {
         colorMap.put(13, "§7");
         colorMap.put(14, "§8");
         colorMap.put(15, "§0");
-        ThreadManager.scheduleRepeat(() -> {
-            for (Map.Entry<String, Double> entry: strengthPlayers.entrySet()) {
-                String player = entry.getKey();
-                Double seconds = entry.getValue();
-                strengthPlayers.put(player, NumberUtils.round(seconds - 0.1, 1));
-                if (seconds == 0.5) {
-                    startStrengthPlayers.remove(player);
-                    endStrengthPlayers.add(player);
-                }
-                else if (seconds == 0) {
-                    startStrengthPlayers.remove(player);
-                    endStrengthPlayers.remove(player);
+    }
+
+    private int ticks = 0;
+
+    @Subscribe
+    public void downtickStrengthPlayers(TickEvent event) {
+        if (event.stage == Stage.START) {
+            if (ticks % 2 == 0) {
+                for (Map.Entry<String, Double> entry : strengthPlayers.entrySet()) {
+                    String player = entry.getKey();
+                    Double seconds = entry.getValue();
+                    strengthPlayers.put(player, NumberUtils.round(seconds - 0.1, 1));
+                    if (seconds == 0.5) {
+                        startStrengthPlayers.remove(player);
+                        endStrengthPlayers.add(player);
+                    }
+                    else if (seconds == 0) {
+                        startStrengthPlayers.remove(player);
+                        endStrengthPlayers.remove(player);
+                    }
                 }
             }
-        }, 100, TimeUnit.MILLISECONDS);
+            ticks++;
+        }
     }
 
-    @SubscribeEvent
-    public void onServerChange(JoinGamePacketEvent event) {
-        strengthPlayers.clear();
-        startStrengthPlayers.clear();
-        endStrengthPlayers.clear();
+    @Subscribe
+    public void resetStrengthIndicators(ReceivePacketEvent event) {
+        if (event.packet instanceof S01PacketJoinGame) {
+            strengthPlayers.clear();
+            startStrengthPlayers.clear();
+            endStrengthPlayers.clear();
+        }
     }
 
-    @SubscribeEvent
-    public void onKillMessage(ClientChatReceivedEvent event) {
-        if (YedelConfig.getInstance().strengthIndicators && HypixelManager.getInstance().isInSkywars()) {
+    @Subscribe
+    public void handleKillMessage(ChatReceiveEvent event) {
+        if (HypixelManager.getInstance().isInSkywars()) {
             String message = event.message.getUnformattedText();
-            for (Pattern killPattern: Constants.skywarsKillPatterns) {
+            for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
                     triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
@@ -103,14 +114,124 @@ public class StrengthIndicators {
     }
 
     @SubscribeEvent
-    public void onRenderStrengthPlayerHealth(RenderScoreEvent event) {
-        EntityPlayer entityPlayer = event.getPlayer();
+    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
+        if (!YedelConfig.getInstance().skywarsStrengthIndicators) return;
+        EntityPlayer entityPlayer = event.entityPlayer;
+        if (entityPlayer.isInvisible()) return;
         String entityName = entityPlayer.getName();
         boolean inStart = startStrengthPlayers.contains(entityName);
-        RenderPlayer renderer = event.getRenderPlayer();
         if (!inStart && !endStrengthPlayers.contains(entityName)) return;
-        String color = inStart ? colorMap.get(YedelConfig.getInstance().startStrengthColor) : colorMap.get(YedelConfig.getInstance().endStrengthColor);
+        String color =
+            colorMap.get(inStart ? YedelConfig.getInstance().strengthColor : YedelConfig.getInstance().subStrengthColor);
         String text = color + "Strength - " + strengthPlayers.get(entityName) + "s";
-        ((InvokerRender) renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.getX(), event.getY() + 0.55, event.getZ(), 64);
+        double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
+        ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
     }
+
+    private static final Pattern[] killPatterns = {
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was killed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was thrown into the void by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was thrown off a cliff by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was shot by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got rekt by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) took the L to (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got dabbed on by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got bamboozled by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was trampled by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was back kicked into the void by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was headbutted off a cliff by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was impaled from a distance by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was struck down by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was turned to dust by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was turned to ash by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was melted by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was filled full of lead by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) met their end by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) lost a drinking contest with (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) lost the draw to (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was given the cold shoulder by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was out of the league of (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*)'s heart was broken by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was struck with Cupid's arrow by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) be sent to Davy Jones' locker by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) be cannonballed to death by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) be voodooed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was turned into space dust by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was sent into orbit by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was retrograded by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was hit by an asteroid from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was deleted by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was ALT\\+F4'd by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was crashed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was rm -rf by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) died in close combat to (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) fought to the edge with (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) stumbled off a ledge with help by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) fell to the great marksmanship of (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was glazed in BBQ sauce by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) slipped in BBQ sauce of the edge spilled by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was not spicy enough for (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was thrown chili powder at by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was exterminated by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was squashed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was tranquilized by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was mushed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was peeled by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) slipped on (?<killer>[a-zA-Z0-9_]*)'s banana peel off a cliff\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got banana pistol'd by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was chewed up by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was squeaked off the edge by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was distracted by a rat draggging pizza from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was squeaked from a distance by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was oinked up by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) slipped into void for (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was distracted by a piglet from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got attacked by a carrot from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was buzzed to death by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was bzzz'd off the edge by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was stung by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was startled from a distance by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was socked by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was KO'd by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) took an uppercut from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was sent into a daze by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was crusaded by the knight (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was jousted by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was capapulted by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was shot to the knee by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was bit by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) got WOOF'D by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was growled off an edge by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was thrown a frisbee by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was backstabbed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was pushed into the abyss by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was thrown into a ravine by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was brutally shot by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was locked outside during a snow storm by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was shoved down an icy slope by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was made into a snowman by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was hit with a snowball from (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was painted pretty by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was flipped off the edge by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was deviled by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was made sunny side up by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was whacked with a party balloon by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was popped into the void by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was launched like a firework by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was shot with a roman candle by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was wrapped up by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was tied into a bow by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) tripped over a present placed by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was glued up by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was crushed into moon dust by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was sent the wrong way by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was blasted to the moon by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was smothered in holiday cheer by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was banished into the ether by (?<killer>[a-zA-Z0-9_]*)'s holiday spirit\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was pushed by (?<killer>[a-zA-Z0-9_]*)'s holiday spirit\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was sniped by a missle of festivity by (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) became victim .+? of (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was bow kill .+? of (?<killer>[a-zA-Z0-9_]*)\\."),
+        Pattern.compile("(?<killed>[a-zA-Z0-9_]*) was void victim .+? of (?<killer>[a-zA-Z0-9_]*)\\.")
+    };
 }

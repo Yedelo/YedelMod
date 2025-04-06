@@ -2,29 +2,32 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.events.DrawSlotEvent;
-import at.yedel.yedelmod.events.PacketEvent;
+import at.yedel.yedelmod.event.events.DrawSlotEvent;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
+import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
+import cc.polyfrost.oneconfig.events.event.Stage;
+import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -65,11 +68,7 @@ public class BedwarsFeatures {
 		return magicMilkTimeText;
 	}
 
-	public void setMagicMilkTimeText(String magicMilkTimeText) {
-		this.magicMilkTimeText = magicMilkTimeText;
-	}
-
-	private final int RED = new Color(246, 94, 94, 255).getRGB();
+	private final int RED = new OneColor(246, 94, 94, 255).getRGB();
 
 	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
 	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
@@ -82,27 +81,41 @@ public class BedwarsFeatures {
 		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
 	}
 
-	@SubscribeEvent
-	public void onExperiencePacket(PacketEvent.ReceiveEvent event) {
-		if (event.getPacket() instanceof S1FPacketSetExperience) {
-			float experience = ((S1FPacketSetExperience) event.getPacket()).func_149397_c();
+	@Subscribe
+	public void setBedwarsExperience(ReceivePacketEvent event) {
+		if (event.packet instanceof S1FPacketSetExperience) {
+			float experience = ((S1FPacketSetExperience) event.packet).func_149397_c();
 			hasExperience = experience > 0;
 			int bedwarsXP = (int) (experience * 5000);
-			hudXPText = "XP: §b" + TextUtils.commafy(bedwarsXP) + "§7/§a5,000";
+			hudXPText = "§b" + TextUtils.commafy(bedwarsXP) + "§7/§a5,000";
 		}
 	}
 
 	@SubscribeEvent
-	public void onDrinkMilk(PlayerUseItemEvent.Finish event) {
+	public void resetMagicMilkTime(PlayerUseItemEvent.Finish event) {
 		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().isInBedwars()) {
 			magicMilkTime = 30;
-			magicMilkTimeText = "Magic Milk: §b30§as";
+			magicMilkTimeText = "§b30§as";
 		}
 	}
 
-	@SubscribeEvent
-	public void onRenderRedstones(DrawSlotEvent event) {
-		if (!YedelConfig.getInstance().defusalHelper) return;
+	private int ticks;
+
+	@Subscribe
+	public void decrementMagicMilkTime(TickEvent event) {
+		if (event.stage == Stage.START) {
+			if (ticks % 20 == 0) {
+				decrementMagicMilkTime();
+				magicMilkTimeText = "§b" + magicMilkTime + "§as";
+			}
+			ticks++;
+		}
+
+	}
+
+	@Subscribe
+	public void renderRedstoneHighlights(DrawSlotEvent event) {
+		if (!YedelConfig.getInstance().bedwarsDefusalHelper) return;
 		ItemStack stack = event.getSlot().getStack();
 		if (stack == null) return;
 		if (stack.getItem() == Items.redstone) {
@@ -115,60 +128,60 @@ public class BedwarsFeatures {
 		}
 	}
 
-	@SubscribeEvent
-	public void onTokenMessage(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void lightgreenifyTokenMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().isInBedwars()) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = tokenMessagePattern.matcher(message);
 			while (matcher.find()) {
-				event.message = new ChatComponentText(event.message.getFormattedText().replace("§2", "§a"));
+				event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void onSlumberTicketMessage(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().isInBedwars()) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = slumberTicketMessagePattern.matcher(message);
 			while (matcher.find()) {
-				event.setCanceled(true);
+				event.isCancelled = true;
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void onItemPickupMessage(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void hideItemPickupMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().isInBedwars()) {
 			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
-				event.setCanceled(true);
+				event.isCancelled = true;
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void onSilverCoinCountMessage(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void hideSilverCoinCountMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideSilverCoinCount) {
 			String message = event.message.getFormattedText();
 			if (message.startsWith("§r§aYou purchased §r§6") && message.contains("§r§7(+1 Silver Coin [")) {
-				event.message = new ChatComponentText(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
+				event.message = new UTextComponent(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void onComfyPillowMessages(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void hideComfyPillowMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideComfyPillowMessages) {
 			if (comfyPillowMessages.contains(event.message.getUnformattedText())) {
-				event.setCanceled(true);
+				event.isCancelled = true;
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void onDreamersSoulFragmentMessage(ClientChatReceivedEvent event) {
+	@Subscribe
+	public void hideDreamersSoulFragmentMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
-			event.setCanceled(true);
+			event.isCancelled = true;
 		}
 	}
 }

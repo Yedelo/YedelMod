@@ -2,7 +2,18 @@ package at.yedel.yedelmod.utils.update;
 
 
 
-import java.awt.Desktop;
+import at.yedel.yedelmod.launch.YedelModConstants;
+import at.yedel.yedelmod.utils.ClickNotifications;
+import at.yedel.yedelmod.utils.Requests;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.UDesktop;
+import cc.polyfrost.oneconfig.libs.universal.UScreen;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.Notifications;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.event.ClickEvent;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -10,16 +21,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.Chat;
-import at.yedel.yedelmod.utils.Requests;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import gg.essential.api.EssentialAPI;
-import net.minecraft.util.ChatComponentText;
-
-import static at.yedel.yedelmod.YedelMod.minecraft;
-import static at.yedel.yedelmod.utils.Constants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 
@@ -32,7 +34,7 @@ public class UpdateManager {
 		return instance;
 	}
 
-	private static final String currentVersion = YedelModConstants.version;
+	private static final String currentVersion = YedelModConstants.MOD_VERSION;
 	public static final URL modrinthApiUrl;
 	public static final URL githubApiUrl;
 
@@ -104,39 +106,34 @@ public class UpdateManager {
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			Chat.logoDisplay("§cYou are up to date with the mod version on " + updateSource + "!");
+			UChat.chat(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
 		}
 		else {
-			if (minecraft.currentScreen != null) { // if this isn't at launch, for auto check updates
-				EssentialAPI.getNotifications().push("YedelMod", "You are up to date with the mod version on " + updateSource + "!");
+			if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
+				Notifications.INSTANCE.send("YedelMod", "You are up to date with the mod version on " + updateSource + "!");
 			}
 		}
 	}
 
 	private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			Chat.display(new ChatComponentText(logo + " §eVersion " + newVersion + " is avaliable on ").appendSibling(updateSource.chatComponent).appendText("§e!"));
+			UChat.chat(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
 		}
 		else {
-			EssentialAPI.getNotifications().push("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "§7! Click to open.", () -> {
-				try {
-					Desktop.getDesktop().browse(updateSource.uri);
+			ClickNotifications.getInstance().send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
+				if (!UDesktop.browse(updateSource.uri)) {
+					Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.name + "!");
 				}
-				catch (IOException e) {
-					EssentialAPI.getNotifications().push("YedelMod", "Couldn't open link for " + updateSource.seriousName + "!");
-					e.printStackTrace();
-				}
-				return null;
 			});
 		}
 	}
 
 	private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			Chat.logoDisplay("§cCouldn't get update information from " + updateSource.seriousName + "!");
+			UChat.chat(logo + " §cCouldn't get update information from " + updateSource.name + "!");
 		}
 		else {
-			EssentialAPI.getNotifications().push("YedelMod", "Couldn't get update information from " + updateSource.seriousName + "!");
+			Notifications.INSTANCE.send("YedelMod", "Couldn't get update information from " + updateSource.name + "!");
 		}
 	}
 

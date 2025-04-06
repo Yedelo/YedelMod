@@ -1,0 +1,43 @@
+package at.yedel.yedelmod.hud;
+
+
+
+import at.yedel.yedelmod.features.major.BedwarsFeatures;
+import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.utils.Constants;
+import cc.polyfrost.oneconfig.hud.SingleTextHud;
+
+
+
+public class BedwarsXPHud extends SingleTextHud {
+    public BedwarsXPHud() {
+        super(
+            "XP", // title is actually useful now
+            true, // enabled obviously
+            5, // x
+            15, // y
+            1, // normal size
+            false, // no background it's ugly
+            false, // no rounded corners it's also ugly
+            0, // NO rounded corners
+            0, // no x padding why would i want it
+            0, // no y padding for the same reason
+            Constants.emptyColor, // no background color
+            false, // no border
+            0, // NO border
+            Constants.emptyColor // no border color
+        );
+        textType = 1;
+    }
+
+    @Override
+    protected boolean shouldShow() {
+        return super.shouldShow() && HypixelManager.getInstance().isInBedwars() && BedwarsFeatures.getInstance().hasExperience();
+    }
+
+    @Override
+    protected String getText(boolean example) {
+        if (example) return "§b3,550§7/§a5,000";
+        else return BedwarsFeatures.getInstance().getHudXPText();
+    }
+}

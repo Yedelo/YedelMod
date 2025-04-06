@@ -1,19 +1,30 @@
-rootProject.name = "YedelMod"
+rootProject.name = extra["mod.name"].toString()
 
 pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        maven("https://repo.essential.gg/repository/maven-public")
+        maven("https://maven.deftu.dev/releases")
         maven("https://maven.fabricmc.net")
         maven("https://maven.architectury.dev")
         maven("https://maven.minecraftforge.net")
-        maven("https://repo.essential.gg/repository/maven-public")
+        maven("https://maven.deftu.dev/snapshots")
     }
     plugins {
-        kotlin("jvm") version "1.7.10"
-        id("gg.essential.loom") version "0.10.0.3"
-        id("io.github.juuxel.loom-quiltflower") version "1.7.3"
-        id("dev.architectury.architectury-pack200") version "0.1.3"
-        id("com.github.johnrengelman.shadow") version "7.0.0"
+        val dgt = "2.29.0"
+        id("dev.deftu.gradle.multiversion-root") version (dgt)
+    }
+}
+
+rootProject.buildFileName = "root.gradle.kts"
+
+listOf(
+    "1.8.9-forge"
+).forEach { version ->
+    include(":$version")
+    project(":$version").apply {
+        projectDir = file("versions/$version")
+        buildFileName = "../../build.gradle.kts"
     }
 }
