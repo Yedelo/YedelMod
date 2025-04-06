@@ -13,22 +13,22 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "2.0.21"
-
-    val dgt = "2.29.0"
-    id("dev.deftu.gradle.tools.java") version dgt
-    id("dev.deftu.gradle.tools.minecraft.loom") version dgt
-    id("dev.deftu.gradle.tools.bloom") version dgt
-    id("dev.deftu.gradle.tools.resources") version dgt
-    id("dev.deftu.gradle.tools.shadow") version dgt
+    id("dev.deftu.gradle.multiversion")
+    id("dev.deftu.gradle.tools")
+    for (tool in listOf(
+        "java",
+        "minecraft.loom",
+        "bloom",
+        "resources",
+        "shadow"
+    )) id("dev.deftu.gradle.tools.$tool")
 }
 
 dependencies {
-    compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:$oneconfigVersion")
+    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
     shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
 
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 
     implementation("net.hypixel:mod-api:1.0")
 
@@ -40,8 +40,12 @@ toolkitLoomHelper {
     disableRunConfigs(GameSide.SERVER)
 
     useTweaker("cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
-    useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
-    useForgeMixin("yedelmod")
+
+    if (mcData.isLegacyForge) {
+        useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
+        useForgeMixin("yedelmod")
+        useMixinRefMap("yedelmod")
+    }
 
     useDevAuth(devAuthVersion)
     useArgument("--version", "YedelMod", GameSide.BOTH)

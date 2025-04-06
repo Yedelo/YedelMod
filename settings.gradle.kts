@@ -1,4 +1,4 @@
-rootProject.name = "YedelMod"
+rootProject.name = extra["mod.name"].toString()
 
 pluginManagement {
     repositories {
@@ -10,5 +10,21 @@ pluginManagement {
         maven("https://maven.architectury.dev")
         maven("https://maven.minecraftforge.net")
         maven("https://maven.deftu.dev/snapshots")
+    }
+    plugins {
+        val dgt = "2.29.0"
+        id("dev.deftu.gradle.multiversion-root") version (dgt)
+    }
+}
+
+rootProject.buildFileName = "root.gradle.kts"
+
+listOf(
+    "1.8.9-forge"
+).forEach { version ->
+    include(":$version")
+    project(":$version").apply {
+        projectDir = file("versions/$version")
+        buildFileName = "../../build.gradle.kts"
     }
 }
