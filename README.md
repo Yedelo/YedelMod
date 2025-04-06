@@ -12,7 +12,7 @@ use [OneConfig (v0)](https://polyfrost.org/projects/oneconfig/). Both are bundle
 Versions 1.2.0+ require the Hypixel Mod API which can be found [here](https://modrinth.com/mod/hypixel-mod-api). If you
 do not have the mod, a popup window will appear with instructions to install it.
 
-Use /yedel (/yedelmod) or the config button in the mod menu for settings and more info.
+Use /yedel (/yedelmod) for settings and more info.
 
 Use /yedel update or the check for update button in the settings menu to check for updates on Modrinth or GitHub.
 

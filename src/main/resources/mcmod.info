@@ -2,7 +2,7 @@
   {
     "modid": "${mod_id}",
     "name": "${mod_name}",
-    "description": "${mod_description}\nUse /yedel or the config button for settings and more info.\nUse /yedel update or the check for update button in the settings menu to check for updates on Modrinth or GitHub.",
+    "description": "${mod_description}",
     "version": "${mod_version}",
     "mcversion": "${mc_version}",
     "url": "https://modrinth.com/mod/yedelmod",
