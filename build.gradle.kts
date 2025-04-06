@@ -2,6 +2,7 @@ import dev.deftu.gradle.utils.GameSide
 
 val oneconfigVersion: String by project
 val oneconfigWrapperVersion: String by project
+val devAuthVersion: String by project
 
 repositories {
     gradlePluginPortal()
@@ -42,6 +43,7 @@ toolkitLoomHelper {
     useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
     useForgeMixin("yedelmod")
 
+    useDevAuth(devAuthVersion)
     useArgument("--version", "YedelMod", GameSide.BOTH)
     val resourcePackDir: String? = System.getenv("minecraft.resourcePackDir")
     if (!resourcePackDir.isNullOrBlank()) {
