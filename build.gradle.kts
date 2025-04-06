@@ -12,7 +12,7 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "2.0.21"
 
     val dgt = "2.29.0"
     id("dev.deftu.gradle.tools.java") version dgt
