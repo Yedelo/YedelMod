@@ -22,5 +22,3 @@ run
 build
 .gradle
 logs
-
-dontuseoneconfigtweaker

@@ -26,7 +26,10 @@ plugins {
 
 dependencies {
     compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
-    shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
+    listOf(
+        "implementation",
+        "shade"
+    ).forEach { it("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion") }
 
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
 
@@ -39,6 +42,7 @@ dependencies {
 toolkitLoomHelper {
     disableRunConfigs(GameSide.SERVER)
 
+    // Remove this in the run config if you're using other OneConfig mods, since those mods will not load with the tweaker argument.
     useTweaker("cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
 
     if (mcData.isLegacyForge) {
