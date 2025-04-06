@@ -19,6 +19,7 @@ plugins {
         "java",
         "minecraft.loom",
         "bloom",
+        "ducks",
         "resources",
         "shadow"
     )) id("dev.deftu.gradle.tools.$tool")
@@ -57,15 +58,6 @@ toolkitLoomHelper {
     if (!resourcePackDir.isNullOrBlank()) {
         println("Using resource pack directory $resourcePackDir from environment variable minecraft.resourcePackDir")
         useArgument("--resourcePackDir", resourcePackDir, GameSide.BOTH)
-    }
-}
-
-sourceSets {
-    val dummy by creating
-    main {
-        dummy.compileClasspath += compileClasspath
-        compileClasspath += dummy.output
-        output.setResourcesDir(java.classesDirectory)
     }
 }
 
