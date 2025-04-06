@@ -18,6 +18,7 @@ plugins {
     id("dev.deftu.gradle.tools.java") version dgt
     id("dev.deftu.gradle.tools.minecraft.loom") version dgt
     id("dev.deftu.gradle.tools.bloom") version dgt
+    id("dev.deftu.gradle.tools.resources") version dgt
     id("dev.deftu.gradle.tools.shadow") version dgt
 }
 
@@ -59,13 +60,6 @@ sourceSets {
 }
 
 tasks {
-    processResources {
-        filesMatching(listOf("mcmod.info", "fabric.mod.json")) {
-            expand("version" to version)
-        }
-        outputs.upToDateWhen { false }
-    }
-
     jar {
         manifest.attributes(
             mapOf(
