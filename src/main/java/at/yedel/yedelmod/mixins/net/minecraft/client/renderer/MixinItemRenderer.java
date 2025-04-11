@@ -2,21 +2,15 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.renderer;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 
 
 // Priority is 1024 to apply before mixins of Antimations < 2.2.1
 @Mixin(value = ItemRenderer.class, priority = 1024)
 public abstract class MixinItemRenderer {
+	/*
 	@Shadow
 	private ItemStack itemToRender;
 
@@ -26,4 +20,5 @@ public abstract class MixinItemRenderer {
 			return 1;
 		return instance.getItemInUseCount();
 	}
+	 */
 }

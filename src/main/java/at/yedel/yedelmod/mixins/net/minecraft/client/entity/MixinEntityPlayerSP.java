@@ -16,7 +16,13 @@ public abstract class MixinEntityPlayerSP extends EntityLivingBase implements Sw
         super(worldIn);
     }
 
-    public void yedelmod$swingItemLocally() {
+    //#if MC == 1.8.9
+    public void yedelmod$swingHandLocally() {
         super.swingItem();
     }
+    //#else
+    //$$public void yedelmod$swingHandLocally(EnumHand hand) {
+    //$$    super.swingArm(hand);
+    //$$}
+    //#endif
 }

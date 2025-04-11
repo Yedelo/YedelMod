@@ -22,7 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
+//#if MC == 1.12.2
+//$$import net.minecraft.util.EnumHand;
+//#endif
 
 public class ItemSwings {
     private static final ItemSwings instance = new ItemSwings();
@@ -42,14 +44,31 @@ public class ItemSwings {
         ));
     }
 
+    //#if MC == 1.12.2
+    //$$EnumHand swingHand;
+    //#endif
+
+    //#if MC == 1.8.9
     private void swing() {
-        ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingItemLocally();
+        ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingHandLocally();
     }
+    //#else
+    //$$private void swing() {
+    //$$      ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingHandLocally(swingHand);
+    //$$}
+    //#endif
 
     @SubscribeEvent
     public void swingOnSwingableUse(PlayerInteractEvent event) {
         if (!YedelConfig.getInstance().itemUseSwings) return;
-        ItemStack itemStack = event.entityPlayer.getHeldItem();
+        ItemStack itemStack;
+        //#if MC == 1.8.9
+        itemStack = event.entityPlayer.getHeldItem();
+        //#else
+        //$$swingHand = event.getHand();
+        //$$itemStack = event.entityPlayer.getHeldItem(swingHand);
+        //#endif
+
         if (itemStack == null) return;
         Item item = itemStack.getItem();
         String registryName = item.getRegistryName();
@@ -75,7 +94,8 @@ public class ItemSwings {
         if (!YedelConfig.getInstance().itemDropSwings) return;
         if (event.packet instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
-            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && UPlayer.getPlayer().getHeldItem() != null) {
+            ItemStack heldItem;
+            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && heldItem != null) {
                 swing();
             }
         }

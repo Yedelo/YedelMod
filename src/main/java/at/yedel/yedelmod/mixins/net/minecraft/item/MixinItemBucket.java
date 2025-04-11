@@ -21,7 +21,7 @@ public abstract class MixinItemBucket {
 	private void yedelmod$swingOnBucketUse(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, CallbackInfoReturnable<ItemStack> cir) {
 		if (YedelConfig.getInstance().itemUseSwings) {
 			if (itemStackIn != cir.getReturnValue()) {
-				((SwingItemDuck) playerIn).yedelmod$swingItemLocally();
+				((SwingItemDuck) playerIn).yedelmod$swingHandLocally();
 			}
 		}
 	}

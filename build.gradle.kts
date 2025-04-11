@@ -61,6 +61,10 @@ toolkitLoomHelper {
     }
 }
 
+preprocess {
+    patternAnnotation.set("at.yedel.yedelmod.utils.version.Pattern")
+}
+
 tasks {
     jar {
         manifest.attributes(

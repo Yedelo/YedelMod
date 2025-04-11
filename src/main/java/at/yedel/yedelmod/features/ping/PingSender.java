@@ -69,7 +69,10 @@ public class PingSender {
 
     public void tabPing() {
         lastTime = System.nanoTime();
+        //#if MC == 1.8.9
         UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"));
+        //#else
+        //$$UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#", null, false));
         tabCheck = true;
     }
 

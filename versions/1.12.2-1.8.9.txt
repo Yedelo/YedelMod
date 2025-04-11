@@ -1,0 +1,11 @@
+net.minecraft.network.play.client.CPacketPlayerDigging net.minecraft.network.play.client.C07PacketPlayerDigging
+net.minecraft.network.play.client.CPacketTabComplete net.minecraft.network.play.client.C14PacketTabComplete
+net.minecraft.network.play.client.CPacketClientStatus net.minecraft.network.play.client.C16PacketClientStatus
+net.minecraft.network.play.server.SPacketJoinGame net.minecraft.network.play.server.S01PacketJoinGame
+net.minecraft.network.play.server.SPacketSetExperience net.minecraft.network.play.server.S1FPacketSetExperience
+net.minecraft.network.play.server.SPacketTabComplete net.minecraft.network.play.server.S3APacketTabComplete
+net.minecraft.network.play.server.SPacketStatistics net.minecraft.network.play.server.S37PacketStatistics
+net.minecraft.util.text.ITextComponent net.minecraft.util.IChatComponent
+net.minecraft.util.text.event net.minecraft.event
+
+net.minecraftforge.event.entity.living.LivingEntityUseItemEvent net.minecraftforge.event.entity.player.PlayerUseItemEvent
