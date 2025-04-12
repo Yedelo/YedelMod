@@ -6,11 +6,12 @@
 
 ![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version)
 
-Versions 1.0.0 to 1.5.1 use [Essential](https://essential.gg/), while versions 2.0.0+
-use [OneConfig (v0)](https://polyfrost.org/projects/oneconfig/). Both are bundled with the mod.
-
-Versions 1.2.0+ require the Hypixel Mod API which can be found [here](https://modrinth.com/mod/hypixel-mod-api). If you
-do not have the mod, a popup window will appear with instructions to install it.
+| **Mod versions** | **Powered by** | **Requires Hypixel Mod API** |
+|------------------|----------------|------------------------------|
+| 1.0.0 to 1.1.0   | Essential      | ❌                            |
+| 1.2.0 to 1.5.1   | Essential      | ✅                            |
+| 2.0.0+           | OneConfig v0   | ✅                            |
+| 3.0.0+ (future)  | OneConfig v1   | ❌                            |
 
 Use /yedel (/yedelmod) for settings and more info.
 
