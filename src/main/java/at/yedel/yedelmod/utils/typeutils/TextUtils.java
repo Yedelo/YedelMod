@@ -3,6 +3,7 @@ package at.yedel.yedelmod.utils.typeutils;
 
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 
 
@@ -15,22 +16,10 @@ public class TextUtils {
         return UUID.randomUUID().toString().substring(0, length);
     }
 
-    public static String color(Float ping) {
-        if (ping < 50) return "§a";
-        else if (ping < 100) return "§2";
-        else if (ping < 150) return "§e";
-        else if (ping < 200) return "§6";
-        else if (ping < 250) return "§c";
-        else if (ping < 300) return "§4";
-        else if (ping < 350) return "§5"; // wtf?
-        else if (ping < 400) return "§d";
-        else if (ping < 450) return "§f";
-        else if (ping < 500) return "§b";
-        else if (ping < 550) return "§3";
-        else if (ping < 600) return "§9";
-        else if (ping < 650) return "§1";
-        else if (ping < 700) return "§7";
-        else if (ping < 740) return "§8";
-        else return "§0";
+    // https://github.com/Polyfrost/UniversalCraft/blob/new-main/src/main/kotlin/gg/essential/universal/UChat.kt
+    private static final Pattern ampersandColorPattern = Pattern.compile("(?<!\\\\)&(?![^0-9a-fklmnor]|$)");
+
+    public static String format(String string) {
+        return ampersandColorPattern.matcher(string).replaceAll("§");
     }
 }

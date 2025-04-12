@@ -2,52 +2,46 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.handlers.HypixelManager;
-import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.hud.TextHud;
-
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 
 
 
 public class BountyHuntingHud extends TextHud {
-    public BountyHuntingHud() {
-        super(
-            true, // enabled obviously
-            5, // x
-            35, // y
-            1, // normal size
-            false, // no background it's ugly
-            false, // no rounded corners it's also ugly
-            0, // NO rounded corners
-            0, // no x padding why would i want it
-            0, // no y padding for the same reason
-            Constants.emptyColor, // no background color
-            false, // no border
-            0, // NO border
-            Constants.emptyColor // no border color
-        );
-        textType = 1;
+    private BountyHuntingHud() {
+        super("", "");
+    }
+
+    private static final BountyHuntingHud instance = new BountyHuntingHud();
+
+    public static BountyHuntingHud getInstance() {
+        return instance;
     }
 
     @Override
-    public boolean shouldShow() {
-        return super.shouldShow() && YedelConfig.getInstance().bountyHunting && HypixelManager.getInstance().isInTNTTag();
+    public @NotNull String title() {
+        return "Bounty Hunting HUD";
     }
 
     @Override
-    protected void getLines(List<String> lines, boolean example) {
-        if (example) {
-            lines.add("§c§lBounty §f§lHunting");
-            lines.add("§a83 points");
-            lines.add("§a15 kills");
-            lines.add("§cYour next target is §aYedelos§c.");
-        }
-        else {
-            lines.clear();
-            lines.addAll(TNTTagFeatures.getInstance().getDisplayLines());
-        }
+    public @NotNull Category category() {
+        return Category.getCOMBAT();
+    }
+
+    @Override
+    public @NotNull String id() {
+        return "bounty-hunting-hud.json";
+    }
+
+    public StringBuilder string = getStringBuilder();
+
+    public void relogic() {
+        super.updateAndRecalculate();
+    }
+
+    @Override
+    protected @Nullable String getText() {
+        return null;
     }
 }

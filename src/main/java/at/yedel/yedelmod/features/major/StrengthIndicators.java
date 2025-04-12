@@ -3,19 +3,17 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
-import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
-import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
-import cc.polyfrost.oneconfig.events.event.Stage;
-import cc.polyfrost.oneconfig.events.event.TickEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,30 +58,28 @@ public class StrengthIndicators {
     private int ticks = 0;
 
     @Subscribe
-    public void downtickStrengthPlayers(TickEvent event) {
-        if (event.stage == Stage.START) {
-            if (ticks % 2 == 0) {
-                for (Map.Entry<String, Double> entry : strengthPlayers.entrySet()) {
-                    String player = entry.getKey();
-                    Double seconds = entry.getValue();
-                    strengthPlayers.put(player, NumberUtils.round(seconds - 0.1, 1));
-                    if (seconds == 0.5) {
-                        startStrengthPlayers.remove(player);
-                        endStrengthPlayers.add(player);
-                    }
-                    else if (seconds == 0) {
-                        startStrengthPlayers.remove(player);
-                        endStrengthPlayers.remove(player);
-                    }
+    public void downtickStrengthPlayers(TickEvent.Start event) {
+        if (ticks % 2 == 0) {
+            for (Map.Entry<String, Double> entry : strengthPlayers.entrySet()) {
+                String player = entry.getKey();
+                Double seconds = entry.getValue();
+                strengthPlayers.put(player, NumberUtils.round(seconds - 0.1, 1));
+                if (seconds == 0.5) {
+                    startStrengthPlayers.remove(player);
+                    endStrengthPlayers.add(player);
+                }
+                else if (seconds == 0) {
+                    startStrengthPlayers.remove(player);
+                    endStrengthPlayers.remove(player);
                 }
             }
-            ticks++;
         }
+        ticks++;
     }
 
     @Subscribe
-    public void resetStrengthIndicators(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
+    public void resetStrengthIndicators(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof S01PacketJoinGame) {
             strengthPlayers.clear();
             startStrengthPlayers.clear();
             endStrengthPlayers.clear();
@@ -91,9 +87,9 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    public void handleKillMessage(ChatReceiveEvent event) {
+    public void handleKillMessage(ChatEvent.Receive event) {
         if (HypixelManager.getInstance().isInSkywars()) {
-            String message = event.message.getUnformattedText();
+            String message = event.getFullyUnformattedMessage();
             for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {

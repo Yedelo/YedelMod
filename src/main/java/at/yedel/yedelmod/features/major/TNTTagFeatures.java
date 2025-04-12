@@ -3,23 +3,23 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.handlers.HypixelManager;
+import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.RankColor;
-import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.libs.universal.USound;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
-import cc.polyfrost.oneconfig.utils.Multithreading;
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.client.OmniClientPlayer;
+import dev.deftu.omnicore.client.OmniClientSound;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,15 +65,15 @@ public class TNTTagFeatures {
 
     public void onTNTTagJoin() {
         if (YedelConfig.getInstance().bountyHunting) {
-            playerName = UPlayer.getPlayer().getName();
+            playerName = OmniClientPlayer.getName();
             dead = false;
             target = null;
-            displayLines.set(0, "§c§lBounty §f§lHunting");
-            displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
-            displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
-            displayLines.set(3, "");
+            setDisplayLine(0, "§c§lBounty §f§lHunting");
+            setDisplayLine(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
+            setDisplayLine(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
+            setDisplayLine(3, "");
             if (YedelConfig.getInstance().firstTimeBountyHunting) {
-                UChat.chat("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
+                OmniChat.displayClientMessage("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
                 YedelConfig.getInstance().firstTimeBountyHunting = false;
                 YedelConfig.getInstance().save();
             }
@@ -81,38 +81,38 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleRoundStarted(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().isInTNTTag() || !event.message.getUnformattedText().endsWith("has started!"))
+    public void handleRoundStarted(ChatEvent.Receive event) {
+        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().isInTNTTag() || !event.getFullyUnformattedMessage().endsWith("has started!"))
             return;
         players.clear();
-        for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
+        for (NetworkPlayerInfo playerInfo : OmniClient.getInstance().getNetHandler().getPlayerInfoMap()) {
             players.add(playerInfo.getGameProfile().getName());
         }
         players.remove(playerName);
         players.remove(YedelConfig.getInstance().currentNick);
         target = players.get((int) Math.floor(Math.random() * players.size()));
         whoCheck = true;
-        UChat.say("/who");
+        OmniChat.sendPlayerMessage("/who");
         if (YedelConfig.getInstance().playHuntingSounds) {
-            USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 0.8F);
+            OmniClientSound.play(Constants.plingSound, 1, 0.8F);
         }
-        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
-        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
+        setDisplayLine(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
+        setDisplayLine(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
     }
 
     @Subscribe
-    public void handleWhoMessage(ChatReceiveEvent event) {
-        String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck) return;
+    public void handleWhoMessage(ChatEvent.Receive event) {
+        String msg = event.getFullyUnformattedMessage();
+        if (!msg.startsWith("ONLINE: ") || !whoCheck) return;
         whoCheck = false;
-        event.isCancelled = true;
+        event.cancelled = true;
         String[] playersArray = msg.substring(14).split("§r§7, ");
         for (String player: playersArray) {
             if (player.contains(target)) {
                 targetRanked = player;
             }
         }
-        displayLines.set(3, "§cYour next target is " + targetRanked + ".");
+        setDisplayLine(3, "§cYour next target is " + targetRanked + ".");
         if (targetRanked.startsWith("§r§7")) targetRankColor = RankColor.GRAY;
         else if (targetRanked.startsWith("§r§a")) targetRankColor = RankColor.GREEN;
         else if (targetRanked.startsWith("§r§b")) targetRankColor = RankColor.AQUA;
@@ -121,8 +121,8 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleFightMessages(ChatReceiveEvent event) {
-        String msg = event.message.getUnformattedText();
+    public void handleFightMessages(ChatEvent.Receive event) {
+        String msg = event.getFullyUnformattedMessage();
         Matcher tagOtherMatcher = youTaggedPersonRegex.matcher(msg);
         while (tagOtherMatcher.find()) {
             if (Objects.equals(tagOtherMatcher.group("personThatYouTagged"), target)) {
@@ -150,7 +150,7 @@ public class TNTTagFeatures {
         if (!YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance)
             return;
         EntityPlayer targetPlayer = event.entityPlayer;
-        EntityPlayerSP player = UPlayer.getPlayer();
+        EntityPlayerSP player = OmniClientPlayer.getInstance();
         if (
             Objects.equals(targetPlayer.getName(), target)
                 &&
@@ -165,25 +165,25 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onBlastRadiusDeath(ChatReceiveEvent event) {
-        if (event.message.getUnformattedText().startsWith("You were blown up by")) {
+    public void onBlastRadiusDeath(ChatEvent.Receive event) {
+        if (event.getFullyUnformattedMessage().startsWith("You were blown up by")) {
             target = null;
             dead = true;
-            displayLines.set(3, "");
+            setDisplayLine(3, "");
         }
     }
 
     @Subscribe
-    public void onRoundEnd(ChatReceiveEvent event) {
+    public void onRoundEnd(ChatEvent.Receive event) {
         if (!YedelConfig.getInstance().bountyHunting) return;
-        String msg = event.message.getUnformattedText();
+        String msg = event.getFullyUnformattedMessage();
         Matcher peopleDeathMatcher = personBlewUpRegex.matcher(msg);
         while (peopleDeathMatcher.find()) {
             String personDied = peopleDeathMatcher.group("personThatBlewUp");
             if (Objects.equals(personDied, playerName)) {
                 dead = true;
                 target = null;
-                displayLines.set(3, "");
+                setDisplayLine(3, "");
             }
             if (Objects.equals(personDied, target) && fightingTarget) {
                 Multithreading.schedule(() -> {
@@ -191,11 +191,11 @@ public class TNTTagFeatures {
                     if (dead) pointIncrease /= 2;
                         YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
                         YedelConfig.getInstance().bountyHuntingKills += 1;
-                        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
-                        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
-                        displayLines.set(3, "§cYou killed your target!");
+                    setDisplayLine(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
+                    setDisplayLine(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
+                    setDisplayLine(3, "§cYou killed your target!");
                         if (YedelConfig.getInstance().playHuntingSounds) {
-                            USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 1.04F);
+                            OmniClientSound.play(Constants.plingSound, 1, 1.04F);
                         }
                     YedelConfig.getInstance().save();
                     }, 500, TimeUnit.MILLISECONDS
@@ -205,9 +205,15 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onNickChange(ChatReceiveEvent event) {
-        if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
-            UChat.chat("§6§l- BountyHunting - §ePlease set your nick with /setnick or in the config.");
+    public void onNickChange(ChatEvent.Receive event) {
+        if (Objects.equals(event.getFullyUnformattedMessage(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
+            OmniChat.displayClientMessage("§6§l- BountyHunting - §ePlease set your nick with /setnick or in the config.");
         }
+    }
+
+    private void setDisplayLine(int index, String line) {
+        displayLines.set(index, line);
+        BountyHuntingHud.getInstance().string.append(String.join("\n", displayLines));
+        BountyHuntingHud.getInstance().relogic();
     }
 }

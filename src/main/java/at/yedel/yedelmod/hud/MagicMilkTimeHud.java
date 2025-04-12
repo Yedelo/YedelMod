@@ -2,42 +2,44 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.features.major.BedwarsFeatures;
-import at.yedel.yedelmod.handlers.HypixelManager;
-import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.hud.SingleTextHud;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 
 
 
-public class MagicMilkTimeHud extends SingleTextHud {
-    public MagicMilkTimeHud() {
-        super(
-            "Magic Milk", // title is actually useful now
-            true, // enabled obviously
-            5, // x
-            25, // y
-            1, // normal size
-            false, // no background it's ugly
-            false, // no rounded corners it's also ugly
-            0, // NO rounded corners
-            0, // no x padding why would i want it
-            0, // no y padding for the same reason
-            Constants.emptyColor, // no background color
-            false, // no border
-            0, // NO border
-            Constants.emptyColor // no border color
-        );
-        textType = 1;
+public class MagicMilkTimeHud extends TextHud {
+    private MagicMilkTimeHud() {
+        super("Magic Milk", "");
+    }
+
+    private static final MagicMilkTimeHud instance = new MagicMilkTimeHud();
+
+    public static MagicMilkTimeHud getInstance() {
+        return instance;
+    }
+
+    @Override public @NotNull String title() {
+        return "Magic Milk Time HUD";
+    }
+
+    @Override public @NotNull Category category() {
+        return Category.getPLAYER();
     }
 
     @Override
-    public boolean shouldShow() {
-        return super.shouldShow() && HypixelManager.getInstance().isInBedwars() && BedwarsFeatures.getInstance().getMagicMilkTime() > -1;
+    public @NotNull String id() {
+        return "magic-milk-time-hud.json";
+    }
+
+    public StringBuilder string = getStringBuilder();
+
+    public void relogic() {
+        super.updateAndRecalculate();
     }
 
     @Override
-    protected String getText(boolean example) {
-        if (example) return "§b25§as";
-        else return BedwarsFeatures.getInstance().getMagicMilkTimeText();
+    protected @Nullable String getText() {
+        return null;
     }
 }

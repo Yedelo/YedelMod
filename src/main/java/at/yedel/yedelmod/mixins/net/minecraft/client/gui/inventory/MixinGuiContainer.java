@@ -3,9 +3,9 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory;
 
 
 import at.yedel.yedelmod.event.events.DrawSlotEvent;
-import cc.polyfrost.oneconfig.events.EventManager;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

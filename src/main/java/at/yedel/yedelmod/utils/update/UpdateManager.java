@@ -3,16 +3,16 @@ package at.yedel.yedelmod.utils.update;
 
 
 import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Requests;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UDesktop;
-import cc.polyfrost.oneconfig.libs.universal.UScreen;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.Notifications;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.event.ClickEvent;
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.client.OmniDesktop;
+import dev.deftu.omnicore.client.OmniScreen;
+import dev.deftu.textile.minecraft.MCClickEvent;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import org.polyfrost.oneconfig.api.ui.v1.Notifications;
+import org.polyfrost.polyui.component.extensions.EventsKt;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -106,34 +106,36 @@ public class UpdateManager {
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
+			OmniChat.displayClientMessage(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
 		}
 		else {
-			if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
-				Notifications.INSTANCE.send("YedelMod", "You are up to date with the mod version on " + updateSource + "!");
+			if (OmniScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
+				Notifications.enqueue(Notifications.Type.Info, "YedelMod", "You are up to date with the mod version on " + updateSource + "!");
 			}
 		}
 	}
 
 	private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
+			OmniChat.displayClientMessage(new MCSimpleTextHolder(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").withClickEvent(MCClickEvent.openUrl(updateSource.uri.toString())));
 		}
 		else {
-			ClickNotifications.getInstance().send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
-				if (!UDesktop.browse(updateSource.uri)) {
-					Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.name + "!");
+			EventsKt.onClick(Notifications.enqueue(Notifications.Type.Info, "YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open."), (block, event) -> {
+					if (!OmniDesktop.browse(updateSource.uri)) {
+						Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't open link for " + updateSource.name + "!");
 				}
-			});
+					return null;
+				}
+			);
 		}
 	}
 
 	private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(logo + " §cCouldn't get update information from " + updateSource.name + "!");
+			OmniChat.displayClientMessage(logo + " §cCouldn't get update information from " + updateSource.name + "!");
 		}
 		else {
-			Notifications.INSTANCE.send("YedelMod", "Couldn't get update information from " + updateSource.name + "!");
+			Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't get update information from " + updateSource.name + "!");
 		}
 	}
 

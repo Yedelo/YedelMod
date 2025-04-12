@@ -4,10 +4,11 @@ package at.yedel.yedelmod.event.events;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
+import org.polyfrost.oneconfig.api.event.v1.events.Event;
 
 
 
-public class DrawSlotEvent {
+public class DrawSlotEvent implements Event {
 	private final GuiContainer guiContainer;
 
 	public GuiContainer getGuiContainer() {

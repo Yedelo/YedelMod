@@ -1,9 +1,9 @@
 package at.yedel.yedelmod.features;
 
 
-import at.yedel.yedelmod.handlers.HypixelManager;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
+
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.client.OmniClient;
 import net.minecraft.world.WorldSettings;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
@@ -20,16 +20,16 @@ public class LimboCreativeCheck {
 
     public void checkLimbo() {
         if (HypixelManager.getInstance().isInLimbo()) {
-            if (UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
-                UChat.chat(logo + " §cYou are already in creative mode!");
+            if (OmniClient.getInstance().playerController.isInCreativeMode()) {
+                OmniChat.displayClientMessage(logo + " §cYou are already in creative mode!");
             }
             else giveCreative();
         }
-        else UChat.chat(logo + " §cLimbo check failed, try again in a bit or rejoin!");
+        else OmniChat.displayClientMessage(logo + " §cLimbo check failed, try again in a bit or rejoin!");
     }
 
     public void giveCreative() {
-        UMinecraft.getMinecraft().playerController.setGameType(WorldSettings.GameType.CREATIVE);
-        UChat.chat(logo + " §eSet gamemode to creative!");
+        OmniClient.getInstance().playerController.setGameType(WorldSettings.GameType.CREATIVE);
+        OmniChat.displayClientMessage(logo + " §eSet gamemode to creative!");
     }
 }

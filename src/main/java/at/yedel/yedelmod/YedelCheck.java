@@ -3,11 +3,11 @@ package at.yedel.yedelmod;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.utils.Multithreading;
+import dev.deftu.omnicore.client.OmniChat;
 import net.minecraft.network.play.server.S01PacketJoinGame;
+import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,18 +33,18 @@ public class YedelCheck {
     private boolean alreadyWarned = true;
 
     @Subscribe
-    public void checkUponServerChange(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
+    public void checkUponServerChange(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof S01PacketJoinGame) {
             if (YedelUtils && !alreadyWarned) {
                 Multithreading.schedule(() -> {
-                        UChat.chat(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
+                    OmniChat.displayClientMessage(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
                     }, 3, TimeUnit.SECONDS
                 );
                 alreadyWarned = false;
             }
             if (YedelConfig.getInstance().firstTime) {
                 Multithreading.schedule(() -> {
-                        UChat.chat("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
+                    OmniChat.displayClientMessage("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
                         YedelConfig.getInstance().firstTime = false;
                         YedelConfig.getInstance().save();
                     }, 1, TimeUnit.SECONDS

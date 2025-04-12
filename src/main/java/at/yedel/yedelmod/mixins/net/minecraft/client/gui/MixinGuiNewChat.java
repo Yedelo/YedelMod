@@ -3,7 +3,7 @@ package at.yedel.yedelmod.mixins.net.minecraft.client.gui;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.opengl.Display;
@@ -23,7 +23,7 @@ public abstract class MixinGuiNewChat {
     @Inject(method = "printChatMessage", at = @At("HEAD"))
     private void yedelmod$onLanHost(IChatComponent chatComponent, CallbackInfo ci) {
         if (chatComponent.getUnformattedText().startsWith("Local game hosted on port")) {
-            String port = UTextComponent.Companion.stripFormatting(chatComponent.getFormattedText().substring(26));
+            String port = MCTextFormat.strip(chatComponent.getFormattedText().substring(26));
             if (YedelConfig.getInstance().changeWindowTitle)
                 Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
         }

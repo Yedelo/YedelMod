@@ -4,8 +4,9 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
-import cc.polyfrost.oneconfig.events.event.ChatSendEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import dev.deftu.omnicore.client.OmniChat;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 
 
@@ -19,10 +20,10 @@ public class RandomPlaceholder {
     }
 
     @Subscribe
-    public void replaceRandomString(ChatSendEvent event) {
+    public void replaceRandomString(ChatEvent.Send event) {
         if (YedelConfig.getInstance().randomPlaceholder) {
-            event.message =
-                event.message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
+            event.cancelled = true;
+            OmniChat.sendPlayerMessage(event.message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8)));
         }
     }
 }

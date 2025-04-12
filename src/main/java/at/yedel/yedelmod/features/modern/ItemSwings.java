@@ -4,10 +4,8 @@ package at.yedel.yedelmod.features.modern;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.SwingItemDuck;
-import cc.polyfrost.oneconfig.events.event.SendPacketEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
+import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.client.OmniClientPlayer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -16,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class ItemSwings {
     }
 
     private void swing() {
-        ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingItemLocally();
+        ((SwingItemDuck) OmniClientPlayer.getInstance()).yedelmod$swingItemLocally();
     }
 
     @SubscribeEvent
@@ -59,7 +59,7 @@ public class ItemSwings {
         else if (Objects.equals(registryName, "minecraft:potion") && ItemPotion.isSplash(itemStack.getMetadata())) {
             swing();
         }
-        else if (Objects.equals(registryName, "minecraft:ender_pearl") && !UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
+        else if (Objects.equals(registryName, "minecraft:ender_pearl") && !OmniClient.getInstance().playerController.isInCreativeMode()) {
             swing();
         }
         else if (item instanceof ItemArmor) {
@@ -71,11 +71,11 @@ public class ItemSwings {
     }
 
     @Subscribe
-    public void swingOnDrop(SendPacketEvent event) {
+    public void swingOnDrop(PacketEvent.Send event) {
         if (!YedelConfig.getInstance().itemDropSwings) return;
-        if (event.packet instanceof C07PacketPlayerDigging) {
-            C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
-            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && UPlayer.getPlayer().getHeldItem() != null) {
+        if (event.getPacket() instanceof C07PacketPlayerDigging) {
+            C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
+            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && OmniClientPlayer.getInstance().getHeldItem() != null) {
                 swing();
             }
         }

@@ -4,18 +4,22 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingSender;
+import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
+import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
-import cc.polyfrost.oneconfig.libs.universal.ChatColor;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UPacket;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.commands.annotations.*;
 import com.google.gson.JsonObject;
-import net.minecraft.event.HoverEvent;
+import dev.deftu.omnicore.client.OmniChat;
+import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.textile.minecraft.MCHoverEvent;
+import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import net.minecraft.network.play.server.S02PacketChat;
+import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
+import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
+import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,10 +35,8 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 @Command(
-    value = "yedel",
-    aliases = YedelModConstants.MOD_ID,
-    description = "The main command of YedelMod",
-    chatColor = ChatColor.BLUE
+    value = {"yedel", YedelModConstants.MOD_ID},
+    description = "The main command of YedelMod"
 )
 public class YedelCommand {
     private YedelCommand() {}
@@ -55,158 +57,160 @@ public class YedelCommand {
             "\n§lStyle §ncodes§r:" +
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
-    private static final UTextComponent formattingGuideMessage =
-        new UTextComponent(logo + " §e§nHover to view the formatting guide.")
-            .setHover(HoverEvent.Action.SHOW_TEXT, formattingCodes);
+    private static final MCSimpleTextHolder formattingGuideMessage =
+        new MCSimpleTextHolder(logo + " §e§nHover to view the formatting guide.") {}
+            .withHoverEvent(new MCHoverEvent.ShowText(formattingCodes));
 
-    @Main(
-        description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."
+    @Command(
+        description = "The main command, hosting all Commands. When used with no arguments, opens the config screen."
     )
     public void main() {
-        YedelConfig.getInstance().openGui();
+        ScreensKt.openUI(YedelConfig.getInstance());
     }
 
-    @SubCommand(description = "Clears the currently set display text.")
+    @Command(description = "Clears the currently set display text.")
     public void cleartext() {
-        YedelConfig.getInstance().customTextHud.displayText = "";
+        CustomTextHud.getInstance().displayText = "";
         YedelConfig.getInstance().save();
-        UChat.chat(logo + " §eCleared display text!");
+        OmniChat.displayClientMessage(logo + " §eCleared display text!");
     }
 
-    @SubCommand(description = "Shows a formatting guide with color and style codes.")
+    @Command(description = "Shows a formatting guide with color and style codes.")
     public void formatting() {
-        UChat.chat(formattingGuideMessage);
+        OmniChat.displayClientMessage(formattingGuideMessage);
     }
 
-    @SubCommand(
+    @Command(
         description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
-        aliases = "li"
+        value = "li"
     )
     public void limbo() {
-        UChat.say("§");
+        OmniChat.sendPlayerMessage("§");
     }
 
-    @SubCommand(
+    @Command(
         description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
-        aliases = {"limbogmc", "lgmc"}
+        value = {"limbogmc", "lgmc"}
     )
     public void limbocreative() {
         LimboCreativeCheck.getInstance().checkLimbo();
     }
 
-    @SubCommandGroup("ping")
+    @Command("ping")
     public static class Ping {
-        @Main
+        @Command
         public void main() {
             PingSender.getInstance().defaultMethodPing();
         }
 
-        @SubCommand(description = "Does /ping command. Works on very few servers.", aliases = "p")
+        @Command(description = "Does /ping command. Works on very few servers.", value = "p")
         public void ping() {
             PingSender.getInstance().pingPing();
         }
 
-        @SubCommand(
+        @Command(
             description = "Enters a random command and waits for the unknown command response. Works on almost all servers.",
-            aliases = "c"
+            value = "c"
         )
         public void command() {
             PingSender.getInstance().commandPing();
         }
 
-        @SubCommand(
+        @Command(
             description = "Sends a tab completion packet and waits for the response. Works on all servers.",
-            aliases = "t"
+            value = "t"
         )
         public void tab() {
             PingSender.getInstance().tabPing();
         }
 
-        @SubCommand(
+        @Command(
             description = "Sends a statistics packet and waits for the response. Works on all servers.",
-            aliases = "s"
+            value = "s"
         )
         public void stats() {
             PingSender.getInstance().statsPing();
         }
 
-        @SubCommand(
+        @Command(
             description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
-            aliases = "l"
+            value = "l"
         )
         public void list() {
             PingSender.getInstance().serverListPing();
         }
 
-        @SubCommand(
+        @Command(
             description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
-            aliases = "h"
+            value = "h"
         )
         public void hypixel() {
             PingSender.getInstance().hypixelPing();
         }
     }
 
-    @SubCommand(
+    @Command(
         description = "Shows your total playtime (while playing on servers) in hours and minutes.",
-        aliases = "pt"
+        value = "pt"
     )
     public void playtime() {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
-        UChat.chat(logo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        OmniChat.displayClientMessage(logo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
     }
 
-    @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
+    @Command(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
     public void setnick(String nick) {
-        UChat.chat("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
+        OmniChat.displayClientMessage("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
         YedelConfig.getInstance().currentNick = nick;
         YedelConfig.getInstance().save();
     }
 
-    @SubCommand(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(@Greedy String text) {
-        String displayText = UChat.addColor(text);
-        YedelConfig.getInstance().customTextHud.displayText = displayText;
+    @Command(description = "Sets the display text, supporting color codes with ampersands (&).")
+    public void settext(String[] text) {
+        String displayText = TextUtils.format(joinArgs(text));
+        CustomTextHud.getInstance().displayText = displayText;
         YedelConfig.getInstance().save();
-        UChat.chat(logo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+        OmniChat.displayClientMessage(logo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
-    @SubCommand(description = "Sets the title of the game window.")
-    public void settitle(@Greedy String title) {
-        Display.setTitle(title);
-        UChat.chat(logo + " §eSet display title to \"§f" + title + "§e\"!");
+    @Command(description = "Sets the title of the game window.")
+    public void settitle(String[] title) {
+        String displayTitle = joinArgs(title);
+        Display.setTitle(displayTitle);
+        OmniChat.displayClientMessage(logo + " §eSet display title to \"§f" + displayTitle + "§e\"!");
     }
 
-    @SubCommand(
+    @Command(
         description = "Simulates a chat message, also supports color codes with ampersands (&).",
-        aliases = "simc"
+        value = "simc"
     )
-    private void simulatechat(@Greedy String text) {
-        String message = UChat.addColor(text);
-        UPacket.sendChatMessage(new UTextComponent(message));
+    private void simulatechat(String[] text) {
+        // js pipe functions would be really nice here
+        // text |> joinArgs |> TextUtils.format |> new ChatComponentText |> new S02PacketChat |> OmniClient.getInstance().getNetHandler().handleChat;
+        OmniClient.getInstance().getNetHandler().handleChat(new S02PacketChat(new ChatComponentText(TextUtils.format(joinArgs(text)))));
     }
 
-    @SubCommandGroup("update")
+    @Command("update")
     public static class Update {
-        @Main
+        @Command
         public void main() {
             UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
         }
 
-        @SubCommand
+        @Command
         public void modrinth() {
             UpdateManager.getInstance().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
         }
 
-        @SubCommand
+        @Command
         public void github() {
             UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
         }
     }
 
-    @SubCommand(
+    @Command(
         description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
-        aliases = "message"
+        value = "message"
     )
     public void yedelmessage() {
         new Thread(() -> {
@@ -231,14 +235,18 @@ public class YedelCommand {
                     yedelog.error("Couldn't get last updatted date/time", e);
                 }
 
-                UChat.chat(logo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
-                UChat.chat(yedelMessage);
+                OmniChat.displayClientMessage(logo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                OmniChat.displayClientMessage(yedelMessage);
             }
             catch (IOException e) {
-                UChat.chat(logo + " §cCouldn't get mod message!");
+                OmniChat.displayClientMessage(logo + " §cCouldn't get mod message!");
                 e.printStackTrace();
             }
         }, "YedelMod Message"
         ).start();
+    }
+
+    private String joinArgs(String[] args) {
+        return String.join(" ", args);
     }
 }

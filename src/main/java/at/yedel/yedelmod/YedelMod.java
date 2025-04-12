@@ -9,15 +9,11 @@ import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
 import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.features.ping.PingResponse;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Threading;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
-import cc.polyfrost.oneconfig.events.EventManager;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import dev.deftu.omnicore.client.OmniClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -26,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -72,19 +70,16 @@ public class YedelMod {
 			TNTTagFeatures.getInstance()
 		);
 		registerEventListeners(
-			ClickNotifications.getInstance(),
 			YedelCheck.getInstance()
 		);
-		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
+		CommandManager.register(YedelCommand.getInstance());
 
 		Threading.scheduleRepeat(() -> {
-			if (UMinecraft.getWorld() != null) {
+			if (OmniClient.getWorld() != null) {
 				YedelConfig.getInstance().playtimeMinutes++;
 				YedelConfig.getInstance().save();
 			}
 		}, 1, TimeUnit.MINUTES);
-
-		HypixelManager.getInstance().setup();
 	}
 
 	@EventHandler
