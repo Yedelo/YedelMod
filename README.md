@@ -11,7 +11,7 @@
 | 1.0.0 to 1.1.0   | Essential      | ❌                            |
 | 1.2.0 to 1.5.1   | Essential      | ✅                            |
 | 2.0.0+           | OneConfig v0   | ✅                            |
-| 3.0.0+ (future)  | OneConfig v1   | ❌                            |
+| 3.0.0+           | OneConfig v1   | ❌                            |
 
 Use /yedel (/yedelmod) for settings and more info.
 
