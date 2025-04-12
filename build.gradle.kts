@@ -48,8 +48,8 @@ toolkitLoomHelper {
 
     if (mcData.isLegacyForge) {
         useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
-        useForgeMixin("yedelmod")
-        useMixinRefMap("yedelmod")
+        useForgeMixin(modData.id)
+        useMixinRefMap(modData.id)
     }
 
     useDevAuth(devAuthVersion)

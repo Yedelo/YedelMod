@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingSender;
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
@@ -31,7 +32,7 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 @Command(
     value = "yedel",
-    aliases = "yedelmod",
+    aliases = YedelModConstants.MOD_ID,
     description = "The main command of YedelMod",
     chatColor = ChatColor.BLUE
 )
