@@ -24,6 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,8 +49,9 @@ public class YedelMod {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		// Loads class. preload() exists for this but what ev
-		YedelConfig.getInstance();
+		YedelConfig.getInstance().preload();
+		// Loads HypixelUtils which sets up OneConfig's implementation of the Hypixel Mod API
+		HypixelUtils.class.getName();
 
 		registerEventListeners(
 			this,
@@ -62,6 +64,7 @@ public class YedelMod {
 			FavoriteServerButton.getInstance(),
 			CustomHitParticles.getInstance(),
 			ItemSwings.getInstance(),
+			LimboCreativeCheck.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
 			RandomPlaceholder.getInstance(),

@@ -751,8 +751,8 @@ public class YedelConfig extends Config {
         EventsKt.onClick(Notifications.enqueue(Notifications.Type.Warning, "YedelMod", "Are you sure you want to reset your stats? (click)"), (block, event) -> {
                 bountyHuntingPoints = 0;
                 bountyHuntingKills = 0;
-                TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");
-                TNTTagFeatures.getInstance().getDisplayLines().set(2, "§c0 kills (reset)");
+                TNTTagFeatures.getInstance().setDisplayLine(1, "§c0 points (reset)");
+                TNTTagFeatures.getInstance().setDisplayLine(2, "§c0 kills (reset)");
                 Notifications.enqueue(Notifications.Type.Success, "YedelMod", "Reset Bounty Hunting stats!");
                 return null;
             }

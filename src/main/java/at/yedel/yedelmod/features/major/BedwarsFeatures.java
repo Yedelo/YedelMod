@@ -7,9 +7,12 @@ import at.yedel.yedelmod.event.events.DrawSlotEvent;
 import at.yedel.yedelmod.hud.BedwarsXPHud;
 import at.yedel.yedelmod.hud.MagicMilkTimeHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import dev.deftu.omnicore.common.OmniColor;
 import dev.deftu.textile.SimpleTextHolder;
+import net.hypixel.data.type.GameType;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
@@ -21,7 +24,6 @@ import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
-import org.polyfrost.polyui.color.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class BedwarsFeatures {
 		magicMilkTime--;
 	}
 
-	private final int RED = ColorUtils.rgba(246, 94, 94, 255).getRgba();
+    private final int RED = OmniColor.Rgba.getRgba(246, 94, 94, 255);
 
 	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
 	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
@@ -71,7 +73,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void resetMagicMilkTime(PlayerUseItemEvent.Finish event) {
-		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().isInBedwars()) {
+        if (Functions.isInGame(GameType.BEDWARS) && event.item.getItem() == Items.milk_bucket) {
 			magicMilkTime = 30;
 			MagicMilkTimeHud.getInstance().string.append("§b30§as");
 			MagicMilkTimeHud.getInstance().relogic();
@@ -107,11 +109,10 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void lightgreenifyTokenMessage(ChatEvent.Receive event) {
-		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().isInBedwars()) {
+        if (YedelConfig.getInstance().lightGreenTokenMessages && Functions.isInGame(GameType.BEDWARS)) {
 			String message = event.getFullyUnformattedMessage();
 			Matcher matcher = tokenMessagePattern.matcher(message);
 			while (matcher.find()) {
-				// event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
 				event.setMessage(new SimpleTextHolder(event.getMessage().asString().replace("§2", "§a")));
 			}
 		}
@@ -119,7 +120,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideSlumberTicketMessage(ChatEvent.Receive event) {
-		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().isInBedwars()) {
+        if (YedelConfig.getInstance().hideSlumberTicketMessages && Functions.isInGame(GameType.BEDWARS)) {
 			String message = event.getFullyUnformattedMessage();
 			Matcher matcher = slumberTicketMessagePattern.matcher(message);
 			while (matcher.find()) {
@@ -130,7 +131,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideItemPickupMessage(ChatEvent.Receive event) {
-		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().isInBedwars()) {
+        if (YedelConfig.getInstance().hideItemPickupMessages && Functions.isInGame(GameType.BEDWARS)) {
 			if (event.getFullyUnformattedMessage().startsWith("You picked up: ")) {
 				event.cancelled = true;
 			}

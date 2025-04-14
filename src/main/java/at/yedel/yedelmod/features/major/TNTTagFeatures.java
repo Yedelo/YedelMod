@@ -6,11 +6,13 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.RankColor;
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClient;
 import dev.deftu.omnicore.client.OmniClientPlayer;
 import dev.deftu.omnicore.client.OmniClientSound;
+import net.hypixel.data.type.GameType;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +20,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
@@ -52,10 +55,6 @@ public class TNTTagFeatures {
 
     private final List<String> displayLines = new ArrayList<String>();
 
-    public List<String> getDisplayLines() {
-        return displayLines;
-    }
-
     private TNTTagFeatures() {
         displayLines.add("§c§lBounty §f§lHunting");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
@@ -63,7 +62,8 @@ public class TNTTagFeatures {
         displayLines.add("");
     }
 
-    public void onTNTTagJoin() {
+    @Subscribe
+    public void onTNTTagJoin(HypixelLocationEvent event) {
         if (YedelConfig.getInstance().bountyHunting) {
             playerName = OmniClientPlayer.getName();
             dead = false;
@@ -82,10 +82,10 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatEvent.Receive event) {
-        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().isInTNTTag() || !event.getFullyUnformattedMessage().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || Functions.isInGame(GameType.TNTGAMES) || !event.getFullyUnformattedMessage().endsWith("has started!"))
             return;
         players.clear();
-        for (NetworkPlayerInfo playerInfo : OmniClient.getInstance().getNetHandler().getPlayerInfoMap()) {
+        for (NetworkPlayerInfo playerInfo : OmniClient.getNetworkHandler().getPlayerInfoMap()) {
             players.add(playerInfo.getGameProfile().getName());
         }
         players.remove(playerName);
@@ -107,7 +107,7 @@ public class TNTTagFeatures {
         whoCheck = false;
         event.cancelled = true;
         String[] playersArray = msg.substring(14).split("§r§7, ");
-        for (String player: playersArray) {
+        for (String player : playersArray) {
             if (player.contains(target)) {
                 targetRanked = player;
             }
@@ -211,7 +211,7 @@ public class TNTTagFeatures {
         }
     }
 
-    private void setDisplayLine(int index, String line) {
+    public void setDisplayLine(int index, String line) {
         displayLines.set(index, line);
         BountyHuntingHud.getInstance().string.append(String.join("\n", displayLines));
         BountyHuntingHud.getInstance().relogic();

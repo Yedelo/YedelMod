@@ -2,11 +2,15 @@ package at.yedel.yedelmod.features;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClient;
 import net.minecraft.world.WorldSettings;
+import org.polyfrost.oneconfig.api.event.v1.events.HypixelLocationEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+
 
 
 public class LimboCreativeCheck {
@@ -18,14 +22,18 @@ public class LimboCreativeCheck {
         return instance;
     }
 
-    public void checkLimbo() {
-        if (HypixelManager.getInstance().isInLimbo()) {
-            if (OmniClient.getInstance().playerController.isInCreativeMode()) {
-                OmniChat.displayClientMessage(logo + " §cYou are already in creative mode!");
-            }
-            else giveCreative();
+    @Subscribe
+    public void autoLimboCreative(HypixelLocationEvent event) {
+        if (event.getLocation().getServerName().isPresent() && event.getLocation().getServerName().get() == "limbo" && YedelConfig.getInstance().limboCreativeMode) {
+            giveCreative();
         }
-        else OmniChat.displayClientMessage(logo + " §cLimbo check failed, try again in a bit or rejoin!");
+    }
+
+    public void checkLimbo() {
+        if (OmniClient.getInstance().playerController.isInCreativeMode()) {
+            OmniChat.displayClientMessage(logo + " §cYou are already in creative mode!");
+        }
+        else giveCreative();
     }
 
     public void giveCreative() {

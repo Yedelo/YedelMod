@@ -5,6 +5,7 @@ package at.yedel.yedelmod.hud;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
+import org.polyfrost.polyui.unit.Units;
 
 
 
@@ -43,5 +44,10 @@ public class BountyHuntingHud extends TextHud {
     @Override
     protected @Nullable String getText() {
         return null;
+    }
+
+    @Override
+    public long updateFrequency() {
+        return Units.seconds(0.05);
     }
 }

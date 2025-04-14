@@ -6,6 +6,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.SwingItemDuck;
 import dev.deftu.omnicore.client.OmniClient;
 import dev.deftu.omnicore.client.OmniClientPlayer;
+import dev.deftu.omnicore.common.OmniEquipment;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -75,7 +76,7 @@ public class ItemSwings {
         if (!YedelConfig.getInstance().itemDropSwings) return;
         if (event.getPacket() instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.getPacket()).getStatus();
-            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && OmniClientPlayer.getInstance().getHeldItem() != null) {
+            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && OmniClientPlayer.getEquipment(OmniEquipment.EquipmentType.MAIN_HAND) != null) {
                 swing();
             }
         }

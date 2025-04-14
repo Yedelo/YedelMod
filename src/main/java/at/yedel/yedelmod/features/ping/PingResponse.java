@@ -5,7 +5,10 @@ package at.yedel.yedelmod.features.ping;
 import at.yedel.yedelmod.utils.Constants;
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.client.OmniClientMultiplayer;
 import dev.deftu.omnicore.client.OmniClientSound;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
@@ -17,7 +20,9 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class PingResponse {
-    private PingResponse() {}
+    private PingResponse() {
+        HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handleHypixelPingResponse);
+    }
 
     private static final PingResponse instance = new PingResponse();
 
@@ -59,7 +64,7 @@ public class PingResponse {
         }
     }
 
-    public void handleHypixelPingResponse() {
+    public void handleHypixelPingResponse(ClientboundPingPacket event) {
         if (!PingSender.getInstance().hypixelCheck) return;
         float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
         OmniChat.displayClientMessage(logo + " §ePing: " + color(delay) + (int) delay + " §ems §7(hypixel)");
@@ -68,10 +73,10 @@ public class PingResponse {
     }
 
     public void handleServerListPing() {
-        if (OmniClient.getInstance().isSingleplayer()) {
+        if (OmniClientMultiplayer.isInSingleplayer()) {
             OmniChat.displayClientMessage(logo + " §cThis method does not work in singleplayer!");
         }
-        float ping = (float) OmniClient.getInstance().getCurrentServerData().pingToServer;
+        float ping = (float) OmniClient.getCurrentServerInfo().pingToServer;
         if (ping == 0) {
             OmniChat.displayClientMessage(logo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         }

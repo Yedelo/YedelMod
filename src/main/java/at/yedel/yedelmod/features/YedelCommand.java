@@ -7,7 +7,6 @@ import at.yedel.yedelmod.features.ping.PingSender;
 import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import com.google.gson.JsonObject;
@@ -15,6 +14,7 @@ import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClient;
 import dev.deftu.textile.minecraft.MCHoverEvent;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
+import dev.deftu.textile.minecraft.MCTextFormat;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
@@ -71,7 +71,7 @@ public class YedelCommand {
     @Command(description = "Clears the currently set display text.")
     public void cleartext() {
         CustomTextHud.getInstance().displayText = "";
-        YedelConfig.getInstance().save();
+        CustomTextHud.getInstance().save();
         OmniChat.displayClientMessage(logo + " §eCleared display text!");
     }
 
@@ -167,9 +167,9 @@ public class YedelCommand {
 
     @Command(description = "Sets the display text, supporting color codes with ampersands (&).")
     public void settext(String[] text) {
-        String displayText = TextUtils.format(joinArgs(text));
+        String displayText = MCTextFormat.translateAlternateColorCodes('&', joinArgs(text));
         CustomTextHud.getInstance().displayText = displayText;
-        YedelConfig.getInstance().save();
+        CustomTextHud.getInstance().save();
         OmniChat.displayClientMessage(logo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
@@ -187,7 +187,7 @@ public class YedelCommand {
     private void simulatechat(String[] text) {
         // js pipe functions would be really nice here
         // text |> joinArgs |> TextUtils.format |> new ChatComponentText |> new S02PacketChat |> OmniClient.getInstance().getNetHandler().handleChat;
-        OmniClient.getInstance().getNetHandler().handleChat(new S02PacketChat(new ChatComponentText(TextUtils.format(joinArgs(text)))));
+        OmniClient.getInstance().getNetHandler().handleChat(new S02PacketChat(new ChatComponentText((MCTextFormat.translateAlternateColorCodes('&', joinArgs(text))))));
     }
 
     @Command("update")

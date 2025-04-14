@@ -2,9 +2,12 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import at.yedel.yedelmod.utils.Functions;
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClientPlayer;
+import dev.deftu.omnicore.common.OmniEquipment;
 import dev.deftu.textile.minecraft.MCTextFormat;
+import net.hypixel.data.type.GameType;
 import net.minecraft.item.ItemStack;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -12,6 +15,7 @@ import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import java.util.Objects;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+
 
 
 public class MarketSearch {
@@ -27,8 +31,9 @@ public class MarketSearch {
     private boolean bzSearching = false;
 
     public void ahSearch() {
-        if (HypixelManager.getInstance().isInSkyblock()) {
-            ItemStack heldItem = OmniClientPlayer.getInstance().getHeldItem();
+        if (Functions.isInGame(GameType.SKYBLOCK)) {
+            ItemStack heldItem = OmniClientPlayer.getEquipment(OmniEquipment.EquipmentType.MAIN_HAND);
+            OmniClientPlayer.getInstance();
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();
                 if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
@@ -41,8 +46,8 @@ public class MarketSearch {
     }
 
     public void bzSearch() {
-        if (HypixelManager.getInstance().isInSkyblock()) {
-            ItemStack heldItem = OmniClientPlayer.getInstance().getHeldItem();
+        if (Functions.isInGame(GameType.SKYBLOCK)) {
+            ItemStack heldItem = OmniClientPlayer.getEquipment(OmniEquipment.EquipmentType.MAIN_HAND);
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();
                 if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;

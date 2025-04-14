@@ -3,14 +3,11 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import dev.deftu.omnicore.client.OmniScreen;
+import dev.deftu.omnicore.client.OmniClientMultiplayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
@@ -36,7 +33,7 @@ public class FavoriteServerButton {
 	@SubscribeEvent
 	public void joinFavoriteServer(ActionPerformedEvent event) {
 		if (event.button == favoriteServerButton) {
-            FMLClientHandler.instance().connectToServer(new GuiMultiplayer(OmniScreen.getCurrentScreen()), new ServerData("Favorite Server", YedelConfig.getInstance().specifiedServer, false));
+            OmniClientMultiplayer.connectTo(YedelConfig.getInstance().specifiedServer, "Favorite Server");
 		}
 	}
 }

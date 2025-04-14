@@ -4,8 +4,10 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.utils.Functions;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import com.google.common.collect.Maps;
+import net.hypixel.data.type.GameType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -88,7 +90,7 @@ public class StrengthIndicators {
 
     @Subscribe
     public void handleKillMessage(ChatEvent.Receive event) {
-        if (HypixelManager.getInstance().isInSkywars()) {
+        if (Functions.isInGame(GameType.SKYWARS)) {
             String message = event.getFullyUnformattedMessage();
             for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
@@ -120,7 +122,7 @@ public class StrengthIndicators {
         String color =
             colorMap.get(inStart ? YedelConfig.getInstance().strengthColor : YedelConfig.getInstance().subStrengthColor);
         String text = color + "Strength - " + strengthPlayers.get(entityName) + "s";
-        double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
+        int sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
         ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
     }
 

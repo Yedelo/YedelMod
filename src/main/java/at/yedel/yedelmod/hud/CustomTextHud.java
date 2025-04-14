@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.polyfrost.oneconfig.api.config.v1.annotations.Text;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
+import org.polyfrost.polyui.unit.Units;
 
 
 
@@ -43,5 +44,10 @@ public class CustomTextHud extends TextHud {
     @Override
     protected @Nullable String getText() {
         return displayText;
+    }
+
+    @Override
+    public long updateFrequency() {
+        return Units.seconds(0.05);
     }
 }

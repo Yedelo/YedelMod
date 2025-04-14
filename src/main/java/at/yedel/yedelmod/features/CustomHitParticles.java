@@ -28,8 +28,10 @@ public class CustomHitParticles {
 		Entity entity = event.target;
 		if (entity.isInvisible()) return;
 		if (YedelConfig.getInstance().onlySpawnCustomParticlesOnPlayers && !(entity instanceof EntityPlayer)) return;
-		int particleId =
-			YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleType;
+        int particleId = YedelConfig.getInstance().randomParticleType ?
+            (int) NumberUtils.randomRange(0, 41)
+            :
+            YedelConfig.getInstance().customParticleType;
         OmniClient.getWorld().spawnParticle(EnumParticleTypes.getParticleFromId(particleId), entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, 0, 0);
 	}
 }

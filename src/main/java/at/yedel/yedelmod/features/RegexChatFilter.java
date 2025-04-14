@@ -27,7 +27,7 @@ public class RegexChatFilter {
                     event.cancelled = true;
 				}
 			}
-			// This can happen when the user is changing patterns and receiving messages. Don't fill the console
+            // This can happen when the user is changing patterns and receiving messages. Don't fill logs
             catch (PatternSyntaxException invalidPatternException) {}
 		}
 	}

@@ -67,13 +67,13 @@ public class PingSender {
 
     public void tabPing() {
         lastTime = System.nanoTime();
-        OmniClient.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"));
+        OmniClient.getNetworkHandler().addToSendQueue(new C14PacketTabComplete("#"));
         tabCheck = true;
     }
 
     public void statsPing() {
         lastTime = System.nanoTime();
-        OmniClient.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
+        OmniClient.getNetworkHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
         statsCheck = true;
     }
 
