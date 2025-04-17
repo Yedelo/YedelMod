@@ -10,15 +10,21 @@ import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import com.google.gson.JsonObject;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.deftu.omnicore.client.OmniChat;
 import dev.deftu.omnicore.client.OmniClient;
+import dev.deftu.omnicore.client.OmniClientCommandSource;
 import dev.deftu.textile.minecraft.MCHoverEvent;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
 import dev.deftu.textile.minecraft.MCTextFormat;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
+import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 
 import java.io.IOException;
@@ -31,13 +37,11 @@ import java.util.Locale;
 
 import static at.yedel.yedelmod.YedelMod.yedelog;
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static org.polyfrost.oneconfig.api.commands.v1.CommandManager.argument;
+import static org.polyfrost.oneconfig.api.commands.v1.CommandManager.literal;
 
 
 
-@Command(
-    value = {"yedel", YedelModConstants.MOD_ID},
-    description = "The main command of YedelMod"
-)
 public class YedelCommand {
     private YedelCommand() {}
 
@@ -47,7 +51,7 @@ public class YedelCommand {
         return instance;
     }
 
-    private static final String formattingCodes =
+    private final String formattingCodes =
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
             "\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
@@ -57,162 +61,131 @@ public class YedelCommand {
             "\n§lStyle §ncodes§r:" +
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
-    private static final MCSimpleTextHolder formattingGuideMessage =
-        new MCSimpleTextHolder(logo + " §e§nHover to view the formatting guide.") {}
+    private final MCSimpleTextHolder formattingGuideMessage =
+        new MCSimpleTextHolder(logo + " §e§nHover to view the formatting guide.")
             .withHoverEvent(new MCHoverEvent.ShowText(formattingCodes));
 
-    @Command(
-        description = "The main command, hosting all Commands. When used with no arguments, opens the config screen."
-    )
-    public void main() {
+    private int main(CommandContext<OmniClientCommandSource> context) {
         ScreensKt.openUI(YedelConfig.getInstance());
+        return 1;
     }
 
-    @Command(description = "Clears the currently set display text.")
-    public void cleartext() {
+    private int cleartext(CommandContext<OmniClientCommandSource> context) {
         CustomTextHud.getInstance().displayText = "";
         CustomTextHud.getInstance().save();
         OmniChat.displayClientMessage(logo + " §eCleared display text!");
+        return 1;
     }
 
-    @Command(description = "Shows a formatting guide with color and style codes.")
-    public void formatting() {
+    private int formatting(CommandContext<OmniClientCommandSource> context) {
         OmniChat.displayClientMessage(formattingGuideMessage);
+        return 1;
     }
 
-    @Command(
-        description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
-        value = "li"
-    )
-    public void limbo() {
+    private int limbo(CommandContext<OmniClientCommandSource> context) {
         OmniChat.sendPlayerMessage("§");
+        return 1;
     }
 
-    @Command(
-        description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
-        value = {"limbogmc", "lgmc"}
-    )
-    public void limbocreative() {
-        LimboCreativeCheck.getInstance().checkLimbo();
+    private int limbocreative(CommandContext<OmniClientCommandSource> context) {
+        return LimboCreativeCheck.getInstance().checkLimbo();
     }
 
-    @Command("ping")
-    public static class Ping {
-        @Command
-        public void main() {
+    private static class Ping {
+        private int main(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().defaultMethodPing();
+            return 1;
         }
 
-        @Command(description = "Does /ping command. Works on very few servers.", value = "p")
-        public void ping() {
+        private int ping(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().pingPing();
+            return 1;
         }
 
-        @Command(
-            description = "Enters a random command and waits for the unknown command response. Works on almost all servers.",
-            value = "c"
-        )
-        public void command() {
+        private int command(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().commandPing();
+            return 1;
         }
 
-        @Command(
-            description = "Sends a tab completion packet and waits for the response. Works on all servers.",
-            value = "t"
-        )
-        public void tab() {
+        private int tab(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().tabPing();
+            return 1;
         }
 
-        @Command(
-            description = "Sends a statistics packet and waits for the response. Works on all servers.",
-            value = "s"
-        )
-        public void stats() {
+        private int stats(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().statsPing();
+            return 1;
         }
 
-        @Command(
-            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
-            value = "l"
-        )
-        public void list() {
+        private int list(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().serverListPing();
+            return 1;
         }
 
-        @Command(
-            description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
-            value = "h"
-        )
-        public void hypixel() {
+        private int hypixel(CommandContext<OmniClientCommandSource> context) {
             PingSender.getInstance().hypixelPing();
+            return 1;
         }
     }
 
-    @Command(
-        description = "Shows your total playtime (while playing on servers) in hours and minutes.",
-        value = "pt"
-    )
-    public void playtime() {
+    private final Ping ping = new Ping();
+
+    private int playtime(CommandContext<OmniClientCommandSource> context) {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
         OmniChat.displayClientMessage(logo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        return 1;
     }
 
-    @Command(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
-    public void setnick(String nick) {
+    private int setnick(CommandContext<OmniClientCommandSource> context) {
+        String nick = StringArgumentType.getString(context, "nick");
         OmniChat.displayClientMessage("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
         YedelConfig.getInstance().currentNick = nick;
         YedelConfig.getInstance().save();
+        return 1;
     }
 
-    @Command(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(String[] text) {
-        String displayText = MCTextFormat.translateAlternateColorCodes('&', joinArgs(text));
+    private int settext(CommandContext<OmniClientCommandSource> context) {
+        String text = StringArgumentType.getString(context, "text");
+        String displayText = MCTextFormat.translateAlternateColorCodes('&', text);
         CustomTextHud.getInstance().displayText = displayText;
         CustomTextHud.getInstance().save();
         OmniChat.displayClientMessage(logo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+        return 1;
     }
 
-    @Command(description = "Sets the title of the game window.")
-    public void settitle(String[] title) {
-        String displayTitle = joinArgs(title);
-        Display.setTitle(displayTitle);
-        OmniChat.displayClientMessage(logo + " §eSet display title to \"§f" + displayTitle + "§e\"!");
+    private int settitle(CommandContext<OmniClientCommandSource> context) {
+        String title = StringArgumentType.getString(context, "title");
+        Display.setTitle(title);
+        OmniChat.displayClientMessage(logo + " §eSet display title to \"§f" + title + "§e\"!");
+        return 1;
     }
 
-    @Command(
-        description = "Simulates a chat message, also supports color codes with ampersands (&).",
-        value = "simc"
-    )
-    private void simulatechat(String[] text) {
-        // js pipe functions would be really nice here
-        // text |> joinArgs |> TextUtils.format |> new ChatComponentText |> new S02PacketChat |> OmniClient.getInstance().getNetHandler().handleChat;
-        OmniClient.getInstance().getNetHandler().handleChat(new S02PacketChat(new ChatComponentText((MCTextFormat.translateAlternateColorCodes('&', joinArgs(text))))));
+    private int simulatechat(CommandContext<OmniClientCommandSource> context) {
+        String text = StringArgumentType.getString(context, "text");
+        OmniClient.getNetworkHandler().handleChat(new S02PacketChat(new ChatComponentText((MCTextFormat.translateAlternateColorCodes('&', text)))));
+        return 1;
     }
 
-    @Command("update")
-    public static class Update {
-        @Command
-        public void main() {
+    private static class Update {
+        private int main(CommandContext<OmniClientCommandSource> context) {
             UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
+            return 1;
         }
 
-        @Command
-        public void modrinth() {
+        private int modrinth(CommandContext<OmniClientCommandSource> context) {
             UpdateManager.getInstance().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
+            return 1;
         }
 
-        @Command
-        public void github() {
+        private int github(CommandContext<OmniClientCommandSource> context) {
             UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
+            return 1;
         }
     }
 
-    @Command(
-        description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
-        value = "message"
-    )
-    public void yedelmessage() {
+    private final Update update = new Update();
+
+    private int yedelmessage(CommandContext<OmniClientCommandSource> context) {
         new Thread(() -> {
             try {
                 JsonObject messageObject =
@@ -244,9 +217,62 @@ public class YedelCommand {
             }
         }, "YedelMod Message"
         ).start();
+        return 1;
     }
 
-    private String joinArgs(String[] args) {
-        return String.join(" ", args);
+    public void register() {
+        // @formatter:off
+        LiteralArgumentBuilder<OmniClientCommandSource> mainCommandBuilder =
+            literal("yedel").executes(this::main)
+            .then(literal("cleartext").executes(this::cleartext))
+            .then(literal("formatting").executes(this::formatting))
+            .then(literal("limbo").executes(this::limbo))
+                .then(literal("li").executes(this::limbo))
+            .then(literal("limbocreative").executes(this::limbocreative))
+                .then(literal("limbogmc").executes(this::limbocreative))
+                .then(literal("lgmc").executes(this::limbocreative))
+            .then(
+                literal("ping").executes(ping::main)
+                .then(literal("ping").executes(ping::ping))
+                    .then(literal("p").executes(ping::ping))
+                .then(literal("command").executes(ping::command))
+                    .then(literal("c").executes(ping::command))
+                .then(literal("tab").executes(ping::tab))
+                    .then(literal("t").executes(ping::tab))
+                .then(literal("stats").executes(ping::stats))
+                    .then(literal("s").executes(ping::stats))
+                .then(literal("list").executes(ping::list))
+                    .then(literal("l").executes(ping::list))
+                .then(literal("hypixel").executes(ping::hypixel))
+                    .then(literal("h").executes(ping::hypixel))
+            )
+            .then(literal("playtime").executes(this::playtime))
+                .then(literal("pt").executes(this::playtime))
+            .then(literal("setnick").then(stringArgument("nick").executes(this::setnick)))
+            .then(literal("settext").then(greedyStringArgument("text").executes(this::settext)))
+            .then(literal("settitle").then(greedyStringArgument("title").executes(this::settitle)))
+            .then(literal("simulatechat").then(greedyStringArgument("text").executes(this::simulatechat)))
+                .then(literal("simc").then(greedyStringArgument("text").executes(this::simulatechat)))
+            .then(
+                literal("update").executes(update::main)
+                .then(literal("modrinth").executes(update::modrinth))
+                .then(literal("github").executes(update::github))
+            )
+            .then(literal("yedelmessage").executes(this::yedelmessage))
+                .then(literal("message").executes(this::yedelmessage))
+        ;
+
+        LiteralCommandNode<OmniClientCommandSource> mainCommandNode = mainCommandBuilder.build();
+        CommandManager.register(mainCommandBuilder);
+        CommandManager.register(literal(YedelModConstants.MOD_ID).redirect(mainCommandNode));
+        // @formatter:on
+    }
+
+    private RequiredArgumentBuilder<OmniClientCommandSource, String> stringArgument(String name) {
+        return argument(name, StringArgumentType.string());
+    }
+
+    private RequiredArgumentBuilder<OmniClientCommandSource, String> greedyStringArgument(String name) {
+        return argument(name, StringArgumentType.greedyString());
     }
 }

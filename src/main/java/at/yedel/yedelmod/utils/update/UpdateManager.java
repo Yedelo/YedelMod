@@ -7,12 +7,9 @@ import at.yedel.yedelmod.utils.Requests;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.deftu.omnicore.client.OmniChat;
-import dev.deftu.omnicore.client.OmniDesktop;
 import dev.deftu.omnicore.client.OmniScreen;
 import dev.deftu.textile.minecraft.MCClickEvent;
 import dev.deftu.textile.minecraft.MCSimpleTextHolder;
-import org.polyfrost.oneconfig.api.ui.v1.Notifications;
-import org.polyfrost.polyui.component.extensions.EventsKt;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -110,7 +107,7 @@ public class UpdateManager {
 		}
 		else {
 			if (OmniScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
-				Notifications.enqueue(Notifications.Type.Info, "YedelMod", "You are up to date with the mod version on " + updateSource + "!");
+				// Notifications.enqueue(Notifications.Type.Info, "YedelMod", "You are up to date with the mod version on " + updateSource + "!");
 			}
 		}
 	}
@@ -120,13 +117,12 @@ public class UpdateManager {
 			OmniChat.displayClientMessage(new MCSimpleTextHolder(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").withClickEvent(MCClickEvent.openUrl(updateSource.uri.toString())));
 		}
 		else {
-			EventsKt.onClick(Notifications.enqueue(Notifications.Type.Info, "YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open."), (block, event) -> {
-					if (!OmniDesktop.browse(updateSource.uri)) {
-						Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't open link for " + updateSource.name + "!");
-				}
-					return null;
-				}
-			);
+//			EventsKt.onClick(Notifications.enqueue(Notifications.Type.Info, "YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open."), (block, event) -> {
+//				if (!OmniDesktop.browse(updateSource.uri)) {
+//					Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't open link for " + updateSource.name + "!");
+//				}
+//				return null;
+//			});
 		}
 	}
 
@@ -135,7 +131,7 @@ public class UpdateManager {
 			OmniChat.displayClientMessage(logo + " §cCouldn't get update information from " + updateSource.name + "!");
 		}
 		else {
-			Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't get update information from " + updateSource.name + "!");
+			// Notifications.enqueue(Notifications.Type.Error, "YedelMod", "Couldn't get update information from " + updateSource.name + "!");
 		}
 	}
 

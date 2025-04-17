@@ -9,6 +9,10 @@ import at.yedel.yedelmod.features.modern.ChangeTitle;
 import at.yedel.yedelmod.features.modern.DrawBookBackground;
 import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.features.ping.PingResponse;
+import at.yedel.yedelmod.hud.BedwarsXPHud;
+import at.yedel.yedelmod.hud.BountyHuntingHud;
+import at.yedel.yedelmod.hud.CustomTextHud;
+import at.yedel.yedelmod.hud.MagicMilkTimeHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Threading;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -22,8 +26,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
 import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -70,12 +74,18 @@ public class YedelMod {
 			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
-			TNTTagFeatures.getInstance()
-		);
-		registerEventListeners(
+			TNTTagFeatures.getInstance(),
+
 			YedelCheck.getInstance()
 		);
-		CommandManager.register(YedelCommand.getInstance());
+		HudManager.register(
+			CustomTextHud.getInstance(),
+			BedwarsXPHud.getInstance(),
+			MagicMilkTimeHud.getInstance(),
+			BountyHuntingHud.getInstance()
+		);
+		//CommandManager.INSTANCE.registerArgumentType(GreedyStringArgumentType.GreedyString.class, GreedyStringArgumentType.getInstance());
+		YedelCommand.getInstance().register();
 
 		Threading.scheduleRepeat(() -> {
 			if (OmniClient.getWorld() != null) {

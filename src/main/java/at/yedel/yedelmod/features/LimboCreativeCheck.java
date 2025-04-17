@@ -29,11 +29,15 @@ public class LimboCreativeCheck {
         }
     }
 
-    public void checkLimbo() {
+    public int checkLimbo() {
         if (OmniClient.getInstance().playerController.isInCreativeMode()) {
             OmniChat.displayClientMessage(logo + " §cYou are already in creative mode!");
+            return 0;
         }
-        else giveCreative();
+        else {
+            giveCreative();
+            return 1;
+        }
     }
 
     public void giveCreative() {

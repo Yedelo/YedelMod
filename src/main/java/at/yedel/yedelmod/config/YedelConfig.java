@@ -53,12 +53,10 @@ public class YedelConfig extends Config {
         addDependency("playHuntingSounds", "bountyHunting");
         addDependency("playSelection", "bountyHunting");
         addDependency("playKill", "bountyHunting");
-        addDependency("bountyHuntingHud", "bountyHunting");
     }
 
     private void hideInternals() {
         for (String internalOption : new String[] {
-            "oldDamageTiltStrength",
             "playtimeMinutes",
             "firstTime",
             "bountyHuntingPoints",
