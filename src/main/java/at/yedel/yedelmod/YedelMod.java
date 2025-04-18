@@ -71,7 +71,6 @@ public class YedelMod {
 			LimboCreativeCheck.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
-			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
 			TNTTagFeatures.getInstance(),
@@ -84,7 +83,6 @@ public class YedelMod {
 			MagicMilkTimeHud.getInstance(),
 			BountyHuntingHud.getInstance()
 		);
-		//CommandManager.INSTANCE.registerArgumentType(GreedyStringArgumentType.GreedyString.class, GreedyStringArgumentType.getInstance());
 		YedelCommand.getInstance().register();
 
 		Threading.scheduleRepeat(() -> {

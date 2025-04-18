@@ -48,6 +48,7 @@ toolkitLoomHelper {
         +"hud"
         +"ui"
         +"utils"
+        +"internal"
     }
 
     if (mcData.isLegacyForge) {

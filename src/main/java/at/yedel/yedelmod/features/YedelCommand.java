@@ -25,7 +25,6 @@ import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
-import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,7 +65,7 @@ public class YedelCommand {
             .withHoverEvent(new MCHoverEvent.ShowText(formattingCodes));
 
     private int main(CommandContext<OmniClientCommandSource> context) {
-        ScreensKt.openUI(YedelConfig.getInstance());
+        YedelConfig.getInstance().openScreen();
         return 1;
     }
 

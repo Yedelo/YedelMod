@@ -16,7 +16,9 @@ import net.minecraft.util.EnumParticleTypes;
 import org.lwjgl.input.Keyboard;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
+import org.polyfrost.oneconfig.api.config.v1.internal.ConfigVisualizer;
 import org.polyfrost.oneconfig.api.ui.v1.Notifications;
+import org.polyfrost.oneconfig.internal.ui.OneConfigUI;
 import org.polyfrost.polyui.component.extensions.EventsKt;
 import org.polyfrost.polyui.input.KeyBinder;
 import org.polyfrost.polyui.input.KeybindHelper;
@@ -71,6 +73,10 @@ public class YedelConfig extends Config {
 
     public static YedelConfig getInstance() {
         return instance;
+    }
+
+    public void openScreen() {
+        OneConfigUI.INSTANCE.open(ConfigVisualizer.INSTANCE.get(getTree()));
     }
 
     private final transient URI video = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
