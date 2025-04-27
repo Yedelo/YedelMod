@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
@@ -11,6 +10,9 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import net.hypixel.data.type.GameType;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -36,6 +38,8 @@ public class StrengthIndicators {
     private final Map<Integer, String> colorMap = new HashMap<>(); // Config array values -> color codes
 
     private StrengthIndicators() {
+        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+
         colorMap.put(0, "§4");
         colorMap.put(1, "§c");
         colorMap.put(2, "§6");
@@ -54,6 +58,12 @@ public class StrengthIndicators {
         colorMap.put(15, "§0");
     }
 
+    private boolean inSkywars;
+
+    private void handleLocationPacket(ClientboundLocationPacket packet) {
+        inSkywars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.SKYWARS;
+    }
+
     @Subscribe
     public void downtickStrengthPlayers(TickEvent event) {
         if (event.stage == Stage.START) {
@@ -69,13 +79,13 @@ public class StrengthIndicators {
 
     @Subscribe
     public void handleKillMessage(ChatReceiveEvent event) {
-        if (HypixelManager.getInstance().isInSkywars()) {
+        if (inSkywars) {
             String message = event.message.getUnformattedText();
             for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
-                    strengthPlayers.put(messageMatcher.group("killed"), NumberUtils.round(5, 2));
-                    strengthPlayers.put(messageMatcher.group("killer"), 0.0D);
+                    strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(5, 2));
+                    strengthPlayers.put(messageMatcher.group("killed"), 0.0D);
                 }
             }
         }

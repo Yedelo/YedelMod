@@ -2,12 +2,14 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import at.yedel.yedelmod.handlers.HypixelManager;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import net.hypixel.data.type.GameType;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.item.ItemStack;
 
 import java.util.Objects;
@@ -16,19 +18,27 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class MarketSearch {
-    private MarketSearch() {}
-
     private static final MarketSearch instance = new MarketSearch();
 
     public static MarketSearch getInstance() {
         return instance;
     }
 
+    private MarketSearch() {
+        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+    }
+
+    private boolean inSkyblock;
+
+    private void handleLocationPacket(ClientboundLocationPacket packet) {
+        inSkyblock = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.SKYBLOCK;
+    }
+
     private boolean ahSearching = false;
     private boolean bzSearching = false;
 
     public void ahSearch() {
-        if (HypixelManager.getInstance().isInSkyblock()) {
+        if (inSkyblock) {
             ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();
@@ -42,7 +52,7 @@ public class MarketSearch {
     }
 
     public void bzSearch() {
-        if (HypixelManager.getInstance().isInSkyblock()) {
+        if (inSkyblock) {
             ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();

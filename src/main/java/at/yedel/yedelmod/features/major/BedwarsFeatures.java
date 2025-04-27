@@ -4,7 +4,6 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.event.events.DrawSlotEvent;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
@@ -15,6 +14,9 @@ import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import net.hypixel.data.type.GameType;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
@@ -32,12 +34,25 @@ import java.util.regex.Pattern;
 
 
 public class BedwarsFeatures {
-	private BedwarsFeatures() {}
-
 	private static final BedwarsFeatures instance = new BedwarsFeatures();
 
 	public static BedwarsFeatures getInstance() {
 		return instance;
+	}
+
+	private BedwarsFeatures() {
+		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+	}
+
+	private boolean inBedwars;
+
+	public boolean isInBedwars() {
+		return inBedwars;
+	}
+
+	private void handleLocationPacket(ClientboundLocationPacket packet) {
+		inBedwars =
+			packet.getServerType().isPresent() && packet.getServerType().get() == GameType.BEDWARS && !packet.getLobbyName().isPresent();
 	}
 
 	private boolean hasExperience;
@@ -93,7 +108,7 @@ public class BedwarsFeatures {
 
 	@SubscribeEvent
 	public void resetMagicMilkTime(PlayerUseItemEvent.Finish event) {
-		if (event.item.getItem() == Items.milk_bucket && HypixelManager.getInstance().isInBedwars()) {
+		if (event.item.getItem() == Items.milk_bucket && inBedwars) {
 			magicMilkTime = 30;
 			magicMilkTimeText = "§b30§as";
 		}
@@ -130,7 +145,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void lightgreenifyTokenMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().lightGreenTokenMessages && HypixelManager.getInstance().isInBedwars()) {
+		if (YedelConfig.getInstance().lightGreenTokenMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = tokenMessagePattern.matcher(message);
 			while (matcher.find()) {
@@ -141,7 +156,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideSlumberTicketMessages && HypixelManager.getInstance().isInBedwars()) {
+		if (YedelConfig.getInstance().hideSlumberTicketMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = slumberTicketMessagePattern.matcher(message);
 			while (matcher.find()) {
@@ -152,7 +167,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideItemPickupMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideItemPickupMessages && HypixelManager.getInstance().isInBedwars()) {
+		if (YedelConfig.getInstance().hideItemPickupMessages && inBedwars) {
 			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
 				event.isCancelled = true;
 			}

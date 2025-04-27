@@ -4,8 +4,6 @@ package at.yedel.yedelmod.handlers;
 
 import at.yedel.yedelmod.features.ping.PingSender;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
-import net.hypixel.data.type.GameType;
-import net.hypixel.data.type.ServerType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ModAPIException;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
@@ -39,36 +37,7 @@ public class HypixelManager {
 
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
-		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 		setupLogHandlers();
-	}
-
-	private boolean inSkywars;
-
-	public boolean isInSkywars() {
-		return inSkywars;
-	}
-
-	private boolean inSkyblock;
-
-	public boolean isInSkyblock() {
-		return inSkyblock;
-	}
-
-	public boolean inBedwars;
-
-	public boolean isInBedwars() {
-		return inBedwars;
-	}
-
-	// I do not like Optional
-	private void handleLocationPacket(ClientboundLocationPacket locationPacket) {
-		if (locationPacket.getServerType().isPresent()) {
-			ServerType serverType = locationPacket.getServerType().get();
-			inSkywars = serverType == GameType.SKYWARS;
-			inSkyblock = serverType == GameType.SKYBLOCK;
-			inBedwars = serverType == GameType.BEDWARS && !locationPacket.getLobbyName().isPresent(); // ok maybe it is good
-		}
 	}
 
 	private void handleException(ModAPIException exception) {

@@ -3,7 +3,6 @@ package at.yedel.yedelmod.hud;
 
 
 import at.yedel.yedelmod.features.major.BedwarsFeatures;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.utils.Constants;
 import cc.polyfrost.oneconfig.hud.SingleTextHud;
 
@@ -32,7 +31,7 @@ public class MagicMilkTimeHud extends SingleTextHud {
 
     @Override
     public boolean shouldShow() {
-        return super.shouldShow() && HypixelManager.getInstance().isInBedwars() && BedwarsFeatures.getInstance().getMagicMilkTime() > -1;
+        return super.shouldShow() && BedwarsFeatures.getInstance().isInBedwars() && BedwarsFeatures.getInstance().getMagicMilkTime() > -1;
     }
 
     @Override

@@ -38,12 +38,6 @@ public class TNTTagFeatures {
         return instance;
     }
 
-    private boolean inTNTTag;
-
-    public boolean isInTNTTag() {
-        return inTNTTag;
-    }
-
     private final ArrayList<String> players = new ArrayList<>();
     private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
@@ -70,6 +64,12 @@ public class TNTTagFeatures {
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         displayLines.add("");
+    }
+
+    private boolean inTNTTag;
+
+    public boolean isInTNTTag() {
+        return inTNTTag;
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
