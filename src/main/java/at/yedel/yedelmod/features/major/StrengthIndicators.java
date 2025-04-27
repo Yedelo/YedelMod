@@ -75,15 +75,11 @@ public class StrengthIndicators {
             for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
-                    triggerKill(messageMatcher.group("killed"), messageMatcher.group("killer"));
+                    strengthPlayers.put(messageMatcher.group("killed"), NumberUtils.round(5, 2));
+                    strengthPlayers.put(messageMatcher.group("killer"), (double) 0);
                 }
             }
         }
-    }
-
-    public void triggerKill(String killed, String killer) {
-        strengthPlayers.put(killer, NumberUtils.round(5, 2));
-        strengthPlayers.put(killed, (double) 0);
     }
 
     @SubscribeEvent
