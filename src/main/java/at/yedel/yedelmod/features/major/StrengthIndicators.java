@@ -60,8 +60,28 @@ public class StrengthIndicators {
 
     private boolean inSkywars;
 
+    private double strengthDuration;
+
     private void handleLocationPacket(ClientboundLocationPacket packet) {
         inSkywars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.SKYWARS;
+        if (packet.getMode().isPresent()) {
+            switch (packet.getMode().get()) {
+                case "solo_normal":
+                case "solo_insane":
+                    strengthDuration = 5;
+                    break;
+                case "teams_normal":
+                    strengthDuration = 2;
+                    break;
+                case "mini_normal":
+                case "mega_doubles":
+                case "solo_insane_lucky":
+                case "teams_insane_lucky":
+                default:
+                    strengthDuration = 0;
+            }
+        }
+        else strengthDuration = 0;
     }
 
     @Subscribe
@@ -79,12 +99,12 @@ public class StrengthIndicators {
 
     @Subscribe
     public void handleKillMessage(ChatReceiveEvent event) {
-        if (inSkywars) {
+        if (inSkywars && strengthDuration != 0) {
             String message = event.message.getUnformattedText();
             for (Pattern killPattern : killPatterns) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
-                    strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(5, 2));
+                    strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(strengthDuration, 2));
                     strengthPlayers.put(messageMatcher.group("killed"), 0.0D);
                 }
             }
