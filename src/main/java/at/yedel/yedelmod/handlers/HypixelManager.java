@@ -158,6 +158,11 @@ public class HypixelManager {
 				}
 				return null;
 			}
+
+			// This is apparently an abstract method of Filter, so putting this stops an AbstractMethodError when the game is closed
+			public void stop() {
+
+			}
 		});
 	}
 }
