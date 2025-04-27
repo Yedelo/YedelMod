@@ -64,7 +64,6 @@ public class YedelConfig extends Config {
         addDependency("regexChatFilterPattern", "regexChatFilter");
         addDependency("randomPlaceholderText", "randomPlaceholder");
         addDependency("strengthColor", "skywarsStrengthIndicators");
-        addDependency("subStrengthColor", "skywarsStrengthIndicators");
         addDependency("rotateSwordInThirdPerson", "clientSideAutoBlock");
         addDependency("specifiedServer", "favoriteServerButton");
 
@@ -373,17 +372,16 @@ public class YedelConfig extends Config {
     @VigilanceName(name = "SkyWars strength indicators", category = "Features", subcategory = "Features")
     @Switch(
         name = "SkyWars Strength Indicators",
-        description = "Shows people's strength above their nametags with customizable colors. Accounts for Apothecary.",
+        description = "Shows people's strength above their nametags with customizable colors",
         category = "Features",
-        subcategory = "Features",
-        size = 2
+        subcategory = "Features"
     )
     public boolean skywarsStrengthIndicators = true;
 
     @VigilanceName(name = "Strength color", category = "Features", subcategory = "Customization")
     @Dropdown(
         name = "Strength Color",
-        description = "Color for strength indicators (5.5s - 0.5s)",
+        description = "Color for strength indicators",
         category = "Features",
         subcategory = "Features",
         options = {
@@ -406,33 +404,6 @@ public class YedelConfig extends Config {
         }
     )
     public int strengthColor = 1;
-
-    @VigilanceName(name = "Sub strength color", category = "Features", subcategory = "Customization")
-    @Dropdown(
-        name = "Sub Strength Color",
-        description = "Color for strength indicators (0.5s - end)",
-        category = "Features",
-        subcategory = "Features",
-        options = {
-            "Dark Red",
-            "Red",
-            "Gold",
-            "Yellow",
-            "Dark Green",
-            "Green",
-            "Aqua",
-            "Dark Aqua",
-            "Dark Blue",
-            "Blue",
-            "Pink",
-            "Purple",
-            "White",
-            "Gray",
-            "Dark Gray",
-            "Black"
-        }
-    )
-    public int subStrengthColor = 2;
 
     @VigilanceName(name = "Client-side auto-block", category = "Features", subcategory = "Features")
     @Switch(

@@ -17,9 +17,9 @@ import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,8 +33,6 @@ public class StrengthIndicators {
     }
 
     private final Map<String, Double> strengthPlayers = Maps.newHashMap();
-    private final ArrayList<String> startStrengthPlayers = new ArrayList<>();
-    private final ArrayList<String> endStrengthPlayers = new ArrayList<>();
 
     private final Map<Integer, String> colorMap = new HashMap<>(); // Config array values -> color codes
 
@@ -57,36 +55,16 @@ public class StrengthIndicators {
         colorMap.put(15, "§0");
     }
 
-    private int ticks = 0;
-
     @Subscribe
     public void downtickStrengthPlayers(TickEvent event) {
         if (event.stage == Stage.START) {
-            if (ticks % 2 == 0) {
-                for (Map.Entry<String, Double> entry : strengthPlayers.entrySet()) {
-                    String player = entry.getKey();
-                    Double seconds = entry.getValue();
-                    strengthPlayers.put(player, NumberUtils.round(seconds - 0.1, 1));
-                    if (seconds == 0.5) {
-                        startStrengthPlayers.remove(player);
-                        endStrengthPlayers.add(player);
-                    }
-                    else if (seconds == 0) {
-                        startStrengthPlayers.remove(player);
-                        endStrengthPlayers.remove(player);
-                    }
-                }
+            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
+            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
+                String player = entry.getKey();
+                Double seconds = entry.getValue();
+                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
             }
-            ticks++;
-        }
-    }
-
-    @Subscribe
-    public void resetStrengthIndicators(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
-            strengthPlayers.clear();
-            startStrengthPlayers.clear();
-            endStrengthPlayers.clear();
+            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
         }
     }
 
@@ -104,13 +82,8 @@ public class StrengthIndicators {
     }
 
     public void triggerKill(String killed, String killer) {
-        strengthPlayers.put(killer, NumberUtils.round(5.5, 1));
-        if (!startStrengthPlayers.contains(killer)) startStrengthPlayers.add(killer);
-        endStrengthPlayers.remove(killer);
-
+        strengthPlayers.put(killer, NumberUtils.round(5, 2));
         strengthPlayers.put(killed, (double) 0);
-        startStrengthPlayers.remove(killed);
-        endStrengthPlayers.remove(killed);
     }
 
     @SubscribeEvent
@@ -119,13 +92,18 @@ public class StrengthIndicators {
         EntityPlayer entityPlayer = event.entityPlayer;
         if (entityPlayer.isInvisible()) return;
         String entityName = entityPlayer.getName();
-        boolean inStart = startStrengthPlayers.contains(entityName);
-        if (!inStart && !endStrengthPlayers.contains(entityName)) return;
-        String color =
-            colorMap.get(inStart ? YedelConfig.getInstance().strengthColor : YedelConfig.getInstance().subStrengthColor);
-        String text = color + "Strength - " + strengthPlayers.get(entityName) + "s";
+        if (!strengthPlayers.containsKey(entityName)) return;
+        String text =
+            colorMap.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
         double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
         ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
+    }
+
+    @Subscribe
+    public void clearStrengthPlayers(ReceivePacketEvent event) {
+        if (event.packet instanceof S01PacketJoinGame) {
+            strengthPlayers.clear();
+        }
     }
 
     private static final Pattern[] killPatterns = {
