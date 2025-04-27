@@ -2,9 +2,6 @@ package at.yedel.yedelmod.handlers;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.LimboCreative;
-import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingSender;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import net.hypixel.data.type.GameType;
@@ -58,42 +55,19 @@ public class HypixelManager {
 		return inSkyblock;
 	}
 
-	private boolean inLimbo;
-
-	public boolean isInLimbo() {
-		return inLimbo;
-	}
-
 	public boolean inBedwars;
 
 	public boolean isInBedwars() {
 		return inBedwars;
 	}
 
-	private boolean inTNTTag;
-
-	public boolean isInTNTTag() {
-		return inTNTTag;
-	}
-
 	// I do not like Optional
 	private void handleLocationPacket(ClientboundLocationPacket locationPacket) {
-		inLimbo = Objects.equals(locationPacket.getServerName(), "limbo");
 		if (locationPacket.getServerType().isPresent()) {
 			ServerType serverType = locationPacket.getServerType().get();
 			inSkywars = serverType == GameType.SKYWARS;
 			inSkyblock = serverType == GameType.SKYBLOCK;
 			inBedwars = serverType == GameType.BEDWARS && !locationPacket.getLobbyName().isPresent(); // ok maybe it is good
-		}
-		if (locationPacket.getMode().isPresent() && locationPacket.getMode().get().equals("TNTAG")) {
-			inTNTTag = true;
-			TNTTagFeatures.getInstance().onTNTTagJoin();
-		}
-		else {
-			inTNTTag = false;
-		}
-		if (inLimbo && YedelConfig.getInstance().limboCreativeMode) {
-			LimboCreative.getInstance().giveCreative();
 		}
 	}
 

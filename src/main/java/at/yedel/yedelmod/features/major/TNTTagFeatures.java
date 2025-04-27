@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.RankColor;
@@ -14,6 +13,8 @@ import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.libs.universal.USound;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import cc.polyfrost.oneconfig.utils.Multithreading;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,6 +38,12 @@ public class TNTTagFeatures {
         return instance;
     }
 
+    private boolean inTNTTag;
+
+    public boolean isInTNTTag() {
+        return inTNTTag;
+    }
+
     private final ArrayList<String> players = new ArrayList<>();
     private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
@@ -57,10 +64,17 @@ public class TNTTagFeatures {
     }
 
     private TNTTagFeatures() {
+        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+
         displayLines.add("§c§lBounty §f§lHunting");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         displayLines.add("");
+    }
+
+    private void handleLocationPacket(ClientboundLocationPacket packet) {
+        inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG");
+        if (inTNTTag) onTNTTagJoin();
     }
 
     public void onTNTTagJoin() {
@@ -82,7 +96,7 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !HypixelManager.getInstance().isInTNTTag() || !event.message.getUnformattedText().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!"))
             return;
         players.clear();
         for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
