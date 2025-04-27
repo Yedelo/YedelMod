@@ -11,7 +11,6 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -32,7 +31,7 @@ public class StrengthIndicators {
         return instance;
     }
 
-    private final Map<String, Double> strengthPlayers = Maps.newHashMap();
+    private final Map<String, Double> strengthPlayers = new HashMap<>();
 
     private final Map<Integer, String> colorMap = new HashMap<>(); // Config array values -> color codes
 
