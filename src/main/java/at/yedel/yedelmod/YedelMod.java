@@ -52,6 +52,8 @@ public class YedelMod {
 	public void init(FMLInitializationEvent event) {
 		// Loads class. preload() exists for this but what ev
 		YedelConfig.getInstance();
+		HypixelManager.getInstance().setup();
+		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
 
 		registerEventListeners(
 			this,
@@ -75,7 +77,6 @@ public class YedelMod {
 			ClickNotifications.getInstance(),
 			YedelCheck.getInstance()
 		);
-		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
 
 		Threading.scheduleRepeat(() -> {
 			if (UMinecraft.getWorld() != null) {
@@ -83,8 +84,6 @@ public class YedelMod {
 				YedelConfig.getInstance().save();
 			}
 		}, 1, TimeUnit.MINUTES);
-
-		HypixelManager.getInstance().setup();
 	}
 
 	@EventHandler

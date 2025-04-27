@@ -9,6 +9,8 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.USound;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 
@@ -16,12 +18,16 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
 public class PingResponse {
-    private PingResponse() {}
-
     private static final PingResponse instance = new PingResponse();
 
     public static PingResponse getInstance() {
         return instance;
+    }
+
+    private PingResponse() {
+        // note: using the method reference PingResponse.getInstance()::handleHypixelPingResponse doesn't work
+        // because that would be referring to the instance in the constructor
+        HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handleHypixelPingResponse);
     }
 
     @Subscribe
@@ -58,7 +64,7 @@ public class PingResponse {
         }
     }
 
-    public void handleHypixelPingResponse() {
+    public void handleHypixelPingResponse(ClientboundPingPacket packet) {
         if (!PingSender.getInstance().hypixelCheck) return;
         float delay = (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
         UChat.chat(logo + " &ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(hypixel)");

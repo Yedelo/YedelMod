@@ -5,7 +5,6 @@ package at.yedel.yedelmod.handlers;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.LimboCreativeCheck;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.features.ping.PingSender;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import net.hypixel.data.type.GameType;
@@ -29,6 +28,7 @@ import java.util.logging.LogRecord;
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
+
 public class HypixelManager {
 	private HypixelManager() {}
 
@@ -42,10 +42,7 @@ public class HypixelManager {
 
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
-
-		HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handlePingPacket);
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-
 		setupLogHandlers();
 	}
 
@@ -77,10 +74,6 @@ public class HypixelManager {
 
 	public boolean isInTNTTag() {
 		return inTNTTag;
-	}
-
-	private void handlePingPacket(ClientboundPingPacket pingPacket) {
-		PingResponse.getInstance().handleHypixelPingResponse();
 	}
 
 	// I do not like Optional
