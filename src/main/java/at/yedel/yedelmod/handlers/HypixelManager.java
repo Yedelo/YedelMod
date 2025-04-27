@@ -3,7 +3,7 @@ package at.yedel.yedelmod.handlers;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.LimboCreativeCheck;
+import at.yedel.yedelmod.features.LimboCreative;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingSender;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
@@ -93,7 +93,7 @@ public class HypixelManager {
 			inTNTTag = false;
 		}
 		if (inLimbo && YedelConfig.getInstance().limboCreativeMode) {
-			LimboCreativeCheck.getInstance().giveCreative();
+			LimboCreative.getInstance().giveCreative();
 		}
 	}
 

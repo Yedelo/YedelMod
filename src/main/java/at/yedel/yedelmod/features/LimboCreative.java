@@ -9,12 +9,13 @@ import net.minecraft.world.WorldSettings;
 import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 
 
-public class LimboCreativeCheck {
-    private LimboCreativeCheck() {}
 
-    private static final LimboCreativeCheck instance = new LimboCreativeCheck();
+public class LimboCreative {
+    private LimboCreative() {}
 
-    public static LimboCreativeCheck getInstance() {
+    private static final LimboCreative instance = new LimboCreative();
+
+    public static LimboCreative getInstance() {
         return instance;
     }
 

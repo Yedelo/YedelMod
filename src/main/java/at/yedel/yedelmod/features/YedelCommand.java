@@ -90,7 +90,7 @@ public class YedelCommand {
         aliases = {"limbogmc", "lgmc"}
     )
     public void limbocreative() {
-        LimboCreativeCheck.getInstance().checkLimbo();
+        LimboCreative.getInstance().checkLimbo();
     }
 
     @SubCommandGroup("ping")
