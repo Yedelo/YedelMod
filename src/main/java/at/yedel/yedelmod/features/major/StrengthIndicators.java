@@ -76,7 +76,7 @@ public class StrengthIndicators {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
                     strengthPlayers.put(messageMatcher.group("killed"), NumberUtils.round(5, 2));
-                    strengthPlayers.put(messageMatcher.group("killer"), (double) 0);
+                    strengthPlayers.put(messageMatcher.group("killer"), 0.0D);
                 }
             }
         }
