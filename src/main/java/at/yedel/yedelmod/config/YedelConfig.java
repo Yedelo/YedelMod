@@ -505,12 +505,21 @@ public class YedelConfig extends Config {
 
     @CustomOption(id = "empty")
     @Empty(
+        name = "- constants",
+        description = "Shows mod constants and build information such as the project version.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$3 = 1;
+
+    @CustomOption(id = "empty")
+    @Empty(
         name = "- formatting",
         description = "Shows a formatting guide with color and style codes.",
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$3 = 1;
+    private transient int empty$4 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -519,7 +528,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$4 = 1;
+    private transient int empty$5 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -528,7 +537,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$5 = 1;
+    private transient int empty$6 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -537,7 +546,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$6 = 1;
+    private transient int empty$7 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -546,7 +555,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$7 = 1;
+    private transient int empty$8 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -555,7 +564,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$8 = 1;
+    private transient int empty$9 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -564,7 +573,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$9 = 1;
+    private transient int empty$10 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -573,7 +582,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$10 = 1;
+    private transient int empty$11 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -582,7 +591,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$11 = 1;
+    private transient int empty$12 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -591,7 +600,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$12 = 1;
+    private transient int empty$13 = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -600,7 +609,7 @@ public class YedelConfig extends Config {
         category = "Commands",
         subcategory = "Index"
     )
-    private transient int empty$13 = 1;
+    private transient int empty$14 = 1;
 
     // Customization
 

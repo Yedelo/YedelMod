@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingSender;
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
@@ -17,6 +18,7 @@ import net.minecraft.event.HoverEvent;
 import org.lwjgl.opengl.Display;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -70,6 +72,22 @@ public class YedelCommand {
         YedelConfig.getInstance().customTextHud.displayText = "";
         YedelConfig.getInstance().save();
         UChat.chat(logo + " §eCleared display text!");
+    }
+
+    @SubCommand(description = "Shows mod constants and build information such as the project version.")
+    public void constants() {
+        try {
+            UChat.chat(logo + " §eConstants:");
+            for (Field field : YedelModConstants.class.getDeclaredFields()) {
+                // this makes a cool arrow
+                // i can't really think of anything cleaner
+                // - YedelMod -> MC_VERSION: 1.8.9
+                UChat.chat(logo + "§e> " + field.getName() + ": §r" + field.get(null));
+            }
+        }
+        catch (IllegalAccessException e) {
+            yedelog.error("Couldn't get mod constants!", e);
+        }
     }
 
     @SubCommand(description = "Shows a formatting guide with color and style codes.")
