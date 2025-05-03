@@ -38,7 +38,7 @@ public class PingResponse {
             event.isCancelled = true;
             float ping = getPing();
             UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(command)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
+            playPingSound(ping);
             PingSender.getInstance().commandCheck = false;
         }
     }
@@ -85,6 +85,10 @@ public class PingResponse {
             UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(server list)");
             USound.INSTANCE.playSoundStatic(new ResourceLocation("random.successful_hit"), 1, (float) (ping * -0.006 + 2));
         }
+    }
+
+    private void playPingSound(float ping) {
+        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
     }
 
     private float getPing() {
