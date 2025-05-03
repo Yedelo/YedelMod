@@ -166,13 +166,7 @@ public class TNTTagFeatures {
             return;
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = UPlayer.getPlayer();
-        if (
-            Objects.equals(targetPlayer.getName(), target)
-                &&
-                player.canEntityBeSeen(event.entityPlayer)
-                &&
-                !targetPlayer.isInvisible()
-        ) {
+        if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(event.entityPlayer) && !targetPlayer.isInvisible()) {
             double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
             String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
             ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
@@ -204,14 +198,14 @@ public class TNTTagFeatures {
                 Multithreading.schedule(() -> {
                     int pointIncrease = (int) Math.ceil(players.size() * 0.8);
                     if (dead) pointIncrease /= 2;
-                        YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
-                        YedelConfig.getInstance().bountyHuntingKills += 1;
-                        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
-                        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
-                        displayLines.set(3, "§cYou killed your target!");
-                        if (YedelConfig.getInstance().playHuntingSounds) {
-                            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
-                        }
+                    YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
+                    YedelConfig.getInstance().bountyHuntingKills += 1;
+                    displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
+                    displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
+                    displayLines.set(3, "§cYou killed your target!");
+                    if (YedelConfig.getInstance().playHuntingSounds) {
+                        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
+                    }
                     YedelConfig.getInstance().save();
                     }, 500, TimeUnit.MILLISECONDS
                 );

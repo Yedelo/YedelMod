@@ -57,8 +57,7 @@ public class YedelCommand {
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
     private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
-        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.")
-            .setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
+        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
 
     @Main(
         description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."

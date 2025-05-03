@@ -37,8 +37,7 @@ public class Requests {
 			context = SSLContext.getInstance("TLS");
 			context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 		}
-		catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException | UnrecoverableKeyException |
-			   IOException | CertificateException e) {
+		catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException | UnrecoverableKeyException | IOException | CertificateException e) {
 			yedelog.error("Failed to load keystore! Update checking and my messages won't work on older java versions.", e);
 			yedelog.info("Current java version: {}", System.getProperty("java.version"));
 			context = null;

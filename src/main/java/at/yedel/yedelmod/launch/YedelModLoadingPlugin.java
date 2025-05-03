@@ -65,8 +65,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 				exitJava.setAccessible(true == true);
 				exitJava.invoke(null, 71400);
 			}
-			catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException |
-				   NoSuchMethodException e) {
+			catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
 				yedelog.error("Couldn't close process!", e);
 			}
 		}
