@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Objects;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 public class MarketSearch {
@@ -45,7 +45,7 @@ public class MarketSearch {
                 if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                 String unformattedItemName = UTextComponent.Companion.stripFormatting(itemName);
                 ahSearching = true;
-                UChat.chat(LOGO + " &eSearching the auction house for " + itemName + "&e...");
+                UChat.chat(yedelogo + " &eSearching the auction house for " + itemName + "&e...");
                 UChat.say("/ahs " + unformattedItemName);
             }
         }
@@ -59,7 +59,7 @@ public class MarketSearch {
                 if (Objects.equals(itemName, "§aSkyBlock Menu §7(Click)")) return;
                 String unformattedItemName = UTextComponent.Companion.stripFormatting(itemName);
                 bzSearching = true;
-                UChat.chat(LOGO + " &eSearching the bazaar for " + itemName + "&e...");
+                UChat.chat(yedelogo + " &eSearching the bazaar for " + itemName + "&e...");
                 UChat.say("/bz " + unformattedItemName);
             }
         }
@@ -71,7 +71,7 @@ public class MarketSearch {
         if (msg.startsWith("You need the Cookie Buff to use this")) {
             if (ahSearching || bzSearching) {
                 event.isCancelled = true;
-                UChat.chat(LOGO + " §r§cYou don't have the Cookie Buff!");
+                UChat.chat(yedelogo + " §r§cYou don't have the Cookie Buff!");
             }
         }
         else if (Objects.equals(msg, "Obtain a Booster Cookie from the community shop in the hub!")) {

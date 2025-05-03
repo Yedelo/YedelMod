@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
@@ -45,7 +45,7 @@ public class HypixelManager {
 		if (Objects.equals(exception.getIdentifier(), PING_PACKET_IDENTIFIER)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				UChat.chat(LOGO + " §cYou were rate limited while using this method!");
+				UChat.chat(yedelogo + " §cYou were rate limited while using this method!");
 			}
 		}
 	}

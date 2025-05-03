@@ -21,7 +21,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
@@ -106,7 +106,7 @@ public class UpdateManager {
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(LOGO + " §cYou are up to date with the mod version on " + updateSource + "!");
+			UChat.chat(yedelogo + " §cYou are up to date with the mod version on " + updateSource + "!");
 		}
 		else {
 			if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
@@ -117,7 +117,7 @@ public class UpdateManager {
 
 	private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(new UTextComponent(LOGO + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
+			UChat.chat(new UTextComponent(yedelogo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
 		}
 		else {
 			ClickNotifications.getInstance().send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
@@ -130,7 +130,7 @@ public class UpdateManager {
 
 	private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(LOGO + " §cCouldn't get update information from " + updateSource.name + "!");
+			UChat.chat(yedelogo + " §cCouldn't get update information from " + updateSource.name + "!");
 		}
 		else {
 			Notifications.INSTANCE.send("YedelMod", "Couldn't get update information from " + updateSource.name + "!");

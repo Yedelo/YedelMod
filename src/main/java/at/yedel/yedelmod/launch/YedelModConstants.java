@@ -3,7 +3,7 @@ package at.yedel.yedelmod.launch;
 
 
 public class YedelModConstants {
-	public static final String LOGO = "§8§l- §9§lYedel§7§lMod §8§l-"; // "- YedelMod -"
+	public static final String yedelogo = "§8§l- §9§lYedel§7§lMod §8§l-"; // "- YedelMod -"
 
 	// Constants filled in from bloom
 

@@ -14,7 +14,7 @@ import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.util.ResourceLocation;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
@@ -86,19 +86,19 @@ public class PingSender {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
         }
-        else UChat.chat(LOGO + " §cYou must be on Hypixel to use this!");
+        else UChat.chat(yedelogo + " §cYou must be on Hypixel to use this!");
     }
 
     public void serverListPing() {
         if (UMinecraft.getMinecraft().isSingleplayer()) {
-            UChat.chat(LOGO + " §cThis method does not work in singleplayer!");
+            UChat.chat(yedelogo + " §cThis method does not work in singleplayer!");
         }
         float ping = (float) UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
         if (ping == 0) {
-            UChat.chat(LOGO + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
+            UChat.chat(yedelogo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         }
         else {
-            UChat.chat(LOGO + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
+            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
             USound.INSTANCE.playSoundStatic(new ResourceLocation("random.successful_hit"), 1, (float) (ping * -0.006 + 2));
         }
     }

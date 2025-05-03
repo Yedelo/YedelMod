@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import static at.yedel.yedelmod.YedelMod.yedelog;
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
@@ -57,7 +57,7 @@ public class YedelCommand {
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
     private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
-        new UTextComponent(LOGO + " §e§nHover to view the formatting guide.")
+        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.")
             .setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
 
     @Main(
@@ -71,18 +71,18 @@ public class YedelCommand {
     public void cleartext() {
         YedelConfig.getInstance().customTextHud.displayText = "";
         YedelConfig.getInstance().save();
-        UChat.chat(LOGO + " §eCleared display text!");
+        UChat.chat(yedelogo + " §eCleared display text!");
     }
 
     @SubCommand(description = "Shows mod constants and build information such as the project version.")
     public void constants() {
         try {
-            UChat.chat(LOGO + " §eConstants:");
+            UChat.chat(yedelogo + " §eConstants:");
             for (Field field : YedelModConstants.class.getDeclaredFields()) {
                 // this makes a cool arrow
                 // i can't really think of anything cleaner
                 // - YedelMod -> MC_VERSION: 1.8.9
-                UChat.chat(LOGO + "§e> " + field.getName() + ": §r" + field.get(null));
+                UChat.chat(yedelogo + "§e> " + field.getName() + ": §r" + field.get(null));
             }
         }
         catch (IllegalAccessException e) {
@@ -170,7 +170,7 @@ public class YedelCommand {
     )
     public void playtime() {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
-        UChat.chat(LOGO + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        UChat.chat(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
     }
 
     @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
@@ -185,13 +185,13 @@ public class YedelCommand {
         String displayText = UChat.addColor(text);
         YedelConfig.getInstance().customTextHud.displayText = displayText;
         YedelConfig.getInstance().save();
-        UChat.chat(LOGO + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+        UChat.chat(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @SubCommand(description = "Sets the title of the game window.")
     public void settitle(@Greedy String title) {
         Display.setTitle(title);
-        UChat.chat(LOGO + " §eSet display title to \"§f" + title + "§e\"!");
+        UChat.chat(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
 
     @SubCommand(
@@ -248,11 +248,11 @@ public class YedelCommand {
                     yedelog.error("Couldn't get last updatted date/time", e);
                 }
 
-                UChat.chat(LOGO + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                UChat.chat(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
                 UChat.chat(yedelMessage);
             }
             catch (IOException e) {
-                UChat.chat(LOGO + " §cCouldn't get mod message!");
+                UChat.chat(yedelogo + " §cCouldn't get mod message!");
                 e.printStackTrace();
             }
         }, "YedelMod Message"

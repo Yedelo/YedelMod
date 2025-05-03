@@ -11,7 +11,7 @@ import net.minecraft.world.WorldSettings;
 
 import java.util.Objects;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
+import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
@@ -38,15 +38,15 @@ public class LimboCreative {
     public void checkLimbo() {
         if (inLimbo) {
             if (UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
-                UChat.chat(LOGO + " §cYou are already in creative mode!");
+                UChat.chat(yedelogo + " §cYou are already in creative mode!");
             }
             else giveCreative();
         }
-        else UChat.chat(LOGO + " §cLimbo check failed, try again in a bit or rejoin!");
+        else UChat.chat(yedelogo + " §cLimbo check failed, try again in a bit or rejoin!");
     }
 
     public void giveCreative() {
         UMinecraft.getMinecraft().playerController.setGameType(WorldSettings.GameType.CREATIVE);
-        UChat.chat(LOGO + " §eSet gamemode to creative!");
+        UChat.chat(yedelogo + " §eSet gamemode to creative!");
     }
 }
