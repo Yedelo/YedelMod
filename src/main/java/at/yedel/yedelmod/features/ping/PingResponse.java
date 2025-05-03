@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
@@ -38,7 +37,7 @@ public class PingResponse {
         if (event.message.getUnformattedText().contains("Unknown command")) {
             event.isCancelled = true;
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(command)");
+            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(command)");
             USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().commandCheck = false;
         }
@@ -49,7 +48,7 @@ public class PingResponse {
         if (!PingSender.getInstance().statsCheck) return;
         if (event.packet instanceof S37PacketStatistics) {
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(stats)");
+            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(stats)");
             USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().statsCheck = false;
         }
@@ -60,7 +59,7 @@ public class PingResponse {
         if (!PingSender.getInstance().tabCheck) return;
         if (event.packet instanceof S3APacketTabComplete) {
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(tab)");
+            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(tab)");
             USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().tabCheck = false;
         }
@@ -69,7 +68,7 @@ public class PingResponse {
     public void handleHypixelPingResponse(ClientboundPingPacket packet) {
         if (!PingSender.getInstance().hypixelCheck) return;
         float ping = getPing();
-        UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(hypixel)");
+        UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(hypixel)");
         USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
         PingSender.getInstance().hypixelCheck = false;
     }
@@ -83,12 +82,31 @@ public class PingResponse {
             UChat.chat(yedelogo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         }
         else {
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
+            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(server list)");
             USound.INSTANCE.playSoundStatic(new ResourceLocation("random.successful_hit"), 1, (float) (ping * -0.006 + 2));
         }
     }
 
     private float getPing() {
         return (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
+    }
+
+    private String color(Float ping) {
+        if (ping < 50) return "§a";
+        else if (ping < 100) return "§2";
+        else if (ping < 150) return "§e";
+        else if (ping < 200) return "§6";
+        else if (ping < 250) return "§c";
+        else if (ping < 300) return "§4";
+        else if (ping < 350) return "§5"; // wtf?
+        else if (ping < 400) return "§d";
+        else if (ping < 450) return "§f";
+        else if (ping < 500) return "§b";
+        else if (ping < 550) return "§3";
+        else if (ping < 600) return "§9";
+        else if (ping < 650) return "§1";
+        else if (ping < 700) return "§7";
+        else if (ping < 740) return "§8";
+        else return "§0";
     }
 }
