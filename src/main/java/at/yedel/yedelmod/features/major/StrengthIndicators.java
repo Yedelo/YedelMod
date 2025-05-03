@@ -36,30 +36,30 @@ public class StrengthIndicators {
     }
 
     private final Map<String, Double> strengthPlayers = new HashMap<>();
-    private static final Map<Integer, String> COLOR_MAP = ImmutableMap.of(); // Config array values -> color codes
+    private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
+        .put(0, "§4")
+        .put(1, "§c")
+        .put(2, "§6")
+        .put(3, "§e")
+        .put(4, "§2")
+        .put(5, "§a")
+        .put(6, "§b")
+        .put(7, "§3")
+        .put(8, "§1")
+        .put(9, "§9")
+        .put(10, "§d")
+        .put(11, "§5")
+        .put(12, "§f")
+        .put(13, "§7")
+        .put(14, "§8")
+        .put(15, "§0")
+        .build();
 
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
 
     private StrengthIndicators() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-
-        COLOR_MAP.put(0, "§4");
-        COLOR_MAP.put(1, "§c");
-        COLOR_MAP.put(2, "§6");
-        COLOR_MAP.put(3, "§e");
-        COLOR_MAP.put(4, "§2");
-        COLOR_MAP.put(5, "§a");
-        COLOR_MAP.put(6, "§b");
-        COLOR_MAP.put(7, "§3");
-        COLOR_MAP.put(8, "§1");
-        COLOR_MAP.put(9, "§9");
-        COLOR_MAP.put(10, "§d");
-        COLOR_MAP.put(11, "§5");
-        COLOR_MAP.put(12, "§f");
-        COLOR_MAP.put(13, "§7");
-        COLOR_MAP.put(14, "§8");
-        COLOR_MAP.put(15, "§0");
     }
 
     private boolean inSkywars;
@@ -95,7 +95,6 @@ public class StrengthIndicators {
             for (Map.Entry<String, Double> entry : strengthPlayerSet) {
                 String player = entry.getKey();
                 Double seconds = entry.getValue();
-
                 strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
             }
             strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
