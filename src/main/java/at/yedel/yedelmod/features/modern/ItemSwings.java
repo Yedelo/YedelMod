@@ -25,16 +25,16 @@ import java.util.Objects;
 
 
 public class ItemSwings {
-    private static final ItemSwings instance = new ItemSwings();
+    private static final ItemSwings INSTANCE = new ItemSwings();
 
     public static ItemSwings getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
-    private final List<String> swingItems = new ArrayList<String>();
+    private static final List<String> SWING_ITEMS = new ArrayList<String>();
 
     private ItemSwings() {
-        swingItems.addAll(Arrays.asList(
+        SWING_ITEMS.addAll(Arrays.asList(
             "minecraft:egg",
             "minecraft:ender_eye",
             "minecraft:experience_bottle",
@@ -53,7 +53,7 @@ public class ItemSwings {
         if (itemStack == null) return;
         Item item = itemStack.getItem();
         String registryName = item.getRegistryName();
-        if (swingItems.contains(registryName)) {
+        if (SWING_ITEMS.contains(registryName)) {
             swing();
         }
         else if (Objects.equals(registryName, "minecraft:potion") && ItemPotion.isSplash(itemStack.getMetadata())) {

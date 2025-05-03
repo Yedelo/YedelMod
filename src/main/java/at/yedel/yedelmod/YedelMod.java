@@ -40,10 +40,10 @@ import java.util.concurrent.TimeUnit;
 )
 public class YedelMod {
 	@Instance
-	private static YedelMod instance;
+	private static YedelMod INSTANCE;
 
 	public static YedelMod getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	public static final Logger yedelog = LogManager.getLogger("YedelMod");

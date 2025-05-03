@@ -20,20 +20,21 @@ import java.util.Objects;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
 
 
 
 public class HypixelManager {
 	private HypixelManager() {}
 
-	private static final HypixelManager instance = new HypixelManager();
+	private static final HypixelManager INSTANCE = new HypixelManager();
 
 	public static HypixelManager getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
-	private static final String pingPacketIdentifier = HypixelModAPI.getInstance().getRegistry().getIdentifier(ClientboundPingPacket.class);
+	private static final String PING_PACKET_IDENTIFIER =
+		HypixelModAPI.getInstance().getRegistry().getIdentifier(ClientboundPingPacket.class);
 
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
@@ -41,10 +42,10 @@ public class HypixelManager {
 	}
 
 	private void handleException(ModAPIException exception) {
-		if (Objects.equals(exception.getIdentifier(), pingPacketIdentifier)) {
+		if (Objects.equals(exception.getIdentifier(), PING_PACKET_IDENTIFIER)) {
 			if (PingSender.getInstance().hypixelCheck) {
 				PingSender.getInstance().hypixelCheck = false;
-				UChat.chat(logo + " §cYou were rate limited while using this method!");
+				UChat.chat(LOGO + " §cYou were rate limited while using this method!");
 			}
 		}
 	}

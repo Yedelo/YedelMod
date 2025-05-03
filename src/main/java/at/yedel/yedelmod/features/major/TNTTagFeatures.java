@@ -32,16 +32,17 @@ import java.util.regex.Pattern;
 
 
 public class TNTTagFeatures {
-    private static final TNTTagFeatures instance = new TNTTagFeatures();
+    private static final TNTTagFeatures INSTANCE = new TNTTagFeatures();
 
     public static TNTTagFeatures getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private final ArrayList<String> players = new ArrayList<>();
-    private final Pattern youTaggedPersonRegex = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
-    private final Pattern personIsItRegex = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
-    private final Pattern personBlewUpRegex = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
+    private static final Pattern YOU_TAGGED_PERSON_REGEX =
+        Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
+    private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
+    private static final Pattern PERSON_BLEW_UP_REGEX = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
 
     private String target;
     private String targetRanked;
@@ -108,7 +109,7 @@ public class TNTTagFeatures {
         whoCheck = true;
         UChat.say("/who");
         if (YedelConfig.getInstance().playHuntingSounds) {
-            USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 0.8F);
+            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
         }
         displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
         displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
@@ -137,14 +138,14 @@ public class TNTTagFeatures {
     @Subscribe
     public void handleFightMessages(ChatReceiveEvent event) {
         String msg = event.message.getUnformattedText();
-        Matcher tagOtherMatcher = youTaggedPersonRegex.matcher(msg);
+        Matcher tagOtherMatcher = YOU_TAGGED_PERSON_REGEX.matcher(msg);
         while (tagOtherMatcher.find()) {
             if (Objects.equals(tagOtherMatcher.group("personThatYouTagged"), target)) {
                 fightingTarget = true;
             }
         }
 
-        Matcher personIsItMatcher = personIsItRegex.matcher(msg);
+        Matcher personIsItMatcher = PERSON_IS_IT_REGEX.matcher(msg);
         while (personIsItMatcher.find()) {
             if (Objects.equals(personIsItMatcher.group("personThatIsIt"), target) && !dead) {
                 fightingTarget = false;
@@ -191,7 +192,7 @@ public class TNTTagFeatures {
     public void onRoundEnd(ChatReceiveEvent event) {
         if (!YedelConfig.getInstance().bountyHunting) return;
         String msg = event.message.getUnformattedText();
-        Matcher peopleDeathMatcher = personBlewUpRegex.matcher(msg);
+        Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
         while (peopleDeathMatcher.find()) {
             String personDied = peopleDeathMatcher.group("personThatBlewUp");
             if (Objects.equals(personDied, playerName)) {
@@ -209,7 +210,7 @@ public class TNTTagFeatures {
                         displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
                         displayLines.set(3, "§cYou killed your target!");
                         if (YedelConfig.getInstance().playHuntingSounds) {
-                            USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 1.04F);
+                            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
                         }
                     YedelConfig.getInstance().save();
                     }, 500, TimeUnit.MILLISECONDS

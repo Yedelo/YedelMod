@@ -89,13 +89,13 @@ public class YedelConfig extends Config {
         }
     }
 
-    private static final YedelConfig instance = new YedelConfig();
+    private static final YedelConfig INSTANCE = new YedelConfig();
 
     public static YedelConfig getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
-    private final transient URI video = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
+    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
     @Override
     protected BasicOption getCustomOption(Field field, CustomOption annotation, OptionPage page, Mod mod, boolean migrate) {
@@ -894,13 +894,13 @@ public class YedelConfig extends Config {
 
     @Button(
         name = "Video",
-        description = "This is a complicated feature, watch my video if you need help!",
+        description = "This is a complicated feature, watch my BOUNTY_HUNTING_VIDEO if you need help!",
         category = "TNT Tag",
-        text = "Open video"
+        text = "Open BOUNTY_HUNTING_VIDEO"
     )
     private void watchVideo() {
-        if (!UDesktop.browse(video)) {
-            Notifications.INSTANCE.send("YedelMod", "Couldn't open video!");
+        if (!UDesktop.browse(BOUNTY_HUNTING_VIDEO)) {
+            Notifications.INSTANCE.send("YedelMod", "Couldn't open BOUNTY_HUNTING_VIDEO!");
         }
     }
 
@@ -941,7 +941,7 @@ public class YedelConfig extends Config {
         text = "Play sound"
     )
     private void playSelection() {
-        USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 0.8F);
+        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
     }
 
     @Button(
@@ -952,7 +952,7 @@ public class YedelConfig extends Config {
         text = "Play sound"
     )
     private void playKill() {
-        USound.INSTANCE.playSoundStatic(Constants.plingSoundLocation, 1, 1.04F);
+        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
     }
 
     @HUD(

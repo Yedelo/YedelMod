@@ -13,10 +13,10 @@ import java.util.regex.PatternSyntaxException;
 public class RegexChatFilter {
 	private RegexChatFilter() {}
 
-	private static final RegexChatFilter instance = new RegexChatFilter();
+	private static final RegexChatFilter INSTANCE = new RegexChatFilter();
 
 	public static RegexChatFilter getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	@Subscribe

@@ -15,19 +15,19 @@ import java.util.regex.Pattern;
 public class AutoGuildWelcome {
     private AutoGuildWelcome() {}
 
-    private static final AutoGuildWelcome instance = new AutoGuildWelcome();
+	private static final AutoGuildWelcome INSTANCE = new AutoGuildWelcome();
 
     public static AutoGuildWelcome getInstance() {
-        return instance;
+		return INSTANCE;
     }
 
-    public final Pattern guildJoinPattern = Pattern.compile("(?<newMember>\\w+) joined the guild!");
+	private static final Pattern GUILD_JOIN_PATTERN = Pattern.compile("(?<newMember>\\w+) joined the guild!");
 
 	@Subscribe
 	public void welcomeNewGuildMember(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().autoWelcomeGuildMembers) {
 			String msg = event.message.getUnformattedText();
-			Matcher guildJoinMatcher = guildJoinPattern.matcher(msg);
+			Matcher guildJoinMatcher = GUILD_JOIN_PATTERN.matcher(msg);
 			while (guildJoinMatcher.find()) {
 				String newMember = guildJoinMatcher.group("newMember");
 				UChat.say("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));

@@ -18,10 +18,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class FavoriteServerButton {
 	private FavoriteServerButton() {}
 
-	private static final FavoriteServerButton instance = new FavoriteServerButton();
+	private static final FavoriteServerButton INSTANCE = new FavoriteServerButton();
 
 	public static FavoriteServerButton getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	private GuiButton favoriteServerButton;

@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import static at.yedel.yedelmod.YedelMod.yedelog;
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
 
 
 
@@ -40,13 +40,13 @@ import static at.yedel.yedelmod.launch.YedelModConstants.logo;
 public class YedelCommand {
     private YedelCommand() {}
 
-    private static final YedelCommand instance = new YedelCommand();
+    private static final YedelCommand INSTANCE = new YedelCommand();
 
     public static YedelCommand getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
-    private static final String formattingCodes =
+    private static final String FORMATTING_CODES =
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
             "\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
@@ -56,9 +56,9 @@ public class YedelCommand {
             "\n§lStyle §ncodes§r:" +
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
-    private static final UTextComponent formattingGuideMessage =
-        new UTextComponent(logo + " §e§nHover to view the formatting guide.")
-            .setHover(HoverEvent.Action.SHOW_TEXT, formattingCodes);
+    private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
+        new UTextComponent(LOGO + " §e§nHover to view the formatting guide.")
+            .setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
 
     @Main(
         description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."
@@ -71,18 +71,18 @@ public class YedelCommand {
     public void cleartext() {
         YedelConfig.getInstance().customTextHud.displayText = "";
         YedelConfig.getInstance().save();
-        UChat.chat(logo + " §eCleared display text!");
+        UChat.chat(LOGO + " §eCleared display text!");
     }
 
     @SubCommand(description = "Shows mod constants and build information such as the project version.")
     public void constants() {
         try {
-            UChat.chat(logo + " §eConstants:");
+            UChat.chat(LOGO + " §eConstants:");
             for (Field field : YedelModConstants.class.getDeclaredFields()) {
                 // this makes a cool arrow
                 // i can't really think of anything cleaner
                 // - YedelMod -> MC_VERSION: 1.8.9
-                UChat.chat(logo + "§e> " + field.getName() + ": §r" + field.get(null));
+                UChat.chat(LOGO + "§e> " + field.getName() + ": §r" + field.get(null));
             }
         }
         catch (IllegalAccessException e) {
@@ -92,7 +92,7 @@ public class YedelCommand {
 
     @SubCommand(description = "Shows a formatting guide with color and style codes.")
     public void formatting() {
-        UChat.chat(formattingGuideMessage);
+        UChat.chat(FORMATTING_GUIDE_MESSAGE);
     }
 
     @SubCommand(
@@ -170,7 +170,7 @@ public class YedelCommand {
     )
     public void playtime() {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
-        UChat.chat(logo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        UChat.chat(LOGO + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
     }
 
     @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
@@ -185,13 +185,13 @@ public class YedelCommand {
         String displayText = UChat.addColor(text);
         YedelConfig.getInstance().customTextHud.displayText = displayText;
         YedelConfig.getInstance().save();
-        UChat.chat(logo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+        UChat.chat(LOGO + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @SubCommand(description = "Sets the title of the game window.")
     public void settitle(@Greedy String title) {
         Display.setTitle(title);
-        UChat.chat(logo + " §eSet display title to \"§f" + title + "§e\"!");
+        UChat.chat(LOGO + " §eSet display title to \"§f" + title + "§e\"!");
     }
 
     @SubCommand(
@@ -248,11 +248,11 @@ public class YedelCommand {
                     yedelog.error("Couldn't get last updatted date/time", e);
                 }
 
-                UChat.chat(logo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                UChat.chat(LOGO + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
                 UChat.chat(yedelMessage);
             }
             catch (IOException e) {
-                UChat.chat(logo + " §cCouldn't get mod message!");
+                UChat.chat(LOGO + " §cCouldn't get mod message!");
                 e.printStackTrace();
             }
         }, "YedelMod Message"

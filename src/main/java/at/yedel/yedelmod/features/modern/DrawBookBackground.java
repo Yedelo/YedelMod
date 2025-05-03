@@ -13,10 +13,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class DrawBookBackground {
     private DrawBookBackground() {}
 
-    private static final DrawBookBackground instance = new DrawBookBackground();
+    private static final DrawBookBackground INSTANCE = new DrawBookBackground();
 
     public static DrawBookBackground getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @SubscribeEvent

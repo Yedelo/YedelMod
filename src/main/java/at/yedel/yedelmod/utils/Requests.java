@@ -23,7 +23,7 @@ import static at.yedel.yedelmod.YedelMod.yedelog;
 
 // Credit to nea89 (https://moddev.nea.moe/https/#bringing-your-own-certificates)
 public class Requests {
-	public static Gson gson = new Gson();
+	public static final Gson GSON = new Gson();
 	public static SSLContext context;
 
 	static {
@@ -54,6 +54,6 @@ public class Requests {
 	}
 
 	public static JsonObject getJsonObject(URL url) throws IOException {
-		return gson.fromJson(new InputStreamReader(openURLConnection(url).getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
+		return GSON.fromJson(new InputStreamReader(openURLConnection(url).getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
 	}
 }

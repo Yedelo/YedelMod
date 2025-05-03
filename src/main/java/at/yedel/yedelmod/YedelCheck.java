@@ -11,7 +11,7 @@ import net.minecraft.network.play.server.S01PacketJoinGame;
 
 import java.util.concurrent.TimeUnit;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
 
 
 
@@ -23,10 +23,10 @@ public class YedelCheck {
     // Also used for the first time message
     private YedelCheck() {}
 
-    private static final YedelCheck instance = new YedelCheck();
+    private static final YedelCheck INSTANCE = new YedelCheck();
 
     public static YedelCheck getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public static boolean YedelUtils = false;
@@ -37,7 +37,7 @@ public class YedelCheck {
         if (event.packet instanceof S01PacketJoinGame) {
             if (YedelUtils && !alreadyWarned) {
                 Multithreading.schedule(() -> {
-                        UChat.chat(logo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
+                    UChat.chat(LOGO + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
                     }, 3, TimeUnit.SECONDS
                 );
                 alreadyWarned = false;

@@ -21,17 +21,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
 
 
 
 public class EasyAtlasVerdicts {
     private EasyAtlasVerdicts() {}
 
-    private static final EasyAtlasVerdicts instance = new EasyAtlasVerdicts();
+    private static final EasyAtlasVerdicts INSTANCE = new EasyAtlasVerdicts();
 
     public static EasyAtlasVerdicts getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private boolean inAtlas;
@@ -51,7 +51,7 @@ public class EasyAtlasVerdicts {
     public void submitInsufficientEvidenceVerdict() {
         EntityPlayerSP player = UPlayer.getPlayer();
         if (inAtlas && player != null) {
-            UChat.chat(logo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
+            UChat.chat(LOGO + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
             player.inventory.currentItem = 7;
             Multithreading.schedule(() -> {
                     ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
@@ -66,7 +66,7 @@ public class EasyAtlasVerdicts {
     public void submitEvidenceWithoutDoubtVerdict() {
         EntityPlayerSP player = UPlayer.getPlayer();
         if (inAtlas && player != null) {
-            UChat.chat(logo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
+            UChat.chat(LOGO + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
             player.inventory.currentItem = 7;
             Multithreading.schedule(() -> {
                     ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();

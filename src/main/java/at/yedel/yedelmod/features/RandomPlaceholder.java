@@ -12,10 +12,10 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 public class RandomPlaceholder {
     private RandomPlaceholder() {}
 
-    private static final RandomPlaceholder instance = new RandomPlaceholder();
+    private static final RandomPlaceholder INSTANCE = new RandomPlaceholder();
 
     public static RandomPlaceholder getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Subscribe

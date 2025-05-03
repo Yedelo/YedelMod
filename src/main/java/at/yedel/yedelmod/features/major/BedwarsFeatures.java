@@ -34,10 +34,10 @@ import java.util.regex.Pattern;
 
 
 public class BedwarsFeatures {
-	private static final BedwarsFeatures instance = new BedwarsFeatures();
+	private static final BedwarsFeatures INSTANCE = new BedwarsFeatures();
 
 	public static BedwarsFeatures getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	private BedwarsFeatures() {
@@ -83,17 +83,17 @@ public class BedwarsFeatures {
 		return magicMilkTimeText;
 	}
 
-	private final int RED = new OneColor(246, 94, 94, 255).getRGB();
+	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
 
-	private static final Pattern tokenMessagePattern = Pattern.compile("\\+[0-9]+ tokens! .*");
-	private static final Pattern slumberTicketMessagePattern = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
-	private static final List<String> comfyPillowMessages = new ArrayList<>();
+	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
+	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
+	private static final List<String> COMFY_PILLOW_MESSAGES = new ArrayList<>();
 
 	static {
-		comfyPillowMessages.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
-		comfyPillowMessages.add("You cannot return items to another team's Shopkeeper!");
-		comfyPillowMessages.add("You cannot carry any more Comfy Pillows!");
-		comfyPillowMessages.add("You died while carrying x1 Comfy Pillows!");
+		COMFY_PILLOW_MESSAGES.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
+		COMFY_PILLOW_MESSAGES.add("You cannot return items to another team's Shopkeeper!");
+		COMFY_PILLOW_MESSAGES.add("You cannot carry any more Comfy Pillows!");
+		COMFY_PILLOW_MESSAGES.add("You died while carrying x1 Comfy Pillows!");
 	}
 
 	@Subscribe
@@ -147,7 +147,7 @@ public class BedwarsFeatures {
 	public void lightgreenifyTokenMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().lightGreenTokenMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
-			Matcher matcher = tokenMessagePattern.matcher(message);
+			Matcher matcher = TOKEN_MESSAGE_PATTERN.matcher(message);
 			while (matcher.find()) {
 				event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
 			}
@@ -158,7 +158,7 @@ public class BedwarsFeatures {
 	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideSlumberTicketMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
-			Matcher matcher = slumberTicketMessagePattern.matcher(message);
+			Matcher matcher = SLUMBER_TICKET_MESSAGE_PATTERN.matcher(message);
 			while (matcher.find()) {
 				event.isCancelled = true;
 			}
@@ -187,7 +187,7 @@ public class BedwarsFeatures {
 	@Subscribe
 	public void hideComfyPillowMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().hideComfyPillowMessages) {
-			if (comfyPillowMessages.contains(event.message.getUnformattedText())) {
+			if (COMFY_PILLOW_MESSAGES.contains(event.message.getUnformattedText())) {
 				event.isCancelled = true;
 			}
 		}

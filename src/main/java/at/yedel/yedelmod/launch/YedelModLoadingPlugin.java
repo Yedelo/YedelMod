@@ -27,11 +27,11 @@ import java.util.jar.JarFile;
 @Name("YedelMod Mod Detector")
 @MCVersion("1.8.9")
 public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
-	private final URI hypixelModApiUri = URI.create("https://modrinth.com/mod/hypixel-mod-api");
-	private final boolean dontCrashGame = System.getProperty("yedelmod.modapi.disablecrash") != null;
-	private static final String modApiVersionKey = "net.hypixel.mod-api.version:1";
+	private static final URI HYPIXEL_MOD_API_URI = URI.create("https://modrinth.com/mod/hypixel-mod-api");
+	private static final boolean DISABLE_CRASH = System.getProperty("yedelmod.modapi.disablecrash") != null;
+	private static final String MOD_API_VERSION_KEY = "net.hypixel.mod-api.version:1";
 
-	private final Logger yedelog = LogManager.getLogger("YedelMod");
+	private static final Logger yedelog = LogManager.getLogger("YedelMod");
 
 	@Override
 	public String[] getASMTransformerClass() {
@@ -56,7 +56,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 			yedelog.fatal("If this was an error, message yedel on discord or make an issue on the GitHub page.");
 			yedelog.fatal("If you believe you can still run the game, use the -Dyedelmod.modapi.disablecrash flag on next launch.");
 			showErrorDialogBox();
-			if (dontCrashGame) {
+			if (DISABLE_CRASH) {
 				yedelog.warn("- On property, skipping game crash! This can cause unexpected behavior!");
 				return;
 			}
@@ -111,7 +111,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 	}
 
 	private boolean isModApiTweakerPresent() {
-		Object modApiVersion = Launch.blackboard.get(modApiVersionKey);
+		Object modApiVersion = Launch.blackboard.get(MOD_API_VERSION_KEY);
 		if (modApiVersion != null) {
 			yedelog.info("Found Hypixel Mod API from tweaker and blackboard key ({})", modApiVersion);
 			return true;
@@ -131,7 +131,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 			versionLong *= 10000;
 			versionLong += Long.parseLong(versionComponents[i]);
 		}
-		Launch.blackboard.put(modApiVersionKey, versionLong);
+		Launch.blackboard.put(MOD_API_VERSION_KEY, versionLong);
 	}
 
 	private void showErrorDialogBox() {
@@ -157,7 +157,7 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 		);
 		if (option == JOptionPane.YES_OPTION) {
 			try {
-				Desktop.getDesktop().browse(hypixelModApiUri);
+				Desktop.getDesktop().browse(HYPIXEL_MOD_API_URI);
 			}
 			catch (IOException e) {
 				yedelog.error("Couldn't open Hypixel Mod API URL!");

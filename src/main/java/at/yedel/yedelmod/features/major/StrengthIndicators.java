@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import com.google.common.collect.ImmutableMap;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -35,30 +36,30 @@ public class StrengthIndicators {
     }
 
     private final Map<String, Double> strengthPlayers = new HashMap<>();
-    private final Map<Integer, String> colorMap = new HashMap<>(); // Config array values -> color codes
+    private static final Map<Integer, String> COLOR_MAP = ImmutableMap.of(); // Config array values -> color codes
 
-    private final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
-    private final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
+    private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
+    private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
 
     private StrengthIndicators() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 
-        colorMap.put(0, "§4");
-        colorMap.put(1, "§c");
-        colorMap.put(2, "§6");
-        colorMap.put(3, "§e");
-        colorMap.put(4, "§2");
-        colorMap.put(5, "§a");
-        colorMap.put(6, "§b");
-        colorMap.put(7, "§3");
-        colorMap.put(8, "§1");
-        colorMap.put(9, "§9");
-        colorMap.put(10, "§d");
-        colorMap.put(11, "§5");
-        colorMap.put(12, "§f");
-        colorMap.put(13, "§7");
-        colorMap.put(14, "§8");
-        colorMap.put(15, "§0");
+        COLOR_MAP.put(0, "§4");
+        COLOR_MAP.put(1, "§c");
+        COLOR_MAP.put(2, "§6");
+        COLOR_MAP.put(3, "§e");
+        COLOR_MAP.put(4, "§2");
+        COLOR_MAP.put(5, "§a");
+        COLOR_MAP.put(6, "§b");
+        COLOR_MAP.put(7, "§3");
+        COLOR_MAP.put(8, "§1");
+        COLOR_MAP.put(9, "§9");
+        COLOR_MAP.put(10, "§d");
+        COLOR_MAP.put(11, "§5");
+        COLOR_MAP.put(12, "§f");
+        COLOR_MAP.put(13, "§7");
+        COLOR_MAP.put(14, "§8");
+        COLOR_MAP.put(15, "§0");
     }
 
     private boolean inSkywars;
@@ -94,6 +95,7 @@ public class StrengthIndicators {
             for (Map.Entry<String, Double> entry : strengthPlayerSet) {
                 String player = entry.getKey();
                 Double seconds = entry.getValue();
+
                 strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
             }
             strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
@@ -122,7 +124,7 @@ public class StrengthIndicators {
         String entityName = entityPlayer.getName();
         if (!strengthPlayers.containsKey(entityName)) return;
         String text =
-            colorMap.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
+            COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
         double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
         ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
     }

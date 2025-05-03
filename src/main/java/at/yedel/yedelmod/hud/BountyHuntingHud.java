@@ -23,10 +23,10 @@ public class BountyHuntingHud extends TextHud {
             0, // NO rounded corners
             0, // no x padding why would i want it
             0, // no y padding for the same reason
-            Constants.emptyColor, // no background color
+            Constants.EMPTY_COLOR, // no background color
             false, // no border
             0, // NO border
-            Constants.emptyColor // no border color
+            Constants.EMPTY_COLOR // no border color
         );
         textType = 1;
     }

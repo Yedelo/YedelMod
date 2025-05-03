@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 public class DropperGG {
     private DropperGG() {}
 
-    private static final DropperGG instance = new DropperGG();
+    private static final DropperGG INSTANCE = new DropperGG();
 
     public static DropperGG getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Subscribe

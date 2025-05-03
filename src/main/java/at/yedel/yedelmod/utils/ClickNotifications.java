@@ -21,10 +21,10 @@ import java.util.concurrent.Callable;
 
 
 public class ClickNotifications {
-    private static final ClickNotifications instance = new ClickNotifications();
+    private static final ClickNotifications INSTANCE = new ClickNotifications();
 
     public static ClickNotifications getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private ClickNotifications() {

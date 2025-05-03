@@ -21,27 +21,27 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static at.yedel.yedelmod.launch.YedelModConstants.logo;
+import static at.yedel.yedelmod.launch.YedelModConstants.LOGO;
 
 
 
 public class UpdateManager {
 	private UpdateManager() {}
 
-	private static final UpdateManager instance = new UpdateManager();
+	private static final UpdateManager INSTANCE = new UpdateManager();
 
 	public static UpdateManager getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
-	private static final String currentVersion = YedelModConstants.MOD_VERSION;
-	public static final URL modrinthApiUrl;
-	public static final URL githubApiUrl;
+	private static final String CURRENT_VERSION = YedelModConstants.MOD_VERSION;
+	private static final URL MODRINTH_API_URL;
+	private static final URL GITHUB_API_URL;
 
 	static {
 		try {
-			modrinthApiUrl = new URL("https://api.modrinth.com/v2/project/yedelmod/version");
-			githubApiUrl = new URL("https://api.github.com/repos/yedelo/yedelmod/releases/latest");
+			MODRINTH_API_URL = new URL("https://api.modrinth.com/v2/project/yedelmod/version");
+			GITHUB_API_URL = new URL("https://api.github.com/repos/yedelo/yedelmod/releases/latest");
 		}
 		catch (MalformedURLException e) {
 			throw new RuntimeException(e);
@@ -57,7 +57,7 @@ public class UpdateManager {
 			if (updateSource == UpdateSource.MODRINTH) {
 				JsonArray modrinthApiInfo = getModrinthApiInfo();
 				String modrinthVersion = getModrinthVersion(modrinthApiInfo);
-				if (Objects.equals(modrinthVersion, currentVersion)) {
+				if (Objects.equals(modrinthVersion, CURRENT_VERSION)) {
 					notifyUpToDate("Modrinth", feedbackMethod);
 					return;
 				}
@@ -66,7 +66,7 @@ public class UpdateManager {
 			else {
 				JsonObject githubApiInfo = getGithubApiInfo();
 				String githubVersion = getGithubVersion(githubApiInfo);
-				if (Objects.equals(githubVersion, currentVersion)) {
+				if (Objects.equals(githubVersion, CURRENT_VERSION)) {
 					notifyUpToDate("GitHub", feedbackMethod);
 					return;
 				}
@@ -80,7 +80,7 @@ public class UpdateManager {
 	}
 
 	public JsonArray getModrinthApiInfo() throws IOException {
-		return Requests.gson.fromJson(new InputStreamReader(Requests.openURLConnection(modrinthApiUrl).getInputStream(), StandardCharsets.UTF_8), JsonArray.class);
+		return Requests.GSON.fromJson(new InputStreamReader(Requests.openURLConnection(MODRINTH_API_URL).getInputStream(), StandardCharsets.UTF_8), JsonArray.class);
 	}
 
 	public String getModrinthVersion(JsonArray modrinthApiInfo) {
@@ -93,7 +93,7 @@ public class UpdateManager {
 	}
 
 	public JsonObject getGithubApiInfo() throws IOException {
-		return Requests.getJsonObject(githubApiUrl);
+		return Requests.getJsonObject(GITHUB_API_URL);
 	}
 
 	public String getGithubVersion(JsonObject githubApiInfo) {
@@ -106,7 +106,7 @@ public class UpdateManager {
 
 	public void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
+			UChat.chat(LOGO + " §cYou are up to date with the mod version on " + updateSource + "!");
 		}
 		else {
 			if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
@@ -117,7 +117,7 @@ public class UpdateManager {
 
 	private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
+			UChat.chat(new UTextComponent(LOGO + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
 		}
 		else {
 			ClickNotifications.getInstance().send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
@@ -130,7 +130,7 @@ public class UpdateManager {
 
 	private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		if (feedbackMethod == FeedbackMethod.CHAT) {
-			UChat.chat(logo + " §cCouldn't get update information from " + updateSource.name + "!");
+			UChat.chat(LOGO + " §cCouldn't get update information from " + updateSource.name + "!");
 		}
 		else {
 			Notifications.INSTANCE.send("YedelMod", "Couldn't get update information from " + updateSource.name + "!");
