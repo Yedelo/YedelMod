@@ -37,9 +37,9 @@ public class PingResponse {
         if (!PingSender.getInstance().commandCheck) return;
         if (event.message.getUnformattedText().contains("Unknown command")) {
             event.isCancelled = true;
-            float delay = getDelay();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(command)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (delay * -0.006 + 2));
+            float ping = getPing();
+            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(command)");
+            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().commandCheck = false;
         }
     }
@@ -48,9 +48,9 @@ public class PingResponse {
     public void handleStatsPingResponse(ReceivePacketEvent event) {
         if (!PingSender.getInstance().statsCheck) return;
         if (event.packet instanceof S37PacketStatistics) {
-            float delay = getDelay();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(stats)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (delay * -0.006 + 2));
+            float ping = getPing();
+            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(stats)");
+            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().statsCheck = false;
         }
     }
@@ -59,18 +59,18 @@ public class PingResponse {
     public void handleTabPingResponse(ReceivePacketEvent event) {
         if (!PingSender.getInstance().tabCheck) return;
         if (event.packet instanceof S3APacketTabComplete) {
-            float delay = getDelay();
-            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(tab)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (delay * -0.006 + 2));
+            float ping = getPing();
+            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(tab)");
+            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
             PingSender.getInstance().tabCheck = false;
         }
     }
 
     public void handleHypixelPingResponse(ClientboundPingPacket packet) {
         if (!PingSender.getInstance().hypixelCheck) return;
-        float delay = getDelay();
-        UChat.chat(yedelogo + " &ePing: " + TextUtils.color(delay) + (int) delay + " &ems &7(hypixel)");
-        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (delay * -0.006 + 2));
+        float ping = getPing();
+        UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(hypixel)");
+        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
         PingSender.getInstance().hypixelCheck = false;
     }
 
@@ -88,7 +88,7 @@ public class PingResponse {
         }
     }
 
-    private float getDelay() {
+    private float getPing() {
         return (float) (System.nanoTime() - PingSender.getInstance().lastTime) / 1000000;
     }
 }
