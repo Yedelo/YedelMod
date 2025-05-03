@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import at.yedel.yedelmod.mixins.net.minecraft.client.InvokerMinecraft;
+import at.yedel.yedelmod.mixins.InvokerMinecraft;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;

@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.mixins.net.minecraft.client.renderer;
+package at.yedel.yedelmod.mixins;
 
 
 

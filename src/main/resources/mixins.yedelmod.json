@@ -2,17 +2,18 @@
   "compatibilityLevel": "JAVA_8",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
-    "net.minecraft.client.InvokerMinecraft",
-    "net.minecraft.client.entity.MixinEntityPlayerSP",
-    "net.minecraft.client.gui.MixinGuiNewChat",
-    "net.minecraft.client.gui.inventory.AccessorGuiChest",
-    "net.minecraft.client.gui.inventory.MixinGuiContainer",
-    "net.minecraft.client.renderer.MixinEntityRenderer",
-    "net.minecraft.client.renderer.MixinItemRenderer",
-    "net.minecraft.client.renderer.entity.InvokerRender",
-    "net.minecraft.client.renderer.entity.MixinRenderPlayer",
-    "net.minecraft.client.renderer.entity.layers.MixinLayerHeldItem",
-    "net.minecraft.item.MixinItemBucket"
+    "AccessorGuiChest",
+    "InvokerMinecraft",
+    "InvokerRender",
+    "MixinEntityPlayerSP",
+    "MixinEntityRenderer",
+    "MixinGuiContainer",
+    "MixinGuiNewChat",
+    "MixinItemBucket",
+    ,
+    "MixinItemRenderer",
+    "MixinLayerHeldItem",
+    "MixinRenderPlayer"
   ],
   "minVersion": "0.7.11"
 }

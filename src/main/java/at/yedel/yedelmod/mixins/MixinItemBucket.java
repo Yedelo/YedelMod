@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.mixins.net.minecraft.item;
+package at.yedel.yedelmod.mixins;
 
 
 

@@ -3,7 +3,7 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.mixins.net.minecraft.client.renderer.entity.InvokerRender;
+import at.yedel.yedelmod.mixins.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.RankColor;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;

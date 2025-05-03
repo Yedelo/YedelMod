@@ -4,7 +4,7 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.event.events.DrawSlotEvent;
-import at.yedel.yedelmod.mixins.net.minecraft.client.gui.inventory.AccessorGuiChest;
+import at.yedel.yedelmod.mixins.AccessorGuiChest;
 import at.yedel.yedelmod.utils.typeutils.RenderUtils;
 import at.yedel.yedelmod.utils.typeutils.TextUtils;
 import cc.polyfrost.oneconfig.config.core.OneColor;

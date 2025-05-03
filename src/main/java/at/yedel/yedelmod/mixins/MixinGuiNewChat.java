@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.mixins.net.minecraft.client.gui;
+package at.yedel.yedelmod.mixins;
 
 
 
