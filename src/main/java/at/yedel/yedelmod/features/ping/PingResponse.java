@@ -106,7 +106,7 @@ public class PingResponse {
         else if (ping < 600) return "§9";
         else if (ping < 650) return "§1";
         else if (ping < 700) return "§7";
-        else if (ping < 740) return "§8";
+        else if (ping < 750) return "§8";
         else return "§0";
     }
 }
