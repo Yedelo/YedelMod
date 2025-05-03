@@ -8,11 +8,13 @@ import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.libs.universal.USound;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
+import net.minecraft.util.ResourceLocation;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
@@ -72,5 +74,17 @@ public class PingResponse {
         PingSender.getInstance().hypixelCheck = false;
     }
 
-    // Server list handled in ping sender
+    public void handleServerListPing() {
+        if (UMinecraft.getMinecraft().isSingleplayer()) {
+            UChat.chat(yedelogo + " §cThis method does not work in singleplayer!");
+        }
+        float ping = (float) UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
+        if (ping == 0) {
+            UChat.chat(yedelogo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
+        }
+        else {
+            UChat.chat(yedelogo + " &ePing: " + TextUtils.color(ping) + (int) ping + " &ems &7(server list)");
+            USound.INSTANCE.playSoundStatic(new ResourceLocation("random.successful_hit"), 1, (float) (ping * -0.006 + 2));
+        }
+    }
 }
