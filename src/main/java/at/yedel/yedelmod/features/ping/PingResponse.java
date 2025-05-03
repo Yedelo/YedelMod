@@ -13,7 +13,6 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
-import net.minecraft.util.ResourceLocation;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
@@ -37,7 +36,7 @@ public class PingResponse {
         if (event.message.getUnformattedText().contains("Unknown command")) {
             event.isCancelled = true;
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(command)");
+            showPingMessage("command", ping);
             playPingSound(ping);
             PingSender.getInstance().commandCheck = false;
         }
@@ -48,8 +47,8 @@ public class PingResponse {
         if (!PingSender.getInstance().statsCheck) return;
         if (event.packet instanceof S37PacketStatistics) {
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(stats)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
+            showPingMessage("stats", ping);
+            playPingSound(ping);
             PingSender.getInstance().statsCheck = false;
         }
     }
@@ -59,8 +58,8 @@ public class PingResponse {
         if (!PingSender.getInstance().tabCheck) return;
         if (event.packet instanceof S3APacketTabComplete) {
             float ping = getPing();
-            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(tab)");
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
+            showPingMessage("tab", ping);
+            playPingSound(ping);
             PingSender.getInstance().tabCheck = false;
         }
     }
@@ -68,8 +67,8 @@ public class PingResponse {
     public void handleHypixelPingResponse(ClientboundPingPacket packet) {
         if (!PingSender.getInstance().hypixelCheck) return;
         float ping = getPing();
-        UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(hypixel)");
-        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
+        showPingMessage("hypixel", ping);
+        playPingSound(ping);
         PingSender.getInstance().hypixelCheck = false;
     }
 
@@ -82,11 +81,15 @@ public class PingResponse {
             UChat.chat(yedelogo + " §cPing is 0! This might have occured if you used Direct Connect or the favorite server button.");
         }
         else {
-            UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(server list)");
-            USound.INSTANCE.playSoundStatic(new ResourceLocation("random.successful_hit"), 1, (float) (ping * -0.006 + 2));
+            showPingMessage("server list", ping);
+            playPingSound(ping);
         }
     }
 
+    private void showPingMessage(String method, float ping) {
+        UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(" + method + ")");
+    }
+    
     private void playPingSound(float ping) {
         USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
     }
