@@ -46,7 +46,7 @@ public class YedelConfig extends Config {
         return INSTANCE;
     }
 
-    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
+    private static final transient URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
     private YedelConfig() {
         super(new Mod("YedelMod", ModType.UTIL_QOL, "assets/yedelmod/yedelmod.png", 255, 255, new VigilanceMigrator("./config/YedelMod.toml")), "yedelmod.json", true, false);
