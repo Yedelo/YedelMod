@@ -14,6 +14,7 @@ import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import com.google.common.collect.ImmutableList;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -25,8 +26,6 @@ import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,14 +42,12 @@ public class BedwarsFeatures {
 	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
 	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
 	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
-	private static final List<String> COMFY_PILLOW_MESSAGES = new ArrayList<>();
-
-	static {
-		COMFY_PILLOW_MESSAGES.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
-		COMFY_PILLOW_MESSAGES.add("You cannot return items to another team's Shopkeeper!");
-		COMFY_PILLOW_MESSAGES.add("You cannot carry any more Comfy Pillows!");
-		COMFY_PILLOW_MESSAGES.add("You died while carrying x1 Comfy Pillows!");
-	}
+	private static final ImmutableList<String> COMFY_PILLOW_MESSAGES = ImmutableList.<String>builder()
+		.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!")
+		.add("You cannot return items to another team's Shopkeeper!")
+		.add("You cannot carry any more Comfy Pillows!")
+		.add("You died while carrying x1 Comfy Pillows!")
+		.build();
 
 	private boolean inBedwars;
 	private boolean hasExperience;
