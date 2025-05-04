@@ -55,12 +55,11 @@ public class EasyAtlasVerdicts {
             UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
             player.inventory.currentItem = 7;
             Multithreading.schedule(() -> {
-                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                    slot = 30;
-                    clickerEnabled = true;
-                    setupTimeout();
-                }, (int) (NumberUtils.randomRange(158, 301)), TimeUnit.MILLISECONDS
-            );
+                ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                slot = 30;
+                clickerEnabled = true;
+                setupTimeout();
+            }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
         }
     }
 

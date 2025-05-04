@@ -26,7 +26,9 @@ public class DropperGG {
         if (YedelConfig.getInstance().dropperAutoGG) {
 			String msg = event.message.getUnformattedText();
 			if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {
-                Multithreading.schedule(() -> UChat.say("/ac gg"), YedelConfig.getInstance().autoGGDelay, TimeUnit.SECONDS);
+				Multithreading.schedule(() -> {
+					UChat.say("/ac gg");
+				}, YedelConfig.getInstance().autoGGDelay, TimeUnit.SECONDS);
 			}
 		}
 	}

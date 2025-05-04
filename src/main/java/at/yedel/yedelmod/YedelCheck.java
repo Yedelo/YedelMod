@@ -38,17 +38,15 @@ public class YedelCheck {
             if (YedelUtils && !alreadyWarned) {
                 Multithreading.schedule(() -> {
                     UChat.chat(yedelogo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
-                    }, 3, TimeUnit.SECONDS
-                );
+                }, 3, TimeUnit.SECONDS);
                 alreadyWarned = false;
             }
             if (YedelConfig.getInstance().firstTime) {
                 Multithreading.schedule(() -> {
-                        UChat.chat("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
-                        YedelConfig.getInstance().firstTime = false;
-                        YedelConfig.getInstance().save();
-                    }, 1, TimeUnit.SECONDS
-                );
+                    UChat.chat("§7Welcome to §9§lYedel§7§lMod! Use §9/yedel §7for more information.");
+                    YedelConfig.getInstance().firstTime = false;
+                    YedelConfig.getInstance().save();
+                }, 1, TimeUnit.SECONDS);
             }
         }
     }

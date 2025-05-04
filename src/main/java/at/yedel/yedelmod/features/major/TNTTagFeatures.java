@@ -38,8 +38,7 @@ public class TNTTagFeatures {
         return INSTANCE;
     }
 
-    private static final Pattern YOU_TAGGED_PERSON_REGEX =
-        Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
+    private static final Pattern YOU_TAGGED_PERSON_REGEX = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private static final Pattern PERSON_BLEW_UP_REGEX = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
 
@@ -119,11 +118,13 @@ public class TNTTagFeatures {
     @Subscribe
     public void handleWhoMessage(ChatReceiveEvent event) {
         String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck) return;
+        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck) {
+            return;
+        }
         whoCheck = false;
         event.isCancelled = true;
         String[] playersArray = msg.substring(14).split("§r§7, ");
-        for (String player: playersArray) {
+        for (String player : playersArray) {
             if (player.contains(target)) {
                 targetRanked = player;
             }
@@ -173,8 +174,9 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void renderTargetLabel(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance)
+        if (!YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance) {
             return;
+        }
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = UPlayer.getPlayer();
         if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
@@ -195,7 +197,9 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void onRoundEnd(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting) return;
+        if (!YedelConfig.getInstance().bountyHunting) {
+            return;
+        }
         String msg = event.message.getUnformattedText();
         Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
         while (peopleDeathMatcher.find()) {
@@ -220,8 +224,7 @@ public class TNTTagFeatures {
                         USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
                     }
                     YedelConfig.getInstance().save();
-                    }, 500, TimeUnit.MILLISECONDS
-                );
+                }, 500, TimeUnit.MILLISECONDS);
             }
         }
     }
