@@ -56,6 +56,84 @@ public class StrengthIndicators {
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
     private final Map<String, Double> strengthPlayers = new HashMap<>();
+    private boolean inSkywars;
+    private double strengthDuration;
+
+    private StrengthIndicators() {
+        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+    }
+
+    private void handleLocationPacket(ClientboundLocationPacket packet) {
+        inSkywars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.SKYWARS;
+        if (packet.getMode().isPresent()) {
+            switch (packet.getMode().get()) {
+                case "solo_normal":
+                case "solo_insane":
+                    strengthDuration = 5;
+                    break;
+                case "teams_normal":
+                    strengthDuration = 2;
+                    break;
+                case "mini_normal":
+                case "mega_doubles":
+                case "solo_insane_lucky":
+                case "teams_insane_lucky":
+                default:
+                    strengthDuration = 0;
+            }
+        }
+        else {
+            strengthDuration = 0;
+        }
+    }
+
+    @Subscribe
+    public void downtickStrengthPlayers(TickEvent event) {
+        if (event.stage == Stage.START) {
+            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
+            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
+                String player = entry.getKey();
+                Double seconds = entry.getValue();
+                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
+            }
+            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
+        }
+    }
+
+    @Subscribe
+    public void handleKillMessage(ChatReceiveEvent event) {
+        if (inSkywars && strengthDuration != 0) {
+            String message = event.message.getUnformattedText();
+            for (Pattern killPattern : KILL_PATTERNS) {
+                Matcher messageMatcher = killPattern.matcher(message);
+                if (messageMatcher.find()) {
+                    strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(strengthDuration, 2));
+                    strengthPlayers.put(messageMatcher.group("killed"), 0.0D);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
+        if (!YedelConfig.getInstance().skywarsStrengthIndicators) return;
+        EntityPlayer entityPlayer = event.entityPlayer;
+        if (entityPlayer.isInvisible()) return;
+        String entityName = entityPlayer.getName();
+        if (!strengthPlayers.containsKey(entityName)) return;
+        String text =
+            COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
+        double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
+        ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
+    }
+
+    @Subscribe
+    public void clearStrengthPlayers(ReceivePacketEvent event) {
+        if (event.packet instanceof S01PacketJoinGame) {
+            strengthPlayers.clear();
+        }
+    }
+
     private static final Pattern[] KILL_PATTERNS = Arrays.stream(new String[] {
         USERNAME_PATTERN.replace("player", "killed") + " was killed by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was thrown into the void by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
@@ -172,81 +250,4 @@ public class StrengthIndicators {
         USERNAME_PATTERN.replace("player", "killed") + " was traded in for milk and cookies by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was turned to gingerbread by " + USERNAME_PATTERN.replace("player", "killer") + "\\."
     }).map(Pattern::compile).toArray(Pattern[]::new);
-    private boolean inSkywars;
-    private double strengthDuration;
-
-    private StrengthIndicators() {
-        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-    }
-
-    private void handleLocationPacket(ClientboundLocationPacket packet) {
-        inSkywars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.SKYWARS;
-        if (packet.getMode().isPresent()) {
-            switch (packet.getMode().get()) {
-                case "solo_normal":
-                case "solo_insane":
-                    strengthDuration = 5;
-                    break;
-                case "teams_normal":
-                    strengthDuration = 2;
-                    break;
-                case "mini_normal":
-                case "mega_doubles":
-                case "solo_insane_lucky":
-                case "teams_insane_lucky":
-                default:
-                    strengthDuration = 0;
-            }
-        }
-        else {
-            strengthDuration = 0;
-        }
-    }
-
-    @Subscribe
-    public void downtickStrengthPlayers(TickEvent event) {
-        if (event.stage == Stage.START) {
-            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
-            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
-                String player = entry.getKey();
-                Double seconds = entry.getValue();
-                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
-            }
-            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
-        }
-    }
-
-    @Subscribe
-    public void handleKillMessage(ChatReceiveEvent event) {
-        if (inSkywars && strengthDuration != 0) {
-            String message = event.message.getUnformattedText();
-            for (Pattern killPattern : KILL_PATTERNS) {
-                Matcher messageMatcher = killPattern.matcher(message);
-                if (messageMatcher.find()) {
-                    strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(strengthDuration, 2));
-                    strengthPlayers.put(messageMatcher.group("killed"), 0.0D);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().skywarsStrengthIndicators) return;
-        EntityPlayer entityPlayer = event.entityPlayer;
-        if (entityPlayer.isInvisible()) return;
-        String entityName = entityPlayer.getName();
-        if (!strengthPlayers.containsKey(entityName)) return;
-        String text =
-            COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
-        double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
-        ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
-    }
-
-    @Subscribe
-    public void clearStrengthPlayers(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
-            strengthPlayers.clear();
-        }
-    }
 }
