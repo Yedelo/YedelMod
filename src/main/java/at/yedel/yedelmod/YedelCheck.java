@@ -15,10 +15,15 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
+/**
+ * This class is for Yedelutils to check if this mod is loaded.
+ * This class would make Java.type("at.yedel.yedelmod.YedelCheck") be a JavaClass or 'function' (why?) instead of a JavaPackage
+ * When this is detected, it sets YedelUtils to true to let both to report a message about the incompatibility.
+ * alreadyWarned is not supposed to be saved.
+ * <p>
+ * Also used for the first time message, which may be extracted to YedelMod later.
+ */
 public class YedelCheck {
-    // This class is for YedelUtils to check if this mod is active. This mod would return JavaClass instead of JavaPackage
-    // YedelUtils makes this boolean true if it loads
-    // alreadyWarned is not supposed to be saved
 
     private static final YedelCheck INSTANCE = new YedelCheck();
 
@@ -29,7 +34,6 @@ public class YedelCheck {
     public static boolean YedelUtils = false;
     private boolean alreadyWarned = true;
 
-    // Also used for the first time message
     private YedelCheck() {}
 
     @Subscribe
