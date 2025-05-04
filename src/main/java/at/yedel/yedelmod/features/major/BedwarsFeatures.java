@@ -60,33 +60,8 @@ public class BedwarsFeatures {
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 	}
 
-	public boolean isInBedwars() {
-		return inBedwars;
-	}
-
 	private void handleLocationPacket(ClientboundLocationPacket packet) {
-		inBedwars =
-			packet.getServerType().isPresent() && packet.getServerType().get() == GameType.BEDWARS && !packet.getLobbyName().isPresent();
-	}
-
-	public boolean hasExperience() {
-		return hasExperience;
-	}
-
-	public String getHudXPText() {
-		return hudXPText;
-	}
-
-	public int getMagicMilkTime() {
-		return magicMilkTime;
-	}
-
-	public void decrementMagicMilkTime() {
-		magicMilkTime--;
-	}
-
-	public String getMagicMilkTimeText() {
-		return magicMilkTimeText;
+		inBedwars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.BEDWARS && !packet.getLobbyName().isPresent();
 	}
 
 	@Subscribe
@@ -116,7 +91,6 @@ public class BedwarsFeatures {
 			}
 			ticks++;
 		}
-
 	}
 
 	@Subscribe
@@ -189,5 +163,29 @@ public class BedwarsFeatures {
 		if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
 			event.isCancelled = true;
 		}
+	}
+
+	public boolean isInBedwars() {
+		return inBedwars;
+	}
+
+	public boolean hasExperience() {
+		return hasExperience;
+	}
+
+	public String getHudXPText() {
+		return hudXPText;
+	}
+
+	public int getMagicMilkTime() {
+		return magicMilkTime;
+	}
+
+	public void decrementMagicMilkTime() {
+		magicMilkTime--;
+	}
+
+	public String getMagicMilkTimeText() {
+		return magicMilkTimeText;
 	}
 }

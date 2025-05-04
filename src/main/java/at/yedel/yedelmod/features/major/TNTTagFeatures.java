@@ -62,14 +62,6 @@ public class TNTTagFeatures {
         displayLines.add("");
     }
 
-    public List<String> getDisplayLines() {
-        return displayLines;
-    }
-
-    public boolean isInTNTTag() {
-        return inTNTTag;
-    }
-
     private void handleLocationPacket(ClientboundLocationPacket packet) {
         inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG");
         if (inTNTTag) {
@@ -234,5 +226,13 @@ public class TNTTagFeatures {
         if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
             UChat.chat("§6§l- BountyHunting - §ePlease set your nick with /setnick or in the config.");
         }
+    }
+
+    public List<String> getDisplayLines() {
+        return displayLines;
+    }
+
+    public boolean isInTNTTag() {
+        return inTNTTag;
     }
 }
