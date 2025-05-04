@@ -55,6 +55,7 @@ public class StrengthIndicators {
         .build();
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
+
     private final Map<String, Double> strengthPlayers = new HashMap<>();
     private boolean inSkywars;
     private double strengthDuration;

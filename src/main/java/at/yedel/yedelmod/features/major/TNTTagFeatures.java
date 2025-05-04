@@ -42,6 +42,7 @@ public class TNTTagFeatures {
         Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private static final Pattern PERSON_BLEW_UP_REGEX = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
+
     private final ArrayList<String> players = new ArrayList<>();
     private final List<String> displayLines = new ArrayList<String>();
     private String target;
