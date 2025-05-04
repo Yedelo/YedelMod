@@ -27,10 +27,11 @@ public class ClickNotifications {
         return INSTANCE;
     }
 
+    private static final float DEFAULT_DURATION = 4000;
+
     private final Field $notifications;
     private final LinkedHashMap<Notification, Animation> notifications;
     private final LinkedHashMap<Notification, Runnable> actionMap = new LinkedHashMap<Notification, Runnable>();
-    private final float DEFAULT_DURATION = 4000;
 
     private ClickNotifications() {
         try {
