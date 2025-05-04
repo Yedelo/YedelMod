@@ -38,14 +38,7 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
     chatColor = ChatColor.BLUE
 )
 public class YedelCommand {
-    private YedelCommand() {}
-
     private static final YedelCommand INSTANCE = new YedelCommand();
-
-    public static YedelCommand getInstance() {
-        return INSTANCE;
-    }
-
     private static final String FORMATTING_CODES =
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
@@ -58,6 +51,12 @@ public class YedelCommand {
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
     private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
         new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
+
+    private YedelCommand() {}
+
+    public static YedelCommand getInstance() {
+        return INSTANCE;
+    }
 
     @Main(
         description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."
@@ -108,6 +107,83 @@ public class YedelCommand {
     )
     public void limbocreative() {
         LimboCreative.getInstance().checkLimbo();
+    }
+
+    @SubCommand(
+        description = "Shows your total playtime (while playing on servers) in hours and minutes.",
+        aliases = "pt"
+    )
+    public void playtime() {
+        int minutes = YedelConfig.getInstance().playtimeMinutes;
+        UChat.chat(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+    }
+
+    @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
+    public void setnick(String nick) {
+        UChat.chat("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
+        YedelConfig.getInstance().currentNick = nick;
+        YedelConfig.getInstance().save();
+    }
+
+    @SubCommand(description = "Sets the display text, supporting color codes with ampersands (&).")
+    public void settext(@Greedy String text) {
+        String displayText = UChat.addColor(text);
+        YedelConfig.getInstance().customTextHud.displayText = displayText;
+        YedelConfig.getInstance().save();
+        UChat.chat(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+    }
+
+    @SubCommand(description = "Sets the title of the game window.")
+    public void settitle(@Greedy String title) {
+        Display.setTitle(title);
+        UChat.chat(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
+    }
+
+    @SubCommand(
+        description = "Simulates a chat message, also supports color codes with ampersands (&).",
+        aliases = "simc"
+    )
+    private void simulatechat(@Greedy String text) {
+        String message = UChat.addColor(text);
+        UPacket.sendChatMessage(new UTextComponent(message));
+    }
+
+    @SubCommand(
+        description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
+        aliases = "message"
+    )
+    public void yedelmessage() {
+        new Thread(() -> {
+            try {
+                JsonObject messageObject =
+                    Requests.getJsonObject(new URL("https://yedelo.github.io/yedelmod.json")).getAsJsonObject();
+                String yedelMessage = messageObject.get("yedelmod-message-formatted").getAsString();
+
+                String lastUpdatedTimeString = "?";
+
+                try {
+                    long lastUpdatedTime = messageObject.get("last-updated-time").getAsLong();
+
+                    ZonedDateTime dateTime =
+                        ZonedDateTime.ofInstant(Instant.ofEpochSecond(lastUpdatedTime), ZoneId.systemDefault());
+                    Locale userLocale = Locale.getDefault();
+                    DateTimeFormatter formatter =
+                        DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy h:mm a z", userLocale);
+                    lastUpdatedTimeString = dateTime.format(formatter);
+                }
+                catch (IllegalStateException e) {
+                    yedelog.error("Couldn't get last updatted date/time", e);
+                }
+
+                UChat.chat(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                UChat.chat(yedelMessage);
+            }
+            catch (IOException e) {
+                UChat.chat(yedelogo + " §cCouldn't get mod message!");
+                e.printStackTrace();
+            }
+        }, "YedelMod Message"
+        ).start();
     }
 
     @SubCommandGroup("ping")
@@ -163,45 +239,6 @@ public class YedelCommand {
         }
     }
 
-    @SubCommand(
-        description = "Shows your total playtime (while playing on servers) in hours and minutes.",
-        aliases = "pt"
-    )
-    public void playtime() {
-        int minutes = YedelConfig.getInstance().playtimeMinutes;
-        UChat.chat(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
-    }
-
-    @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
-    public void setnick(String nick) {
-        UChat.chat("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
-        YedelConfig.getInstance().currentNick = nick;
-        YedelConfig.getInstance().save();
-    }
-
-    @SubCommand(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(@Greedy String text) {
-        String displayText = UChat.addColor(text);
-        YedelConfig.getInstance().customTextHud.displayText = displayText;
-        YedelConfig.getInstance().save();
-        UChat.chat(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
-    }
-
-    @SubCommand(description = "Sets the title of the game window.")
-    public void settitle(@Greedy String title) {
-        Display.setTitle(title);
-        UChat.chat(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
-    }
-
-    @SubCommand(
-        description = "Simulates a chat message, also supports color codes with ampersands (&).",
-        aliases = "simc"
-    )
-    private void simulatechat(@Greedy String text) {
-        String message = UChat.addColor(text);
-        UPacket.sendChatMessage(new UTextComponent(message));
-    }
-
     @SubCommandGroup("update")
     public static class Update {
         @Main
@@ -218,43 +255,5 @@ public class YedelCommand {
         public void github() {
             UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
         }
-    }
-
-    @SubCommand(
-        description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
-        aliases = "message"
-    )
-    public void yedelmessage() {
-        new Thread(() -> {
-            try {
-                JsonObject messageObject =
-                    Requests.getJsonObject(new URL("https://yedelo.github.io/yedelmod.json")).getAsJsonObject();
-                String yedelMessage = messageObject.get("yedelmod-message-formatted").getAsString();
-
-                String lastUpdatedTimeString = "?";
-
-                try {
-                    long lastUpdatedTime = messageObject.get("last-updated-time").getAsLong();
-
-                    ZonedDateTime dateTime =
-                        ZonedDateTime.ofInstant(Instant.ofEpochSecond(lastUpdatedTime), ZoneId.systemDefault());
-                    Locale userLocale = Locale.getDefault();
-                    DateTimeFormatter formatter =
-                        DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy h:mm a z", userLocale);
-                    lastUpdatedTimeString = dateTime.format(formatter);
-                }
-                catch (IllegalStateException e) {
-                    yedelog.error("Couldn't get last updatted date/time", e);
-                }
-
-                UChat.chat(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
-                UChat.chat(yedelMessage);
-            }
-            catch (IOException e) {
-                UChat.chat(yedelogo + " §cCouldn't get mod message!");
-                e.printStackTrace();
-            }
-        }, "YedelMod Message"
-        ).start();
     }
 }

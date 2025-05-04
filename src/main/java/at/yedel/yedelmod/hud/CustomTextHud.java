@@ -10,6 +10,13 @@ import cc.polyfrost.oneconfig.hud.SingleTextHud;
 
 
 public class CustomTextHud extends SingleTextHud {
+    @Text(
+        name = "Display text",
+        size = 2
+    )
+    @VigilanceName(name = "displayedText", category = "storage", subcategory = "")
+    public String displayText = "";
+
     public CustomTextHud() {
         super(
             "", // no title
@@ -29,13 +36,6 @@ public class CustomTextHud extends SingleTextHud {
         );
         textType = 1;
     }
-
-    @Text(
-        name = "Display text",
-        size = 2
-    )
-    @VigilanceName(name = "displayedText", category = "storage", subcategory = "")
-    public String displayText = "";
 
     @Override
     protected String getText(boolean example) {

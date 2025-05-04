@@ -26,11 +26,6 @@ import java.util.Objects;
 
 public class ItemSwings {
     private static final ItemSwings INSTANCE = new ItemSwings();
-
-    public static ItemSwings getInstance() {
-        return INSTANCE;
-    }
-
     private static final List<String> SWING_ITEMS = new ArrayList<String>();
 
     private ItemSwings() {
@@ -40,6 +35,10 @@ public class ItemSwings {
             "minecraft:experience_bottle",
             "minecraft:snowball"
         ));
+    }
+
+    public static ItemSwings getInstance() {
+        return INSTANCE;
     }
 
     private void swing() {

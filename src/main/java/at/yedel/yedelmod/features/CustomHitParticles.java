@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 public class CustomHitParticles {
-	private CustomHitParticles() {}
-
 	private static final CustomHitParticles INSTANCE = new CustomHitParticles();
+
+	private CustomHitParticles() {}
 
 	public static CustomHitParticles getInstance() {
 		return INSTANCE;

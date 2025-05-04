@@ -35,16 +35,32 @@ import java.util.regex.Pattern;
 
 public class BedwarsFeatures {
 	private static final BedwarsFeatures INSTANCE = new BedwarsFeatures();
+	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
+	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
+	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
+	private static final List<String> COMFY_PILLOW_MESSAGES = new ArrayList<>();
 
-	public static BedwarsFeatures getInstance() {
-		return INSTANCE;
+	static {
+		COMFY_PILLOW_MESSAGES.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
+		COMFY_PILLOW_MESSAGES.add("You cannot return items to another team's Shopkeeper!");
+		COMFY_PILLOW_MESSAGES.add("You cannot carry any more Comfy Pillows!");
+		COMFY_PILLOW_MESSAGES.add("You died while carrying x1 Comfy Pillows!");
 	}
+
+	private boolean inBedwars;
+	private boolean hasExperience;
+	private String hudXPText;
+	private int magicMilkTime;
+	private String magicMilkTimeText;
+	private int ticks;
 
 	private BedwarsFeatures() {
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 	}
 
-	private boolean inBedwars;
+	public static BedwarsFeatures getInstance() {
+		return INSTANCE;
+	}
 
 	public boolean isInBedwars() {
 		return inBedwars;
@@ -55,19 +71,13 @@ public class BedwarsFeatures {
 			packet.getServerType().isPresent() && packet.getServerType().get() == GameType.BEDWARS && !packet.getLobbyName().isPresent();
 	}
 
-	private boolean hasExperience;
-
 	public boolean hasExperience() {
 		return hasExperience;
 	}
 
-	private String hudXPText;
-
 	public String getHudXPText() {
 		return hudXPText;
 	}
-
-	private int magicMilkTime;
 
 	public int getMagicMilkTime() {
 		return magicMilkTime;
@@ -77,23 +87,8 @@ public class BedwarsFeatures {
 		magicMilkTime--;
 	}
 
-	private String magicMilkTimeText;
-
 	public String getMagicMilkTimeText() {
 		return magicMilkTimeText;
-	}
-
-	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
-
-	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
-	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
-	private static final List<String> COMFY_PILLOW_MESSAGES = new ArrayList<>();
-
-	static {
-		COMFY_PILLOW_MESSAGES.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!");
-		COMFY_PILLOW_MESSAGES.add("You cannot return items to another team's Shopkeeper!");
-		COMFY_PILLOW_MESSAGES.add("You cannot carry any more Comfy Pillows!");
-		COMFY_PILLOW_MESSAGES.add("You died while carrying x1 Comfy Pillows!");
 	}
 
 	@Subscribe
@@ -113,8 +108,6 @@ public class BedwarsFeatures {
 			magicMilkTimeText = "§b30§as";
 		}
 	}
-
-	private int ticks;
 
 	@Subscribe
 	public void decrementMagicMilkTime(TickEvent event) {

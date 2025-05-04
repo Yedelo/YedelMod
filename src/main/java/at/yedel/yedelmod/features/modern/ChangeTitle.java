@@ -15,9 +15,9 @@ import java.util.Objects;
 
 
 public class ChangeTitle {
-    private ChangeTitle() {}
-
     private static final ChangeTitle INSTANCE = new ChangeTitle();
+
+    private ChangeTitle() {}
 
     public static ChangeTitle getInstance() {
         return INSTANCE;

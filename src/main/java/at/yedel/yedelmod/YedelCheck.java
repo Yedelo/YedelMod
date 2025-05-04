@@ -20,17 +20,16 @@ public class YedelCheck {
     // YedelUtils makes this boolean true if it loads
     // alreadyWarned is not supposed to be saved
 
+    private static final YedelCheck INSTANCE = new YedelCheck();
+    public static boolean YedelUtils = false;
+    private boolean alreadyWarned = true;
+
     // Also used for the first time message
     private YedelCheck() {}
-
-    private static final YedelCheck INSTANCE = new YedelCheck();
 
     public static YedelCheck getInstance() {
         return INSTANCE;
     }
-
-    public static boolean YedelUtils = false;
-    private boolean alreadyWarned = true;
 
     @Subscribe
     public void checkUponServerChange(ReceivePacketEvent event) {

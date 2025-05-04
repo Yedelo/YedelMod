@@ -25,16 +25,15 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 public class HypixelManager {
-	private HypixelManager() {}
-
 	private static final HypixelManager INSTANCE = new HypixelManager();
+	private static final String PING_PACKET_IDENTIFIER =
+		HypixelModAPI.getInstance().getRegistry().getIdentifier(ClientboundPingPacket.class);
+
+	private HypixelManager() {}
 
 	public static HypixelManager getInstance() {
 		return INSTANCE;
 	}
-
-	private static final String PING_PACKET_IDENTIFIER =
-		HypixelModAPI.getInstance().getRegistry().getIdentifier(ClientboundPingPacket.class);
 
 	public void setup() {
 		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);

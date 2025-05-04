@@ -20,14 +20,14 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 public class PingResponse {
     private static final PingResponse INSTANCE = new PingResponse();
 
-    public static PingResponse getInstance() {
-        return INSTANCE;
-    }
-
     private PingResponse() {
         // note: using the method reference PingResponse.getInstance()::handleHypixelPingResponse doesn't work
         // because that would be referring to the instance in the constructor
         HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handleHypixelPingResponse);
+    }
+
+    public static PingResponse getInstance() {
+        return INSTANCE;
     }
 
     @Subscribe

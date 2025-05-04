@@ -9,19 +9,18 @@ import net.minecraft.inventory.Slot;
 
 public class DrawSlotEvent {
 	private final GuiContainer guiContainer;
+	private final Slot slot;
+
+	public DrawSlotEvent(GuiContainer guiContainer, Slot slot) {
+		this.guiContainer = guiContainer;
+		this.slot = slot;
+	}
 
 	public GuiContainer getGuiContainer() {
 		return guiContainer;
 	}
 
-	private final Slot slot;
-
 	public Slot getSlot() {
 		return slot;
-	}
-
-	public DrawSlotEvent(GuiContainer guiContainer, Slot slot) {
-		this.guiContainer = guiContainer;
-		this.slot = slot;
 	}
 }

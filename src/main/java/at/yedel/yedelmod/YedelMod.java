@@ -39,14 +39,13 @@ import java.util.concurrent.TimeUnit;
 	clientSideOnly = true
 )
 public class YedelMod {
+	public static final Logger yedelog = LogManager.getLogger("YedelMod");
 	@Instance
 	private static YedelMod INSTANCE;
 
 	public static YedelMod getInstance() {
 		return INSTANCE;
 	}
-
-	public static final Logger yedelog = LogManager.getLogger("YedelMod");
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {

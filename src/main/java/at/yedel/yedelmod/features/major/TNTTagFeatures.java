@@ -33,17 +33,12 @@ import java.util.regex.Pattern;
 
 public class TNTTagFeatures {
     private static final TNTTagFeatures INSTANCE = new TNTTagFeatures();
-
-    public static TNTTagFeatures getInstance() {
-        return INSTANCE;
-    }
-
-    private final ArrayList<String> players = new ArrayList<>();
     private static final Pattern YOU_TAGGED_PERSON_REGEX =
         Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private static final Pattern PERSON_BLEW_UP_REGEX = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
-
+    private final ArrayList<String> players = new ArrayList<>();
+    private final List<String> displayLines = new ArrayList<String>();
     private String target;
     private String targetRanked;
     private boolean whoCheck;
@@ -51,12 +46,7 @@ public class TNTTagFeatures {
     private RankColor targetRankColor = RankColor.GRAY; // Prevents it from trying to render with a null color code
     private boolean dead;
     private String playerName;
-
-    private final List<String> displayLines = new ArrayList<String>();
-
-    public List<String> getDisplayLines() {
-        return displayLines;
-    }
+    private boolean inTNTTag;
 
     private TNTTagFeatures() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
@@ -67,7 +57,13 @@ public class TNTTagFeatures {
         displayLines.add("");
     }
 
-    private boolean inTNTTag;
+    public static TNTTagFeatures getInstance() {
+        return INSTANCE;
+    }
+
+    public List<String> getDisplayLines() {
+        return displayLines;
+    }
 
     public boolean isInTNTTag() {
         return inTNTTag;

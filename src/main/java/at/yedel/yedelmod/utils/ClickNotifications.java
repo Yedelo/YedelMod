@@ -22,10 +22,10 @@ import java.util.concurrent.Callable;
 
 public class ClickNotifications {
     private static final ClickNotifications INSTANCE = new ClickNotifications();
-
-    public static ClickNotifications getInstance() {
-        return INSTANCE;
-    }
+    private final Field $notifications;
+    private final LinkedHashMap<Notification, Animation> notifications;
+    private final LinkedHashMap<Notification, Runnable> actionMap = new LinkedHashMap<Notification, Runnable>();
+    private final float DEFAULT_DURATION = 4000;
 
     private ClickNotifications() {
         try {
@@ -38,11 +38,9 @@ public class ClickNotifications {
         }
     }
 
-    private final Field $notifications;
-
-    private final LinkedHashMap<Notification, Animation> notifications;
-
-    private final LinkedHashMap<Notification, Runnable> actionMap = new LinkedHashMap<Notification, Runnable>();
+    public static ClickNotifications getInstance() {
+        return INSTANCE;
+    }
 
     public void clickNotification() {
         Set<Map.Entry<Notification, Runnable>> entrySet = actionMap.entrySet();
@@ -65,8 +63,6 @@ public class ClickNotifications {
             clickNotification();
         }
     }
-
-    private final float DEFAULT_DURATION = 4000;
 
     /**
      * Send a notification to the user

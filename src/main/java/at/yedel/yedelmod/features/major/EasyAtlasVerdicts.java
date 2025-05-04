@@ -26,18 +26,16 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 public class EasyAtlasVerdicts {
-    private EasyAtlasVerdicts() {}
-
     private static final EasyAtlasVerdicts INSTANCE = new EasyAtlasVerdicts();
+    private boolean inAtlas;
+    private boolean clickerEnabled = false;
+    private int slot;
+
+    private EasyAtlasVerdicts() {}
 
     public static EasyAtlasVerdicts getInstance() {
         return INSTANCE;
     }
-
-    private boolean inAtlas;
-
-    private boolean clickerEnabled = false;
-    private int slot;
 
     @Subscribe
     public void onSuspectTeleport(ChatReceiveEvent event) {

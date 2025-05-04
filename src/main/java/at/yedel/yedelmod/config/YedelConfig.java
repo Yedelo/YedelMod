@@ -93,8 +93,7 @@ public class YedelConfig extends Config {
         BasicOption option = null;
         if (Objects.equals(annotation.id(), "empty")) {
             Empty empty = ConfigUtils.findAnnotation(field, Empty.class);
-            option =
-                new EmptyOption(field, this, empty.name(), empty.description(), empty.category(), empty.subcategory(), empty.size());
+            option = new EmptyOption(field, this, empty.name(), empty.description(), empty.category(), empty.subcategory(), empty.size());
             ConfigUtils.getSubCategory(page, empty.category(), empty.subcategory()).options.add(option);
         }
         return option;

@@ -11,9 +11,9 @@ import java.util.regex.PatternSyntaxException;
 
 
 public class RegexChatFilter {
-	private RegexChatFilter() {}
-
 	private static final RegexChatFilter INSTANCE = new RegexChatFilter();
+
+	private RegexChatFilter() {}
 
 	public static RegexChatFilter getInstance() {
 		return INSTANCE;
