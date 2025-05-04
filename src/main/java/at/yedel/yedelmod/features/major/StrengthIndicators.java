@@ -56,7 +56,7 @@ public class StrengthIndicators {
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
     private final Map<String, Double> strengthPlayers = new HashMap<>();
-    private static final Pattern[] killPatterns = Arrays.stream(new String[] {
+    private static final Pattern[] KILL_PATTERNS = Arrays.stream(new String[] {
         USERNAME_PATTERN.replace("player", "killed") + " was killed by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was thrown into the void by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was thrown off a cliff by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
@@ -220,7 +220,7 @@ public class StrengthIndicators {
     public void handleKillMessage(ChatReceiveEvent event) {
         if (inSkywars && strengthDuration != 0) {
             String message = event.message.getUnformattedText();
-            for (Pattern killPattern : killPatterns) {
+            for (Pattern killPattern : KILL_PATTERNS) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
                     strengthPlayers.put(messageMatcher.group("killer"), NumberUtils.round(strengthDuration, 2));
