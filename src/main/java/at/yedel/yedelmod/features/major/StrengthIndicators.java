@@ -29,10 +29,10 @@ import java.util.regex.Pattern;
 
 
 public class StrengthIndicators {
-    private static final StrengthIndicators instance = new StrengthIndicators();
+    private static final StrengthIndicators INSTANCE = new StrengthIndicators();
 
     public static StrengthIndicators getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
