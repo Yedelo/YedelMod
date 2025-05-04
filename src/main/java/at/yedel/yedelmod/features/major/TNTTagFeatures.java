@@ -179,7 +179,7 @@ public class TNTTagFeatures {
             return;
         EntityPlayer targetPlayer = event.entityPlayer;
         EntityPlayerSP player = UPlayer.getPlayer();
-        if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(event.entityPlayer) && !targetPlayer.isInvisible()) {
+        if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
             double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
             String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
             ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
