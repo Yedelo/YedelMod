@@ -32,7 +32,7 @@ public class YedelCheck {
     }
 
     public static boolean YedelUtils = false;
-    private boolean alreadyWarned = true;
+    private boolean alreadyWarned = false;
 
     private YedelCheck() {}
 
@@ -43,7 +43,7 @@ public class YedelCheck {
                 Multithreading.schedule(() -> {
                     UChat.chat(yedelogo + " §cYedelUtils detected, it will likely completely break this mod. Do §7/ct delete YedelUtils §cto remove it.");
                 }, 3, TimeUnit.SECONDS);
-                alreadyWarned = false;
+                alreadyWarned = true;
             }
             if (YedelConfig.getInstance().firstTime) {
                 Multithreading.schedule(() -> {
