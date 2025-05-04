@@ -40,6 +40,14 @@ import java.util.Objects;
 
 
 public class YedelConfig extends Config {
+    private static final YedelConfig INSTANCE = new YedelConfig();
+
+    public static YedelConfig getInstance() {
+        return INSTANCE;
+    }
+
+    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
+
     private YedelConfig() {
         super(new Mod("YedelMod", ModType.UTIL_QOL, "assets/yedelmod/yedelmod.png", 255, 255, new VigilanceMigrator("./config/YedelMod.toml")), "yedelmod.json", true, false);
         initialize();
@@ -79,14 +87,6 @@ public class YedelConfig extends Config {
             hideIf(internalOption, () -> true);
         }
     }
-
-    private static final YedelConfig INSTANCE = new YedelConfig();
-
-    public static YedelConfig getInstance() {
-        return INSTANCE;
-    }
-
-    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
     @Override
     protected BasicOption getCustomOption(Field field, CustomOption annotation, OptionPage page, Mod mod, boolean migrate) {
