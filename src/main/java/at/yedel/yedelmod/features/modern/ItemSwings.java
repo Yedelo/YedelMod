@@ -38,10 +38,6 @@ public class ItemSwings {
 
     private ItemSwings() {}
 
-    private void swing() {
-        ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingItemLocally();
-    }
-
     @SubscribeEvent
     public void swingOnSwingableUse(PlayerInteractEvent event) {
         if (!YedelConfig.getInstance().itemUseSwings) return;
@@ -75,5 +71,9 @@ public class ItemSwings {
                 swing();
             }
         }
+    }
+
+    private void swing() {
+        ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingItemLocally();
     }
 }
