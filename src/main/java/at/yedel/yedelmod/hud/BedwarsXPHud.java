@@ -36,7 +36,11 @@ public class BedwarsXPHud extends SingleTextHud {
 
     @Override
     protected String getText(boolean example) {
-        if (example) return "§b3,550§7/§a5,000";
-        else return BedwarsFeatures.getInstance().getHudXPText();
+        if (example) {
+            return "§b3,550§7/§a5,000";
+        }
+        else {
+            return BedwarsFeatures.getInstance().getHudXPText();
+        }
     }
 }

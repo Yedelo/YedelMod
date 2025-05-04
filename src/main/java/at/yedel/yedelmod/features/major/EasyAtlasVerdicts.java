@@ -45,7 +45,9 @@ public class EasyAtlasVerdicts {
         if (Objects.equals(text, "Teleporting you to suspect")) {
             inAtlas = true;
         }
-        else if (Objects.equals(text, "Atlas verdict submitted! Thank you :)")) inAtlas = false;
+        else if (Objects.equals(text, "Atlas verdict submitted! Thank you :)")) {
+            inAtlas = false;
+        }
     }
 
     public void submitInsufficientEvidenceVerdict() {
@@ -80,7 +82,9 @@ public class EasyAtlasVerdicts {
 
     @Subscribe
     public void onLeaveAtlas(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) inAtlas = false;
+        if (event.packet instanceof S01PacketJoinGame) {
+            inAtlas = false;
+        }
     }
 
     @SubscribeEvent

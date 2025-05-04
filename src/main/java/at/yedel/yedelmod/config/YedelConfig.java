@@ -134,8 +134,12 @@ public class YedelConfig extends Config {
     public int updateSource = 0;
 
     public UpdateSource getUpdateSource() {
-        if (updateSource == 0) return UpdateSource.MODRINTH;
-        else return UpdateSource.GITHUB;
+        if (updateSource == 0) {
+            return UpdateSource.MODRINTH;
+        }
+        else {
+            return UpdateSource.GITHUB;
+        }
     }
 
     @VigilanceName(name = "Automatically check for updates", category = "General", subcategory = "Updates")

@@ -85,7 +85,9 @@ public class StrengthIndicators {
                     strengthDuration = 0;
             }
         }
-        else strengthDuration = 0;
+        else {
+            strengthDuration = 0;
+        }
     }
 
     @Subscribe

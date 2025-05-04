@@ -81,12 +81,16 @@ public class YedelModLoadingPlugin implements IFMLLoadingPlugin {
 
 		List<File> allModFiles = new ArrayList<>();
 		allModFiles.addAll(Arrays.asList(modFiles));
-		if (deepModFiles != null) allModFiles.addAll(Arrays.asList(deepModFiles));
+		if (deepModFiles != null) {
+			allModFiles.addAll(Arrays.asList(deepModFiles));
+		}
 
 		for (File modFile: allModFiles) {
 			try (JarFile modJar = new JarFile(modFile)) {
 				JarEntry possibleModInfo = modJar.getJarEntry("mcmod.info");
-				if (possibleModInfo == null) continue;
+				if (possibleModInfo == null) {
+					continue;
+				}
 				try (InputStream modStream = modJar.getInputStream(possibleModInfo); InputStreamReader reader = new InputStreamReader(modStream)) {
 					JsonObject modObject =
 						new JsonParser().parse(reader)

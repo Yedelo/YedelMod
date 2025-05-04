@@ -84,7 +84,9 @@ public class PingSender {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
             hypixelCheck = true;
         }
-        else UChat.chat(yedelogo + " §cYou must be on Hypixel to use this!");
+        else {
+            UChat.chat(yedelogo + " §cYou must be on Hypixel to use this!");
+        }
     }
 
     public void serverListPing() {

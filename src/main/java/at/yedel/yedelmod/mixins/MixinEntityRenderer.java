@@ -15,6 +15,8 @@ public abstract class MixinEntityRenderer {
     @ModifyArg(method = "hurtCameraEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;rotate(FFFF)V", ordinal = 2), index = 0)
     private float antimations$changeHurtcamIntensity(float original) {
         if (YedelConfig.getInstance().damageTilt) return original * YedelConfig.getInstance().damageTiltStrength / 100;
-        else return original;
+        else {
+            return original;
+        }
     }
 }

@@ -37,6 +37,8 @@ public class MagicMilkTimeHud extends SingleTextHud {
     @Override
     protected String getText(boolean example) {
         if (example) return "§b25§as";
-        else return BedwarsFeatures.getInstance().getMagicMilkTimeText();
+        else {
+            return BedwarsFeatures.getInstance().getMagicMilkTimeText();
+        }
     }
 }

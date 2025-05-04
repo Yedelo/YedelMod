@@ -40,9 +40,13 @@ public class LimboCreative {
             if (UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
                 UChat.chat(yedelogo + " §cYou are already in creative mode!");
             }
-            else giveCreative();
+            else {
+                giveCreative();
+            }
         }
-        else UChat.chat(yedelogo + " §cLimbo check failed, try again in a bit or rejoin!");
+        else {
+            UChat.chat(yedelogo + " §cLimbo check failed, try again in a bit or rejoin!");
+        }
     }
 
     public void giveCreative() {

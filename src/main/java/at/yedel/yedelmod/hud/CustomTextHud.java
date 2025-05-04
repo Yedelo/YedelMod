@@ -39,7 +39,11 @@ public class CustomTextHud extends SingleTextHud {
 
     @Override
     protected String getText(boolean example) {
-        if (example) return "Example text";
-        else return displayText;
+        if (example) {
+            return "Example text";
+        }
+        else {
+            return displayText;
+        }
     }
 }

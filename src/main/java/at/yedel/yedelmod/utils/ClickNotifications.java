@@ -51,7 +51,9 @@ public class ClickNotifications {
             int lastIndex = entryArray.length - 1;
             Map.Entry<Notification, Runnable> lastEntry = (Map.Entry<Notification, Runnable>) entryArray[lastIndex];
             if (lastEntry != null) {
-                if (!lastEntry.getKey().isFinished()) lastEntry.getValue().run();
+                if (!lastEntry.getKey().isFinished()) {
+                    lastEntry.getValue().run();
+                }
                 actionMap.remove(lastEntry.getKey());
             }
         }

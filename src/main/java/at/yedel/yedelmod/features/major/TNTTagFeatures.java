@@ -75,7 +75,9 @@ public class TNTTagFeatures {
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
         inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG");
-        if (inTNTTag) onTNTTagJoin();
+        if (inTNTTag) {
+            onTNTTagJoin();
+        }
     }
 
     public void onTNTTagJoin() {
@@ -97,8 +99,9 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!"))
+        if (!YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!")) {
             return;
+        }
         players.clear();
         for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
             players.add(playerInfo.getGameProfile().getName());
@@ -128,11 +131,21 @@ public class TNTTagFeatures {
             }
         }
         displayLines.set(3, "§cYour next target is " + targetRanked + ".");
-        if (targetRanked.startsWith("§r§7")) targetRankColor = RankColor.GRAY;
-        else if (targetRanked.startsWith("§r§a")) targetRankColor = RankColor.GREEN;
-        else if (targetRanked.startsWith("§r§b")) targetRankColor = RankColor.AQUA;
-        else if (targetRanked.startsWith("§r§6")) targetRankColor = RankColor.GOLD;
-        else targetRankColor = RankColor.RED;
+        if (targetRanked.startsWith("§r§7")) {
+            targetRankColor = RankColor.GRAY;
+        }
+        else if (targetRanked.startsWith("§r§a")) {
+            targetRankColor = RankColor.GREEN;
+        }
+        else if (targetRanked.startsWith("§r§b")) {
+            targetRankColor = RankColor.AQUA;
+        }
+        else if (targetRanked.startsWith("§r§6")) {
+            targetRankColor = RankColor.GOLD;
+        }
+        else {
+            targetRankColor = RankColor.RED;
+        }
     }
 
     @Subscribe
@@ -197,7 +210,9 @@ public class TNTTagFeatures {
             if (Objects.equals(personDied, target) && fightingTarget) {
                 Multithreading.schedule(() -> {
                     int pointIncrease = (int) Math.ceil(players.size() * 0.8);
-                    if (dead) pointIncrease /= 2;
+                    if (dead) {
+                        pointIncrease /= 2;
+                    }
                     YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
                     YedelConfig.getInstance().bountyHuntingKills += 1;
                     displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
