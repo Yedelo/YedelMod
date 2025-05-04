@@ -8,6 +8,7 @@ import cc.polyfrost.oneconfig.events.event.SendPacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -17,9 +18,6 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -31,16 +29,14 @@ public class ItemSwings {
         return INSTANCE;
     }
 
-    private static final List<String> SWING_ITEMS = new ArrayList<String>();
+    private static final ImmutableList<String> SWING_ITEMS = ImmutableList.<String>builder()
+        .add("minecraft:egg")
+        .add("minecraft_ender_eye")
+        .add("minecraft_experience_bottle")
+        .add("minecraft:snowball")
+        .build();
 
-    private ItemSwings() {
-        SWING_ITEMS.addAll(Arrays.asList(
-            "minecraft:egg",
-            "minecraft:ender_eye",
-            "minecraft:experience_bottle",
-            "minecraft:snowball"
-        ));
-    }
+    private ItemSwings() {}
 
     private void swing() {
         ((SwingItemDuck) UPlayer.getPlayer()).yedelmod$swingItemLocally();
