@@ -33,6 +33,11 @@ import java.util.regex.Pattern;
 
 public class TNTTagFeatures {
     private static final TNTTagFeatures INSTANCE = new TNTTagFeatures();
+
+    public static TNTTagFeatures getInstance() {
+        return INSTANCE;
+    }
+
     private static final Pattern YOU_TAGGED_PERSON_REGEX =
         Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
@@ -55,10 +60,6 @@ public class TNTTagFeatures {
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         displayLines.add("");
-    }
-
-    public static TNTTagFeatures getInstance() {
-        return INSTANCE;
     }
 
     public List<String> getDisplayLines() {

@@ -39,6 +39,11 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 )
 public class YedelCommand {
     private static final YedelCommand INSTANCE = new YedelCommand();
+
+    public static YedelCommand getInstance() {
+        return INSTANCE;
+    }
+
     private static final String FORMATTING_CODES =
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
@@ -53,10 +58,6 @@ public class YedelCommand {
         new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
 
     private YedelCommand() {}
-
-    public static YedelCommand getInstance() {
-        return INSTANCE;
-    }
 
     @Main(
         description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."

@@ -30,6 +30,11 @@ import java.util.regex.Pattern;
 
 public class StrengthIndicators {
     private static final StrengthIndicators instance = new StrengthIndicators();
+
+    public static StrengthIndicators getInstance() {
+        return instance;
+    }
+
     private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
         .put(0, "§4")
         .put(1, "§c")
@@ -172,10 +177,6 @@ public class StrengthIndicators {
 
     private StrengthIndicators() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-    }
-
-    public static StrengthIndicators getInstance() {
-        return instance;
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {

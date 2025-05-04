@@ -17,14 +17,15 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 public class LimboCreative {
     private static final LimboCreative INSTANCE = new LimboCreative();
+
+    public static LimboCreative getInstance() {
+        return INSTANCE;
+    }
+
     private boolean inLimbo;
 
     private LimboCreative() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-    }
-
-    public static LimboCreative getInstance() {
-        return INSTANCE;
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {

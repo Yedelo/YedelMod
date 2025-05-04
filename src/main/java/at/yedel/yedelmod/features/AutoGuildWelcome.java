@@ -14,13 +14,14 @@ import java.util.regex.Pattern;
 
 public class AutoGuildWelcome {
 	private static final AutoGuildWelcome INSTANCE = new AutoGuildWelcome();
+
+	public static AutoGuildWelcome getInstance() {
+		return INSTANCE;
+	}
+
 	private static final Pattern GUILD_JOIN_PATTERN = Pattern.compile("(?<newMember>\\w+) joined the guild!");
 
     private AutoGuildWelcome() {}
-
-    public static AutoGuildWelcome getInstance() {
-		return INSTANCE;
-    }
 
 	@Subscribe
 	public void welcomeNewGuildMember(ChatReceiveEvent event) {

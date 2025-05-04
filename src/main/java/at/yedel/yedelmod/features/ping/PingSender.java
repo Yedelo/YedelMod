@@ -18,16 +18,18 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 public class PingSender {
     private static final PingSender INSTANCE = new PingSender();
+
+    public static PingSender getInstance() {
+        return INSTANCE;
+    }
+
     public boolean commandCheck = false;
     public boolean statsCheck = false;
     public boolean tabCheck = false;
     public boolean hypixelCheck = false;
     public long lastTime;
-    private PingSender() {}
 
-    public static PingSender getInstance() {
-        return INSTANCE;
-    }
+    private PingSender() {}
 
     public void defaultMethodPing() {
         switch (YedelConfig.getInstance().pingMethod) {

@@ -35,6 +35,11 @@ import java.util.regex.Pattern;
 
 public class BedwarsFeatures {
 	private static final BedwarsFeatures INSTANCE = new BedwarsFeatures();
+
+	public static BedwarsFeatures getInstance() {
+		return INSTANCE;
+	}
+
 	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
 	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
 	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
@@ -56,10 +61,6 @@ public class BedwarsFeatures {
 
 	private BedwarsFeatures() {
 		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-	}
-
-	public static BedwarsFeatures getInstance() {
-		return INSTANCE;
 	}
 
 	public boolean isInBedwars() {

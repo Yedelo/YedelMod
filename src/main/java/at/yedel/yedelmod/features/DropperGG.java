@@ -15,11 +15,11 @@ import java.util.concurrent.TimeUnit;
 public class DropperGG {
     private static final DropperGG INSTANCE = new DropperGG();
 
-    private DropperGG() {}
+	public static DropperGG getInstance() {
+		return INSTANCE;
+	}
 
-    public static DropperGG getInstance() {
-        return INSTANCE;
-    }
+    private DropperGG() {}
 
     @Subscribe
     public void triggerDropperGG(ChatReceiveEvent event) {

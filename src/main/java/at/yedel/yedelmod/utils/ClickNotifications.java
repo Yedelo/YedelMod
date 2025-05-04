@@ -22,6 +22,11 @@ import java.util.concurrent.Callable;
 
 public class ClickNotifications {
     private static final ClickNotifications INSTANCE = new ClickNotifications();
+
+    public static ClickNotifications getInstance() {
+        return INSTANCE;
+    }
+
     private final Field $notifications;
     private final LinkedHashMap<Notification, Animation> notifications;
     private final LinkedHashMap<Notification, Runnable> actionMap = new LinkedHashMap<Notification, Runnable>();
@@ -36,10 +41,6 @@ public class ClickNotifications {
         catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static ClickNotifications getInstance() {
-        return INSTANCE;
     }
 
     public void clickNotification() {

@@ -12,11 +12,11 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 public class RandomPlaceholder {
     private static final RandomPlaceholder INSTANCE = new RandomPlaceholder();
 
-    private RandomPlaceholder() {}
-
     public static RandomPlaceholder getInstance() {
         return INSTANCE;
     }
+
+    private RandomPlaceholder() {}
 
     @Subscribe
     public void replaceRandomString(ChatSendEvent event) {

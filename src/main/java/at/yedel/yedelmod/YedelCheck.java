@@ -21,15 +21,16 @@ public class YedelCheck {
     // alreadyWarned is not supposed to be saved
 
     private static final YedelCheck INSTANCE = new YedelCheck();
+
+    public static YedelCheck getInstance() {
+        return INSTANCE;
+    }
+
     public static boolean YedelUtils = false;
     private boolean alreadyWarned = true;
 
     // Also used for the first time message
     private YedelCheck() {}
-
-    public static YedelCheck getInstance() {
-        return INSTANCE;
-    }
 
     @Subscribe
     public void checkUponServerChange(ReceivePacketEvent event) {

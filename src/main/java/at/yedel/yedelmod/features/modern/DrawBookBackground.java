@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class DrawBookBackground {
     private static final DrawBookBackground INSTANCE = new DrawBookBackground();
 
-    private DrawBookBackground() {}
-
     public static DrawBookBackground getInstance() {
         return INSTANCE;
     }
+
+    private DrawBookBackground() {}
 
     @SubscribeEvent
     public void renderBookBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {

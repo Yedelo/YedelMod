@@ -27,6 +27,11 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 public class UpdateManager {
 	private static final UpdateManager INSTANCE = new UpdateManager();
+
+	public static UpdateManager getInstance() {
+		return INSTANCE;
+	}
+
 	private static final String CURRENT_VERSION = YedelModConstants.MOD_VERSION;
 	private static final URL MODRINTH_API_URL;
 	private static final URL GITHUB_API_URL;
@@ -41,10 +46,6 @@ public class UpdateManager {
 		}
 	}
 	private UpdateManager() {}
-
-	public static UpdateManager getInstance() {
-		return INSTANCE;
-	}
 
 	public void checkForUpdates(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
 		new Thread(() -> threadedCheckForUpdates(updateSource, feedbackMethod), "YedelMod Update Checker").start();

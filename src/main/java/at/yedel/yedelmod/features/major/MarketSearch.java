@@ -19,16 +19,17 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 public class MarketSearch {
     private static final MarketSearch INSTANCE = new MarketSearch();
+
+    public static MarketSearch getInstance() {
+        return INSTANCE;
+    }
+
     private boolean inSkyblock;
     private boolean ahSearching = false;
     private boolean bzSearching = false;
 
     private MarketSearch() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
-    }
-
-    public static MarketSearch getInstance() {
-        return INSTANCE;
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {

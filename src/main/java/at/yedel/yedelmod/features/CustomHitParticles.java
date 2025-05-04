@@ -15,11 +15,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CustomHitParticles {
 	private static final CustomHitParticles INSTANCE = new CustomHitParticles();
 
-	private CustomHitParticles() {}
-
 	public static CustomHitParticles getInstance() {
 		return INSTANCE;
 	}
+
+	private CustomHitParticles() {}
 
 	@SubscribeEvent
 	public void spawnAttackParticle(AttackEntityEvent event) {

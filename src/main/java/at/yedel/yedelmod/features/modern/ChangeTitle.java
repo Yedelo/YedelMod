@@ -17,11 +17,11 @@ import java.util.Objects;
 public class ChangeTitle {
     private static final ChangeTitle INSTANCE = new ChangeTitle();
 
-    private ChangeTitle() {}
-
     public static ChangeTitle getInstance() {
         return INSTANCE;
     }
+
+    private ChangeTitle() {}
 
     @SubscribeEvent
     public void onServerJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
