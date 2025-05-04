@@ -56,7 +56,7 @@ public class StrengthIndicators {
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
     private final Map<String, Double> strengthPlayers = new HashMap<>();
-    private final Pattern[] killPatterns = Arrays.stream(new String[] {
+    private static final Pattern[] killPatterns = Arrays.stream(new String[] {
         USERNAME_PATTERN.replace("player", "killed") + " was killed by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was thrown into the void by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
         USERNAME_PATTERN.replace("player", "killed") + " was thrown off a cliff by " + USERNAME_PATTERN.replace("player", "killer") + "\\.",
