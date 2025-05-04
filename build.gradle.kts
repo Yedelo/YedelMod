@@ -61,6 +61,10 @@ toolkitLoomHelper {
     }
 }
 
+toolkitMultiversion {
+    moveBuildsToRootProject.set(true)
+}
+
 tasks {
     jar {
         manifest.attributes(
