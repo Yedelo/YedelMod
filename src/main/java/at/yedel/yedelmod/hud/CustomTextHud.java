@@ -30,14 +30,14 @@ public class CustomTextHud extends SingleTextHud {
         textType = 1;
     }
 
-    @Text(
-        name = "Display text",
-        size = 2
-    )
     @VigilanceName(
         name = "displayedText",
         category = "storage",
         subcategory = ""
+    )
+    @Text(
+        name = "Display text",
+        size = 2
     )
     public String displayText = "";
 
