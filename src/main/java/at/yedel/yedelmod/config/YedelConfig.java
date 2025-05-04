@@ -50,11 +50,6 @@ public class YedelConfig extends Config {
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
         registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidenceWithoutDoubtVerdict);
 
-        addDependencies();
-        hideInternals();
-    }
-
-    private void addDependencies() {
         addDependency("guildWelcomeMessage", "autoWelcomeGuildMembers");
         addDependency("customParticleType", "customHitParticles");
         addDependency("particleYOffset", "customHitParticles");
@@ -66,17 +61,13 @@ public class YedelConfig extends Config {
         addDependency("strengthColor", "skywarsStrengthIndicators");
         addDependency("rotateSwordInThirdPerson", "clientSideAutoBlock");
         addDependency("specifiedServer", "favoriteServerButton");
-
         addDependency("damageTiltStrength", "damageTilt");
-
         addDependency("highlightTargetAndShowDistance", "bountyHunting");
         addDependency("playHuntingSounds", "bountyHunting");
         addDependency("playSelection", "bountyHunting");
         addDependency("playKill", "bountyHunting");
         addDependency("bountyHuntingHud", "bountyHunting");
-    }
 
-    private void hideInternals() {
         for (String internalOption : new String[] {
             "oldDamageTiltStrength",
             "playtimeMinutes",
