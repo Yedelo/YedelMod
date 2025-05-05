@@ -10,7 +10,6 @@
     "MixinGuiContainer",
     "MixinGuiNewChat",
     "MixinItemBucket",
-    ,
     "MixinItemRenderer",
     "MixinLayerHeldItem",
     "MixinRenderPlayer"
