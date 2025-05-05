@@ -888,13 +888,13 @@ public class YedelConfig extends Config {
 
     @Button(
         name = "Video",
-        description = "This is a complicated feature, watch my BOUNTY_HUNTING_VIDEO if you need help!",
+        description = "This is a complicated feature, watch my video if you need help!",
         category = "TNT Tag",
-        text = "Open BOUNTY_HUNTING_VIDEO"
+        text = "Open video"
     )
     private void watchVideo() {
         if (!UDesktop.browse(BOUNTY_HUNTING_VIDEO)) {
-            Notifications.INSTANCE.send("YedelMod", "Couldn't open BOUNTY_HUNTING_VIDEO!");
+            Notifications.INSTANCE.send("YedelMod", "Couldn't open video!");
         }
     }
 
