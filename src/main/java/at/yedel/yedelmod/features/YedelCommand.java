@@ -85,7 +85,7 @@ public class YedelCommand {
             }
         }
         catch (IllegalAccessException e) {
-            UChat.chat(yedelogo + " §cCouldn't get mod constants");
+            UChat.chat(yedelogo + " §cCouldn't get mod constants!");
             yedelog.error("Couldn't get mod constants!", e);
 
         }
