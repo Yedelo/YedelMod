@@ -54,6 +54,7 @@ If you are using other OneConfig mods, remove the tweaker from the run config.
 All hosted under /yedel (yedelmod):
 
 - cleartext
+- constants
 - formatting
 - limbo (li)
 - limbocreative (limbogmc, lgmc)

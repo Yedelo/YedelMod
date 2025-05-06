@@ -4,6 +4,8 @@ val oneconfigVersion: String by project
 val oneconfigWrapperVersion: String by project
 val devAuthVersion: String by project
 
+version = properties["mod.version"]!!
+
 repositories {
     gradlePluginPortal()
     mavenCentral()
