@@ -21,7 +21,7 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
  * When this is detected, it sets YedelUtils to true to let both to report a message about the incompatibility.
  * alreadyWarned is not supposed to be saved.
  * <p>
- * Also used for the first time message, which may be extracted to YedelMod later.
+ * Also used for the first time message, which may be extracted to YedelMod (the class) later.
  */
 public class YedelCheck {
 
