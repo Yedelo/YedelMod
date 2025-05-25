@@ -88,23 +88,22 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!")) {
-            return;
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && inTNTTag && event.message.getUnformattedText().endsWith("has started!")) {
+            players.clear();
+            for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
+                players.add(playerInfo.getGameProfile().getName());
+            }
+            players.remove(playerName);
+            players.remove(YedelConfig.getInstance().currentNick);
+            target = players.get((int) Math.floor(Math.random() * players.size()));
+            whoCheck = true;
+            UChat.say("/who");
+            if (YedelConfig.getInstance().playHuntingSounds) {
+                USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
+            }
+            displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
+            displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         }
-        players.clear();
-        for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
-            players.add(playerInfo.getGameProfile().getName());
-        }
-        players.remove(playerName);
-        players.remove(YedelConfig.getInstance().currentNick);
-        target = players.get((int) Math.floor(Math.random() * players.size()));
-        whoCheck = true;
-        UChat.say("/who");
-        if (YedelConfig.getInstance().playHuntingSounds) {
-            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
-        }
-        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
-        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
     }
 
     @Subscribe
@@ -166,15 +165,14 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void renderTargetLabel(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance) {
-            return;
-        }
-        EntityPlayer targetPlayer = event.entityPlayer;
-        EntityPlayerSP player = UPlayer.getPlayer();
-        if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
-            double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
-            String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
-            ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance) {
+            EntityPlayer targetPlayer = event.entityPlayer;
+            EntityPlayerSP player = UPlayer.getPlayer();
+            if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
+                double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
+                String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
+                ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
+            }
         }
     }
 
@@ -189,34 +187,33 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void onRoundEnd(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting) {
-            return;
-        }
-        String msg = event.message.getUnformattedText();
-        Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
-        while (peopleDeathMatcher.find()) {
-            String personDied = peopleDeathMatcher.group("personThatBlewUp");
-            if (Objects.equals(personDied, playerName)) {
-                dead = true;
-                target = null;
-                displayLines.set(3, "");
-            }
-            if (Objects.equals(personDied, target) && fightingTarget) {
-                Multithreading.schedule(() -> {
-                    int pointIncrease = (int) Math.ceil(players.size() * 0.8);
-                    if (dead) {
-                        pointIncrease /= 2;
-                    }
-                    YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
-                    YedelConfig.getInstance().bountyHuntingKills += 1;
-                    displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
-                    displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
-                    displayLines.set(3, "§cYou killed your target!");
-                    if (YedelConfig.getInstance().playHuntingSounds) {
-                        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
-                    }
-                    YedelConfig.getInstance().save();
-                }, 500, TimeUnit.MILLISECONDS);
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
+            String msg = event.message.getUnformattedText();
+            Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
+            while (peopleDeathMatcher.find()) {
+                String personDied = peopleDeathMatcher.group("personThatBlewUp");
+                if (Objects.equals(personDied, playerName)) {
+                    dead = true;
+                    target = null;
+                    displayLines.set(3, "");
+                }
+                if (Objects.equals(personDied, target) && fightingTarget) {
+                    Multithreading.schedule(() -> {
+                        int pointIncrease = (int) Math.ceil(players.size() * 0.8);
+                        if (dead) {
+                            pointIncrease /= 2;
+                        }
+                        YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
+                        YedelConfig.getInstance().bountyHuntingKills += 1;
+                        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
+                        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
+                        displayLines.set(3, "§cYou killed your target!");
+                        if (YedelConfig.getInstance().playHuntingSounds) {
+                            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
+                        }
+                        YedelConfig.getInstance().save();
+                    }, 500, TimeUnit.MILLISECONDS);
+                }
             }
         }
     }

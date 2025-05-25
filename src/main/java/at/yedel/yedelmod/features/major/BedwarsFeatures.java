@@ -95,14 +95,17 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void renderRedstoneHighlights(DrawSlotEvent event) {
-		if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bedwarsDefusalHelper) return;
-		ItemStack stack = event.getSlot().getStack();
-		if (stack == null) return;
-		if (stack.getItem() == Items.redstone) {
-			GuiContainer guiContainer = event.getGuiContainer();
-			if (guiContainer instanceof GuiChest) {
-				if (Objects.equals(((AccessorGuiChest) guiContainer).getLowerChestInventory().getName(), "§cC4 (Click §4§lREDSTONE§c)")) {
-					RenderUtils.highlightItem(event.getSlot(), RED);
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bedwarsDefusalHelper) {
+			ItemStack stack = event.getSlot().getStack();
+			if (stack == null) {
+				return;
+			}
+			if (stack.getItem() == Items.redstone) {
+				GuiContainer guiContainer = event.getGuiContainer();
+				if (guiContainer instanceof GuiChest) {
+					if (Objects.equals(((AccessorGuiChest) guiContainer).getLowerChestInventory().getName(), "§cC4 (Click §4§lREDSTONE§c)")) {
+						RenderUtils.highlightItem(event.getSlot(), RED);
+					}
 				}
 			}
 		}

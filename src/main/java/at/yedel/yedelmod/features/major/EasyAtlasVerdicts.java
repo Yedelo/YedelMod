@@ -51,33 +51,35 @@ public class EasyAtlasVerdicts {
     }
 
     public void submitInsufficientEvidenceVerdict() {
-        if (!YedelConfig.getInstance().enabled) return;
-        EntityPlayerSP player = UPlayer.getPlayer();
-        if (inAtlas && player != null) {
-            UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
-            player.inventory.currentItem = 7;
-            Multithreading.schedule(() -> {
-                ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                slot = 30;
-                clickerEnabled = true;
-                setupTimeout();
-            }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
+        if (YedelConfig.getInstance().enabled) {
+            EntityPlayerSP player = UPlayer.getPlayer();
+            if (inAtlas && player != null) {
+                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
+                player.inventory.currentItem = 7;
+                Multithreading.schedule(() -> {
+                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                    slot = 30;
+                    clickerEnabled = true;
+                    setupTimeout();
+                }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
+            }
         }
     }
 
     public void submitEvidenceWithoutDoubtVerdict() {
-        if (!YedelConfig.getInstance().enabled) return;
-        EntityPlayerSP player = UPlayer.getPlayer();
-        if (inAtlas && player != null) {
-            UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
-            player.inventory.currentItem = 7;
-            Multithreading.schedule(() -> {
-                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                    slot = 32;
-                    clickerEnabled = true;
-                    setupTimeout();
-                }, (int) (NumberUtils.randomRange(158, 301)), TimeUnit.MILLISECONDS
-            );
+        if (YedelConfig.getInstance().enabled) {
+            EntityPlayerSP player = UPlayer.getPlayer();
+            if (inAtlas && player != null) {
+                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
+                player.inventory.currentItem = 7;
+                Multithreading.schedule(() -> {
+                        ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                        slot = 32;
+                        clickerEnabled = true;
+                        setupTimeout();
+                    }, (int) (NumberUtils.randomRange(158, 301)), TimeUnit.MILLISECONDS
+                );
+            }
         }
     }
 
@@ -95,15 +97,18 @@ public class EasyAtlasVerdicts {
 
     @SubscribeEvent
     public void clickAtlasVerdict(GuiOpenEvent event) {
-        if (!clickerEnabled) return;
-        if (event.gui instanceof GuiContainer) {
-            EntityPlayerSP player = UPlayer.getPlayer();
-            if (player == null) return;
-            Multithreading.schedule(() -> {
-                    UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
-                }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
-            );
-            clickerEnabled = false;
+        if (clickerEnabled) {
+            if (event.gui instanceof GuiContainer) {
+                EntityPlayerSP player = UPlayer.getPlayer();
+                if (player == null) {
+                    return;
+                }
+                Multithreading.schedule(() -> {
+                        UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
+                    }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
+                );
+                clickerEnabled = false;
+            }
         }
     }
 

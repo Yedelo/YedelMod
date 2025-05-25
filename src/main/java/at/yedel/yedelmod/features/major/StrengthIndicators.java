@@ -117,15 +117,20 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().skywarsStrengthIndicators) return;
-        EntityPlayer entityPlayer = event.entityPlayer;
-        if (entityPlayer.isInvisible()) return;
-        String entityName = entityPlayer.getName();
-        if (!strengthPlayers.containsKey(entityName)) return;
-        String text =
-            COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
-        double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
-        ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators) {
+            EntityPlayer entityPlayer = event.entityPlayer;
+            if (entityPlayer.isInvisible()) {
+                return;
+            }
+            String entityName = entityPlayer.getName();
+            if (!strengthPlayers.containsKey(entityName)) {
+                return;
+            }
+            String text =
+                COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
+            double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
+            ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
+        }
     }
 
     @Subscribe

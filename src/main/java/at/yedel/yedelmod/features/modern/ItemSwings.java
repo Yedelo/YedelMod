@@ -40,35 +40,39 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void swingOnSwingableUse(PlayerInteractEvent event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().itemUseSwings) return;
-        ItemStack itemStack = event.entityPlayer.getHeldItem();
-        if (itemStack == null) return;
-        Item item = itemStack.getItem();
-        String registryName = item.getRegistryName();
-        if (SWING_ITEMS.contains(registryName)) {
-            swing();
-        }
-        else if (Objects.equals(registryName, "minecraft:potion") && ItemPotion.isSplash(itemStack.getMetadata())) {
-            swing();
-        }
-        else if (Objects.equals(registryName, "minecraft:ender_pearl") && !UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
-            swing();
-        }
-        else if (item instanceof ItemArmor) {
-            int slot = EntityLiving.getArmorPosition(itemStack) - 1;
-            if (event.entityPlayer.getCurrentArmor(slot) == null) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().itemUseSwings) {
+            ItemStack itemStack = event.entityPlayer.getHeldItem();
+            if (itemStack == null) {
+                return;
+            }
+            Item item = itemStack.getItem();
+            String registryName = item.getRegistryName();
+            if (SWING_ITEMS.contains(registryName)) {
                 swing();
+            }
+            else if (Objects.equals(registryName, "minecraft:potion") && ItemPotion.isSplash(itemStack.getMetadata())) {
+                swing();
+            }
+            else if (Objects.equals(registryName, "minecraft:ender_pearl") && !UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
+                swing();
+            }
+            else if (item instanceof ItemArmor) {
+                int slot = EntityLiving.getArmorPosition(itemStack) - 1;
+                if (event.entityPlayer.getCurrentArmor(slot) == null) {
+                    swing();
+                }
             }
         }
     }
 
     @Subscribe
     public void swingOnDrop(SendPacketEvent event) {
-        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().itemDropSwings) return;
-        if (event.packet instanceof C07PacketPlayerDigging) {
-            C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
-            if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && UPlayer.getPlayer().getHeldItem() != null) {
-                swing();
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().itemDropSwings) {
+            if (event.packet instanceof C07PacketPlayerDigging) {
+                C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
+                if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && UPlayer.getPlayer().getHeldItem() != null) {
+                    swing();
+                }
             }
         }
     }
