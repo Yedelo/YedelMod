@@ -95,7 +95,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void renderRedstoneHighlights(DrawSlotEvent event) {
-		if (!YedelConfig.getInstance().bedwarsDefusalHelper) return;
+		if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bedwarsDefusalHelper) return;
 		ItemStack stack = event.getSlot().getStack();
 		if (stack == null) return;
 		if (stack.getItem() == Items.redstone) {
@@ -110,7 +110,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void lightgreenifyTokenMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().lightGreenTokenMessages && inBedwars) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().lightGreenTokenMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = TOKEN_MESSAGE_PATTERN.matcher(message);
 			while (matcher.find()) {
@@ -121,7 +121,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideSlumberTicketMessages && inBedwars) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideSlumberTicketMessages && inBedwars) {
 			String message = event.message.getUnformattedText();
 			Matcher matcher = SLUMBER_TICKET_MESSAGE_PATTERN.matcher(message);
 			while (matcher.find()) {
@@ -132,7 +132,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideItemPickupMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideItemPickupMessages && inBedwars) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideItemPickupMessages && inBedwars) {
 			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
 				event.isCancelled = true;
 			}
@@ -141,7 +141,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideSilverCoinCountMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideSilverCoinCount) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideSilverCoinCount) {
 			String message = event.message.getFormattedText();
 			if (message.startsWith("§r§aYou purchased §r§6") && message.contains("§r§7(+1 Silver Coin [")) {
 				event.message = new UTextComponent(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
@@ -151,7 +151,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideComfyPillowMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideComfyPillowMessages) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideComfyPillowMessages) {
 			if (COMFY_PILLOW_MESSAGES.contains(event.message.getUnformattedText())) {
 				event.isCancelled = true;
 			}
@@ -160,7 +160,7 @@ public class BedwarsFeatures {
 
 	@Subscribe
 	public void hideDreamersSoulFragmentMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
 			event.isCancelled = true;
 		}
 	}

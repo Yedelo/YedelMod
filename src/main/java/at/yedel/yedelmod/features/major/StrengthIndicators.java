@@ -117,7 +117,7 @@ public class StrengthIndicators {
 
     @SubscribeEvent
     public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().skywarsStrengthIndicators) return;
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().skywarsStrengthIndicators) return;
         EntityPlayer entityPlayer = event.entityPlayer;
         if (entityPlayer.isInvisible()) return;
         String entityName = entityPlayer.getName();

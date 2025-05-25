@@ -22,7 +22,7 @@ public class DrawBookBackground {
     @SubscribeEvent
     public void renderBookBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
         Gui gui = event.gui;
-        if (YedelConfig.getInstance().bookBackground && gui instanceof GuiScreenBook) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bookBackground && gui instanceof GuiScreenBook) {
             ((GuiScreenBook) gui).drawWorldBackground(1);
         }
     }

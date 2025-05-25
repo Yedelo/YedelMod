@@ -28,7 +28,7 @@ public class FavoriteServerButton {
 
 	@SubscribeEvent
 	public void addFavoriteServerButton(InitGuiEvent event) {
-		if (YedelConfig.getInstance().favoriteServerButton && event.gui instanceof GuiMainMenu) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().favoriteServerButton && event.gui instanceof GuiMainMenu) {
 			event.buttonList.add(favoriteServerButton = new GuiButton(1600, 5, 5, 125, 20, "Join Favorite Server"));
 		}
 	}

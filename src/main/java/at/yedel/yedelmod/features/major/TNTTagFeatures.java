@@ -70,7 +70,7 @@ public class TNTTagFeatures {
     }
 
     public void onTNTTagJoin() {
-        if (YedelConfig.getInstance().bountyHunting) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
             playerName = UPlayer.getPlayer().getName();
             dead = false;
             target = null;
@@ -88,7 +88,7 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!")) {
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting || !inTNTTag || !event.message.getUnformattedText().endsWith("has started!")) {
             return;
         }
         players.clear();
@@ -166,7 +166,7 @@ public class TNTTagFeatures {
 
     @SubscribeEvent
     public void renderTargetLabel(RenderPlayerEvent.Pre event) {
-        if (!YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance) {
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting || !YedelConfig.getInstance().highlightTargetAndShowDistance) {
             return;
         }
         EntityPlayer targetPlayer = event.entityPlayer;
@@ -189,7 +189,7 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void onRoundEnd(ChatReceiveEvent event) {
-        if (!YedelConfig.getInstance().bountyHunting) {
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().bountyHunting) {
             return;
         }
         String msg = event.message.getUnformattedText();
@@ -223,7 +223,7 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void onNickChange(ChatReceiveEvent event) {
-        if (Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...") && YedelConfig.getInstance().bountyHunting) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...")) {
             UChat.chat("§6§l- BountyHunting - §ePlease set your nick with /setnick or in the config.");
         }
     }

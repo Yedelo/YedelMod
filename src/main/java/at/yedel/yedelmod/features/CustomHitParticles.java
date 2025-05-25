@@ -23,7 +23,7 @@ public class CustomHitParticles {
 
 	@SubscribeEvent
 	public void spawnAttackParticle(AttackEntityEvent event) {
-		if (!YedelConfig.getInstance().customHitParticles) return;
+		if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().customHitParticles) return;
 		Entity entity = event.target;
 		if (entity.isInvisible()) return;
 		if (YedelConfig.getInstance().onlySpawnCustomParticlesOnPlayers && !(entity instanceof EntityPlayer)) return;

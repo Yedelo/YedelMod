@@ -88,7 +88,7 @@ public class YedelMod {
 
 	@EventHandler
 	public void checkForUpdates(FMLLoadCompleteEvent event) {
-		if (YedelConfig.getInstance().automaticallyCheckForUpdates) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().automaticallyCheckForUpdates) {
 			UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 		}
 	}

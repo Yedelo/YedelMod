@@ -24,7 +24,7 @@ public abstract class MixinGuiNewChat {
     private void yedelmod$onLanHost(IChatComponent chatComponent, CallbackInfo ci) {
         if (chatComponent.getUnformattedText().startsWith("Local game hosted on port")) {
             String port = UTextComponent.Companion.stripFormatting(chatComponent.getFormattedText().substring(26));
-            if (YedelConfig.getInstance().changeWindowTitle)
+            if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().changeWindowTitle)
                 Display.setTitle("Minecraft 1.8.9 - LAN Singleplayer - " + port);
         }
     }
@@ -34,7 +34,7 @@ public abstract class MixinGuiNewChat {
         at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", ordinal = 2)
     )
     private void yedelmod$keepChatHistory(List<String> sentMessages) {
-        if (YedelConfig.getInstance().keepChatHistoryOnChatClear) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().keepChatHistoryOnChatClear) {
             return;
         }
         sentMessages.clear();

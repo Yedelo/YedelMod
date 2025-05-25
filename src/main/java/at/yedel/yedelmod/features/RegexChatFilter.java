@@ -21,7 +21,7 @@ public class RegexChatFilter {
 
 	@Subscribe
 	public void filterMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().regexChatFilter) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().regexChatFilter) {
 			try {
 				if (event.message.getUnformattedText().matches(YedelConfig.getInstance().regexChatFilterPattern)) {
 					event.isCancelled = true;

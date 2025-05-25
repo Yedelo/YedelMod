@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.mixins.InvokerMinecraft;
 import at.yedel.yedelmod.utils.typeutils.NumberUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
@@ -50,6 +51,7 @@ public class EasyAtlasVerdicts {
     }
 
     public void submitInsufficientEvidenceVerdict() {
+        if (!YedelConfig.getInstance().enabled) return;
         EntityPlayerSP player = UPlayer.getPlayer();
         if (inAtlas && player != null) {
             UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
@@ -64,6 +66,7 @@ public class EasyAtlasVerdicts {
     }
 
     public void submitEvidenceWithoutDoubtVerdict() {
+        if (!YedelConfig.getInstance().enabled) return;
         EntityPlayerSP player = UPlayer.getPlayer();
         if (inAtlas && player != null) {
             UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");

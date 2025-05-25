@@ -22,7 +22,7 @@ public abstract class MixinRenderPlayer {
 
     @Inject(method = "setModelVisibilities", at = @At("TAIL"))
     private void yedelmod$setAutoBlockModel(AbstractClientPlayer clientPlayer, CallbackInfo ci) {
-        if (YedelConfig.getInstance().clientSideAutoBlock && clientPlayer.isUser() && clientPlayer.getHeldItem() != null && clientPlayer.getHeldItem().getItemUseAction() == EnumAction.BLOCK) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().clientSideAutoBlock && clientPlayer.isUser() && clientPlayer.getHeldItem() != null && clientPlayer.getHeldItem().getItemUseAction() == EnumAction.BLOCK) {
             getMainModel().heldItemRight = 3;
         }
     }

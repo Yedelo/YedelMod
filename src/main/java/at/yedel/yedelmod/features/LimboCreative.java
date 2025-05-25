@@ -30,7 +30,7 @@ public class LimboCreative {
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
         inLimbo = Objects.equals(packet.getServerName(), "limbo");
-        if (YedelConfig.getInstance().limboCreativeMode && inLimbo) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().limboCreativeMode && inLimbo) {
             giveCreative();
         }
     }

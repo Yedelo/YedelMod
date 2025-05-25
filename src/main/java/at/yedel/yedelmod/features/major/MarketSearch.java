@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features.major;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
@@ -37,7 +38,7 @@ public class MarketSearch {
     }
 
     public void ahSearch() {
-        if (inSkyblock) {
+        if (YedelConfig.getInstance().enabled && inSkyblock) {
             ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();
@@ -51,7 +52,7 @@ public class MarketSearch {
     }
 
     public void bzSearch() {
-        if (inSkyblock) {
+        if (YedelConfig.getInstance().enabled && inSkyblock) {
             ItemStack heldItem = UPlayer.getPlayer().getHeldItem();
             if (heldItem != null) {
                 String itemName = heldItem.getDisplayName();

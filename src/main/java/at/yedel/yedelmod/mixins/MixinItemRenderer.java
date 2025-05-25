@@ -22,7 +22,7 @@ public abstract class MixinItemRenderer {
 
 	@Redirect(method = "renderItemInFirstPerson", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;getItemInUseCount()I"))
 	private int yedelmod$firstPersonAutoBlock(AbstractClientPlayer instance) {
-		if (YedelConfig.getInstance().clientSideAutoBlock && itemToRender.getItemUseAction() == EnumAction.BLOCK) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().clientSideAutoBlock && itemToRender.getItemUseAction() == EnumAction.BLOCK) {
 			return 1;
 		}
 		return instance.getItemInUseCount();

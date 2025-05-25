@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinLayerHeldItem {
 	@Inject(method = "doRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderItem(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V"))
 	private void yedelmod$setAutoBlockRotations(EntityLivingBase entitylivingbaseIn, float f, float g, float partialTicks, float h, float i, float j, float scale, CallbackInfo ci) {
-        if (YedelConfig.getInstance().rotateSwordInThirdPerson && YedelConfig.getInstance().clientSideAutoBlock && entitylivingbaseIn instanceof EntityPlayerSP) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().rotateSwordInThirdPerson && YedelConfig.getInstance().clientSideAutoBlock && entitylivingbaseIn instanceof EntityPlayerSP) {
 			ItemStack heldItem = entitylivingbaseIn.getHeldItem();
 			if (heldItem != null && heldItem.getItemUseAction() == EnumAction.BLOCK && !((EntityPlayerSP) entitylivingbaseIn).isUsingItem()) {
 				GlStateManager.translate(0.05F, 0.0F, -0.1F);

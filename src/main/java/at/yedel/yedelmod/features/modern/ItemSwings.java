@@ -40,7 +40,7 @@ public class ItemSwings {
 
     @SubscribeEvent
     public void swingOnSwingableUse(PlayerInteractEvent event) {
-        if (!YedelConfig.getInstance().itemUseSwings) return;
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().itemUseSwings) return;
         ItemStack itemStack = event.entityPlayer.getHeldItem();
         if (itemStack == null) return;
         Item item = itemStack.getItem();
@@ -64,7 +64,7 @@ public class ItemSwings {
 
     @Subscribe
     public void swingOnDrop(SendPacketEvent event) {
-        if (!YedelConfig.getInstance().itemDropSwings) return;
+        if (!YedelConfig.getInstance().enabled || !YedelConfig.getInstance().itemDropSwings) return;
         if (event.packet instanceof C07PacketPlayerDigging) {
             C07PacketPlayerDigging.Action action = ((C07PacketPlayerDigging) event.packet).getStatus();
             if ((action == C07PacketPlayerDigging.Action.DROP_ALL_ITEMS || action == C07PacketPlayerDigging.Action.DROP_ITEM) && UPlayer.getPlayer().getHeldItem() != null) {

@@ -20,7 +20,7 @@ public class RandomPlaceholder {
 
     @Subscribe
     public void replaceRandomString(ChatSendEvent event) {
-        if (YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
             event.message =
                 event.message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
         }

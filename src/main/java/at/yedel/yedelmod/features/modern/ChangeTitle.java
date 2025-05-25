@@ -25,7 +25,7 @@ public class ChangeTitle {
 
     @SubscribeEvent
     public void onServerJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
-        if (YedelConfig.getInstance().changeWindowTitle) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().changeWindowTitle) {
             UMinecraft.getMinecraft().addScheduledTask(() -> {
                 if (event.isLocal) {
                     Display.setTitle("Minecraft 1.8.9 - Singleplayer");
@@ -45,7 +45,7 @@ public class ChangeTitle {
     @SubscribeEvent
     public void onDisconnectFromServer(ClientDisconnectionFromServerEvent event) {
         UMinecraft.getMinecraft().addScheduledTask(() -> {
-            if (YedelConfig.getInstance().changeWindowTitle || !Objects.equals(Display.getTitle(), "Minecraft 1.8.9")) {
+            if ((YedelConfig.getInstance().enabled && YedelConfig.getInstance().changeWindowTitle) || !Objects.equals(Display.getTitle(), "Minecraft 1.8.9")) {
                 Display.setTitle("Minecraft 1.8.9");
             }
         });
