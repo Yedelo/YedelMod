@@ -71,9 +71,8 @@ public class YedelMod {
 			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
-			TNTTagFeatures.getInstance()
-		);
-		registerEventListeners(
+			TNTTagFeatures.getInstance(),
+
 			ClickNotifications.getInstance(),
 			YedelCheck.getInstance()
 		);
