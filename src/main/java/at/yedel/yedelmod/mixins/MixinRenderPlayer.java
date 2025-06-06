@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -40,7 +42,9 @@ public abstract class MixinRenderPlayer extends RendererLivingEntity<AbstractCli
     private void yedelmod$renderNameLines(AbstractClientPlayer entityIn, double x, double y, double z, String str, float p_177069_9_, double p_177069_10_, CallbackInfo ci) {
         NameLineEvent event = new NameLineEvent();
         MinecraftForge.EVENT_BUS.post(event);
-        for (NameLine nameLine : event.getNameLines().stream().filter((nameLine) -> nameLine.shouldShow(entityIn)).collect(Collectors.toList())) {
+        List<NameLine> nameLines = event.getNameLines().stream().filter((nameLine) -> nameLine.shouldShow(entityIn)).collect(Collectors.toList());
+        Collections.reverse(nameLines);
+        for (NameLine nameLine : nameLines) {
             y += (FONT_HEIGHT * 1.15 * (2F / 75F));
             renderLivingLabel(entityIn, nameLine.getText(), x, y, z, nameLine.getMaxDistance());
         }
