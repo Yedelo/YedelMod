@@ -25,6 +25,10 @@ This mod uses the OneConfig tweaker to load OneConfig, both in the development e
 However, using the tweaker in development environment causes other OneConfig mods (in run/mods) to not load OneConfig.
 If you are using other OneConfig mods, remove the tweaker from the run config.
 
+## NoForge note
+
+NoForge seems to break Strength Indicators, which likely means the Hypixel Mod API won't work, meaning many other features like BedWars features won't work.
+
 ## Features
 
 <details><summary>Features</summary>
