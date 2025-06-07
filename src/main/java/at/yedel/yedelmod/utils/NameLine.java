@@ -5,6 +5,8 @@ package at.yedel.yedelmod.utils;
 import com.google.common.base.Strings;
 import net.minecraft.entity.Entity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 
@@ -27,7 +29,7 @@ public class NameLine {
         // Max distance handled in the Render/RendererLivingEntity.renderLivingLabel method
         return true;
     };
-    private Predicate<Entity> shouldShow = DEFAULT_PREDICATE;
+    private List<Predicate<Entity>> predicates = Collections.singletonList(DEFAULT_PREDICATE);
 
     public NameLine text(String text) {
         this.text = text;
@@ -69,8 +71,13 @@ public class NameLine {
         return this;
     }
 
-    public NameLine shouldShow(Predicate<Entity> shouldShow) {
-        this.shouldShow = shouldShow;
+    public NameLine addPredicate(Predicate<Entity> predicate) {
+        predicates.add(predicate);
+        return this;
+    }
+
+    public NameLine predicate(Predicate<Entity> predicate) {
+        predicates = Collections.singletonList(predicate);
         return this;
     }
 
@@ -82,7 +89,11 @@ public class NameLine {
         return maxDistance;
     }
 
+    public List<Predicate<Entity>> getPredicates() {
+        return predicates;
+    }
+
     public boolean shouldShow(Entity entity) {
-        return shouldShow.test(entity);
+        return predicates.stream().allMatch((predicate) -> predicate.test(entity));
     }
 }
