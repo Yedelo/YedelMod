@@ -14,7 +14,7 @@ public class NameLine {
     private boolean showWhileSneaking = true;
     private boolean showWhileInvisible = false;
     private int maxDistance = 64;
-    private final Predicate<AbstractClientPlayer> DEFAULT_SHOW_PREDICATE = (player) -> {
+    private final Predicate<AbstractClientPlayer> DEFAULT_PREDICATE = (player) -> {
         if (Strings.isNullOrEmpty(text)) {
             return false;
         }
@@ -27,7 +27,7 @@ public class NameLine {
         // Max distance handled in the Render/RendererLivingEntity.renderLivingLabel method
         return true;
     };
-    private Predicate<AbstractClientPlayer> shouldShow = DEFAULT_SHOW_PREDICATE;
+    private Predicate<AbstractClientPlayer> shouldShow = DEFAULT_PREDICATE;
 
     public NameLine text(String text) {
         this.text = text;
