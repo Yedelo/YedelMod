@@ -22,4 +22,10 @@ public class NameLineEvent extends Event {
         nameLines.add(nameLine);
         return nameLine;
     }
+
+    public NameLine newNameLine() {
+        NameLine nameLine = new NameLine();
+        nameLines.add(nameLine);
+        return nameLine;
+    }
 }
