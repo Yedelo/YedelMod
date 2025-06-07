@@ -3,7 +3,7 @@ package at.yedel.yedelmod.utils;
 
 
 import com.google.common.base.Strings;
-import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.entity.Entity;
 
 import java.util.function.Predicate;
 
@@ -14,20 +14,20 @@ public class NameLine {
     private boolean showWhileSneaking = true;
     private boolean showWhileInvisible = false;
     private int maxDistance = 64;
-    private final Predicate<AbstractClientPlayer> DEFAULT_PREDICATE = (player) -> {
+    private final Predicate<Entity> DEFAULT_PREDICATE = (entity) -> {
         if (Strings.isNullOrEmpty(text)) {
             return false;
         }
-        if (!showWhileSneaking && player.isSneaking()) {
+        if (!showWhileSneaking && entity.isSneaking()) {
             return false;
         }
-        if (!showWhileInvisible && player.isInvisible()) {
+        if (!showWhileInvisible && entity.isInvisible()) {
             return false;
         }
         // Max distance handled in the Render/RendererLivingEntity.renderLivingLabel method
         return true;
     };
-    private Predicate<AbstractClientPlayer> shouldShow = DEFAULT_PREDICATE;
+    private Predicate<Entity> shouldShow = DEFAULT_PREDICATE;
 
     public NameLine text(String text) {
         this.text = text;
@@ -69,7 +69,7 @@ public class NameLine {
         return this;
     }
 
-    public NameLine shouldShow(Predicate<AbstractClientPlayer> shouldShow) {
+    public NameLine shouldShow(Predicate<Entity> shouldShow) {
         this.shouldShow = shouldShow;
         return this;
     }
@@ -82,7 +82,7 @@ public class NameLine {
         return maxDistance;
     }
 
-    public boolean shouldShow(AbstractClientPlayer player) {
-        return shouldShow.test(player);
+    public boolean shouldShow(Entity entity) {
+        return shouldShow.test(entity);
     }
 }
