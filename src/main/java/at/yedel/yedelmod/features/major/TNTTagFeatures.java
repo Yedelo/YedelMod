@@ -171,7 +171,7 @@ public class TNTTagFeatures {
             if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
                 double sneakingInc = targetPlayer.isSneaking() ? 0.0 : 0.3;
                 String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
-                ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
+                ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(targetPlayer, text, event.x, event.y + sneakingInc, event.z, 64);
             }
         }
     }

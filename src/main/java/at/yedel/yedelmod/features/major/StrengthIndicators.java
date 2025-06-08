@@ -129,7 +129,7 @@ public class StrengthIndicators {
             String text =
                 COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
             double sneakingInc = entityPlayer.isSneaking() ? -1 : 0;
-            ((InvokerRender) event.renderer).yedelmod$invokeRenderLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
+            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + 0.55 + sneakingInc, event.z, 64);
         }
     }
 

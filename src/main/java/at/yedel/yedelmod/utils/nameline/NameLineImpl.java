@@ -33,7 +33,7 @@ public class NameLineImpl {
         }
         for (NameLine nameLine : nameLines) {
             y += 0.276D;
-            ((InvokerRender) entityRenderer).yedelmod$invokeRenderLabel(entity, nameLine.getText(), x, y, z, nameLine.getMaxDistance());
+            ((InvokerRender) entityRenderer).yedelmod$renderLivingLabel(entity, nameLine.getText(), x, y, z, nameLine.getMaxDistance());
         }
         labelCountMap.clear();
     }
