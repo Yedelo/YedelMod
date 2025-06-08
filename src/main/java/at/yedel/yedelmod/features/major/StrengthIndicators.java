@@ -131,7 +131,6 @@ public class StrengthIndicators {
             if (!strengthPlayers.containsKey(entityName)) {
                 return;
             }
-            net.minecraft.client.renderer.entity.RenderPlayer
             String text =
                 COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
             double sneakingInc = entityPlayer.isSneaking() ? -0.125 : 0;
