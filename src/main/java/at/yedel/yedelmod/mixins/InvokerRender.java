@@ -12,5 +12,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Render.class)
 public interface InvokerRender {
     @Invoker("renderLivingLabel")
-    void yedelmod$invokeRenderLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance);
+    void yedelmod$renderLivingLabel(Entity entityIn, String str, double x, double y, double z, int maxDistance);
 }
