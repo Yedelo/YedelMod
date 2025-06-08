@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.mixins.InvokerRender;
 import at.yedel.yedelmod.utils.NumberUtils;
+import at.yedel.yedelmod.utils.RenderUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
@@ -133,7 +134,8 @@ public class StrengthIndicators {
             String text =
                 COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + strengthPlayers.get(entityName) + "s";
             double sneakingInc = entityPlayer.isSneaking() ? -0.125 : 0;
-            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + 0.5 + sneakingInc, event.z, 64);
+            int expectedLines = RenderUtils.shouldRenderSubinfo(entityPlayer) ? 2 : 1;
+            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + (expectedLines * 0.274) + sneakingInc, event.z, 64);
         }
     }
 
