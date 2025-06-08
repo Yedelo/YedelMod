@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import com.google.common.collect.ImmutableMap;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
@@ -119,6 +120,9 @@ public class StrengthIndicators {
     public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators) {
             EntityPlayer entityPlayer = event.entityPlayer;
+            if (!YedelConfig.getInstance().showSelfStrength && entityPlayer == UPlayer.getPlayer()) {
+                return;
+            }
             if (entityPlayer.isInvisible()) {
                 return;
             }

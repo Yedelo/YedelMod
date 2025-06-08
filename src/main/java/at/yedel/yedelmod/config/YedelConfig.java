@@ -67,6 +67,7 @@ public class YedelConfig extends Config {
         addDependency("regexChatFilterPattern", "regexChatFilter");
         addDependency("randomPlaceholderText", "randomPlaceholder");
         addDependency("strengthColor", "skywarsStrengthIndicators");
+        addDependency("showSelfStrength", "skywarsStrengthIndicators");
         addDependency("rotateSwordInThirdPerson", "clientSideAutoBlock");
         addDependency("specifiedServer", "favoriteServerButton");
         addDependency("damageTiltStrength", "damageTilt");
@@ -398,6 +399,15 @@ public class YedelConfig extends Config {
         }
     )
     public int strengthColor = 1;
+
+    @Switch(
+        name = "Show Self Strength",
+        description = "Whether or not to show your own strength indicators.",
+        category = "Features",
+        subcategory = "Features",
+        size = 2
+    )
+    public boolean showSelfStrength = true;
 
     @VigilanceName(name = "Client-side auto-block", category = "Features", subcategory = "Features")
     @Switch(
