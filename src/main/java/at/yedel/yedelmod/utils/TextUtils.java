@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.utils.typeutils;
+package at.yedel.yedelmod.utils;
 
 
 

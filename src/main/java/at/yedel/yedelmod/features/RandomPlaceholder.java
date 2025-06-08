@@ -3,7 +3,7 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import at.yedel.yedelmod.utils.TextUtils;
 import cc.polyfrost.oneconfig.events.event.ChatSendEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 

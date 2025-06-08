@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.typeutils.NumberUtils;
+import at.yedel.yedelmod.utils.NumberUtils;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

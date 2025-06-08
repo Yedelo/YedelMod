@@ -2,7 +2,7 @@ package at.yedel.yedelmodtest;
 
 
 
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import at.yedel.yedelmod.utils.TextUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

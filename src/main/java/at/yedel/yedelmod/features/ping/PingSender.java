@@ -3,7 +3,7 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.typeutils.TextUtils;
+import at.yedel.yedelmod.utils.TextUtils;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
