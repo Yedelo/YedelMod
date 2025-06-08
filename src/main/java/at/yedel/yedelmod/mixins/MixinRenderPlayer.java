@@ -3,8 +3,8 @@ package at.yedel.yedelmod.mixins;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.event.events.NameLineEvent;
-import at.yedel.yedelmod.utils.NameLine;
+import at.yedel.yedelmod.utils.nameline.NameLine;
+import at.yedel.yedelmod.utils.nameline.NameLineEvent;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;

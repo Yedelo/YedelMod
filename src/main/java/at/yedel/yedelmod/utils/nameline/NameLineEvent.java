@@ -1,8 +1,7 @@
-package at.yedel.yedelmod.event.events;
+package at.yedel.yedelmod.utils.nameline;
 
 
 
-import at.yedel.yedelmod.utils.NameLine;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.ArrayList;
