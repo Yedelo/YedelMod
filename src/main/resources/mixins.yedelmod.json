@@ -12,6 +12,8 @@
     "MixinItemBucket",
     "MixinItemRenderer",
     "MixinLayerHeldItem",
+    "MixinRender",
+    "MixinRenderManager",
     "MixinRenderPlayer"
   ],
   "minVersion": "0.7.11"
