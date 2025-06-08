@@ -12,7 +12,7 @@ import net.minecraft.inventory.Slot;
 
 public class RenderUtils {
     public static boolean shouldRenderSubinfo(EntityPlayer player) {
-        return player.getDistanceSqToEntity(UMinecraft.getMinecraft().getRenderViewEntity()) < 100;
+        return player.getDistanceSqToEntity(UMinecraft.getMinecraft().getRenderViewEntity()) < 100 && player.getWorldScoreboard().getObjectiveInDisplaySlot(2) != null;
     }
 
 	public static void highlightItem(Slot slot, int color) {
