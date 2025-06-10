@@ -33,7 +33,7 @@ public class CustomHitParticles {
 			}
 			int particleId =
 				YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleType;
-			UMinecraft.getWorld().spawnParticle(EnumParticleTypes.getParticleFromId(particleId), entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, 0, 0);
+			UMinecraft.getWorld().spawnParticle(EnumParticleTypes.getParticleFromId(particleId), true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, 0, 0);
 		}
 	}
 }
