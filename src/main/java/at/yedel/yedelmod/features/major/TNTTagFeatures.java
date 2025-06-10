@@ -168,7 +168,7 @@ public class TNTTagFeatures {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance) {
             EntityPlayer targetPlayer = event.entityPlayer;
             EntityPlayerSP player = UPlayer.getPlayer();
-            if (Objects.equals(targetPlayer.getName(), target) && player.canEntityBeSeen(targetPlayer) && !targetPlayer.isInvisible()) {
+            if (Objects.equals(targetPlayer.getName(), target) && !targetPlayer.isInvisible()) {
                 String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
                 double sneakingInc = targetPlayer.isSneaking() ? -0.125 : 0;
                 ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(targetPlayer, text, event.x, event.y + 0.274 + sneakingInc, event.z, 64);
