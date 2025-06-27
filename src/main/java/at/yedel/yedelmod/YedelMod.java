@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-// Mod...
+// Mod,
 @Mod(
 	modid = YedelModConstants.MOD_ID,
 	name = YedelModConstants.MOD_NAME,
