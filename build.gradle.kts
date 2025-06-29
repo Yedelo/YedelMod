@@ -9,6 +9,7 @@ repositories {
     gradlePluginPortal()
     mavenCentral()
     maven("https://repo.polyfrost.cc/releases")
+    maven("https://repo.polyfrost.cc/snapshots")
     maven("https://repo.spongepowered.org/repository/maven-public")
 }
 
