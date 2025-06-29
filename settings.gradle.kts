@@ -12,7 +12,7 @@ pluginManagement {
         maven("https://maven.deftu.dev/snapshots")
     }
     plugins {
-        val dgt = "2.32.2"
+        val dgt = "2.38.0"
         id("dev.deftu.gradle.multiversion-root") version (dgt)
     }
 }
