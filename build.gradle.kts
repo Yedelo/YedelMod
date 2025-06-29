@@ -31,13 +31,12 @@ dependencies {
 
 toolkitLoomHelper {
     disableRunConfigs(GameSide.SERVER)
-    val _polyMixinVersion = polyMixinVersion
     useOneConfig {
         version = oneconfigVersion
         loaderVersion = oneconfigLoaderVersion
 
         usePolyMixin = true
-        polyMixinVersion = _polyMixinVersion
+        this.polyMixinVersion = polyMixinVersion
 
         applyLoaderTweaker = true
 
