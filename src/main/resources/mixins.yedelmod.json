@@ -14,5 +14,8 @@
     "net.minecraft.client.renderer.entity.layers.MixinLayerHeldItem",
     "net.minecraft.item.MixinItemBucket"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.8",
+  "mixins": [
+    "MixinFMLModContainer"
+  ]
 }
