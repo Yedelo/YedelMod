@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features.modern;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.utils.SwingItemDuck;
 import cc.polyfrost.oneconfig.events.event.SendPacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;

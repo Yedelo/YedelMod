@@ -2,7 +2,7 @@ package at.yedel.yedelmod.mixins;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.utils.SwingItemDuck;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBucket;

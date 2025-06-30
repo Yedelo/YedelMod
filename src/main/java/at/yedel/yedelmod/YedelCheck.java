@@ -2,7 +2,7 @@ package at.yedel.yedelmod;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;

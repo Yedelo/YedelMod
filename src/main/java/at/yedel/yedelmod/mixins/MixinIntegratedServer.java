@@ -2,7 +2,7 @@ package at.yedel.yedelmod.mixins;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import net.minecraft.server.integrated.IntegratedServer;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;

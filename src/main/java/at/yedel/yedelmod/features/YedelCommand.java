@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingSender;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;

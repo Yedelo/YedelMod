@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.event.events.DrawSlotEvent;
 import at.yedel.yedelmod.mixins.AccessorGuiChest;
 import at.yedel.yedelmod.utils.RenderUtils;

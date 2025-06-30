@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features.modern;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraftforge.client.event.GuiScreenEvent;

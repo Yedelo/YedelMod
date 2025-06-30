@@ -2,7 +2,7 @@ package at.yedel.yedelmod.utils;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import cc.polyfrost.oneconfig.gui.animations.Animation;
 import cc.polyfrost.oneconfig.gui.animations.DummyAnimation;
 import cc.polyfrost.oneconfig.internal.utils.Notification;

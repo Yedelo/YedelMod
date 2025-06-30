@@ -2,7 +2,7 @@ package at.yedel.yedelmod;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
 import at.yedel.yedelmod.features.major.*;
 import at.yedel.yedelmod.features.modern.ChangeTitle;

@@ -2,7 +2,7 @@ package at.yedel.yedelmod.mixins;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;

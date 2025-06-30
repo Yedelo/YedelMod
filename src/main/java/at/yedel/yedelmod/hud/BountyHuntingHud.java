@@ -2,7 +2,7 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
 import cc.polyfrost.oneconfig.hud.TextHud;

@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features.modern;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.api.config.YedelConfig;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
