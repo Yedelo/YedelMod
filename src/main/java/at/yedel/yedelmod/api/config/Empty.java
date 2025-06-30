@@ -1,4 +1,4 @@
-package at.yedel.yedelmod.config;
+package at.yedel.yedelmod.api.config;
 
 
 
