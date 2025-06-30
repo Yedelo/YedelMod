@@ -3,5 +3,7 @@ plugins {
 }
 
 preprocess {
-    "1.8.9-forge"(10809, "srg")
+    "1.21.5-fabric"(12105, "yarn") {
+        "1.8.9-forge"(10809, "srg")
+    }
 }
