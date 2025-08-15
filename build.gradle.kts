@@ -69,6 +69,7 @@ toolkitMultiversion {
 
 tasks {
     jar {
+        archiveFileName = "YedelMod-$version+${mcData}.jar"
         manifest.attributes(
             mapOf(
                 "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow",
