@@ -67,6 +67,7 @@ public class YedelConfig extends Config {
         addDependency("regexChatFilterPattern", "regexChatFilter");
         addDependency("randomPlaceholderText", "randomPlaceholder");
         addDependency("strengthColor", "skywarsStrengthIndicators");
+        addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
         addDependency("showSelfStrength", "skywarsStrengthIndicators");
         addDependency("rotateSwordInThirdPerson", "clientSideAutoBlock");
         addDependency("specifiedServer", "favoriteServerButton");
@@ -399,6 +400,17 @@ public class YedelConfig extends Config {
         }
     )
     public int strengthColor = 1;
+
+    @Slider(
+        name = "Strength Indicator Offset (in hundredths)",
+        description = "The Y offset (in hundredths) to render the strength indicator label at.",
+        category = "Features",
+        subcategory = "Features",
+        min = -100,
+        max = 100,
+        step = 1
+    )
+    public int strengthIndicatorOffset = 0;
 
     @Switch(
         name = "Show Self Strength",

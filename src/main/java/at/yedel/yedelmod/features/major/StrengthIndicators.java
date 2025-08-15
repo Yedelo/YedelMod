@@ -133,9 +133,12 @@ public class StrengthIndicators {
             }
             String text =
                 COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + String.format("%.2f", strengthPlayers.get(entityName)) + "s";
-            double sneakingInc = entityPlayer.isSneaking() ? -0.125 : 0;
-            int expectedLines = RenderUtils.shouldRenderSubinfo(entityPlayer) ? 2 : 1;
-            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + (expectedLines * 0.274) + sneakingInc, event.z, 64);
+            double currentLabelOffset = (RenderUtils.shouldRenderSubinfo(entityPlayer) ? 0.548 : 0.274);
+            double sneakingOffset = entityPlayer.isSneaking() ? -0.125 : 0;
+            // this thing goes like double the offset it's supposed to idk why it does that so it's being halved
+            double configOffset = (double) YedelConfig.getInstance().strengthIndicatorOffset / 100 / 2;
+            double offset = currentLabelOffset + sneakingOffset + configOffset;
+            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + offset, event.z, 64);
         }
     }
 
