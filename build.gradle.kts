@@ -15,8 +15,9 @@ repositories {
 }
 
 plugins {
-    id("dev.deftu.gradle.multiversion")
-    id("dev.deftu.gradle.tools")
+    java
+    val dgt = "2.73.0"
+    id("dev.deftu.gradle.tools") version dgt
     for (tool in listOf(
         "java",
         "minecraft.loom",
@@ -24,7 +25,7 @@ plugins {
         "ducks",
         "resources",
         "shadow"
-    )) id("dev.deftu.gradle.tools.$tool")
+    )) id("dev.deftu.gradle.tools.$tool") version dgt
 }
 
 dependencies {
@@ -61,10 +62,6 @@ toolkitLoomHelper {
         println("Using resource pack directory $resourcePackDir from environment variable minecraft.resourcePackDir")
         useArgument("--resourcePackDir", resourcePackDir, GameSide.BOTH)
     }
-}
-
-toolkitMultiversion {
-    moveBuildsToRootProject.set(true)
 }
 
 tasks {
