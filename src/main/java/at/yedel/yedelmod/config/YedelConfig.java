@@ -666,6 +666,30 @@ public class YedelConfig extends Config {
     )
     public boolean lightGreenTokenMessages = false;
 
+    @Checkbox(
+        name = "Hide Token Messages",
+        description = "Hide token messages completely.",
+        category = "BedWars",
+        subcategory = "Chat"
+    )
+    public boolean hideTokenMessages = false;
+
+    @Checkbox(
+        name = "Hide Bedwars XP Messages",
+        description = "Hide bedwars xp messages in-game from things like kills and resources.",
+        category = "BedWars",
+        subcategory = "Chat"
+    )
+    public boolean hideBedwarsXPMessages = false;
+
+    @Checkbox(
+        name = "Hide Punch Deposit Messages",
+        description = "Hide messages from depositing items into chests.",
+        category = "BedWars",
+        subcategory = "Chat"
+    )
+    public boolean hidePunchDepositMessages = false;
+
     @VigilanceName(name = "Hide slumber ticket messages", category = "BedWars", subcategory = "Chat")
     @Checkbox(
         name = "Hide Slumber Ticket Messages",

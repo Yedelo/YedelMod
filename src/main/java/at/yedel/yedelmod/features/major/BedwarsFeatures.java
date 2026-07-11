@@ -40,8 +40,10 @@ public class BedwarsFeatures {
 	}
 
 	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
-	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ tokens! .*");
-	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+[0-9]+ Slumber Tickets! .*");
+	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ tokens! \\(.*\\)");
+	private static final Pattern BEDWARS_XP_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ Bed Wars XP \\(.*\\)");
+	private static final Pattern PUNCH_DEPOSIT_MESSAGE_PATTERN = Pattern.compile("Deposited x\\d+ (.*) into (Ender|Team) Chest! \\(\\d+ Total\\)");
+	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ Slumber Tickets \\(.*\\)");
 	private static final ImmutableList<String> COMFY_PILLOW_MESSAGES = ImmutableList.<String>builder()
 		.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!")
 		.add("You cannot return items to another team's Shopkeeper!")
@@ -111,26 +113,45 @@ public class BedwarsFeatures {
 		}
 	}
 
-	@Subscribe
-	public void lightgreenifyTokenMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().lightGreenTokenMessages && inBedwars) {
+	private void hideOnPattern(ChatReceiveEvent event, boolean configOption, Pattern pattern) {
+		if (YedelConfig.getInstance().enabled && inBedwars && configOption) {
 			String message = event.message.getUnformattedText();
-			Matcher matcher = TOKEN_MESSAGE_PATTERN.matcher(message);
+			Matcher matcher = pattern.matcher(message);
 			while (matcher.find()) {
-				event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
+				event.isCancelled = true;
 			}
 		}
 	}
 
 	@Subscribe
-	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideSlumberTicketMessages && inBedwars) {
+	public void modifyTokenMessages(ChatReceiveEvent event) {
+		if (YedelConfig.getInstance().enabled && inBedwars) {
 			String message = event.message.getUnformattedText();
-			Matcher matcher = SLUMBER_TICKET_MESSAGE_PATTERN.matcher(message);
+			Matcher matcher = TOKEN_MESSAGE_PATTERN.matcher(message);
 			while (matcher.find()) {
-				event.isCancelled = true;
+				if (YedelConfig.getInstance().lightGreenTokenMessages) {
+					event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
+				}
+				else if (YedelConfig.getInstance().hideTokenMessages) {
+					event.isCancelled = true;
+				}
 			}
 		}
+	}
+
+	@Subscribe
+	public void hideBedwarsXPMessages(ChatReceiveEvent event) {
+		hideOnPattern(event, YedelConfig.getInstance().hideBedwarsXPMessages, BEDWARS_XP_MESSAGE_PATTERN);
+	}
+
+	@Subscribe
+	public void hidePunchDepositMessages(ChatReceiveEvent event) {
+		hideOnPattern(event, YedelConfig.getInstance().hidePunchDepositMessages, PUNCH_DEPOSIT_MESSAGE_PATTERN);
+	}
+
+	@Subscribe
+	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
+		hideOnPattern(event, YedelConfig.getInstance().hideSlumberTicketMessages, SLUMBER_TICKET_MESSAGE_PATTERN);
 	}
 
 	@Subscribe
