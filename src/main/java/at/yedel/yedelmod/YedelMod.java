@@ -4,7 +4,10 @@ package at.yedel.yedelmod;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
-import at.yedel.yedelmod.features.major.*;
+import at.yedel.yedelmod.features.major.BedwarsFeatures;
+import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
+import at.yedel.yedelmod.features.major.StrengthIndicators;
+import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.launch.YedelModConstants;
@@ -60,7 +63,6 @@ public class YedelMod {
 			EasyAtlasVerdicts.getInstance(),
 			FavoriteServerButton.getInstance(),
 			CustomHitParticles.getInstance(),
-			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
 			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),

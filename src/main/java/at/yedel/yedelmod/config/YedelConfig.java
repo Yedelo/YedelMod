@@ -3,7 +3,6 @@ package at.yedel.yedelmod.config;
 
 
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
-import at.yedel.yedelmod.features.major.MarketSearch;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.hud.BedwarsXPHud;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
@@ -626,26 +625,6 @@ public class YedelConfig extends Config {
     public int pingMethod = 1;
 
     /* Keybinds */
-
-    // Keybinds
-
-    @KeyBind(
-        name = "Search the auction house for your held item",
-        description = "Searches the auction house for your currently held item's coloredName, you may need to switch categories to see your item.",
-        category = "Keybinds",
-        subcategory = "Keybinds",
-        size = 2
-    )
-    public OneKeyBind ahSearchKeybind = new OneKeyBind(UKeyboard.KEY_K);
-
-    @KeyBind(
-        name = "Search the bazaar for your held item",
-        description = "Searches the bazaar for your currently held item's coloredName.",
-        category = "Keybinds",
-        subcategory = "Keybinds",
-        size = 2
-    )
-    public OneKeyBind bzSearchKeybind = new OneKeyBind(UKeyboard.KEY_L);
 
     @KeyBind(
         name = "Submit insufficient evidence verdict",
