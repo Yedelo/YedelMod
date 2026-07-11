@@ -14,8 +14,8 @@ import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 import cc.polyfrost.oneconfig.config.Config;
-import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.annotations.*;
+import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.core.ConfigUtils;
 import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.InfoType;
@@ -69,9 +69,7 @@ public class YedelConfig extends Config {
         addDependency("strengthColor", "skywarsStrengthIndicators");
         addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
         addDependency("showSelfStrength", "skywarsStrengthIndicators");
-        addDependency("rotateSwordInThirdPerson", "clientSideAutoBlock");
         addDependency("specifiedServer", "favoriteServerButton");
-        addDependency("damageTiltStrength", "damageTilt");
         addDependency("highlightTargetAndShowDistance", "bountyHunting");
         addDependency("playHuntingSounds", "bountyHunting");
         addDependency("playSelection", "bountyHunting");
@@ -421,24 +419,6 @@ public class YedelConfig extends Config {
     )
     public boolean showSelfStrength = true;
 
-    @VigilanceName(name = "Client-side auto-block", category = "Features", subcategory = "Features")
-    @Switch(
-        name = "Client-Side Auto-Block",
-        description = "Always shows the blocking animation client-side.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean clientSideAutoBlock = false;
-
-    @VigilanceName(name = "Rotate sword in third person", category = "Features", subcategory = "Customization")
-    @Switch(
-        name = "Rotate Sword in Third Person",
-        description = "Applies sword rotations for third-person auto-blocking. Potentially fixes rotation issues with OverflowAnimations.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean rotateSwordInThirdPerson = true;
-
     @VigilanceName(name = "Limbo creative mode", category = "Features", subcategory = "Features")
     @Switch(
         name = "Limbo Creative Mode",
@@ -684,109 +664,6 @@ public class YedelConfig extends Config {
         size = 2
     )
     public OneKeyBind evidenceWithoutDoubtKeybind = new OneKeyBind(UKeyboard.KEY_P);
-
-    /* Modern Features */
-
-    @Header(
-        text = "Features backported from modern versions of the game.",
-        category = "Modern Features",
-        size = 2
-    )
-    private transient int header$3 = 1;
-
-    // General
-
-    @VigilanceName(name = "Book background (1.14+)", category = "Modern Features", subcategory = "General")
-    @Switch(
-        name = "Book Background (1.14+)",
-        description = "Draws the default dark background in book GUIs.",
-        category = "Modern Features",
-        subcategory = "Features"
-    )
-    public boolean bookBackground = true;
-
-    @VigilanceName(
-        name = "Keep chat history on chat clear (1.15.2+)",
-        category = "Modern Features",
-        subcategory = "General"
-    )
-    @Switch(
-        name = "Keep Chat History on Chat Clear (1.15.2+)",
-        description = "When clearing your chat (F3 + D), keep your message history (from pressing up arrow key).",
-        category = "Modern Features",
-        subcategory = "Features"
-    )
-    public boolean keepChatHistoryOnChatClear = true;
-
-    @VigilanceName(name = "Change window title (1.15.2+)", category = "Modern Features", subcategory = "General")
-    @Switch(
-        name = "Change Window Title (1.15.2+)",
-        description = "Changes the window title on world and server join. \nYou can manually do this with /yedel settitle.",
-        category = "Modern Features",
-        subcategory = "Features"
-    )
-    public boolean changeWindowTitle = false;
-
-    @VigilanceName(name = "Damage Tilt (1.19.4+)", category = "Modern Features", subcategory = "General")
-    @Switch(
-        name = "Damage Tilt (1.19.4+)",
-        description = "Allows you to customize how much your screen hurts when being damaged.",
-        category = "Modern Features",
-        subcategory = "Features"
-    )
-    public boolean damageTilt = false;
-
-    // The vigilance setting was a float from 0-1 with a step of 0.01, so copy that into this field
-    @VigilanceName(name = "Damage Tilt Strength", category = "Modern Features", subcategory = "Customization")
-    @Number(
-        name = "oldDamageTiltStrength",
-        category = "Modern Features",
-        subcategory = "Customization",
-        min = 1,
-        max = 1
-    )
-    private float oldDamageTiltStrength = 1;
-
-    @Slider(
-        name = "Damage Tilt Strength",
-        description = "The amount of camera shake caused by being hurt.",
-        category = "Modern Features",
-        subcategory = "Features",
-        min = 0,
-        max = 100,
-        step = 1
-    )
-    // And move it into this field
-    public int damageTiltStrength = (int) (oldDamageTiltStrength * 100);
-
-    // Hand Swings
-
-    @Info(
-        text = "Note: This only swings your hand client-side.",
-        type = InfoType.INFO,
-        category = "Modern Features",
-        subcategory = "Hand Swings",
-        size = 2
-    )
-    private transient int info$6 = 1;
-
-    @VigilanceName(name = "Item uses (1.15+)", category = "Modern Features", subcategory = "Hand Swings")
-    @Switch(
-        name = "Item Uses (1.15+)",
-        description = "Swings your hand when using certain items, such as snowballs, eggs and armor.",
-        category = "Modern Features",
-        subcategory = "Hand Swings"
-    )
-    public boolean itemUseSwings = false;
-
-    @VigilanceName(name = "Item drops (1.15+)", category = "Modern Features", subcategory = "Hand Swings")
-    @Switch(
-        name = "Item Drops (1.15+)",
-        description = "Swings your hand when dropping an item.",
-        category = "Modern Features",
-        subcategory = "Hand Swings"
-    )
-    public boolean itemDropSwings = false;
 
     /* BedWars */
 

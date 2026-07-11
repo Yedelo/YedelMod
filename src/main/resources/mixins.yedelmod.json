@@ -6,14 +6,7 @@
     "InvokerMinecraft",
     "InvokerRender",
     "MixinEntityPlayerSP",
-    "MixinEntityRenderer",
-    "MixinGuiContainer",
-    "MixinGuiNewChat",
-    "MixinIntegratedServer",
-    "MixinItemBucket",
-    "MixinItemRenderer",
-    "MixinLayerHeldItem",
-    "MixinRenderPlayer"
+    "MixinGuiContainer"
   ],
   "minVersion": "0.7.11"
 }

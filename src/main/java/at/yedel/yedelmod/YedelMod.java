@@ -5,9 +5,6 @@ package at.yedel.yedelmod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
 import at.yedel.yedelmod.features.major.*;
-import at.yedel.yedelmod.features.modern.ChangeTitle;
-import at.yedel.yedelmod.features.modern.DrawBookBackground;
-import at.yedel.yedelmod.features.modern.ItemSwings;
 import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.launch.YedelModConstants;
@@ -59,13 +56,10 @@ public class YedelMod {
 			this,
 			AutoGuildWelcome.getInstance(),
 			BedwarsFeatures.getInstance(),
-			ChangeTitle.getInstance(),
-			DrawBookBackground.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			FavoriteServerButton.getInstance(),
 			CustomHitParticles.getInstance(),
-			ItemSwings.getInstance(),
 			MarketSearch.getInstance(),
 			PingResponse.getInstance(),
 			RandomPlaceholder.getInstance(),
