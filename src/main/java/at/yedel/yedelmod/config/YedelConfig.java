@@ -52,8 +52,6 @@ public class YedelConfig extends Config {
         initialize();
 
         registerKeyBind(clickNotificationKeybind, ClickNotifications.getInstance()::clickNotification);
-        registerKeyBind(ahSearchKeybind, MarketSearch.getInstance()::ahSearch);
-        registerKeyBind(bzSearchKeybind, MarketSearch.getInstance()::bzSearch);
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
         registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidenceWithoutDoubtVerdict);
 
@@ -676,15 +674,6 @@ public class YedelConfig extends Config {
         subcategory = "Chat"
     )
     public boolean hideSlumberTicketMessages = false;
-
-    @VigilanceName(name = "Hide item pickup messages", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Hide Item Pickup Messages",
-        description = "Hide \"You picked up: ...\" messages.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideItemPickupMessages = false;
 
     @VigilanceName(name = "Hide silver coin count", category = "BedWars", subcategory = "Chat")
     @Checkbox(

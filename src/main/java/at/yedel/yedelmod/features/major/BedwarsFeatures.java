@@ -134,15 +134,6 @@ public class BedwarsFeatures {
 	}
 
 	@Subscribe
-	public void hideItemPickupMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideItemPickupMessages && inBedwars) {
-			if (event.message.getUnformattedText().startsWith("You picked up: ")) {
-				event.isCancelled = true;
-			}
-		}
-	}
-
-	@Subscribe
 	public void hideSilverCoinCountMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideSilverCoinCount) {
 			String message = event.message.getFormattedText();
