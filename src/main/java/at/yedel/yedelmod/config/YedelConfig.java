@@ -792,7 +792,7 @@ public class YedelConfig extends Config {
     @VigilanceName(name = "Current nick", category = "TNT Tag", subcategory = "Customization")
     @Text(
         name = "Current Nick",
-        description = "If you're playing nicked, set your currentNick or you might become the target.",
+        description = "If you're playing nicked, set your nick or you might become the target.",
         category = "TNT Tag",
         placeholder = "Replace"
     )
