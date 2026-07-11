@@ -38,9 +38,6 @@ dependencies {
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
 
     implementation("net.hypixel:mod-api:1.0")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 }
 
 toolkitLoomHelper {
@@ -73,10 +70,6 @@ tasks {
                 "ModSide" to "CLIENT",
             )
         )
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }
 
