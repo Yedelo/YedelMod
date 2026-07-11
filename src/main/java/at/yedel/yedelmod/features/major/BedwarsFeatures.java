@@ -27,7 +27,6 @@ import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -113,69 +112,40 @@ public class BedwarsFeatures {
 		}
 	}
 
-	private void hideOnPattern(ChatReceiveEvent event, boolean configOption, Pattern pattern) {
-		if (YedelConfig.getInstance().enabled && inBedwars && configOption) {
-			String message = event.message.getUnformattedText();
-			Matcher matcher = pattern.matcher(message);
-			while (matcher.find()) {
-				event.isCancelled = true;
-			}
-		}
-	}
-
 	@Subscribe
-	public void modifyTokenMessages(ChatReceiveEvent event) {
+	public void modifyBedwarsChat(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().enabled && inBedwars) {
-			String message = event.message.getUnformattedText();
-			Matcher matcher = TOKEN_MESSAGE_PATTERN.matcher(message);
-			while (matcher.find()) {
-				if (YedelConfig.getInstance().lightGreenTokenMessages) {
-					event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
-				}
-				else if (YedelConfig.getInstance().hideTokenMessages) {
+			String message = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
+
+			if (TOKEN_MESSAGE_PATTERN.matcher(message).find()) {
+				if (YedelConfig.getInstance().hideTokenMessages) {
 					event.isCancelled = true;
 				}
+				else if (YedelConfig.getInstance().lightGreenTokenMessages) {
+					event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
+				}
 			}
-		}
-	}
 
-	@Subscribe
-	public void hideBedwarsXPMessages(ChatReceiveEvent event) {
-		hideOnPattern(event, YedelConfig.getInstance().hideBedwarsXPMessages, BEDWARS_XP_MESSAGE_PATTERN);
-	}
+			hideOnPattern(event, message, YedelConfig.getInstance().hideBedwarsXPMessages, BEDWARS_XP_MESSAGE_PATTERN);
+			hideOnPattern(event, message, YedelConfig.getInstance().hidePunchDepositMessages, PUNCH_DEPOSIT_MESSAGE_PATTERN);
+			hideOnPattern(event, message, YedelConfig.getInstance().hideSlumberTicketMessages, SLUMBER_TICKET_MESSAGE_PATTERN);
 
-	@Subscribe
-	public void hidePunchDepositMessages(ChatReceiveEvent event) {
-		hideOnPattern(event, YedelConfig.getInstance().hidePunchDepositMessages, PUNCH_DEPOSIT_MESSAGE_PATTERN);
-	}
-
-	@Subscribe
-	public void hideSlumberTicketMessage(ChatReceiveEvent event) {
-		hideOnPattern(event, YedelConfig.getInstance().hideSlumberTicketMessages, SLUMBER_TICKET_MESSAGE_PATTERN);
-	}
-
-	@Subscribe
-	public void hideSilverCoinCountMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideSilverCoinCount) {
-			String message = event.message.getFormattedText();
-			if (message.startsWith("§r§aYou purchased §r§6") && message.contains("§r§7(+1 Silver Coin [")) {
-				event.message = new UTextComponent(message.substring(0, message.indexOf(" §r§7(+1 Silver Coin [")));
+			if (YedelConfig.getInstance().hideSilverCoinCount && message.startsWith("You purchased") && message.contains("(+1 Silver Coin [")) {
+				event.message = new UTextComponent(message.substring(0, message.indexOf(" (+1 Silver Coin [")));
 			}
-		}
-	}
 
-	@Subscribe
-	public void hideComfyPillowMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideComfyPillowMessages) {
-			if (COMFY_PILLOW_MESSAGES.contains(event.message.getUnformattedText())) {
+			if (YedelConfig.getInstance().hideComfyPillowMessages && COMFY_PILLOW_MESSAGES.contains(message)) {
+				event.isCancelled = true;
+			}
+
+			if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && message.equals("+1 Dreamer's Soul Fragment!")) {
 				event.isCancelled = true;
 			}
 		}
 	}
 
-	@Subscribe
-	public void hideDreamersSoulFragmentMessage(ChatReceiveEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().hideDreamerSoulFragmentMessages && Objects.equals(event.message.getUnformattedText(), "+1 Dreamer's Soul Fragment!")) {
+	private void hideOnPattern(ChatReceiveEvent event, String message, boolean configOption, Pattern pattern) {
+		if (configOption && pattern.matcher(message).find()) {
 			event.isCancelled = true;
 		}
 	}
