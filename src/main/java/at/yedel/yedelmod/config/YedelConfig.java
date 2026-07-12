@@ -447,7 +447,7 @@ public class YedelConfig extends Config {
 
     @HUD(
         name = "Custom Text HUD",
-        category = "HUDs"
+        category = "Features"
     )
     public CustomTextHud customTextHud = new CustomTextHud();
 
@@ -740,13 +740,13 @@ public class YedelConfig extends Config {
 
     @HUD(
         name = "Bedwars XP Display HUD",
-        category = "HUDs"
+        category = "BedWars"
     )
     public BedwarsXPHud bedwarsXPHud = new BedwarsXPHud();
 
     @HUD(
         name = "Magic Milk Time HUD",
-        category = "HUDs"
+        category = "BedWars"
     )
     public MagicMilkTimeHud magicMilkTimeHud = new MagicMilkTimeHud();
 
@@ -850,7 +850,8 @@ public class YedelConfig extends Config {
 
     @HUD(
         name = "Bounty Hunting HUD",
-        category = "HUDs"
+        category = "TNT Tag",
+        subcategory = "HUD"
     )
     public BountyHuntingHud bountyHuntingHud = new BountyHuntingHud();
 
