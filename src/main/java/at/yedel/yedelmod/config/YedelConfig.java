@@ -683,6 +683,14 @@ public class YedelConfig extends Config {
     public boolean hideBedwarsXPMessages = false;
 
     @Checkbox(
+        name = "Hide Item Purchase Messages",
+        description = "Hide messages from purchasing items at the Item Shop.",
+        category = "BedWars",
+        subcategory = "Chat"
+    )
+    public boolean hideItemPurchaseMessages = false;
+
+    @Checkbox(
         name = "Hide Punch Deposit Messages",
         description = "Hide messages from depositing items into chests.",
         category = "BedWars",

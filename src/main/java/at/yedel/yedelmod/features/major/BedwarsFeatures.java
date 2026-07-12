@@ -130,8 +130,13 @@ public class BedwarsFeatures {
 			hideOnPattern(event, message, YedelConfig.getInstance().hidePunchDepositMessages, PUNCH_DEPOSIT_MESSAGE_PATTERN);
 			hideOnPattern(event, message, YedelConfig.getInstance().hideSlumberTicketMessages, SLUMBER_TICKET_MESSAGE_PATTERN);
 
-			if (YedelConfig.getInstance().hideSilverCoinCount && message.startsWith("You purchased") && message.contains("(+1 Silver Coin [")) {
-				event.message = new UTextComponent(message.substring(0, message.indexOf(" (+1 Silver Coin [")));
+			if (message.startsWith("You purchased")) {
+				if (YedelConfig.getInstance().hideItemPurchaseMessages) {
+					event.isCancelled = true;
+				}
+				else if (YedelConfig.getInstance().hideSilverCoinCount && message.contains("(+1 Silver Coin [")) {
+					event.message = new UTextComponent(message.substring(0, message.indexOf(" (+1 Silver Coin [")));
+				}
 			}
 
 			if (YedelConfig.getInstance().hideComfyPillowMessages && COMFY_PILLOW_MESSAGES.contains(message)) {
