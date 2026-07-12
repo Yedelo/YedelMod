@@ -117,6 +117,9 @@ public class BedwarsFeatures {
 		if (YedelConfig.getInstance().enabled && inBedwars) {
 			String message = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
 
+			if (YedelConfig.getInstance().hideTokenMessages && Objects.equals(message, "Tokens just earned DOUBLED as a Guild Level Reward!")) {
+				event.isCancelled = true;
+			}
 			if (TOKEN_MESSAGE_PATTERN.matcher(message).find()) {
 				if (YedelConfig.getInstance().hideTokenMessages) {
 					event.isCancelled = true;
