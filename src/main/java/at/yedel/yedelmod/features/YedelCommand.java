@@ -123,7 +123,7 @@ public class YedelCommand {
 
     @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
     public void setnick(String nick) {
-        UChat.chat("§6§l- BountyHunting - §eSet nick to " + nick + "§e!");
+        UChat.chat("§6§l- BountyHunting - §eSet nick to \"§f" + nick + "\"§e!");
         YedelConfig.getInstance().currentNick = nick;
         YedelConfig.getInstance().save();
     }
