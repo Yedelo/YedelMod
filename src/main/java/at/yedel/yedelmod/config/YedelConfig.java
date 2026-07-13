@@ -499,7 +499,7 @@ public class YedelConfig extends Config {
     @CustomOption(id = "empty")
     @Empty(
         name = "- constants",
-        description = "Shows mod constants and build information such as the project version.",
+        description = "Shows mod constants such as the project version and build information.",
         category = "Commands",
         subcategory = "Index"
     )
