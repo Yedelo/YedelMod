@@ -5,6 +5,7 @@ package at.yedel.yedelmod.features;
 import at.yedel.yedelmod.config.YedelConfig;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 
 import java.util.regex.PatternSyntaxException;
 
@@ -23,7 +24,7 @@ public class RegexChatFilter {
 	public void filterMessage(ChatReceiveEvent event) {
 		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().regexChatFilter) {
 			try {
-				if (event.message.getUnformattedText().matches(YedelConfig.getInstance().regexChatFilterPattern)) {
+				if (UTextComponent.Companion.stripFormatting(event.message.getUnformattedText()).matches(YedelConfig.getInstance().regexChatFilterPattern)) {
 					event.isCancelled = true;
 				}
 			}
