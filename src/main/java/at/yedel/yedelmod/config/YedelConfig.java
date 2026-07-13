@@ -270,7 +270,7 @@ public class YedelConfig extends Config {
         max = 2,
         step = 1
     )
-    public int particleYOffset = 0;
+    public int particleYOffset = 2;
 
     @VigilanceName(name = "Random particle type", category = "Features", subcategory = "Customization")
     @Checkbox(
@@ -348,7 +348,7 @@ public class YedelConfig extends Config {
         category = "Features",
         subcategory = "Features"
     )
-    public boolean randomPlaceholder = true;
+    public boolean randomPlaceholder = false;
 
     @VigilanceName(name = "Random placeholder text", category = "Features", subcategory = "Customization")
     @Text(
@@ -535,11 +535,27 @@ public class YedelConfig extends Config {
     @CustomOption(id = "empty")
     @Empty(
         name = "- ping [method]",
-        description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method which can be customized.",
+        description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method specified below.",
         category = "Commands",
         subcategory = "Index"
     )
     private transient int empty$7 = 1;
+
+    @VigilanceName(name = "Ping method", category = "Commands", subcategory = "Customization")
+    @Dropdown(
+        name = "Ping Method",
+        description =
+            "Ping: Does /ping command. Works on very few servers." +
+                "\nCommand (default): Enters a random command and waits for the unknown command response. Works on almost all servers." +
+                "\nTab: Sends a tab completion packet and waits for the response. Works on all servers." +
+                "\nStats: Sends a statistics packet and waits for the response. Works on all servers." +
+                "\nServer list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect." +
+                "\nHypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
+        category = "Commands",
+        subcategory = "Index",
+        options = {"Ping", "Command", "Tab", "Stats", "Server list", "Hypixel"}
+    )
+    public int pingMethod = 1;
 
     @CustomOption(id = "empty")
     @Empty(
@@ -603,24 +619,6 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$14 = 1;
-
-    // Customization
-
-    @VigilanceName(name = "Ping method", category = "Commands", subcategory = "Customization")
-    @Dropdown(
-        name = "Ping Method",
-        description =
-            "Ping: Does /ping command. Works on very few servers." +
-                "\nCommand (default): Enters a random command and waits for the unknown command response. Works on almost all servers." +
-                "\nTab: Sends a tab completion packet and waits for the response. Works on all servers." +
-                "\nStats: Sends a statistics packet and waits for the response. Works on all servers." +
-                "\nServer list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect." +
-                "\nHypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
-        category = "Commands",
-        subcategory = "Customization",
-        options = {"Ping", "Command", "Tab", "Stats", "Server list", "Hypixel"}
-    )
-    public int pingMethod = 1;
 
     /* Keybinds */
 
