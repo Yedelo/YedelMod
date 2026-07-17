@@ -22,21 +22,26 @@ public class LimboCreative {
         return INSTANCE;
     }
 
-    private boolean inLimbo;
+    private boolean inLimboServer;
+
+    // like it could be different for alpha and it actually is but alpha is closed now so i can't test it
+    private boolean isInLimbo() {
+        return inLimboServer;
+    }
 
     private LimboCreative() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
-        inLimbo = Objects.equals(packet.getServerName(), "limbo");
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().limboCreativeMode && inLimbo) {
+        inLimboServer = Objects.equals(packet.getServerName(), "limbo");
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().limboCreativeMode && inLimboServer) {
             giveCreative();
         }
     }
 
-    public void checkLimbo() {
-        if (inLimbo) {
+    public void awardLimboCreative() {
+        if (isInLimbo()) {
             if (UMinecraft.getMinecraft().playerController.isInCreativeMode()) {
                 UChat.chat(yedelogo + " §cYou are already in creative mode!");
             }
@@ -49,7 +54,7 @@ public class LimboCreative {
         }
     }
 
-    public void giveCreative() {
+    private void giveCreative() {
         UMinecraft.getMinecraft().playerController.setGameType(WorldSettings.GameType.CREATIVE);
         UChat.chat(yedelogo + " §eSet gamemode to creative!");
     }
