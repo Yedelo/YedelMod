@@ -1,5 +1,7 @@
 ﻿# YedelMod
 
+![icon](src/main/resources/assets/yedelmod/yedelmod.png)
+
 ![Badge](https://img.shields.io/badge/discord-yedel-blue)
 
 ![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20version)
