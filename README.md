@@ -6,13 +6,6 @@
 
 ![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version)
 
-| **Mod versions** | **Powered by** | **Requires Hypixel Mod API** |
-|------------------|----------------|------------------------------|
-| 1.0.0 to 1.1.0   | Essential      | ❌                            |
-| 1.2.0 to 1.5.1   | Essential      | ✅                            |
-| 2.0.0+           | OneConfig v0   | ✅                            |
-| 3.0.0+ (future)  | OneConfig v1   | ❌                            |
-
 Use /yedel (/yedelmod) for settings and more info.
 
 Use /yedel update or the check for update button in the settings menu to check for updates on Modrinth or GitHub.
