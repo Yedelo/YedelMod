@@ -25,10 +25,6 @@ This mod uses the OneConfig tweaker to load OneConfig, both in the development e
 However, using the tweaker in development environment causes other OneConfig mods (in run/mods) to not load OneConfig.
 If you are using other OneConfig mods, remove the tweaker from the run config.
 
-## NoForge note
-
-NoForge seems to break Strength Indicators, which likely means the Hypixel Mod API won't work, meaning many other features like BedWars features won't work.
-
 ## Features
 
 <details><summary>Features</summary>
@@ -39,17 +35,9 @@ NoForge seems to break Strength Indicators, which likely means the Hypixel Mod A
 - Regex Chat Filter
 - Random Placeholder
 - SkyWars Strength Indicators
-- Client-Side Auto-Block
 - Limbo Creative Mode
 - Favorite Server Button
-
-</details>
-
-<details><summary>HUDs</summary>
-
 - Custom Text HUD
-- Bedwars XP Display HUD
-- Magic Milk Time HUD
 
 </details>
 
@@ -75,25 +63,8 @@ All hosted under /yedel (yedelmod):
 
 <details><summary>Keybinds</summary>
 
-- Search the auction house for your held item
-- Search the bazaar for your held item
 - Submit insufficient evidence verdict
 - Submit evidence without doubt verdict
-
-</details>
-
-<details><summary>Modern Features</summary>
-
-Features backported from modern versions of the game.
-
-- Book Background (1.14+)
-- Keep Chat History on Chat Clear (1.15.2+)
-- Change Window Title (1.15.2+)
-- Damage Tilt (1.19.4+)
-
-- Hand Swings (1.15+)
-  * Item Uses
-  * Item Drops
 
 </details>
 
@@ -102,11 +73,17 @@ Features backported from modern versions of the game.
 - BedWars Defusal Helper
 
 - Light Green Token Messages
+- Hide Token Messages
+- Hide Bedwars XP Messages
+- Hide Item Purchase Messages
+- Hide Punch Deposit Messages
 - Hide Slumber Ticket Messages
-- Hide Item Pickup Messages
 - Hide Silver Coin Count
 - Hide Comfy Pillow Messages
 - Hide Dreamer's Soul Fragment Messages
+-
+- Bedwars XP Display HUD
+- Magic Milk Time HUD
 
 </details>
 
