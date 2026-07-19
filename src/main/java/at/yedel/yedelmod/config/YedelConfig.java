@@ -47,33 +47,44 @@ public class YedelConfig extends Config {
 
     private static final transient URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
+    // because it's annoying
+    private void addDependentOption(String dependent, String option) {
+        addDependency(option, dependent);
+    }
+
+    private void addDependentOptions(String dependent, String... options) {
+        for (String option : options) {
+            addDependentOption(dependent, option);
+        }
+    }
+
     private YedelConfig() {
-        super(new Mod("YedelMod", ModType.UTIL_QOL, "/assets/yedelmod/yedelmod.png", new VigilanceMigrator("./config/YedelMod.toml")), "yedelmod.json", true, true);
+        super(
+            new Mod(
+                "YedelMod",
+                ModType.UTIL_QOL,
+                "/assets/yedelmod/yedelmod.png",
+                new VigilanceMigrator("./config/YedelMod.toml")
+            ),
+            "yedelmod.json",
+            true,
+            true
+        );
         initialize();
 
         registerKeyBind(clickNotificationKeybind, ClickNotifications.getInstance()::clickNotification);
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
         registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidenceWithoutDoubtVerdict);
 
-        addDependency("guildWelcomeMessage", "autoWelcomeGuildMembers");
-        addDependency("customParticleType", "customHitParticles");
-        addDependency("particleYOffset", "customHitParticles");
-        addDependency("randomParticleType", "customHitParticles");
-        addDependency("onlySpawnCustomParticlesOnPlayers", "customHitParticles");
-        addDependency("autoGGDelay", "dropperAutoGG");
-        addDependency("regexChatFilterPattern", "regexChatFilter");
-        addDependency("randomPlaceholderText", "randomPlaceholder");
-        addDependency("strengthColor", "skywarsStrengthIndicators");
-        addDependency("showSelfStrength", "skywarsStrengthIndicators");
-        addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
-        addDependency("insufficientEvidenceKeybind", "easyAtlasVerdicts");
-        addDependency("evidenceWithoutDoubtKeybind", "easyAtlasVerdicts");
-        addDependency("specifiedServer", "favoriteServerButton");
-        addDependency("highlightTargetAndShowDistance", "bountyHunting");
-        addDependency("playHuntingSounds", "bountyHunting");
-        addDependency("playSelection", "bountyHunting");
-        addDependency("playKill", "bountyHunting");
-        addDependency("bountyHuntingHud", "bountyHunting");
+        addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
+        addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+        addDependentOption("dropperAutoGG", "autoGGDelay");
+        addDependentOption("regexChatFilter", "regexChatFilterPattern");
+        addDependentOption("randomPlaceholder", "randomPlaceholderText");
+        addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
+        addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
+        addDependentOption("favoriteServerButton", "specifiedServer");
+        addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
 
         for (String internalOption : new String[] {
             "oldDamageTiltStrength",
@@ -421,8 +432,7 @@ public class YedelConfig extends Config {
         name = "Show Self Strength",
         description = "Whether or not to show your own strength indicators.",
         category = "Features",
-        subcategory = "Hypixel",
-        size = 2
+        subcategory = "Hypixel"
     )
     public boolean showSelfStrength = true;
 
