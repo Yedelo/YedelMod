@@ -440,8 +440,7 @@ public class YedelConfig extends Config {
     @VigilanceName(name = "Limbo creative mode", category = "Features", subcategory = "Features")
     @Switch(
         name = "Limbo Creative Mode",
-        description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
-            "Use /yedel lgmc in limbo if it doesn't work the first time.",
+        description = "Automatically gives creative mode in Hypixel limbo. Use /yedel lgmc or rejoin if it doesn't work the first time.",
         category = "Features",
         subcategory = "Hypixel",
         size = 2
