@@ -46,11 +46,9 @@ toolkitLoomHelper {
     // Remove this in the run config if you're using other OneConfig mods, since those mods will not load with the tweaker argument.
     useTweaker("cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
 
-    if (mcData.isLegacyForge) {
-        useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
-        useForgeMixin("yedelmod")
-        useMixinRefMap("yedelmod")
-    }
+    useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
+    useForgeMixin("yedelmod")
+    useMixinRefMap("yedelmod")
 
     useDevAuth(devAuthVersion)
     useArgument("--version", "YedelMod", GameSide.BOTH)
