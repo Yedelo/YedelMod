@@ -445,6 +445,31 @@ public class YedelConfig extends Config {
     )
     public boolean limboCreativeMode = true;
 
+    @Switch(
+        name = "Easy Atlas Verdicts",
+        description = "Adds hotkeys for submitting Atlas verdicts.",
+        category = "Features",
+        subcategory = "Hypixel",
+        size = 2
+    )
+    public boolean easyAtlasVerdicts = false;
+
+    @KeyBind(
+        name = "Submit insufficient evidence verdict",
+        description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
+        category = "Features",
+        subcategory = "Hypixel"
+    )
+    public OneKeyBind insufficientEvidenceKeybind = new OneKeyBind(UKeyboard.KEY_O);
+
+    @KeyBind(
+        name = "Submit evidence without doubt verdict",
+        description = "Submits an \"Evidence Without Doubt\" verdict in Atlas.",
+        category = "Features",
+        subcategory = "Hypixel"
+    )
+    public OneKeyBind evidenceWithoutDoubtKeybind = new OneKeyBind(UKeyboard.KEY_P);
+
     // the colossal hud customization options will continue to stay under everything else
     @HUD(
         name = "Custom Text HUD",
@@ -620,31 +645,6 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$14 = 1;
-
-    @Switch(
-        name = "Easy Atlas Verdicts",
-        description = "Adds hotkeys for submitting Atlas verdicts.",
-        category = "Features",
-        subcategory = "Hypixel",
-        size = 2
-    )
-    public boolean easyAtlasVerdicts = false;
-
-    @KeyBind(
-        name = "Submit insufficient evidence verdict",
-        description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    public OneKeyBind insufficientEvidenceKeybind = new OneKeyBind(UKeyboard.KEY_O);
-
-    @KeyBind(
-        name = "Submit evidence without doubt verdict",
-        description = "Submits an \"Evidence Without Doubt\" verdict in Atlas.",
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    public OneKeyBind evidenceWithoutDoubtKeybind = new OneKeyBind(UKeyboard.KEY_P);
 
     /* BedWars */
 
