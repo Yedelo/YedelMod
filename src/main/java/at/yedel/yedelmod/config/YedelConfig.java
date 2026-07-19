@@ -66,6 +66,8 @@ public class YedelConfig extends Config {
         addDependency("strengthColor", "skywarsStrengthIndicators");
         addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
         addDependency("showSelfStrength", "skywarsStrengthIndicators");
+        addDependency("insufficientEvidenceKeybind", "easyAtlasVerdicts");
+        addDependency("evidenceWithoutDoubtKeybind", "easyAtlasVerdicts");
         addDependency("specifiedServer", "favoriteServerButton");
         addDependency("highlightTargetAndShowDistance", "bountyHunting");
         addDependency("playHuntingSounds", "bountyHunting");
@@ -455,7 +457,7 @@ public class YedelConfig extends Config {
     public boolean easyAtlasVerdicts = false;
 
     @KeyBind(
-        name = "Submit insufficient evidence verdict",
+        name = "Insufficient Evidence Verdict",
         description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
         category = "Features",
         subcategory = "Hypixel"
@@ -463,7 +465,7 @@ public class YedelConfig extends Config {
     public OneKeyBind insufficientEvidenceKeybind = new OneKeyBind(UKeyboard.KEY_O);
 
     @KeyBind(
-        name = "Submit evidence without doubt verdict",
+        name = "Evidence Without Doubt Verdict",
         description = "Submits an \"Evidence Without Doubt\" verdict in Atlas.",
         category = "Features",
         subcategory = "Hypixel"
