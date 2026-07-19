@@ -51,34 +51,25 @@ public class EasyAtlasVerdicts {
     }
 
     public void submitInsufficientEvidenceVerdict() {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
-            EntityPlayerSP player = UPlayer.getPlayer();
-            if (inAtlas && player != null) {
-                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Insufficient Evidence\"...");
-                player.inventory.currentItem = 7;
-                Multithreading.schedule(() -> {
-                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                    slot = 30;
-                    clickerEnabled = true;
-                    setupTimeout();
-                }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
-            }
-        }
+        submitVerdict("Insufficient Evidence", 30);
     }
 
     public void submitEvidenceWithoutDoubtVerdict() {
+        submitVerdict("Evidence Without Doubt", 32);
+    }
+
+    private void submitVerdict(String name, int inventorySlot) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
             EntityPlayerSP player = UPlayer.getPlayer();
             if (inAtlas && player != null) {
-                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"Evidence Without Doubt\"...");
+                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
                 player.inventory.currentItem = 7;
                 Multithreading.schedule(() -> {
-                        ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                        slot = 32;
-                        clickerEnabled = true;
-                        setupTimeout();
-                    }, (int) (NumberUtils.randomRange(158, 301)), TimeUnit.MILLISECONDS
-                );
+                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                    slot = inventorySlot;
+                    clickerEnabled = true;
+                    setupTimeout();
+                }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
             }
         }
     }
