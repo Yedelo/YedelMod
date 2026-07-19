@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.libs.universal.USound;
 import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.error.ErrorReason;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
@@ -27,7 +28,7 @@ public class PingResponse {
     private PingResponse() {
         // note: using the method reference PingResponse.getInstance()::handleHypixelPingResponse doesn't work
         // because that would be referring to the instance in the constructor
-        HypixelModAPI.getInstance().registerHandler(ClientboundPingPacket.class, this::handleHypixelPingResponse);
+        HypixelModAPI.getInstance().createHandler(ClientboundPingPacket.class, this::handleHypixelPingResponse).onError(this::handlePingError);
     }
 
     @Subscribe
@@ -70,6 +71,13 @@ public class PingResponse {
         showPingMessage("hypixel", ping);
         playPingSound(ping);
         PingSender.getInstance().hypixelCheck = false;
+    }
+
+    private void handlePingError(ErrorReason reason) {
+        if (PingSender.getInstance().hypixelCheck) {
+            PingSender.getInstance().hypixelCheck = false;
+            UChat.chat(yedelogo + " §cHypixel ping errored with reason " + ErrorReason.getById(reason.getId()) + "!");
+        }
     }
 
     public void handleServerListPing() {

@@ -9,7 +9,6 @@ import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
-import at.yedel.yedelmod.handlers.HypixelManager;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Threading;
@@ -18,6 +17,8 @@ import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -52,7 +53,7 @@ public class YedelMod {
 	public void init(FMLInitializationEvent event) {
 		// Loads class. preload() exists for this but what ev
 		YedelConfig.getInstance();
-		HypixelManager.getInstance().setup();
+		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
 		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
 
 		registerEventListeners(
