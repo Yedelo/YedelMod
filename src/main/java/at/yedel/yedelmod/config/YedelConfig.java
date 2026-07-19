@@ -64,8 +64,8 @@ public class YedelConfig extends Config {
         addDependency("regexChatFilterPattern", "regexChatFilter");
         addDependency("randomPlaceholderText", "randomPlaceholder");
         addDependency("strengthColor", "skywarsStrengthIndicators");
-        addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
         addDependency("showSelfStrength", "skywarsStrengthIndicators");
+        addDependency("strengthIndicatorOffset", "skywarsStrengthIndicators");
         addDependency("insufficientEvidenceKeybind", "easyAtlasVerdicts");
         addDependency("evidenceWithoutDoubtKeybind", "easyAtlasVerdicts");
         addDependency("specifiedServer", "favoriteServerButton");
@@ -385,7 +385,8 @@ public class YedelConfig extends Config {
         name = "SkyWars Strength Indicators",
         description = "Shows people's strength above their nametags with customizable colors",
         category = "Features",
-        subcategory = "Hypixel"
+        subcategory = "Hypixel",
+        size = 2
     )
     public boolean skywarsStrengthIndicators = true;
 
@@ -416,6 +417,15 @@ public class YedelConfig extends Config {
     )
     public int strengthColor = 1;
 
+    @Switch(
+        name = "Show Self Strength",
+        description = "Whether or not to show your own strength indicators.",
+        category = "Features",
+        subcategory = "Hypixel",
+        size = 2
+    )
+    public boolean showSelfStrength = true;
+
     @Slider(
         name = "Strength Indicator Offset (in hundredths)",
         description = "The Y offset (in hundredths) to render the strength indicator label at.",
@@ -426,15 +436,6 @@ public class YedelConfig extends Config {
         step = 1
     )
     public int strengthIndicatorOffset = 0;
-
-    @Switch(
-        name = "Show Self Strength",
-        description = "Whether or not to show your own strength indicators.",
-        category = "Features",
-        subcategory = "Hypixel",
-        size = 2
-    )
-    public boolean showSelfStrength = true;
 
     @VigilanceName(name = "Limbo creative mode", category = "Features", subcategory = "Features")
     @Switch(
