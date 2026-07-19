@@ -14,12 +14,6 @@ Use /yedel update or the check for update button in the settings menu to check f
 
 Use /yedel yedelmessage for messages from me regarding the mod. These are usually tips or bug notices.
 
-## Developing
-
-This mod uses the OneConfig tweaker to load OneConfig, both in the development environment and in production (manifest).
-However, using the tweaker in development environment causes other OneConfig mods (in run/mods) to not load OneConfig.
-If you are using other OneConfig mods, remove the tweaker from the run config.
-
 ## Features
 
 <details><summary>Features</summary>
