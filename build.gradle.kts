@@ -2,6 +2,7 @@ import dev.deftu.gradle.utils.GameSide
 
 val oneconfigVersion: String by project
 val oneconfigWrapperVersion: String by project
+val modApiVersion: String by project
 val devAuthVersion: String by project
 
 version = properties["mod.version"]!!
@@ -28,25 +29,24 @@ plugins {
     )) id("dev.deftu.gradle.tools.$tool") version dgt
 }
 
-dependencies {
-    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
-    listOf(
-        "implementation",
-        "shade"
-    ).forEach { it("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion") }
+val shadeOptionally = configurations.create("shadeOptionally")
+configurations.named("implementation") {
+    extendsFrom(shadeOptionally)
+}
 
+dependencies {
+    shadeOptionally("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
+    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
 
-    implementation("net.hypixel:mod-api:1.0")
+    modImplementation("net.hypixel:mod-api-forge:$modApiVersion")
+    shadeOptionally("net.hypixel:mod-api-forge-tweaker:$modApiVersion")
 }
 
 toolkitLoomHelper {
     disableRunConfigs(GameSide.SERVER)
 
-    // Remove this in the run config if you're using other OneConfig mods, since those mods will not load with the tweaker argument.
-    useTweaker("cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
-
-    useCoreMod("at.yedel.yedelmod.launch.YedelModLoadingPlugin")
+    useTweaker("at.yedel.yedelmod.launch.YedelModTweaker")
     useForgeMixin("yedelmod")
     useMixinRefMap("yedelmod")
 
@@ -68,6 +68,10 @@ tasks {
                 "ModSide" to "CLIENT",
             )
         )
+    }
+    fatJar {
+        configurations = listOf(shadeOptionally)
+        relocate("net.hypixel.modapi.tweaker", "at.yedel.yedelmod.launch")
     }
 }
 
