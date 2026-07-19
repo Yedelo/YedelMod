@@ -180,24 +180,6 @@ public class YedelConfig extends Config {
 
     // Features
 
-    @VigilanceName(name = "Auto welcome guild members", category = "Features", subcategory = "Features")
-    @Switch(
-        name = "Auto Welcome Guild Members",
-        description = "Automatically welcomes new guild members with a customizable message.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean autoWelcomeGuildMembers = true;
-
-    @VigilanceName(name = "Guild welcome message", category = "Features", subcategory = "Customization")
-    @Text(
-        name = "Guild Welcome Message",
-        description = "Message for new guild members. Use [player] for the new player.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public String guildWelcomeMessage = "Welcome, [player]!";
-
     @VigilanceName(name = "Custom hit particles", category = "Features", subcategory = "Features")
     @Switch(
         name = "Custom Hit Particles",
@@ -293,36 +275,6 @@ public class YedelConfig extends Config {
     )
     public boolean onlySpawnCustomParticlesOnPlayers = false;
 
-    @Info(
-        text = "This only says gg at the end of the game, not when you finish.",
-        type = InfoType.INFO,
-        category = "Features",
-        subcategory = "Features",
-        size = 2
-    )
-    private transient int info$1 = 1;
-
-    @VigilanceName(name = "Dropper AutoGG", category = "Features", subcategory = "Features")
-    @Switch(
-        name = "Dropper AutoGG",
-        description = "AutoGG for dropper, will be removed when it is added to Sk1er's AutoGG.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean dropperAutoGG = Platform.getLoaderPlatform().isModLoaded("autogg");
-
-    @VigilanceName(name = "AutoGG Delay", category = "Features", subcategory = "Customization")
-    @Slider(
-        name = "AutoGG Delay",
-        description = "Delay for AutoGG, measured in seconds.",
-        category = "Features",
-        subcategory = "Features",
-        min = 0,
-        max = 5,
-        step = 1
-    )
-    public int autoGGDelay = 0;
-
     @VigilanceName(name = "Regex chat filter", category = "Features", subcategory = "Features")
     @Switch(
         name = "Regex Chat Filter",
@@ -360,12 +312,78 @@ public class YedelConfig extends Config {
     )
     public String randomPlaceholderText = "//r";
 
+    @VigilanceName(name = "Favorite server button", category = "Features", subcategory = "Features")
+    @Switch(
+        name = "Favorite Server Button",
+        description = "Adds a button to the main menu to join a customizable server address.",
+        category = "Features",
+        subcategory = "Features"
+    )
+    public boolean favoriteServerButton = false;
+
+    @VigilanceName(name = "Specified server", category = "Features", subcategory = "Customization")
+    @Text(
+        name = "Specified Server",
+        description = "Server joined with button",
+        category = "Features",
+        subcategory = "Features"
+    )
+    public String specifiedServer = "mc.hypixel.net";
+
+    @VigilanceName(name = "Auto welcome guild members", category = "Features", subcategory = "Features")
+    @Switch(
+        name = "Auto Welcome Guild Members",
+        description = "Automatically welcomes new guild members with a customizable message.",
+        category = "Features",
+        subcategory = "Hypixel"
+    )
+    public boolean autoWelcomeGuildMembers = true;
+
+    @VigilanceName(name = "Guild welcome message", category = "Features", subcategory = "Customization")
+    @Text(
+        name = "Guild Welcome Message",
+        description = "Message for new guild members. Use [player] for the new player.",
+        category = "Features",
+        subcategory = "Hypixel"
+    )
+    public String guildWelcomeMessage = "Welcome, [player]!";
+
+    @Info(
+        text = "This only says gg at the end of the game, not when you finish.",
+        type = InfoType.INFO,
+        category = "Features",
+        subcategory = "Hypixel",
+        size = 2
+    )
+    private transient int info$1 = 1;
+
+    @VigilanceName(name = "Dropper AutoGG", category = "Features", subcategory = "Features")
+    @Switch(
+        name = "Dropper AutoGG",
+        description = "AutoGG for dropper, will be removed when it is added to Sk1er's AutoGG.",
+        category = "Features",
+        subcategory = "Hypixel"
+    )
+    public boolean dropperAutoGG = Platform.getLoaderPlatform().isModLoaded("autogg");
+
+    @VigilanceName(name = "AutoGG Delay", category = "Features", subcategory = "Customization")
+    @Slider(
+        name = "AutoGG Delay",
+        description = "Delay for AutoGG, measured in seconds.",
+        category = "Features",
+        subcategory = "Hypixel",
+        min = 0,
+        max = 5,
+        step = 1
+    )
+    public int autoGGDelay = 0;
+
     @VigilanceName(name = "SkyWars strength indicators", category = "Features", subcategory = "Features")
     @Switch(
         name = "SkyWars Strength Indicators",
         description = "Shows people's strength above their nametags with customizable colors",
         category = "Features",
-        subcategory = "Features"
+        subcategory = "Hypixel"
     )
     public boolean skywarsStrengthIndicators = true;
 
@@ -374,7 +392,7 @@ public class YedelConfig extends Config {
         name = "Strength Color",
         description = "Color for strength indicators",
         category = "Features",
-        subcategory = "Features",
+        subcategory = "Hypixel",
         options = {
             "Dark Red",
             "Red",
@@ -400,7 +418,7 @@ public class YedelConfig extends Config {
         name = "Strength Indicator Offset (in hundredths)",
         description = "The Y offset (in hundredths) to render the strength indicator label at.",
         category = "Features",
-        subcategory = "Features",
+        subcategory = "Hypixel",
         min = -100,
         max = 100,
         step = 1
@@ -411,7 +429,7 @@ public class YedelConfig extends Config {
         name = "Show Self Strength",
         description = "Whether or not to show your own strength indicators.",
         category = "Features",
-        subcategory = "Features",
+        subcategory = "Hypixel",
         size = 2
     )
     public boolean showSelfStrength = true;
@@ -422,29 +440,12 @@ public class YedelConfig extends Config {
         description = "Automatically gives creative mode in Hypixel limbo, not bannable because the server does not listen to anything happening. " +
             "Use /yedel lgmc in limbo if it doesn't work the first time.",
         category = "Features",
-        subcategory = "Features",
+        subcategory = "Hypixel",
         size = 2
     )
     public boolean limboCreativeMode = true;
 
-    @VigilanceName(name = "Favorite server button", category = "Features", subcategory = "Features")
-    @Switch(
-        name = "Favorite Server Button",
-        description = "Adds a button to the main menu to join a customizable server address.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean favoriteServerButton = false;
-
-    @VigilanceName(name = "Specified server", category = "Features", subcategory = "Customization")
-    @Text(
-        name = "Specified Server",
-        description = "Server joined with button",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public String specifiedServer = "mc.hypixel.net";
-
+    // the colossal hud customization options will continue to stay under everything else
     @HUD(
         name = "Custom Text HUD",
         category = "Features"
@@ -624,7 +625,7 @@ public class YedelConfig extends Config {
         name = "Easy Atlas Verdicts",
         description = "Adds hotkeys for submitting Atlas verdicts.",
         category = "Features",
-        subcategory = "Features",
+        subcategory = "Hypixel",
         size = 2
     )
     public boolean easyAtlasVerdicts = false;
@@ -633,7 +634,7 @@ public class YedelConfig extends Config {
         name = "Submit insufficient evidence verdict",
         description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
         category = "Features",
-        subcategory = "Features"
+        subcategory = "Hypixel"
     )
     public OneKeyBind insufficientEvidenceKeybind = new OneKeyBind(UKeyboard.KEY_O);
 
@@ -641,7 +642,7 @@ public class YedelConfig extends Config {
         name = "Submit evidence without doubt verdict",
         description = "Submits an \"Evidence Without Doubt\" verdict in Atlas.",
         category = "Features",
-        subcategory = "Features"
+        subcategory = "Hypixel"
     )
     public OneKeyBind evidenceWithoutDoubtKeybind = new OneKeyBind(UKeyboard.KEY_P);
 
