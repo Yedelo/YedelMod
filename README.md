@@ -21,20 +21,21 @@ Use /yedel yedelmessage for messages from me regarding the mod. These are usuall
 | 1.0.0 to 1.1.0   | [Essential](https://essential.gg/)                       | ❌ (not included or required)                                |
 | 1.2.0 to 1.5.1   | [Essential](https://essential.gg/)                       | ☑️ (separate download required)                             |
 | 2.0.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0 | ☑️ (separate download required)                             |
-| ???+             | [OneConfig](https://polyfrost.org/projects/oneconfig) v0 | ✅ (bundled via tweaker)                                     |
+| 2.3.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0 | ✅ (bundled via tweaker)                                     |
 
 ## Features
 
 <details><summary>Features</summary>
 
-- Auto Welcome Guild Members
 - Custom Hit Particles
-- Dropper AutoGG
 - Regex Chat Filter
 - Random Placeholder
+- Favorite Server Button
+- Auto Welcome Guild Members
+- Dropper AutoGG
 - SkyWars Strength Indicators
 - Limbo Creative Mode
-- Favorite Server Button
+- Easy Atlas Verdicts
 - Custom Text HUD
 
 </details>
@@ -56,13 +57,6 @@ All hosted under /yedel (yedelmod):
 - simulatechat (simc) [text]
 - update [platform]
 - yedelmessage (message)
-
-</details>
-
-<details><summary>Keybinds</summary>
-
-- Submit insufficient evidence verdict
-- Submit evidence without doubt verdict
 
 </details>
 

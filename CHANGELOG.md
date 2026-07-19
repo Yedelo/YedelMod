@@ -1,28 +1,21 @@
-**2.2.0**
+**2.3.0**
 
-_It was the worst of times._
+_It was the contrary of times._
 
-- Removed the following features:
-    - Client-Side Auto Block
-    - All modern features
-        - These two can now be found in [Finement](https://modrinth.com/mod/finement) (1.3.0+)
-    - Market Search Keybinds
-        - SkyBlock no longer supports 1.8.9, this would be re-added for a modern port
-    - Hide Item Pickup Messages
-        - Now a base game setting (BedWars lobby -> /settings -> Bed Wars Settings -> Slumber Item Notification:
-          Disabled)
-- Add the following BedWars chat features:
-    - Hide Token Messages
-    - Hide Bedwars XP Messages
-    - Hide Deposit Messages
-    - Hide Item Purchase Messages
-- Changed the following defaults:
-    - Particle Y Offset: 0 -> 2
-    - Random Placeholder: enabled -> disabled
-- Move HUDs to their respective categories
-- Move ping method option up to ping command in commands section
-- Fix regex chat filter not stripping formatting correctly, causing it to not work
-- Fix hide slumber ticket messages potentially not working
-- Fix some config descriptions having weird code artifacts
+- Add YedelModTweaker, which now handles individual loading of OneConfig, the Hypixel Mod API, and the mod itself
+  - Add Hypixel Mod API bundling tweaker
+    - Bundles version 1.0.1.2 of the Forge Mod API
+    - This also adds compatibility for local copies of the mod API in the mods folder, which can fix crashes with other
+      mods
+    - Local file copies may be removed from the mods folder, but they can also be used to override the bundled version
+      if it is newer than the bundled version
+    - Both the bundling tweaker and the local copy compatibility tweaker can be disabled with system properties
+      `yedelmod.launch.hypixel-mod-api=false` and `yedelmod.launch.local-mod-api-compatibility=false`
+  - Similarly, tweakers for loading OneConfig and YedelMod can be disabled with system properties
+    `yedelmod.launch.oneconfig=false` and `yedelmod.launch.mod-requeue=false`
+- Add proper error handling for -ping hypixel, now shows error and reason
+- Move Hypixel related features under Features -> Hypixel
+- Add toggle for Easy Atlas Verdicts, move it to Features under Hypixel
+- Update description for Limbo Creative Mode because it was lwk weird
 
-"all the cool girls use yedelmod" - IgnDolphin, the #1 fangirl
+"not as fried as chicken" - Dark36O, the release warrior
