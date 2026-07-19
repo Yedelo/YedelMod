@@ -620,23 +620,28 @@ public class YedelConfig extends Config {
     )
     private transient int empty$14 = 1;
 
-    /* Keybinds */
+    @Switch(
+        name = "Easy Atlas Verdicts",
+        description = "Adds hotkeys for submitting Atlas verdicts.",
+        category = "Features",
+        subcategory = "Features",
+        size = 2
+    )
+    public boolean easyAtlasVerdicts = false;
 
     @KeyBind(
         name = "Submit insufficient evidence verdict",
         description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
-        category = "Keybinds",
-        subcategory = "Keybinds",
-        size = 2
+        category = "Features",
+        subcategory = "Features"
     )
     public OneKeyBind insufficientEvidenceKeybind = new OneKeyBind(UKeyboard.KEY_O);
 
     @KeyBind(
         name = "Submit evidence without doubt verdict",
         description = "Submits an \"Evidence Without Doubt\" verdict in Atlas.",
-        category = "Keybinds",
-        subcategory = "Keybinds",
-        size = 2
+        category = "Features",
+        subcategory = "Features"
     )
     public OneKeyBind evidenceWithoutDoubtKeybind = new OneKeyBind(UKeyboard.KEY_P);
 
