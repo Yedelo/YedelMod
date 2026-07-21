@@ -1,48 +1,51 @@
-import dev.deftu.gradle.utils.GameSide
-
+val fabricLoaderVersion: String by project
 val oneconfigVersion: String by project
-val oneconfigWrapperVersion: String by project
-val modApiVersion: String by project
-val devAuthVersion: String by project
-
-version = properties["mod.version"]!!
+val modMenuVersion: String by project
 
 repositories {
-    gradlePluginPortal()
     mavenCentral()
-    maven("https://repo.polyfrost.cc/releases")
-    maven("https://repo.spongepowered.org/repository/maven-public")
-    maven("https://repo.hypixel.net/repository/Hypixel/")
+    gradlePluginPortal()
+    google()
+    maven("https://repo.polyfrost.org/releases")
+    maven("https://repo.polyfrost.org/snapshots")
+    maven("https://maven.terraformersmc.com/releases")
+    maven("https://repo.hypixel.net/repository/Hypixel/") {
+        content {
+            includeGroup("net.hypixel")
+        }
+    }
+    maven("https://maven.fabricmc.net/releases") {
+        content {
+            includeGroup("net.fabricmc")
+        }
+    }
 }
 
 plugins {
-    java
-    val dgt = "2.73.0"
-    id("dev.deftu.gradle.tools") version dgt
-    for (tool in listOf(
-        "java",
-        "minecraft.loom",
-        "bloom",
-        "ducks",
-        "resources",
-        "shadow"
-    )) id("dev.deftu.gradle.tools.$tool") version dgt
-}
-
-val shadeOptionally = configurations.create("shadeOptionally")
-configurations.named("implementation") {
-    extendsFrom(shadeOptionally)
+    id("net.fabricmc.fabric-loom") version "1.16-SNAPSHOT"
 }
 
 dependencies {
-    shadeOptionally("cc.polyfrost:oneconfig-wrapper-launchwrapper:$oneconfigWrapperVersion")
-    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
-    compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
+    minecraft("com.mojang:minecraft:${sc.current.version}")
+    implementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
+    implementation("org.polyfrost.oneconfig:${sc.current.version}-fabric:$oneconfigVersion")
 
-    modImplementation("net.hypixel:mod-api-forge:$modApiVersion")
-    shadeOptionally("net.hypixel:mod-api-forge-tweaker:$modApiVersion")
+    api("com.terraformersmc:modmenu:$modMenuVersion")
 }
 
+loom {
+    runConfigs.remove(runConfigs["server"])
+
+    runConfigs.all {
+        runDir = "../../run"
+        val resourcePackDir: String? = System.getenv("minecraft.resourcePackDir")
+        if (!resourcePackDir.isNullOrBlank()) {
+            println("Using resource pack directory $resourcePackDir from environment variable minecraft.resourcePackDir")
+            programArgs("--resourcePackDir", resourcePackDir)
+        }
+    }
+}
+/*
 toolkitLoomHelper {
     disableRunConfigs(GameSide.SERVER)
 
@@ -58,21 +61,21 @@ toolkitLoomHelper {
         useArgument("--resourcePackDir", resourcePackDir, GameSide.BOTH)
     }
 }
+ */
 
 tasks {
     jar {
-        archiveFileName = "YedelMod-$version+${mcData}.jar"
+        archiveFileName = "YedelMod-${sc.current.project}.jar"
         manifest.attributes(
             mapOf(
-                "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow",
-                "ModSide" to "CLIENT",
+                "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow"
             )
         )
     }
-    fatJar {
-        configurations = listOf(shadeOptionally)
-        relocate("net.hypixel.modapi.tweaker", "at.yedel.yedelmod.launch")
-    }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
 

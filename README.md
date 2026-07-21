@@ -16,12 +16,12 @@ Use /yedel yedelmessage for messages from me regarding the mod. These are usuall
 
 ## Dependency Information
 
-| **Mod versions** | **Powered by**                                           | **[Hypixel Mod API](https://github.com/HypixelDev/ModAPI)** |
-|------------------|----------------------------------------------------------|-------------------------------------------------------------|
-| 1.0.0 to 1.1.0   | [Essential](https://essential.gg/)                       | ❌ (not included or required)                                |
-| 1.2.0 to 1.5.1   | [Essential](https://essential.gg/)                       | ☑️ (separate download required)                             |
-| 2.0.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0 | ☑️ (separate download required)                             |
-| 2.3.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0 | ✅ (bundled via tweaker)                                     |
+| **Mod versions** | **Powered by**                                              | **[Hypixel Mod API](https://github.com/HypixelDev/ModAPI)** |
+|------------------|-------------------------------------------------------------|-------------------------------------------------------------|
+| 1.0.0 to 1.1.0   | [Essential](https://essential.gg/)                          | ❌ (not included or required)                                |
+| 1.2.0 to 1.5.1   | [Essential](https://essential.gg/)                          | ☑️ (separate download required)                             |
+| 2.0.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0    | ☑️ (separate download required)                             |
+| 2.3.0+           | [OneConfig](https://polyfrost.org/projects/oneconfig) v0/v1 | ✅ (bundled)                                                 |
 
 ## Features
 
