@@ -9,16 +9,8 @@ repositories {
     maven("https://repo.polyfrost.org/releases")
     maven("https://repo.polyfrost.org/snapshots")
     maven("https://maven.terraformersmc.com/releases")
-    maven("https://repo.hypixel.net/repository/Hypixel/") {
-        content {
-            includeGroup("net.hypixel")
-        }
-    }
-    maven("https://maven.fabricmc.net/releases") {
-        content {
-            includeGroup("net.fabricmc")
-        }
-    }
+    maven("https://repo.hypixel.net/repository/Hypixel/")
+    maven("https://maven.fabricmc.net/releases")
 }
 
 plugins {
@@ -45,23 +37,6 @@ loom {
         }
     }
 }
-/*
-toolkitLoomHelper {
-    disableRunConfigs(GameSide.SERVER)
-
-    useTweaker("at.yedel.yedelmod.launch.YedelModTweaker")
-    useForgeMixin("yedelmod")
-    useMixinRefMap("yedelmod")
-
-    useDevAuth(devAuthVersion)
-    useArgument("--version", "YedelMod", GameSide.BOTH)
-    val resourcePackDir: String? = System.getenv("minecraft.resourcePackDir")
-    if (!resourcePackDir.isNullOrBlank()) {
-        println("Using resource pack directory $resourcePackDir from environment variable minecraft.resourcePackDir")
-        useArgument("--resourcePackDir", resourcePackDir, GameSide.BOTH)
-    }
-}
- */
 
 tasks {
     jar {
