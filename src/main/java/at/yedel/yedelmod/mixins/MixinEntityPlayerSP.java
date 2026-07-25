@@ -2,7 +2,6 @@ package at.yedel.yedelmod.mixins;
 
 
 
-import at.yedel.yedelmod.utils.SwingItemDuck;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;

@@ -39,6 +39,17 @@ loom {
 }
 
 tasks {
+    processResources {
+        filesMatching("fabric.mod.json") {
+            expand(
+                mapOf(
+                    "version" to version
+                )
+            )
+        }
+        outputs.upToDateWhen { false }
+    }
+
     jar {
         archiveFileName = "YedelMod-${sc.current.project}.jar"
         manifest.attributes(

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "name": "YedelMod",
+  "id": "yedelmod",
+  "description": "Expansive features for Hypixel and Minecraft QOL",
+  "version": "${version}",
+  "authors": [
+    "Yedel"
+  ],
+  "icon": "assets/yedelmod/yedelmod.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "at.yedel.yedelmod.YedelMod"
+    ]
+  },
+  "mixins": [
+    "mixins.yedelmod.json"
+  ],
+  "depends": {
+    "java": "${java}",
+    "fabricloader": "${fabricLoader}",
+    "minecraft": "${minecraft}",
+    "fabric-api": "*"
+  },
+  "recommends": {
+    "modmenu": "*"
+  },
+  "contact": {
+    "homepage": "https://modrinth.com/mod/yedelmod",
+    "issues": "https://github.com/Yedelo/YedelMod/issues",
+    "sources": "https://github.com/Yedelo/YedelMod"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.github_releases": "https://github.com/Yedelo/YedelMod/releases/",
+        "modmenu.modrinth": "https://modrinth.com/mod/yedelmod"
+      }
+    }
+  }
+}

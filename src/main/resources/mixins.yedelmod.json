@@ -1,5 +1,5 @@
 {
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_25",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
     "AccessorGuiChest",
@@ -8,5 +8,5 @@
     "MixinEntityPlayerSP",
     "MixinGuiContainer"
   ],
-  "minVersion": "0.7.11"
+  "minVersion": "0.8"
 }

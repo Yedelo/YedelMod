@@ -8,7 +8,6 @@ import at.yedel.yedelmod.hud.BedwarsXPHud;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.hud.MagicMilkTimeHud;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;

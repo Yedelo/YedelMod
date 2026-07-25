@@ -9,22 +9,15 @@ import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
-import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Threading;
-import at.yedel.yedelmod.utils.update.UpdateManager;
-import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,15 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-// Mod...
-@Mod(
-	modid = YedelModConstants.MOD_ID,
-	name = YedelModConstants.MOD_NAME,
-	version = YedelModConstants.MOD_VERSION,
-	clientSideOnly = true
-)
 public class YedelMod {
-	@Instance
 	private static YedelMod INSTANCE;
 
 	public static YedelMod getInstance() {
@@ -68,10 +53,7 @@ public class YedelMod {
 			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
-			TNTTagFeatures.getInstance(),
-
-			ClickNotifications.getInstance(),
-			YedelCheck.getInstance()
+            TNTTagFeatures.getInstance()
 		);
 
 		Threading.scheduleRepeat(() -> {
@@ -80,13 +62,6 @@ public class YedelMod {
 				YedelConfig.getInstance().save();
 			}
 		}, 1, TimeUnit.MINUTES);
-	}
-
-	@EventHandler
-	public void checkForUpdates(FMLLoadCompleteEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().automaticallyCheckForUpdates) {
-			UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
-		}
 	}
 
 	private void registerEventListeners(Object... eventListeners) {
