@@ -1,0 +1,184 @@
+package at.yedel.yedelmod.features.major;
+
+
+
+import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.event.events.DrawSlotEvent;
+import at.yedel.yedelmod.mixins.AccessorGuiChest;
+import at.yedel.yedelmod.utils.RenderUtils;
+import at.yedel.yedelmod.utils.TextUtils;
+import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
+import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
+import cc.polyfrost.oneconfig.events.event.Stage;
+import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import com.google.common.collect.ImmutableList;
+import net.hypixel.data.type.GameType;
+import net.hypixel.modapi.HypixelModAPI;
+import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+
+
+public class BedwarsFeatures {
+	private static final BedwarsFeatures INSTANCE = new BedwarsFeatures();
+
+	public static BedwarsFeatures getInstance() {
+		return INSTANCE;
+	}
+
+	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
+	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ tokens! \\(.*\\)");
+	private static final Pattern BEDWARS_XP_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ Bed Wars XP \\(.*\\)");
+	private static final Pattern PUNCH_DEPOSIT_MESSAGE_PATTERN = Pattern.compile("Deposited x\\d+ (.*) into (Ender|Team) Chest! \\(\\d+ Total\\)");
+	private static final Pattern SLUMBER_TICKET_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ Slumber Tickets \\(.*\\)");
+	private static final ImmutableList<String> COMFY_PILLOW_MESSAGES = ImmutableList.<String>builder()
+		.add("You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!")
+		.add("You cannot return items to another team's Shopkeeper!")
+		.add("You cannot carry any more Comfy Pillows!")
+		.add("You died while carrying x1 Comfy Pillows!")
+		.build();
+
+	private boolean inBedwars;
+	private boolean hasExperience;
+	private String hudXPText;
+	private int magicMilkTime;
+	private String magicMilkTimeText;
+	private int ticks;
+
+	private BedwarsFeatures() {
+		HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+	}
+
+	private void handleLocationPacket(ClientboundLocationPacket packet) {
+		inBedwars = packet.getServerType().isPresent() && packet.getServerType().get() == GameType.BEDWARS && !packet.getLobbyName().isPresent();
+	}
+
+	@Subscribe
+	public void setBedwarsExperience(ReceivePacketEvent event) {
+		if (event.packet instanceof S1FPacketSetExperience) {
+			float experience = ((S1FPacketSetExperience) event.packet).func_149397_c();
+			hasExperience = experience > 0;
+			int bedwarsXP = (int) (experience * 5000);
+			hudXPText = "§b" + TextUtils.commafy(bedwarsXP) + "§7/§a5,000";
+		}
+	}
+
+	@SubscribeEvent
+	public void resetMagicMilkTime(PlayerUseItemEvent.Finish event) {
+		if (event.item.getItem() == Items.milk_bucket && inBedwars) {
+			magicMilkTime = 30;
+			magicMilkTimeText = "§b30§as";
+		}
+	}
+
+	@Subscribe
+	public void decrementMagicMilkTime(TickEvent event) {
+		if (event.stage == Stage.START) {
+			if (ticks % 20 == 0) {
+				decrementMagicMilkTime();
+				magicMilkTimeText = "§b" + magicMilkTime + "§as";
+			}
+			ticks++;
+		}
+	}
+
+	@Subscribe
+	public void renderRedstoneHighlights(DrawSlotEvent event) {
+		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bedwarsDefusalHelper) {
+			ItemStack stack = event.getSlot().getStack();
+			if (stack == null) {
+				return;
+			}
+			if (stack.getItem() == Items.redstone) {
+				GuiContainer guiContainer = event.getGuiContainer();
+				if (guiContainer instanceof GuiChest) {
+					if (Objects.equals(((AccessorGuiChest) guiContainer).getLowerChestInventory().getName(), "§cC4 (Click §4§lREDSTONE§c)")) {
+						RenderUtils.highlightItem(event.getSlot(), RED);
+					}
+				}
+			}
+		}
+	}
+
+	@Subscribe
+	public void modifyBedwarsChat(ChatReceiveEvent event) {
+		if (YedelConfig.getInstance().enabled && inBedwars) {
+			String message = UTextComponent.Companion.stripFormatting(event.message.getUnformattedText());
+
+			if (YedelConfig.getInstance().hideTokenMessages && Objects.equals(message, "Tokens just earned DOUBLED as a Guild Level Reward!")) {
+				event.isCancelled = true;
+			}
+			if (TOKEN_MESSAGE_PATTERN.matcher(message).find()) {
+				if (YedelConfig.getInstance().hideTokenMessages) {
+					event.isCancelled = true;
+				}
+				else if (YedelConfig.getInstance().lightGreenTokenMessages) {
+					event.message = new UTextComponent(event.message.getFormattedText().replace("§2", "§a"));
+				}
+			}
+
+			hideOnPattern(event, message, YedelConfig.getInstance().hideBedwarsXPMessages, BEDWARS_XP_MESSAGE_PATTERN);
+			hideOnPattern(event, message, YedelConfig.getInstance().hidePunchDepositMessages, PUNCH_DEPOSIT_MESSAGE_PATTERN);
+			hideOnPattern(event, message, YedelConfig.getInstance().hideSlumberTicketMessages, SLUMBER_TICKET_MESSAGE_PATTERN);
+
+			if (message.startsWith("You purchased")) {
+				if (YedelConfig.getInstance().hideItemPurchaseMessages) {
+					event.isCancelled = true;
+				}
+				else if (YedelConfig.getInstance().hideSilverCoinCount && message.contains("(+1 Silver Coin [")) {
+					event.message = new UTextComponent(message.substring(0, message.indexOf(" (+1 Silver Coin [")));
+				}
+			}
+
+			if (YedelConfig.getInstance().hideComfyPillowMessages && COMFY_PILLOW_MESSAGES.contains(message)) {
+				event.isCancelled = true;
+			}
+
+			if (YedelConfig.getInstance().hideDreamerSoulFragmentMessages && message.equals("+1 Dreamer's Soul Fragment!")) {
+				event.isCancelled = true;
+			}
+		}
+	}
+
+	private void hideOnPattern(ChatReceiveEvent event, String message, boolean configOption, Pattern pattern) {
+		if (configOption && pattern.matcher(message).find()) {
+			event.isCancelled = true;
+		}
+	}
+
+	public boolean isInBedwars() {
+		return inBedwars;
+	}
+
+	public boolean hasExperience() {
+		return hasExperience;
+	}
+
+	public String getHudXPText() {
+		return hudXPText;
+	}
+
+	public int getMagicMilkTime() {
+		return magicMilkTime;
+	}
+
+	public void decrementMagicMilkTime() {
+		magicMilkTime--;
+	}
+
+	public String getMagicMilkTimeText() {
+		return magicMilkTimeText;
+	}
+}

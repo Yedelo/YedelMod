@@ -43,10 +43,7 @@ tasks {
         filesMatching("fabric.mod.json") {
             expand(
                 mapOf(
-                    // i will do this later
-                    "version" to version,
-                    "minecraft" to ">=26.1",
-                    "fabricLoader" to ">=$fabricLoaderVersion"
+                    "version" to version
                 )
             )
         }
@@ -54,7 +51,7 @@ tasks {
     }
 
     jar {
-        archiveFileName = "YedelMod-$version-${sc.current.project}.jar"
+        archiveFileName = "YedelMod-${sc.current.project}.jar"
         manifest.attributes(
             mapOf(
                 "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow"
