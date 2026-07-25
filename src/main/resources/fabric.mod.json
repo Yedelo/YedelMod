@@ -9,16 +9,11 @@
   ],
   "icon": "assets/yedelmod/yedelmod.png",
   "environment": "client",
-  "entrypoints": {
-    "client": [
-      "at.yedel.yedelmod.YedelMod"
-    ]
-  },
   "mixins": [
     "mixins.yedelmod.json"
   ],
   "depends": {
-    "java": "${java}",
+    "java": ">=25",
     "fabricloader": "${fabricLoader}",
     "minecraft": "${minecraft}",
     "fabric-api": "*"
