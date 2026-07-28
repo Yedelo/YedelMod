@@ -9,37 +9,41 @@ import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
+import at.yedel.yedelmod.hud.BedwarsXPHud;
+import at.yedel.yedelmod.hud.BountyHuntingHud;
+import at.yedel.yedelmod.hud.CustomTextHud;
+import at.yedel.yedelmod.hud.MagicMilkTimeHud;
 import at.yedel.yedelmod.utils.Threading;
-import cc.polyfrost.oneconfig.events.EventManager;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import net.hypixel.modapi.HypixelModAPI;
-import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 
 import java.util.concurrent.TimeUnit;
 
 
 
-public class YedelMod {
+public class YedelMod implements ClientModInitializer {
 	private static YedelMod INSTANCE;
 
 	public static YedelMod getInstance() {
 		return INSTANCE;
 	}
 
+	public YedelMod() {
+		INSTANCE = this;
+	}
+
 	public static final Logger yedelog = LogManager.getLogger("YedelMod");
 
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
+	@Override
+	public void onInitializeClient() {
 		// Loads class. preload() exists for this but what ev
-		YedelConfig.getInstance();
-		HypixelModAPI.getInstance().subscribeToEventPacket(ClientboundLocationPacket.class);
-		CommandManager.INSTANCE.registerCommand(YedelCommand.getInstance());
+		YedelConfig.getInstance().preload();
+		CommandManager.register(YedelCommand.getInstance());
 
 		registerEventListeners(
 			this,
@@ -55,9 +59,15 @@ public class YedelMod {
 			StrengthIndicators.getInstance(),
             TNTTagFeatures.getInstance()
 		);
+		HudManager.register(
+			BedwarsXPHud.getInstance(),
+			BountyHuntingHud.getInstance(),
+			CustomTextHud.getInstance(),
+			MagicMilkTimeHud.getInstance()
+		);
 
 		Threading.scheduleRepeat(() -> {
-			if (UMinecraft.getWorld() != null) {
+			if (Minecraft.getInstance().player != null) {
 				YedelConfig.getInstance().playtimeMinutes++;
 				YedelConfig.getInstance().save();
 			}

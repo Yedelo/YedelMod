@@ -2,10 +2,17 @@ package at.yedel.yedelmod.utils;
 
 
 
-import cc.polyfrost.oneconfig.config.core.OneColor;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.sounds.SoundEvents;
+import org.polyfrost.compose.render.PolyColor;
+
+
 
 public class Constants {
-    public static final ResourceLocation PLING_SOUND_LOCATION = new ResourceLocation("random.successful_hit");
-    public static final OneColor EMPTY_COLOR = new OneColor(0, 0, 0, 0);
+    public static final PolyColor EMPTY_COLOR = PolyColor.Companion.getTRANSPARENT();
+
+    public static void playPingSound(float volume, float pitch) {
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, pitch, volume));
+    }
 }

@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.mixins.InvokerRender;
 import at.yedel.yedelmod.utils.NumberUtils;
 import at.yedel.yedelmod.utils.RenderUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;

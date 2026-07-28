@@ -2,43 +2,34 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.hud.TextHud;
+import org.polyfrost.oneconfig.api.hud.v1.Hud;
+import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 
 public class BountyHuntingHud extends TextHud {
-    public BountyHuntingHud() {
-        super(
-            true, // enabled obviously
-            5, // x
-            35, // y
-            1, // normal size
-            false, // no background it's ugly
-            false, // no rounded corners it's also ugly
-            0, // NO rounded corners
-            0, // no x padding why would i want it
-            0, // no y padding for the same reason
-            Constants.EMPTY_COLOR, // no background color
-            false, // no border
-            0, // NO border
-            Constants.EMPTY_COLOR // no border color
-        );
-        textType = 1;
+    private static final BountyHuntingHud INSTANCE = new BountyHuntingHud();
+
+    public static BountyHuntingHud getInstance() {
+        return INSTANCE;
     }
 
-    @Override
-    public boolean shouldShow() {
-        return super.shouldShow() && YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
+    private BountyHuntingHud() {
+        super("bounty_hunting_hud", "Bounty Hunting HUD", Hud.Category.getINFO(), "prefix", "");
     }
 
+    //    @Override
+    //    public boolean shouldShow() {
+    //        return super.shouldShow() && YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
+    //    }
+
     @Override
-    protected void getLines(List<String> lines, boolean example) {
-        if (example) {
+    protected String getText() {
+        ArrayList<String> lines = new ArrayList<>();
+        if (!isReal()) {
             lines.add("§c§lBounty §f§lHunting");
             lines.add("§a83 points");
             lines.add("§a15 kills");
@@ -48,5 +39,6 @@ public class BountyHuntingHud extends TextHud {
             lines.clear();
             lines.addAll(TNTTagFeatures.getInstance().getDisplayLines());
         }
+        return String.join("\n", lines);
     }
 }

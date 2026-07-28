@@ -2,52 +2,52 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.config.annotations.Text;
-import cc.polyfrost.oneconfig.config.migration.VigilanceName;
-import cc.polyfrost.oneconfig.hud.SingleTextHud;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import org.jspecify.annotations.NonNull;
+import org.polyfrost.oneconfig.api.config.v1.annotations.Text;
+import org.polyfrost.oneconfig.api.hud.v1.LegacyHud;
 
 
 
-public class CustomTextHud extends SingleTextHud {
-    public CustomTextHud() {
-        super(
-            "", // no title
-            true, // enabled obviously
-            5, // x
-            5, // y
-            1, // normal size
-            false, // no background it's ugly
-            false, // no rounded corners it's also ugly
-            0, // NO rounded corners
-            0, // no x padding why would i want it
-            0, // no y padding for the same reason
-            Constants.EMPTY_COLOR, // no background color
-            false, // no border
-            0, // NO border
-            Constants.EMPTY_COLOR // no border color
-        );
-        textType = 1;
+public class CustomTextHud extends LegacyHud {
+    private static final CustomTextHud INSTANCE = new CustomTextHud();
+
+    public static CustomTextHud getInstance() {
+        return INSTANCE;
     }
 
-    @VigilanceName(
-        name = "displayedText",
-        category = "storage",
-        subcategory = ""
-    )
+    private CustomTextHud() {
+        super("custom_text_hud", "Custom Text HUD", Category.getINFO(), "prefix", "");
+    }
+
     @Text(
-        name = "Display text",
-        size = 2
+        title = "Display text"
     )
     public String displayText = "";
 
     @Override
-    protected String getText(boolean example) {
+    protected String getText() {
         if (example) {
             return "Example text";
         }
         else {
             return displayText;
         }
+    }
+
+    @Override public float getWidth() {
+        return 0;
+    }
+
+    @Override public float getHeight() {
+        return 0;
+    }
+
+    @Override public void render(@NonNull GuiGraphicsExtractor guiGraphicsExtractor) {
+
+    }
+
+    @Override public boolean update() {
+        return false;
     }
 }

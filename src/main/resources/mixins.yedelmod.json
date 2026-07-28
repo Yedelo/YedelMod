@@ -2,11 +2,6 @@
   "compatibilityLevel": "JAVA_25",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
-    "AccessorGuiChest",
-    "InvokerMinecraft",
-    "InvokerRender",
-    "MixinEntityPlayerSP",
-    "MixinGuiContainer"
   ],
   "minVersion": "0.8"
 }
