@@ -16,7 +16,6 @@ import java.util.function.Function;
 
 
 public enum PingMethod {
-    PING_COMMAND(() -> UChat.say("/ping")),
     COMMAND_RESPONSE(() -> UChat.say("/" + TextUtils.randomUuid(8))),
     TAB_PACKET(() -> UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
     STATS_PACKET(() -> UMinecraft.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
