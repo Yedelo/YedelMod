@@ -1,9 +1,8 @@
-package at.yedel.yedelmod;
+package at.yedel.yedelmod.features;
 
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.LimboCreative;
 import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
