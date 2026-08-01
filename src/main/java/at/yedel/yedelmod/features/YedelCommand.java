@@ -3,7 +3,6 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.ping.PingSender;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -193,12 +192,12 @@ public class YedelCommand {
     public static class Ping {
         @Main
         public void main() {
-            PingSender.getInstance().defaultMethodPing();
+            //PingSender.getInstance().defaultMethodPing();
         }
 
         @SubCommand(description = "Does /ping command. Works on very few servers.", aliases = "p")
         public void ping() {
-            PingSender.getInstance().pingPing();
+            //PingSender.getInstance().pingPing();
         }
 
         @SubCommand(
@@ -206,7 +205,7 @@ public class YedelCommand {
             aliases = "c"
         )
         public void command() {
-            PingSender.getInstance().commandPing();
+            //PingSender.getInstance().commandPing();
         }
 
         @SubCommand(
@@ -214,7 +213,7 @@ public class YedelCommand {
             aliases = "t"
         )
         public void tab() {
-            PingSender.getInstance().tabPing();
+            //PingSender.getInstance().tabPing();
         }
 
         @SubCommand(
@@ -222,7 +221,7 @@ public class YedelCommand {
             aliases = "s"
         )
         public void stats() {
-            PingSender.getInstance().statsPing();
+            //PingSender.getInstance().statsPing();
         }
 
         @SubCommand(
@@ -230,7 +229,7 @@ public class YedelCommand {
             aliases = "l"
         )
         public void list() {
-            PingSender.getInstance().serverListPing();
+            //PingSender.getInstance().serverListPing();
         }
 
         @SubCommand(
@@ -238,7 +237,7 @@ public class YedelCommand {
             aliases = "h"
         )
         public void hypixel() {
-            PingSender.getInstance().hypixelPing();
+            //PingSender.getInstance().hypixelPing();
         }
     }
 
