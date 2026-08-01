@@ -1,5 +1,5 @@
 {
-  "compatibilityLevel": "JAVA_25",
+  "compatibilityLevel": "${mixinJava}",
   "package": "at.yedel.yedelmod.mixins",
   "client": [
   ],

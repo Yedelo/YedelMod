@@ -3,8 +3,7 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.USound;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
@@ -23,13 +22,13 @@ public class PingCommandInterface {
         PingQueue.getInstance().queue(
             method,
             (ping) -> showcasePing(method, ping),
-            (error) -> UChat.chat(yedelogo + " §c" + error.getMessage())
+            (error) -> Platform.compatibility().displayChatMessage(yedelogo + " §c" + error.getMessage())
         );
     }
 
     private void showcasePing(PingMethod method, long ping) {
-        UChat.chat(yedelogo + " §ePing: " + color(ping) + ping + " §ems &7(" + method.friendlyName.toLowerCase() + ")");
-        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
+        Platform.compatibility().displayChatMessage(yedelogo + " §ePing: " + color(ping) + ping + " §ems &7(" + method.friendlyName.toLowerCase() + ")");
+        Constants.playPingSound(1, (float) (ping * -0.006 + 2));
     }
 
     private String color(long ping) {

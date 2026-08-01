@@ -2,22 +2,15 @@ package at.yedel.yedelmod.features.major;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NumberUtils;
-import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
-import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
-import cc.polyfrost.oneconfig.events.event.Stage;
-import cc.polyfrost.oneconfig.events.event.TickEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import com.google.common.collect.ImmutableMap;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -89,22 +82,20 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    public void downtickStrengthPlayers(TickEvent event) {
-        if (event.stage == Stage.START) {
-            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
-            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
-                String player = entry.getKey();
-                Double seconds = entry.getValue();
-                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
-            }
-            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
+    public void downtickStrengthPlayers(TickEvent.Start event) {
+        Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
+        for (Map.Entry<String, Double> entry : strengthPlayerSet) {
+            String player = entry.getKey();
+            Double seconds = entry.getValue();
+            strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
         }
+        strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
     }
 
     @Subscribe
-    public void handleKillMessage(ChatReceiveEvent event) {
+    public void handleKillMessage(ChatEvent.Receive event) {
         if (inSkywars && strengthDuration != 0) {
-            String message = event.message.getUnformattedText();
+            String message = event.getFullyUnformattedMessage();
             for (Pattern killPattern : KILL_PATTERNS) {
                 Matcher messageMatcher = killPattern.matcher(message);
                 if (messageMatcher.find()) {
@@ -115,36 +106,35 @@ public class StrengthIndicators {
         }
     }
 
-    @SubscribeEvent
-    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators) {
-            EntityPlayer entityPlayer = event.entityPlayer;
-            if (!YedelConfig.getInstance().showSelfStrength && entityPlayer == UPlayer.getPlayer()) {
-                return;
-            }
-            if (entityPlayer.isInvisible()) {
-                return;
-            }
-            String entityName = entityPlayer.getName();
-            if (!strengthPlayers.containsKey(entityName)) {
-                return;
-            }
-            String text =
-                COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + String.format("%.2f", strengthPlayers.get(entityName)) + "s";
-            double currentLabelOffset = (RenderUtils.shouldRenderSubinfo(entityPlayer) ? 0.548 : 0.274);
-            double sneakingOffset = entityPlayer.isSneaking() ? -0.125 : 0;
-            // this thing goes like double the offset it's supposed to idk why it does that so it's being halved
-            double configOffset = (double) YedelConfig.getInstance().strengthIndicatorOffset / 100 / 2;
-            double offset = currentLabelOffset + sneakingOffset + configOffset;
-            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + offset, event.z, 64);
-        }
-    }
+    // @TODO actualy render strength indicators
+    //    @SubscribeEvent
+    //    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
+    //        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators) {
+    //            EntityPlayer entityPlayer = event.entityPlayer;
+    //            if (!YedelConfig.getInstance().showSelfStrength && entityPlayer == UPlayer.getPlayer()) {
+    //                return;
+    //            }
+    //            if (entityPlayer.isInvisible()) {
+    //                return;
+    //            }
+    //            String entityName = entityPlayer.getName();
+    //            if (!strengthPlayers.containsKey(entityName)) {
+    //                return;
+    //            }
+    //            String text =
+    //                COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + String.format("%.2f", strengthPlayers.get(entityName)) + "s";
+    //            double currentLabelOffset = (RenderUtils.shouldRenderSubinfo(entityPlayer) ? 0.548 : 0.274);
+    //            double sneakingOffset = entityPlayer.isSneaking() ? -0.125 : 0;
+    //            // this thing goes like double the offset it's supposed to idk why it does that so it's being halved
+    //            double configOffset = (double) YedelConfig.getInstance().strengthIndicatorOffset / 100 / 2;
+    //            double offset = currentLabelOffset + sneakingOffset + configOffset;
+    //            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + offset, event.z, 64);
+    //        }
+
 
     @Subscribe
-    public void clearStrengthPlayers(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
-            strengthPlayers.clear();
-        }
+    public void clearStrengthPlayers(WorldEvent.Load event) {
+        strengthPlayers.clear();
     }
 
     private static final Pattern[] KILL_PATTERNS = Arrays.stream(new String[] {

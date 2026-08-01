@@ -51,8 +51,6 @@ public class YedelMod implements ClientModInitializer {
 			BedwarsFeatures.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
-			FavoriteServerButton.getInstance(),
-			CustomHitParticles.getInstance(),
 			PingResponse.getInstance(),
 			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
@@ -76,7 +74,7 @@ public class YedelMod implements ClientModInitializer {
 
 	private void registerEventListeners(Object... eventListeners) {
 		for (Object eventListener: eventListeners) {
-			MinecraftForge.EVENT_BUS.register(eventListener);
+			// fabric events are registered just by this object existing
 			EventManager.INSTANCE.register(eventListener);
 		}
 	}

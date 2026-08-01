@@ -83,24 +83,6 @@ public class YedelConfig extends Config {
     )
     public String randomPlaceholderText = "//r";
 
-
-    @Switch(
-        title = "Favorite Server Button",
-        description = "Adds a button to the main menu to join a customizable server address.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean favoriteServerButton = false;
-
-    @DependsOn("favoriteServerButton")
-    @Text(
-        title = "Specified Server",
-        description = "Server joined with button",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public String specifiedServer = "mc.hypixel.net";
-
     @Switch(
         title = "Auto Welcome Guild Members",
         description = "Automatically welcomes new guild members with a customizable message.",

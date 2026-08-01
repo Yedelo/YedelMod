@@ -3,24 +3,24 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.TextUtils;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
+
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
-import net.minecraft.network.play.client.C14PacketTabComplete;
-import net.minecraft.network.play.client.C16PacketClientStatus;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
+import net.minecraft.network.protocol.game.ServerboundCommandSuggestionPacket;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 import java.util.function.Function;
 
 
 
 public enum PingMethod {
-    COMMAND_RESPONSE("Command", () -> UChat.say("/" + TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> UMinecraft.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendChat("/" + TextUtils.randomUuid(8))),
+    TAB_PACKET("Tab", () -> Minecraft.getInstance().player.connection.send(new ServerboundCommandSuggestionPacket(0, "#"))),
+    STATS_PACKET("Stats", () -> Minecraft.getInstance().player.connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
-        if (HypixelUtils.INSTANCE.isHypixel()) {
+        if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
         }
         else {
@@ -28,14 +28,16 @@ public enum PingMethod {
         }
     }),
     SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
-        if (UMinecraft.getMinecraft().isSingleplayer()) {
-            throw new PingException("This method does not work in singleplayer!");
-        }
-        long ping = UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
-        if (ping == 0) {
-            throw new PingException("Ping is 0! This might have occured if you used Direct Connect or the favorite server button.");
-        }
-        return ping;
+        //@TODO deal with irregular ping values
+        //        if (UMinecraft.getMinecraft().isSingleplayer()) {
+        //            throw new PingException("This method does not work in singleplayer!");
+        //        }
+        //        long ping = UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
+        //        if (ping == 0) {
+        //            throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
+        //        }
+        //        return ping;
+        return Minecraft.getInstance().getCurrentServer().ping;
     });
 
     public final String friendlyName;

@@ -2,14 +2,14 @@ package at.yedel.yedelmod.features.ping;
 
 
 
-import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
-import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ErrorReason;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
-import net.minecraft.network.play.server.S37PacketStatistics;
-import net.minecraft.network.play.server.S3APacketTabComplete;
+import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
+import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 
 
@@ -25,24 +25,24 @@ public class PingResponse {
     }
 
     @Subscribe
-    public void handleCommandPingResponse(ChatReceiveEvent event) {
-        if (event.message.getUnformattedText().contains("Unknown command")) {
+    public void handleCommandPingResponse(ChatEvent.Receive event) {
+        if (event.getFullyUnformattedMessage().contains("Unknown command")) {
             if (PingQueue.getInstance().post(PingMethod.COMMAND_RESPONSE)) {
-                event.isCancelled = true;
+                event.cancelled = true;
             }
         }
     }
 
     @Subscribe
-    public void handleStatsPingResponse(ReceivePacketEvent event) {
-        if (event.packet instanceof S37PacketStatistics) {
+    public void handleStatsPingResponse(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof ClientboundAwardStatsPacket) {
             PingQueue.getInstance().post(PingMethod.STATS_PACKET);
         }
     }
 
     @Subscribe
-    public void handleTabPingResponse(ReceivePacketEvent event) {
-        if (event.packet instanceof S3APacketTabComplete) {
+    public void handleTabPingResponse(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof ClientboundCommandSuggestionsPacket) {
             PingQueue.getInstance().post(PingMethod.TAB_PACKET);
         }
     }

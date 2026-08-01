@@ -4,19 +4,15 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NumberUtils;
-import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
-import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
-import cc.polyfrost.oneconfig.utils.Multithreading;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.InteractionHand;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.ScreenOpenEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +35,8 @@ public class EasyAtlasVerdicts {
     private EasyAtlasVerdicts() {}
 
     @Subscribe
-    public void onSuspectTeleport(ChatReceiveEvent event) {
-        String text = event.message.getUnformattedText();
+    public void onSuspectTeleport(ChatEvent.Receive event) {
+        String text = event.getFullyUnformattedMessage();
         if (Objects.equals(text, "Teleporting you to suspect")) {
             inAtlas = true;
         }
@@ -59,12 +55,12 @@ public class EasyAtlasVerdicts {
 
     private void submitVerdict(String name, int inventorySlot) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
-            EntityPlayerSP player = UPlayer.getPlayer();
+            LocalPlayer player = Minecraft.getInstance().player;
             if (inAtlas && player != null) {
-                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
-                player.inventory.currentItem = 7;
+                Platform.compatibility().displayChatMessage(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
+                player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
-                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                    Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);
                     slot = inventorySlot;
                     clickerEnabled = true;
                     setupTimeout();
@@ -74,32 +70,24 @@ public class EasyAtlasVerdicts {
     }
 
     @Subscribe
-    public void onLeaveAtlas(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
-            inAtlas = false;
-        }
-    }
-
-    @SubscribeEvent
     public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
         inAtlas = false;
     }
 
-    @SubscribeEvent
-    public void clickAtlasVerdict(GuiOpenEvent event) {
-        if (clickerEnabled) {
-            if (event.gui instanceof GuiContainer) {
-                EntityPlayerSP player = UPlayer.getPlayer();
-                if (player == null) {
-                    return;
-                }
-                Multithreading.schedule(() -> {
-                        UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
-                    }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
-                );
-                clickerEnabled = false;
-            }
-        }
+    @Subscribe
+    public void clickAtlasVerdict(ScreenOpenEvent event) {
+        //@TODO click
+        //        if (clickerEnabled) {
+        //            if (event.getScreen() instanceof ChestMenu container) {
+        //                container.clicked();
+        //                Multithreading.schedule(() -> {
+        //                        UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
+        //                        Minecraft.getMinecraft()
+        //                    }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
+        //                );
+        //                clickerEnabled = false;
+        //            }
+        //        }
     }
 
     public void setupTimeout() { // In case anything goes wrong, this makes sure it doesn't randomly click the next inventory
