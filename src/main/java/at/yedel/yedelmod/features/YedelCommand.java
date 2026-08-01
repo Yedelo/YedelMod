@@ -3,6 +3,8 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.features.ping.PingCommandInterface;
+import at.yedel.yedelmod.features.ping.PingMethod;
 import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
@@ -197,7 +199,7 @@ public class YedelCommand {
 
         @Handler(value = {"ping", "p"}, description = "Does /ping command. Works on very few servers.")
         public void ping() {
-            PingSender.getInstance().pingPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
         }
 
         @Handler(
@@ -205,7 +207,7 @@ public class YedelCommand {
             description = "Enters a random command and waits for the unknown command response. Works on almost all servers."
         )
         public void command() {
-            PingSender.getInstance().commandPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.COMMAND_RESPONSE);
         }
 
         @Handler(
@@ -213,7 +215,7 @@ public class YedelCommand {
             description = "Sends a tab completion packet and waits for the response. Works on all servers."
         )
         public void tab() {
-            PingSender.getInstance().tabPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.TAB_PACKET);
         }
 
         @Handler(
@@ -221,7 +223,7 @@ public class YedelCommand {
             description = "Sends a statistics packet and waits for the response. Works on all servers."
         )
         public void stats() {
-            PingSender.getInstance().statsPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.STATS_PACKET);
         }
 
         @Handler(
@@ -229,7 +231,7 @@ public class YedelCommand {
             description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect."
         )
         public void list() {
-            PingSender.getInstance().serverListPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.SERVER_LIST_PING);
         }
 
         @Handler(
@@ -237,7 +239,7 @@ public class YedelCommand {
             description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel."
         )
         public void hypixel() {
-            PingSender.getInstance().hypixelPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
         }
     }
 }
