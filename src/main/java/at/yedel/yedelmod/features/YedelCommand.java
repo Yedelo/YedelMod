@@ -3,18 +3,18 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
+import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateSource;
+import cc.polyfrost.oneconfig.libs.universal.ChatColor;
+import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.UPacket;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.commands.annotations.*;
 import com.google.gson.JsonObject;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFW;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
-import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
-import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
+import net.minecraft.event.HoverEvent;
+import org.lwjgl.opengl.Display;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -31,8 +31,10 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 @Command(
-    value = {"yedel", "yedelmod"},
-    description = "The main command of YedelMod"
+    value = "yedel",
+    aliases = "yedelmod",
+    description = "The main command of YedelMod",
+    chatColor = ChatColor.BLUE
 )
 public class YedelCommand {
     private static final YedelCommand INSTANCE = new YedelCommand();
@@ -41,7 +43,7 @@ public class YedelCommand {
         return INSTANCE;
     }
 
-    private static final Component FORMATTING_CODES = Component.text(
+    private static final String FORMATTING_CODES =
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
             "\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
@@ -50,109 +52,107 @@ public class YedelCommand {
             "\n" +
             "\n§lStyle §ncodes§r:" +
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
-            "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
-    );
-    private static final Component FORMATTING_GUIDE_MESSAGE =
-        Component.text(yedelogo + " §e§nHover to view the formatting guide.").hoverEvent(HoverEvent.showText(FORMATTING_CODES));
+            "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
+    private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
+        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
 
     private YedelCommand() {}
 
-    @Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
+    @Main(
+        description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen."
+    )
     public void main() {
-        ScreensKt.openUI(YedelConfig.getInstance());
+        YedelConfig.getInstance().openGui();
     }
 
-    @Handler(description = "Clears the currently set display text.")
+    @SubCommand(description = "Clears the currently set display text.")
     public void cleartext() {
-        CustomTextHud.getInstance().displayText = "";
-        CustomTextHud.getInstance().save();
-        Platform.compatibility().displayChatMessage(yedelogo + " §eCleared display text!");
+        YedelConfig.getInstance().customTextHud.displayText = "";
+        YedelConfig.getInstance().save();
+        UChat.chat(yedelogo + " §eCleared display text!");
     }
 
-    @Handler(description = "Shows mod constants and build information such as the project version.")
+    @SubCommand(description = "Shows mod constants and build information such as the project version.")
     public void constants() {
         try {
-            Platform.compatibility().displayChatMessage(yedelogo + " §eConstants:");
+            UChat.chat(yedelogo + " §eConstants:");
             for (Field field : YedelModConstants.class.getDeclaredFields()) {
                 // this makes a cool arrow
                 // i can't really think of anything cleaner
                 // - YedelMod -> MC_VERSION: 1.8.9
-                Platform.compatibility().displayChatMessage(yedelogo + "§e> " + field.getName() + ": §r" + field.get(null));
+                UChat.chat(yedelogo + "§e> " + field.getName() + ": §r" + field.get(null));
             }
         }
         catch (IllegalAccessException e) {
-            Platform.compatibility().displayChatMessage(yedelogo + " §cCouldn't get mod constants!");
+            UChat.chat(yedelogo + " §cCouldn't get mod constants!");
             yedelog.error("Couldn't get mod constants!", e);
 
         }
     }
 
-    @Handler(description = "Shows a formatting guide with color and style codes.")
+    @SubCommand(description = "Shows a formatting guide with color and style codes.")
     public void formatting() {
-        Platform.compatibility().displayChatMessage(FORMATTING_GUIDE_MESSAGE);
+        UChat.chat(FORMATTING_GUIDE_MESSAGE);
     }
 
-    @Handler(
-        value = {"limbo", "li"},
-        description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead."
+    @SubCommand(
+        description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
+        aliases = "li"
     )
     public void limbo() {
-        Minecraft.getInstance().player.connection.sendChat("§");
+        UChat.say("§");
     }
 
-    @Handler(
-        value = {"limbocreative", "limbogmc", "lgmc"},
-        description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed."
+    @SubCommand(
+        description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
+        aliases = {"limbogmc", "lgmc"}
     )
     public void limbocreative() {
         LimboCreative.getInstance().awardLimboCreative();
     }
 
-    @Handler(
-        value = {"playtime", "pt"},
-        description = "Shows your total playtime (while playing on servers) in hours and minutes."
+    @SubCommand(
+        description = "Shows your total playtime (while playing on servers) in hours and minutes.",
+        aliases = "pt"
     )
     public void playtime() {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
-        Platform.compatibility().displayChatMessage(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        UChat.chat(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
     }
 
-    @Handler(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
+    @SubCommand(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
     public void setnick(String nick) {
-        Platform.compatibility().displayChatMessage("§6§l- BountyHunting - §eSet nick to \"§f" + nick + "\"§e!");
+        UChat.chat("§6§l- BountyHunting - §eSet nick to \"§f" + nick + "\"§e!");
         YedelConfig.getInstance().currentNick = nick;
         YedelConfig.getInstance().save();
     }
 
-    @Handler(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(String text) {
-        // @TODO make this colored
-        String displayText = text;
-        CustomTextHud.getInstance().displayText = text;
-        CustomTextHud.getInstance().save();
-        Platform.compatibility().displayChatMessage(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+    @SubCommand(description = "Sets the display text, supporting color codes with ampersands (&).")
+    public void settext(@Greedy String text) {
+        String displayText = UChat.addColor(text);
+        YedelConfig.getInstance().customTextHud.displayText = displayText;
+        YedelConfig.getInstance().save();
+        UChat.chat(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
-    @Handler(description = "Sets the title of the game window.")
-    public void settitle(String title) {
-        GLFW.glfwSetWindowTitle(Minecraft.getInstance().getWindow().handle(), title);
-        Platform.compatibility().displayChatMessage(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
+    @SubCommand(description = "Sets the title of the game window.")
+    public void settitle(@Greedy String title) {
+        Display.setTitle(title);
+        UChat.chat(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
 
-    @Handler(
-        value = {"simulatechat", "simc"},
-        description = "Simulates a chat message, supports color codes with ampersands (&)."
+    @SubCommand(
+        description = "Simulates a chat message, also supports color codes with ampersands (&).",
+        aliases = "simc"
     )
-    private void simulatechat(String text) {
-        // @TODO make this colored
-        String message = text;
-        // @TODO make this actually simulate and not just show
-        Platform.compatibility().displayChatMessage(text);
+    private void simulatechat(@Greedy String text) {
+        String message = UChat.addColor(text);
+        UPacket.sendChatMessage(new UTextComponent(message));
     }
 
-    @Handler(
-        value = {"yedelmessage", "message"},
-        description = "Shows messages from me about the mod. These can be anything from tips to bug notices."
+    @SubCommand(
+        description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
+        aliases = "message"
     )
     public void yedelmessage() {
         new Thread(() -> {
@@ -177,67 +177,85 @@ public class YedelCommand {
                     yedelog.error("Couldn't get last updatted date/time", e);
                 }
 
-                Platform.compatibility().displayChatMessage(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
-                Platform.compatibility().displayChatMessage(yedelMessage);
+                UChat.chat(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                UChat.chat(yedelMessage);
             }
             catch (IOException e) {
-                Platform.compatibility().displayChatMessage(yedelogo + " §cCouldn't get mod message!");
+                UChat.chat(yedelogo + " §cCouldn't get mod message!");
                 e.printStackTrace();
             }
         }, "YedelMod Message"
         ).start();
     }
 
-    @Command("ping")
+    @SubCommandGroup("ping")
     public static class Ping {
-        @Handler
+        @Main
         public void main() {
-
+            //PingSender.getInstance().defaultMethodPing();
         }
 
-        @Handler(value = {"ping", "p"}, description = "Does /ping command. Works on very few servers.")
+        @SubCommand(description = "Does /ping command. Works on very few servers.", aliases = "p")
         public void ping() {
-            PingSender.getInstance().pingPing();
+            //PingSender.getInstance().pingPing();
         }
 
-        @Handler(
-            value = {"command", "c"},
-            description = "Enters a random command and waits for the unknown command response. Works on almost all servers."
+        @SubCommand(
+            description = "Enters a random command and waits for the unknown command response. Works on almost all servers.",
+            aliases = "c"
         )
         public void command() {
-            PingSender.getInstance().commandPing();
+            //PingSender.getInstance().commandPing();
         }
 
-        @Handler(
-            value = {"tab", "t"},
-            description = "Sends a tab completion packet and waits for the response. Works on all servers."
+        @SubCommand(
+            description = "Sends a tab completion packet and waits for the response. Works on all servers.",
+            aliases = "t"
         )
         public void tab() {
-            PingSender.getInstance().tabPing();
+            //PingSender.getInstance().tabPing();
         }
 
-        @Handler(
-            value = {"stats", "s"},
-            description = "Sends a statistics packet and waits for the response. Works on all servers."
+        @SubCommand(
+            description = "Sends a statistics packet and waits for the response. Works on all servers.",
+            aliases = "s"
         )
         public void stats() {
-            PingSender.getInstance().statsPing();
+            //PingSender.getInstance().statsPing();
         }
 
-        @Handler(
-            value = {"list", "l"},
-            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect."
+        @SubCommand(
+            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
+            aliases = "l"
         )
         public void list() {
-            PingSender.getInstance().serverListPing();
+            //PingSender.getInstance().serverListPing();
         }
 
-        @Handler(
-            value = {"hypixel", "h"},
-            description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel."
+        @SubCommand(
+            description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
+            aliases = "h"
         )
         public void hypixel() {
-            PingSender.getInstance().hypixelPing();
+            //PingSender.getInstance().hypixelPing();
+        }
+    }
+
+    @SubCommandGroup("update")
+    public static class Update {
+        @Main
+        public void main() {
+            UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
+        }
+
+        @SubCommand
+        public void modrinth() {
+            UpdateManager.getInstance().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
+        }
+
+        @SubCommand
+        public void github() {
+            UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
         }
     }
 }
