@@ -33,7 +33,7 @@ public enum PingMethod {
         }
         long ping = UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
         if (ping == 0) {
-            throw new PingException("Ping is 0! This might have occured if you used Direct Connect or the favorite server button.");
+            throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
         }
         return ping;
     });

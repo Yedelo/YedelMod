@@ -83,7 +83,6 @@ public class YedelConfig extends Config {
         addDependentOption("randomPlaceholder", "randomPlaceholderText");
         addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
-        addDependentOption("favoriteServerButton", "specifiedServer");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
 
         for (String internalOption : new String[] {
@@ -324,24 +323,6 @@ public class YedelConfig extends Config {
         placeholder = "//r"
     )
     public String randomPlaceholderText = "//r";
-
-    @VigilanceName(name = "Favorite server button", category = "Features", subcategory = "Features")
-    @Switch(
-        name = "Favorite Server Button",
-        description = "Adds a button to the main menu to join a customizable server address.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean favoriteServerButton = false;
-
-    @VigilanceName(name = "Specified server", category = "Features", subcategory = "Customization")
-    @Text(
-        name = "Specified Server",
-        description = "Server joined with button",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public String specifiedServer = "mc.hypixel.net";
 
     @VigilanceName(name = "Auto welcome guild members", category = "Features", subcategory = "Features")
     @Switch(

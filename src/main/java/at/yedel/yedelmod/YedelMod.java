@@ -62,7 +62,6 @@ public class YedelMod {
 			BedwarsFeatures.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
-			FavoriteServerButton.getInstance(),
 			CustomHitParticles.getInstance(),
 			PingResponse.getInstance(),
 			RandomPlaceholder.getInstance(),
