@@ -3,9 +3,8 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.TextUtils;
-import cc.polyfrost.oneconfig.events.event.ChatSendEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
 
 
@@ -19,10 +18,9 @@ public class RandomPlaceholder {
     private RandomPlaceholder() {}
 
     @Subscribe
-    public void replaceRandomString(ChatSendEvent event) {
+    public void replaceRandomString(ChatEvent.Send event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
-            event.message =
-                event.message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
+            //@TODO cancel it for real
         }
     }
 }

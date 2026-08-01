@@ -4,9 +4,7 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.event.events.DrawSlotEvent;
-import at.yedel.yedelmod.utils.RenderUtils;
 import at.yedel.yedelmod.utils.TextUtils;
-import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
@@ -24,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.polyfrost.compose.render.PolyColor;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -37,7 +36,8 @@ public class BedwarsFeatures {
 		return INSTANCE;
 	}
 
-	private static final int RED = new OneColor(246, 94, 94, 255).getRGB();
+	// 246, 94, 94, 255
+	private static final int RED = new PolyColor(-631202).getArgb();
 	private static final Pattern TOKEN_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ tokens! \\(.*\\)");
 	private static final Pattern BEDWARS_XP_MESSAGE_PATTERN = Pattern.compile("\\+\\d+ Bed Wars XP \\(.*\\)");
 	private static final Pattern PUNCH_DEPOSIT_MESSAGE_PATTERN = Pattern.compile("Deposited x\\d+ (.*) into (Ender|Team) Chest! \\(\\d+ Total\\)");

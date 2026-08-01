@@ -35,6 +35,14 @@ public class YedelConfig extends Config {
     // Start of config
     // Start of visible config
 
+    /* General */
+
+    @Switch(
+        title = "Enabled",
+        description = "Global toggle for the mod."
+    )
+    public boolean enabled = true;
+
     /* Features */
 
     // Features

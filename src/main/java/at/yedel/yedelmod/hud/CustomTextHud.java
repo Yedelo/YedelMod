@@ -17,7 +17,7 @@ public class CustomTextHud extends LegacyHud {
     }
 
     private CustomTextHud() {
-        super("custom_text_hud", "Custom Text HUD", Category.getINFO(), "prefix", "");
+        super("custom_text_hud", "Custom Text HUD", Category.getINFO());
     }
 
     @Text(
@@ -25,29 +25,24 @@ public class CustomTextHud extends LegacyHud {
     )
     public String displayText = "";
 
+    // @TODO make this real
     @Override
-    protected String getText() {
-        if (example) {
-            return "Example text";
-        }
-        else {
-            return displayText;
-        }
+    public float getWidth() {
+        return 20;
     }
 
-    @Override public float getWidth() {
-        return 0;
+    @Override
+    public float getHeight() {
+        return 20;
     }
 
-    @Override public float getHeight() {
-        return 0;
+    @Override
+    public void render(@NonNull GuiGraphicsExtractor guiGraphicsExtractor) {
+        // @TODO uhhhhhh
     }
 
-    @Override public void render(@NonNull GuiGraphicsExtractor guiGraphicsExtractor) {
-
-    }
-
-    @Override public boolean update() {
+    @Override
+    public boolean update() {
         return false;
     }
 }

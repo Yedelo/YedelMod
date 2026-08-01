@@ -1,14 +1,15 @@
-package at.yedel.yedelmod.features;
+package at.yedel.yedelmod;
 
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.features.ping.PingSender;
+import at.yedel.yedelmod.features.LimboCreative;
 import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
@@ -41,7 +42,7 @@ public class YedelCommand {
         return INSTANCE;
     }
 
-    private static final String FORMATTING_CODES =
+    private static final Component FORMATTING_CODES = Component.text(
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
             "\n§3Dark Aqua: §3&3     §5Dark Purple: §5&5     §6Gold: §6&6     §7Gray: §7&7" +
@@ -50,13 +51,10 @@ public class YedelCommand {
             "\n" +
             "\n§lStyle §ncodes§r:" +
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
-            "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r";
-    private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
-        new UTextComponent().setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
-
+            "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
+    );
     private static final Component FORMATTING_GUIDE_MESSAGE =
-        Component.text(yedelogo + " §e§nHover to view the formatting guide.")
-            .style();
+        Component.text(yedelogo + " §e§nHover to view the formatting guide.").hoverEvent(HoverEvent.showText(FORMATTING_CODES));
 
     private YedelCommand() {}
 
@@ -195,7 +193,7 @@ public class YedelCommand {
     public static class Ping {
         @Handler
         public void main() {
-            PingSender.getInstance().defaultMethodPing();
+
         }
 
         @Handler(value = {"ping", "p"}, description = "Does /ping command. Works on very few servers.")
