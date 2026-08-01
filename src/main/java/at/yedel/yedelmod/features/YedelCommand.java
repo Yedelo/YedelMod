@@ -3,6 +3,8 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.features.ping.PingCommandInterface;
+import at.yedel.yedelmod.features.ping.PingMethod;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -192,12 +194,7 @@ public class YedelCommand {
     public static class Ping {
         @Main
         public void main() {
-            //PingSender.getInstance().defaultMethodPing();
-        }
-
-        @SubCommand(description = "Does /ping command. Works on very few servers.", aliases = "p")
-        public void ping() {
-            //PingSender.getInstance().pingPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
         }
 
         @SubCommand(
@@ -205,7 +202,7 @@ public class YedelCommand {
             aliases = "c"
         )
         public void command() {
-            //PingSender.getInstance().commandPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.COMMAND_RESPONSE);
         }
 
         @SubCommand(
@@ -213,7 +210,7 @@ public class YedelCommand {
             aliases = "t"
         )
         public void tab() {
-            //PingSender.getInstance().tabPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.TAB_PACKET);
         }
 
         @SubCommand(
@@ -221,15 +218,7 @@ public class YedelCommand {
             aliases = "s"
         )
         public void stats() {
-            //PingSender.getInstance().statsPing();
-        }
-
-        @SubCommand(
-            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
-            aliases = "l"
-        )
-        public void list() {
-            //PingSender.getInstance().serverListPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.STATS_PACKET);
         }
 
         @SubCommand(
@@ -237,7 +226,15 @@ public class YedelCommand {
             aliases = "h"
         )
         public void hypixel() {
-            //PingSender.getInstance().hypixelPing();
+            PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
+        }
+
+        @SubCommand(
+            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
+            aliases = "l"
+        )
+        public void list() {
+            PingCommandInterface.getInstance().queuePing(PingMethod.SERVER_LIST_PING);
         }
     }
 
