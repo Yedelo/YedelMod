@@ -10,29 +10,16 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 
-public class PingCommandInterface {
-    private static final PingCommandInterface INSTANCE = new PingCommandInterface();
-
-    public static PingCommandInterface getInstance() {
-        return INSTANCE;
+public class PingChatInterface {
+    private void showPingMessage(String method, float ping) {
+        UChat.chat(yedelogo + " &ePing: " + color(ping) + (int) ping + " &ems &7(" + method + ")");
     }
 
-    private PingCommandInterface() {}
-
-    public void queuePing(PingMethod method) {
-        PingQueue.getInstance().queue(
-            method,
-            (ping) -> showcasePing(method, ping),
-            (error) -> UChat.chat(yedelogo + " §c" + error.getMessage())
-        );
-    }
-
-    private void showcasePing(PingMethod method, long ping) {
-        UChat.chat(yedelogo + " §ePing: " + color(ping) + ping + " §ems &7(" + method.friendlyName.toLowerCase() + ")");
+    private void playPingSound(float ping) {
         USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, (float) (ping * -0.006 + 2));
     }
 
-    private String color(long ping) {
+    private String color(Float ping) {
         if (ping < 50) {
             return "§a";
         }

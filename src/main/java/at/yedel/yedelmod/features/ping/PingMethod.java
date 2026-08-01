@@ -16,10 +16,10 @@ import java.util.function.Function;
 
 
 public enum PingMethod {
-    COMMAND_RESPONSE("Command", () -> UChat.say("/" + TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> UMinecraft.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
-    HYPIXEL_PING("Hypixel", () -> {
+    COMMAND_RESPONSE(() -> UChat.say("/" + TextUtils.randomUuid(8))),
+    TAB_PACKET(() -> UMinecraft.getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
+    STATS_PACKET(() -> UMinecraft.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    HYPIXEL_PING(() -> {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
         }
@@ -27,7 +27,7 @@ public enum PingMethod {
             throw new PingException("You must be on Hypixel to use this!");
         }
     }),
-    SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
+    SERVER_LIST_PING(PingMethod::iGuessBro, (info) -> {
         if (UMinecraft.getMinecraft().isSingleplayer()) {
             throw new PingException("This method does not work in singleplayer!");
         }
@@ -38,16 +38,14 @@ public enum PingMethod {
         return ping;
     });
 
-    public final String friendlyName;
     public final Runnable starting;
     public final Function<PingQueueInfo, Long> calculator;
 
-    PingMethod(String friendlyName, Runnable starting) {
-        this(friendlyName, starting, (info) -> (info.endTime() - info.startTime()) / 1000000);
+    PingMethod(Runnable starting) {
+        this(starting, (info) -> (info.endTime() - info.startTime()) / 1000000);
     }
 
-    PingMethod(String friendlyName, Runnable starting, Function<PingQueueInfo, Long> calculator) {
-        this.friendlyName = friendlyName;
+    PingMethod(Runnable starting, Function<PingQueueInfo, Long> calculator) {
         this.starting = starting;
         this.calculator = calculator;
     }
