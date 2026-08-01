@@ -316,17 +316,16 @@ public class YedelConfig extends Config {
     @Dropdown(
         title = "Ping Method",
         description =
-            "Ping: Does /ping command. Works on very few servers." +
-                "\nCommand (default): Enters a random command and waits for the unknown command response. Works on almost all servers." +
+            "Command: Enters a random command and waits for the unknown command response. Works on almost all servers." +
                 "\nTab: Sends a tab completion packet and waits for the response. Works on all servers." +
-                "\nStats: Sends a statistics packet and waits for the response. Works on all servers." +
-                "\nServer list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect." +
-                "\nHypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.",
+                "\nStats (default): Sends a statistics packet and waits for the response. Works on all servers." +
+                "\nHypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel." +
+                "\nServer list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
         category = "Commands",
         subcategory = "Index",
-        options = {"Ping", "Command", "Tab", "Stats", "Server list", "Hypixel"}
+        options = {"Command", "Tab", "Stats", "Hypixel", "Server list"}
     )
-    public int pingMethod = 1;
+    public int pingMethod = 2;
 
     @Info(
         title = "- playtime (pt)",
