@@ -36,17 +36,15 @@ public class TNTTagFeatures {
         return INSTANCE;
     }
 
+    private static final String BOUNTY_HUNTING_LOGO = "§6§l- BountyHunting -";
     private static final Pattern YOU_TAGGED_PERSON_REGEX = Pattern.compile("You tagged (?<personThatYouTagged>[a-zA-Z0-9_]*)!");
     private static final Pattern PERSON_IS_IT_REGEX = Pattern.compile("(?<personThatIsIt>[a-zA-Z0-9_]*) is IT!");
     private static final Pattern PERSON_BLEW_UP_REGEX = Pattern.compile("(?<personThatBlewUp>[a-zA-Z0-9_]*) blew up!");
 
     private final ArrayList<String> players = new ArrayList<>();
-    private final List<String> displayLines = new ArrayList<String>();
+    private final List<String> displayLines = new ArrayList<>();
     private String target;
-    private String targetRanked;
-    private boolean whoCheck;
     private boolean fightingTarget;
-    private RankColor targetRankColor = RankColor.GRAY; // Prevents it from trying to render with a null color code
     private boolean dead;
     private String playerName;
     private boolean inTNTTag;
@@ -61,8 +59,8 @@ public class TNTTagFeatures {
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
-        inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG");
-        if (inTNTTag) {
+        // intended. reassign the variable and also check it
+        if (inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG")) {
             onTNTTagJoin();
         }
     }
@@ -77,7 +75,7 @@ public class TNTTagFeatures {
             displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
             displayLines.set(3, "");
             if (YedelConfig.getInstance().firstTimeBountyHunting) {
-                UChat.chat("§6§l[BountyHunting] §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
+                UChat.chat(BOUNTY_HUNTING_LOGO + " §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
                 YedelConfig.getInstance().firstTimeBountyHunting = false;
                 YedelConfig.getInstance().save();
             }
@@ -86,7 +84,7 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void handleRoundStarted(ChatReceiveEvent event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && inTNTTag && event.message.getUnformattedText().endsWith("has started!")) {
+        if (inTNTTag && event.message.getUnformattedText().endsWith("has started!")) {
             players.clear();
             for (NetworkPlayerInfo playerInfo : UMinecraft.getNetHandler().getPlayerInfoMap()) {
                 players.add(playerInfo.getGameProfile().getName());
@@ -94,45 +92,12 @@ public class TNTTagFeatures {
             players.remove(playerName);
             players.remove(YedelConfig.getInstance().currentNick);
             target = players.get((int) Math.floor(Math.random() * players.size()));
-            whoCheck = true;
-            UChat.say("/who");
-            if (YedelConfig.getInstance().playHuntingSounds) {
+            if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().playHuntingSounds) {
                 USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
             }
             displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
             displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
-        }
-    }
-
-    @Subscribe
-    public void handleWhoMessage(ChatReceiveEvent event) {
-        String msg = event.message.getFormattedText();
-        if (!event.message.getUnformattedText().startsWith("ONLINE: ") || !whoCheck) {
-            return;
-        }
-        whoCheck = false;
-        event.isCancelled = true;
-        String[] playersArray = msg.substring(14).split("§r§7, ");
-        for (String player : playersArray) {
-            if (player.contains(target)) {
-                targetRanked = player;
-            }
-        }
-        displayLines.set(3, "§cYour next target is " + targetRanked + ".");
-        if (targetRanked.startsWith("§r§7")) {
-            targetRankColor = RankColor.GRAY;
-        }
-        else if (targetRanked.startsWith("§r§a")) {
-            targetRankColor = RankColor.GREEN;
-        }
-        else if (targetRanked.startsWith("§r§b")) {
-            targetRankColor = RankColor.AQUA;
-        }
-        else if (targetRanked.startsWith("§r§6")) {
-            targetRankColor = RankColor.GOLD;
-        }
-        else {
-            targetRankColor = RankColor.RED;
+            displayLines.set(3, "§cYour next target is §f" + target + ".");
         }
     }
 
@@ -167,7 +132,7 @@ public class TNTTagFeatures {
             EntityPlayer targetPlayer = event.entityPlayer;
             EntityPlayerSP player = UPlayer.getPlayer();
             if (Objects.equals(targetPlayer.getName(), target) && !targetPlayer.isInvisible()) {
-                String text = targetRankColor.colorCode + "Distance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
+                String text = "§fDistance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
                 double sneakingInc = targetPlayer.isSneaking() ? -0.125 : 0;
                 ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(targetPlayer, text, event.x, event.y + 0.274 + sneakingInc, event.z, 64);
             }
@@ -185,33 +150,34 @@ public class TNTTagFeatures {
 
     @Subscribe
     public void onRoundEnd(ChatReceiveEvent event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
-            String msg = event.message.getUnformattedText();
-            Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
-            while (peopleDeathMatcher.find()) {
-                String personDied = peopleDeathMatcher.group("personThatBlewUp");
-                if (Objects.equals(personDied, playerName)) {
-                    dead = true;
-                    target = null;
-                    displayLines.set(3, "");
-                }
-                if (Objects.equals(personDied, target) && fightingTarget) {
-                    Multithreading.schedule(() -> {
-                        int pointIncrease = (int) Math.ceil(players.size() * 0.8);
-                        if (dead) {
-                            pointIncrease /= 2;
-                        }
-                        YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
-                        YedelConfig.getInstance().bountyHuntingKills += 1;
-                        displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
-                        displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
-                        displayLines.set(3, "§cYou killed your target!");
-                        if (YedelConfig.getInstance().playHuntingSounds) {
-                            USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
-                        }
-                        YedelConfig.getInstance().save();
-                    }, 500, TimeUnit.MILLISECONDS);
-                }
+        String msg = event.message.getUnformattedText();
+        Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
+        while (peopleDeathMatcher.find()) {
+            String personDied = peopleDeathMatcher.group("personThatBlewUp");
+            if (Objects.equals(personDied, playerName)) {
+                dead = true;
+                target = null;
+                displayLines.set(3, "");
+            }
+            // now this is the part where i actually check for config
+            // everything before this is for keeping state but this actually changes things
+            // so i will check if mod and bounty hunting are enabled before going ahead and updating
+            if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(personDied, target) && fightingTarget) {
+                Multithreading.schedule(() -> {
+                    int pointIncrease = (int) Math.ceil(players.size() * 0.8);
+                    if (dead) {
+                        pointIncrease /= 2;
+                    }
+                    YedelConfig.getInstance().bountyHuntingPoints += pointIncrease;
+                    YedelConfig.getInstance().bountyHuntingKills++;
+                    YedelConfig.getInstance().save();
+                    displayLines.set(1, "§a" + YedelConfig.getInstance().bountyHuntingPoints + " points (+" + pointIncrease + ")");
+                    displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills (+1)");
+                    displayLines.set(3, "§cYou killed your target!");
+                    if (YedelConfig.getInstance().playHuntingSounds) {
+                        USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 1.04F);
+                    }
+                }, 500, TimeUnit.MILLISECONDS);
             }
         }
     }
@@ -219,7 +185,7 @@ public class TNTTagFeatures {
     @Subscribe
     public void onNickChange(ChatReceiveEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(event.message.getUnformattedText(), "Processing request. Please wait...")) {
-            UChat.chat("§6§l- BountyHunting - §ePlease set your nick with /setnick or in the config.");
+            UChat.chat(BOUNTY_HUNTING_LOGO + " §ePlease set your nick with /setnick or in the config.");
         }
     }
 
