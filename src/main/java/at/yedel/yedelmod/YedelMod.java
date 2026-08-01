@@ -46,17 +46,16 @@ public class YedelMod implements ClientModInitializer {
 		CommandManager.register(YedelCommand.getInstance());
 
 		registerEventListeners(
-			this,
 			AutoGuildWelcome.getInstance(),
 			BedwarsFeatures.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			PingResponse.getInstance(),
-			RandomPlaceholder.getInstance(),
 			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
             TNTTagFeatures.getInstance()
 		);
+		RandomPlaceholder.getInstance();
 		HudManager.register(
 			BedwarsXPHud.getInstance(),
 			BountyHuntingHud.getInstance(),
@@ -74,7 +73,7 @@ public class YedelMod implements ClientModInitializer {
 
 	private void registerEventListeners(Object... eventListeners) {
 		for (Object eventListener: eventListeners) {
-			// fabric events are registered just by this object existing
+			// fabric events are registered just by the object existing
 			EventManager.INSTANCE.register(eventListener);
 		}
 	}

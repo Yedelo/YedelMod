@@ -21,6 +21,7 @@
     "java": "${java}",
     "fabricloader": "${fabricLoader}",
     "minecraft": "${minecraft}",
+    "oneconfigv1": ">=1.0.0",
     "fabric-api": "*"
   },
   "recommends": {

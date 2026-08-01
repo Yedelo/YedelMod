@@ -358,14 +358,6 @@ public class YedelConfig extends Config {
     private transient int empty$12 = 1;
 
     @Info(
-        title = "- update [platform]",
-        description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
-        category = "Commands",
-        subcategory = "Index"
-    )
-    private transient int empty$13 = 1;
-
-    @Info(
         title = "- yedelmessage (message)",
         description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
         category = "Commands",

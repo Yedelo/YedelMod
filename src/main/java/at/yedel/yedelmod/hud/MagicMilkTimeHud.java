@@ -15,13 +15,13 @@ public class MagicMilkTimeHud extends TextHud {
     }
 
     private MagicMilkTimeHud() {
-        super("magic_milk_time_hud", "Magic Milk Time HUD", Category.getINFO(), "prefix", "");
+        super("magic_milk_time_hud", "Magic Milk Time HUD", Category.getINFO(), "Magic Milk:", "");
     }
 
-    //    @Override
-    //    public boolean shouldShow() {
-    //        return super.shouldShow() && BedwarsFeatures.getInstance().isInBedwars() && BedwarsFeatures.getInstance().getMagicMilkTime() > -1;
-    //    }
+    @Override
+    public boolean getHidden() {
+        return super.getHidden() || !BedwarsFeatures.getInstance().isInBedwars() || BedwarsFeatures.getInstance().getMagicMilkTime() <= -1;
+    }
 
     @Override
     protected String getText() {

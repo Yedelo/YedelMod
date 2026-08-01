@@ -3,11 +3,11 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+import at.yedel.yedelmod.utils.TextUtils;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.GameType;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
 
 import java.util.Objects;
 
@@ -43,19 +43,19 @@ public class LimboCreative {
     public void awardLimboCreative() {
         if (isInLimbo()) {
             if (Minecraft.getInstance().player.isCreative()) {
-                Platform.compatibility().displayChatMessage(yedelogo + " §cYou are already in creative mode!");
+                TextUtils.chat(yedelogo + " §cYou are already in creative mode!");
             }
             else {
                 giveCreative();
             }
         }
         else {
-            Platform.compatibility().displayChatMessage(yedelogo + " §cLimbo check failed, try again in a bit or rejoin!");
+            TextUtils.chat(yedelogo + " §cLimbo check failed, try again in a bit or rejoin!");
         }
     }
 
     private void giveCreative() {
         Minecraft.getInstance().gameMode.setLocalMode(GameType.CREATIVE);
-        Platform.compatibility().displayChatMessage(yedelogo + " §eSet gamemode to creative!");
+        TextUtils.chat(yedelogo + " §eSet gamemode to creative!");
     }
 }

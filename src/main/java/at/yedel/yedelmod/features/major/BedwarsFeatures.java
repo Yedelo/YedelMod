@@ -65,14 +65,12 @@ public class BedwarsFeatures {
 		}
 	}
 
-	//@TODO how do i detect drinking milk????
-	//	@Subscribe
-	//	public void resetMagicMilkTime(PlayerUseItemEvent.Finish event) {
-	//		if (event.item.getItem() == Items.milk_bucket && inBedwars) {
-	//			magicMilkTime = 30;
-	//			magicMilkTimeText = "§b30§as";
-	//		}
-	//	}
+	public void handleMilk() {
+		if (inBedwars) {
+			magicMilkTime = 30;
+			magicMilkTimeText = "§b30§as";
+		}
+	}
 
 	@Subscribe
 	public void decrementMagicMilkTime(TickEvent.Start event) {

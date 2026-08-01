@@ -3,7 +3,7 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.Constants;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
+import at.yedel.yedelmod.utils.TextUtils;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
@@ -22,12 +22,12 @@ public class PingCommandInterface {
         PingQueue.getInstance().queue(
             method,
             (ping) -> showcasePing(method, ping),
-            (error) -> Platform.compatibility().displayChatMessage(yedelogo + " §c" + error.getMessage())
+            (error) -> TextUtils.chat(yedelogo + " §c" + error.getMessage())
         );
     }
 
     private void showcasePing(PingMethod method, long ping) {
-        Platform.compatibility().displayChatMessage(yedelogo + " §ePing: " + color(ping) + ping + " §ems &7(" + method.friendlyName.toLowerCase() + ")");
+        TextUtils.chat(yedelogo + " §ePing: " + color(ping) + ping + " §ems &7(" + method.friendlyName.toLowerCase() + ")");
         Constants.playPingSound(1, (float) (ping * -0.006 + 2));
     }
 

@@ -1,7 +1,6 @@
 {
   "compatibilityLevel": "${mixinJava}",
   "package": "at.yedel.yedelmod.mixins",
-  "client": [
-  ],
+  "client": [],
   "minVersion": "0.8"
 }

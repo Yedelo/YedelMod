@@ -3,8 +3,8 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import at.yedel.yedelmod.utils.TextUtils;
+import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 
 
@@ -15,12 +15,12 @@ public class RandomPlaceholder {
         return INSTANCE;
     }
 
-    private RandomPlaceholder() {}
-
-    @Subscribe
-    public void replaceRandomString(ChatEvent.Send event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
-            //@TODO cancel it for real
-        }
+    private RandomPlaceholder() {
+        ClientSendMessageEvents.MODIFY_CHAT.register((message) -> {
+            if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
+                return message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
+            }
+            return message;
+        });
     }
 }

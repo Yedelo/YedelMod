@@ -15,13 +15,13 @@ public class BedwarsXPHud extends TextHud {
     }
 
     private BedwarsXPHud() {
-        super("bedwars_xp_hud", "Bedwars XP Hud", Category.getINFO(), "prefix", "");
+        super("bedwars_xp_hud", "Bedwars XP Hud", Category.getINFO(), "XP:", "");
     }
 
-    //    @Override
-    //    protected boolean shouldShow() {
-    //        return super.shouldShow() && BedwarsFeatures.getInstance().isInBedwars() && BedwarsFeatures.getInstance().hasExperience();
-    //    }
+    @Override
+    public boolean getHidden() {
+        return super.getHidden() || !BedwarsFeatures.getInstance().isInBedwars() || !BedwarsFeatures.getInstance().hasExperience();
+    }
 
     @Override
     protected String getText() {
@@ -32,4 +32,6 @@ public class BedwarsXPHud extends TextHud {
             return BedwarsFeatures.getInstance().getHudXPText();
         }
     }
+
+
 }

@@ -66,7 +66,7 @@ tasks {
 
 
     jar {
-        archiveFileName = "YedelMod-${sc.current.project}.jar"
+        archiveFileName = "YedelMod-$version+${sc.current.project}.jar"
         manifest.attributes(
             mapOf(
                 "Main-Class" to "at.yedel.yedelmod.launch.YedelModWindow"
