@@ -6,7 +6,6 @@ import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.hud.CustomTextHud;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
@@ -28,7 +27,6 @@ import cc.polyfrost.oneconfig.libs.universal.USound;
 import cc.polyfrost.oneconfig.platform.Platform;
 import cc.polyfrost.oneconfig.utils.Notifications;
 import net.minecraft.util.EnumParticleTypes;
-import org.lwjgl.input.Keyboard;
 
 import java.lang.reflect.Field;
 import java.net.URI;
@@ -70,7 +68,6 @@ public class YedelConfig extends Config {
         );
         initialize();
 
-        registerKeyBind(clickNotificationKeybind, ClickNotifications.getInstance()::clickNotification);
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
         registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidenceWithoutDoubtVerdict);
 
@@ -108,15 +105,6 @@ public class YedelConfig extends Config {
 
     // Start of config
     // Start of visible config
-
-    /* General */
-
-    @KeyBind(
-        name = "Click Notification Keybind",
-        description = "Clicks on the latest notification.",
-        size = 2
-    )
-    public OneKeyBind clickNotificationKeybind = new OneKeyBind(Keyboard.KEY_SEMICOLON);
 
     // Updates
 
@@ -661,7 +649,7 @@ public class YedelConfig extends Config {
         text = "Reset"
     )
     private void resetConfirmation() {
-        ClickNotifications.getInstance().send("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)", () -> {
+        Notifications.INSTANCE.send("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)", () -> {
                 bountyHuntingPoints = 0;
                 bountyHuntingKills = 0;
                 TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");

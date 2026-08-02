@@ -3,7 +3,6 @@ package at.yedel.yedelmod.utils.update;
 
 
 import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Requests;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.UDesktop;
@@ -119,7 +118,7 @@ public class UpdateManager {
 			UChat.chat(new UTextComponent(yedelogo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, updateSource.uri.toString()));
 		}
 		else {
-			ClickNotifications.getInstance().send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
+			Notifications.INSTANCE.send("YedelMod", "Version " + newVersion + " is avaliable on " + updateSource.name + "! Press %k to open.", () -> {
 				if (!UDesktop.browse(updateSource.uri)) {
 					Notifications.INSTANCE.send("YedelMod", "Couldn't open link for " + updateSource.name + "!");
 				}

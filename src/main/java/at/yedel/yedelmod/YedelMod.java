@@ -9,7 +9,6 @@ import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.launch.YedelModConstants;
-import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Threading;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateManager.FeedbackMethod;
@@ -67,7 +66,6 @@ public class YedelMod {
 			StrengthIndicators.getInstance(),
 			TNTTagFeatures.getInstance(),
 
-			ClickNotifications.getInstance(),
 			YedelCheck.getInstance()
 		);
 

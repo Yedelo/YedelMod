@@ -23,7 +23,6 @@ plugins {
         "java",
         "minecraft.loom",
         "bloom",
-        "ducks",
         "resources",
         "shadow"
     )) id("dev.deftu.gradle.tools.$tool") version dgt
