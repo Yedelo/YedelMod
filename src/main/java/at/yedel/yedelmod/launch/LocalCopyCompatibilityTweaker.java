@@ -48,6 +48,7 @@ public class LocalCopyCompatibilityTweaker implements ITweaker {
     }
 
     public static final String VERSION_KEY = "net.hypixel.mod-api.version:1";
+    private static final String LOCAL_COPY_LOADING_VERSION = "lcc.local-copy-loading-version";
     private boolean hasOfferedVersion = false;
 
     public static long getBlackboardVersion() {
@@ -64,17 +65,28 @@ public class LocalCopyCompatibilityTweaker implements ITweaker {
     private void handleCopyConflicts() {
         long blackboardVersion = getBlackboardVersion();
         if (blackboardVersion != VERSION) {
-            LOGGER.info("Blackboard version {} is newer than local version {}, local copy will not be loaded.", blackboardVersion, VERSION);
-            dismissLocalCopy();
+            LOGGER.info("Blackboard version {} is newer than local version {}.", blackboardVersion, VERSION);
+            potentiallyDismissLocalCopy();
         }
         else if (!hasOfferedVersion) {
-            LOGGER.info("Another mod with version {} offered to inject themselves first, local copy will not be loaded.", VERSION);
-            dismissLocalCopy();
+            LOGGER.info("Another mod with version {} offered to inject themselves first.", VERSION);
+            potentiallyDismissLocalCopy();
         }
         else {
             // if we don't have to remove the file, we just go on about our day,
             // since the local copy does not have a tweaker that prevent it from loading
             LOGGER.info("Local copy seems to have the highest version ({}). Loading will continue.", VERSION);
+        }
+    }
+
+    private void potentiallyDismissLocalCopy() {
+        Object localCopyLoadingVersion = Launch.blackboard.get(LOCAL_COPY_LOADING_VERSION);
+        if (localCopyLoadingVersion == null) {
+            LOGGER.info("No other local copy was found, dismissing the local copy.");
+            dismissLocalCopy();
+        }
+        else {
+            LOGGER.info("Another tweaker offered the local copy with version {}, we will not dismiss it.", localCopyLoadingVersion);
         }
     }
 
@@ -88,6 +100,7 @@ public class LocalCopyCompatibilityTweaker implements ITweaker {
             LOGGER.info("Offering newer version from local copy, {} > {}", VERSION, getBlackboardVersion());
             hasOfferedVersion = true;
             Launch.blackboard.put(VERSION_KEY, VERSION);
+            Launch.blackboard.put(LOCAL_COPY_LOADING_VERSION, VERSION);
         }
     }
 
