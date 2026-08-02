@@ -4,10 +4,8 @@ package at.yedel.yedelmod.config;
 
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
-import at.yedel.yedelmod.hud.BedwarsXPHud;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.hud.CustomTextHud;
-import at.yedel.yedelmod.hud.MagicMilkTimeHud;
 import at.yedel.yedelmod.utils.ClickNotifications;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.update.UpdateManager;
@@ -637,114 +635,6 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$14 = 1;
-
-    /* BedWars */
-
-    // Challenges
-
-    @VigilanceName(name = "BedWars defusal helper", category = "BedWars", subcategory = "Challenges")
-    @Switch(
-        name = "BedWars Defusal Helper",
-        description = "Highlights redstone for the BedWars defusal challenge.",
-        category = "BedWars",
-        subcategory = "Challenges"
-    )
-    public boolean bedwarsDefusalHelper = true;
-
-    // Chat
-
-    @VigilanceName(name = "Light green token messages", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Light Green Token Messages",
-        description = "Make token messages light green instead of green (only in bedwars) to make them appear different from emerald messages.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean lightGreenTokenMessages = false;
-
-    @Checkbox(
-        name = "Hide Token Messages",
-        description = "Hide token messages completely.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideTokenMessages = false;
-
-    @Checkbox(
-        name = "Hide Bedwars XP Messages",
-        description = "Hide bedwars xp messages in-game from things like kills and resources.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideBedwarsXPMessages = false;
-
-    @Checkbox(
-        name = "Hide Item Purchase Messages",
-        description = "Hide messages from purchasing items at the Item Shop.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideItemPurchaseMessages = false;
-
-    @Checkbox(
-        name = "Hide Punch Deposit Messages",
-        description = "Hide messages from depositing items into chests.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hidePunchDepositMessages = false;
-
-    @VigilanceName(name = "Hide slumber ticket messages", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Hide Slumber Ticket Messages",
-        description = "Hide slumber ticket messages in-game from things like kills and wins.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideSlumberTicketMessages = false;
-
-    @VigilanceName(name = "Hide silver coin count", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Hide Silver Coin Count",
-        description = "Hide the silver coin count from item purchase messages.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideSilverCoinCount = false;
-
-    @VigilanceName(name = "Hide comfy pillow messages", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Hide Comfy Pillow Messages",
-        description = "Hides the following messages:" +
-            "\n\"You are now carrying x1 Comfy Pillows, bring it back to your shop keeper!\"" +
-            "\n\"You cannot return items to another team's Shopkeeper!\"" +
-            "\n\"You cannot carry any more Comfy Pillows!\"" +
-            "\n\"You died while carrying 1x Comfy Pillows!\"",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideComfyPillowMessages = false;
-
-    @VigilanceName(name = "Hide dreamer's soul fragment messages", category = "BedWars", subcategory = "Chat")
-    @Checkbox(
-        name = "Hide Dreamer's Soul Fragment Messages",
-        description = "Hide \"+1 Dreamer's Soul Fragment!\" messages.",
-        category = "BedWars",
-        subcategory = "Chat"
-    )
-    public boolean hideDreamerSoulFragmentMessages = false;
-
-    @HUD(
-        name = "Bedwars XP Display HUD",
-        category = "BedWars"
-    )
-    public BedwarsXPHud bedwarsXPHud = new BedwarsXPHud();
-
-    @HUD(
-        name = "Magic Milk Time HUD",
-        category = "BedWars"
-    )
-    public MagicMilkTimeHud magicMilkTimeHud = new MagicMilkTimeHud();
 
     /* TNT Tag */
 

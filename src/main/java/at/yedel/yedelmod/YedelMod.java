@@ -4,7 +4,6 @@ package at.yedel.yedelmod;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
-import at.yedel.yedelmod.features.major.BedwarsFeatures;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
@@ -59,7 +58,6 @@ public class YedelMod {
 		registerEventListeners(
 			this,
 			AutoGuildWelcome.getInstance(),
-			BedwarsFeatures.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			CustomHitParticles.getInstance(),
