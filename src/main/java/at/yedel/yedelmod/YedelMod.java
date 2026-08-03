@@ -4,15 +4,12 @@ package at.yedel.yedelmod;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
-import at.yedel.yedelmod.features.major.BedwarsFeatures;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
-import at.yedel.yedelmod.hud.BedwarsXPHud;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.hud.CustomTextHud;
-import at.yedel.yedelmod.hud.MagicMilkTimeHud;
 import at.yedel.yedelmod.utils.Threading;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.Minecraft;
@@ -47,7 +44,6 @@ public class YedelMod implements ClientModInitializer {
 
 		registerEventListeners(
 			AutoGuildWelcome.getInstance(),
-			BedwarsFeatures.getInstance(),
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			PingResponse.getInstance(),
@@ -57,10 +53,8 @@ public class YedelMod implements ClientModInitializer {
 		);
 		RandomPlaceholder.getInstance();
 		HudManager.register(
-			BedwarsXPHud.getInstance(),
 			BountyHuntingHud.getInstance(),
-			CustomTextHud.getInstance(),
-			MagicMilkTimeHud.getInstance()
+			CustomTextHud.getInstance()
 		);
 
 		Threading.scheduleRepeat(() -> {
