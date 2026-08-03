@@ -12,3 +12,4 @@ _Nooooooooooooooooooooooo!!!_
 - Removed favorite server button
 - Removed click notification system, notifications can just be clicked normally
 
+"execute all of the all in one mods by firing squad" - wyvest 2026 (eastern daylight time)
