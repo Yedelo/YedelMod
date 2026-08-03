@@ -30,7 +30,6 @@ Use /yedel yedelmessage for messages from me regarding the mod. These are usuall
 - Custom Hit Particles
 - Regex Chat Filter
 - Random Placeholder
-- Favorite Server Button
 - Auto Welcome Guild Members
 - Dropper AutoGG
 - SkyWars Strength Indicators
@@ -57,25 +56,6 @@ All hosted under /yedel (yedelmod):
 - simulatechat (simc) [text]
 - update [platform]
 - yedelmessage (message)
-
-</details>
-
-<details><summary>BedWars</summary>
-
-- BedWars Defusal Helper
-
-- Light Green Token Messages
-- Hide Token Messages
-- Hide Bedwars XP Messages
-- Hide Item Purchase Messages
-- Hide Punch Deposit Messages
-- Hide Slumber Ticket Messages
-- Hide Silver Coin Count
-- Hide Comfy Pillow Messages
-- Hide Dreamer's Soul Fragment Messages
--
-- Bedwars XP Display HUD
-- Magic Milk Time HUD
 
 </details>
 
