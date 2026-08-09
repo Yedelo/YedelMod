@@ -16,11 +16,14 @@ public class RandomPlaceholder {
     }
 
     private RandomPlaceholder() {
-        ClientSendMessageEvents.MODIFY_CHAT.register((message) -> {
-            if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
-                return message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
-            }
-            return message;
-        });
+        ClientSendMessageEvents.MODIFY_CHAT.register(this::modifyMessage);
+        ClientSendMessageEvents.MODIFY_COMMAND.register(this::modifyMessage);
+    }
+
+    private String modifyMessage(String message) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty()) {
+            return message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
+        }
+        return message;
     }
 }

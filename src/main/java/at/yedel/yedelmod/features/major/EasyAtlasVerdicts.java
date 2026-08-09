@@ -4,7 +4,6 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NumberUtils;
-import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,6 +11,7 @@ import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.ScreenOpenEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.Objects;
@@ -57,7 +57,7 @@ public class EasyAtlasVerdicts {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
             LocalPlayer player = Minecraft.getInstance().player;
             if (inAtlas && player != null) {
-                TextUtils.chat(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
+                Platform.compatibility().displayChatMessage(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
                     Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);

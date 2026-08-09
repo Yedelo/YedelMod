@@ -16,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 
 import java.io.IOException;
@@ -68,22 +69,19 @@ public class YedelCommand {
     public void cleartext() {
         CustomTextHud.getInstance().displayText = "";
         CustomTextHud.getInstance().save();
-        TextUtils.chat(yedelogo + " §eCleared display text!");
+        Platform.compatibility().displayChatMessage(yedelogo + " §eCleared display text!");
     }
 
     @Handler(description = "Shows mod constants and build information such as the project version.")
     public void constants() {
         try {
-            TextUtils.chat(yedelogo + " §eConstants:");
+            Platform.compatibility().displayChatMessage(yedelogo + " §eConstants:");
             for (Field field : YedelModConstants.class.getDeclaredFields()) {
-                // this makes a cool arrow
-                // i can't really think of anything cleaner
-                // - YedelMod -> MC_VERSION: 1.8.9
-                TextUtils.chat(yedelogo + "§e> " + field.getName() + ": §r" + field.get(null));
+                Platform.compatibility().displayChatMessage(yedelogo + "§e> " + field.getName() + ": §r" + field.get(null));
             }
         }
         catch (IllegalAccessException e) {
-            TextUtils.chat(yedelogo + " §cCouldn't get mod constants!");
+            Platform.compatibility().displayChatMessage(yedelogo + " §cCouldn't get mod constants!");
             yedelog.error("Couldn't get mod constants!", e);
 
         }
@@ -91,7 +89,7 @@ public class YedelCommand {
 
     @Handler(description = "Shows a formatting guide with color and style codes.")
     public void formatting() {
-        TextUtils.chat(FORMATTING_GUIDE_MESSAGE);
+        Platform.compatibility().displayChatMessage(FORMATTING_GUIDE_MESSAGE);
     }
 
     @Handler(
@@ -116,29 +114,29 @@ public class YedelCommand {
     )
     public void playtime() {
         int minutes = YedelConfig.getInstance().playtimeMinutes;
-        TextUtils.chat(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
+        Platform.compatibility().displayChatMessage(yedelogo + " §ePlaytime: §6" + minutes / 60 + " hours §eand §6" + minutes % 60 + " minutes");
     }
 
     @Handler(description = "Sets your nick for Bounty Hunting to not select yourself as the target.")
     public void setnick(String nick) {
-        TextUtils.chat("§6§l- BountyHunting - §eSet nick to \"§f" + nick + "\"§e!");
+        Platform.compatibility().displayChatMessage("§6§l- BountyHunting - §eSet nick to \"§f" + nick + "\"§e!");
         YedelConfig.getInstance().currentNick = nick;
         YedelConfig.getInstance().save();
     }
 
     @Handler(description = "Sets the display text, supporting color codes with ampersands (&).")
     public void settext(String text) {
-        // @TODO make this colored
-        String displayText = text;
+        String displayText = TextUtils.replaceAmpersand(text);
         CustomTextHud.getInstance().displayText = text;
         CustomTextHud.getInstance().save();
-        TextUtils.chat(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
+        Platform.compatibility().displayChatMessage(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @Handler(description = "Sets the title of the game window.")
     public void settitle(String title) {
+        //@TODO it doesnt work
         GLFW.glfwSetWindowTitle(Minecraft.getInstance().getWindow().handle(), title);
-        TextUtils.chat(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
+        Platform.compatibility().displayChatMessage(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
 
     @Handler(
@@ -146,10 +144,8 @@ public class YedelCommand {
         description = "Simulates a chat message, supports color codes with ampersands (&)."
     )
     private void simulatechat(String text) {
-        // @TODO make this colored
-        String message = text;
-        // @TODO make this actually simulate and not just show
-        TextUtils.chat(text);
+        String message = TextUtils.replaceAmpersand(text);
+        Platform.compatibility().displayChatMessage(message);
     }
 
     @Handler(
@@ -179,11 +175,11 @@ public class YedelCommand {
                     yedelog.error("Couldn't get last updatted date/time", e);
                 }
 
-                TextUtils.chat(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
-                TextUtils.chat(yedelMessage);
+                Platform.compatibility().displayChatMessage(yedelogo + " §eMessage from Yedel (last updated §f" + lastUpdatedTimeString + "§e):");
+                Platform.compatibility().displayChatMessage(yedelMessage);
             }
             catch (IOException e) {
-                TextUtils.chat(yedelogo + " §cCouldn't get mod message!");
+                Platform.compatibility().displayChatMessage(yedelogo + " §cCouldn't get mod message!");
                 e.printStackTrace();
             }
         }, "YedelMod Message"
@@ -195,6 +191,7 @@ public class YedelCommand {
         PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
     }
 
+    //@TODO this does not work, dp is just a replacement
     @Command("ping")
     public static class Ping {
         @Handler

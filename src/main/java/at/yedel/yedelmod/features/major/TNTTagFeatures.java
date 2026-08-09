@@ -4,7 +4,6 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Constants;
-import at.yedel.yedelmod.utils.TextUtils;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -13,6 +12,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionResult;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class TNTTagFeatures {
             displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
             displayLines.set(3, "");
             if (YedelConfig.getInstance().firstTimeBountyHunting) {
-                TextUtils.chat(BOUNTY_HUNTING_LOGO + " §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
+                Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
                 YedelConfig.getInstance().firstTimeBountyHunting = false;
                 YedelConfig.getInstance().save();
             }
@@ -89,7 +89,7 @@ public class TNTTagFeatures {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
             for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
-                players.add(player.getName().toString());
+                players.add(player.getName().getString());
             }
             players.remove(playerName);
             players.remove(YedelConfig.getInstance().currentNick);
@@ -180,7 +180,7 @@ public class TNTTagFeatures {
     @Subscribe
     public void onNickChange(ChatEvent.Receive event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(event.getFullyUnformattedMessage(), "Processing request. Please wait...")) {
-            TextUtils.chat(BOUNTY_HUNTING_LOGO + " §ePlease set your nick with /setnick or in the config.");
+            Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §ePlease set your nick with /setnick or in the config.");
         }
     }
 

@@ -2,21 +2,16 @@ package at.yedel.yedelmod.utils;
 
 
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 
 
 public class TextUtils {
-    // temporary. hopefully oneconfig gets their stuff fixed
-    public static void chat(Object object) {
-        Minecraft.getInstance().gui.getChat().addClientSystemMessage(Component.literal(object.toString()));
-    }
+    private static final Pattern ampersandFormattingPattern = Pattern.compile("&([0123456789abcdefklnor])");
 
-    public static String commafy(int number) {
-        return String.format("%,d", number);
+    public static String replaceAmpersand(String string) {
+        return ampersandFormattingPattern.matcher(string).replaceAll("§$1");
     }
 
     public static String randomUuid(int length) {
