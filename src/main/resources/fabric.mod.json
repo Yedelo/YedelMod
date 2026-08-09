@@ -2,11 +2,12 @@
   "schemaVersion": 1,
   "name": "YedelMod",
   "id": "yedelmod",
-  "description": "Expansive features for Hypixel and Minecraft QOL",
+  "description": "${description}",
   "version": "${version}",
   "authors": [
     "Yedel"
   ],
+  "license": "${license}",
   "icon": "assets/yedelmod/yedelmod.png",
   "environment": "client",
   "entrypoints": {
