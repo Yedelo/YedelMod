@@ -46,6 +46,9 @@ public class YedelMod {
 	}
 
 	public static final Logger yedelog = LogManager.getLogger("YedelMod");
+	public final UpdateManager updateManager = new UpdateManager(
+		"YedelMod", YedelModConstants.MOD_VERSION, "yedelmod", "Yedelo/YedelMod", YedelModConstants.yedelogo
+	);
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
@@ -80,7 +83,7 @@ public class YedelMod {
 	@EventHandler
 	public void checkForUpdates(FMLLoadCompleteEvent event) {
 		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().automaticallyCheckForUpdates) {
-			UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
+			updateManager.checkForUpdates(YedelConfig.getInstance().getUpdateSource(), FeedbackMethod.NOTIFICATIONS);
 		}
 	}
 
@@ -89,5 +92,9 @@ public class YedelMod {
 			MinecraftForge.EVENT_BUS.register(eventListener);
 			EventManager.INSTANCE.register(eventListener);
 		}
+	}
+
+	public UpdateManager getUpdateManager() {
+		return updateManager;
 	}
 }

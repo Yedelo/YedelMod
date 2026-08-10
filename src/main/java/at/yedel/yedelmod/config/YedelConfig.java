@@ -2,6 +2,7 @@ package at.yedel.yedelmod.config;
 
 
 
+import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
@@ -144,7 +145,7 @@ public class YedelConfig extends Config {
         text = "Open"
     )
     public void openModrinthLink() {
-        if (!UDesktop.browse(UpdateSource.MODRINTH.uri)) {
+        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getModrinthLink())) {
             Notifications.INSTANCE.send("YedelMod", "Couldn't open modrinth link!");
         }
     }
@@ -157,7 +158,7 @@ public class YedelConfig extends Config {
         text = "Open"
     )
     public void openGitHubRepository() {
-        if (!UDesktop.browse(UpdateSource.GITHUB.uri)) {
+        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getGithubLink())) {
             Notifications.INSTANCE.send("YedelMod", "Couldn't open github link!");
         }
     }
@@ -171,7 +172,7 @@ public class YedelConfig extends Config {
         size = 2
     )
     public void checkForUpdates() {
-        UpdateManager.getInstance().checkForUpdates(getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
+        YedelMod.getInstance().getUpdateManager().checkForUpdates(getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
     }
 
     /* Features */

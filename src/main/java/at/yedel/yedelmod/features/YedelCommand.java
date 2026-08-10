@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 
+import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingCommandInterface;
 import at.yedel.yedelmod.features.ping.PingMethod;
@@ -242,17 +243,17 @@ public class YedelCommand {
     public static class Update {
         @Main
         public void main() {
-            UpdateManager.getInstance().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
         }
 
         @SubCommand
         public void modrinth() {
-            UpdateManager.getInstance().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
         }
 
         @SubCommand
         public void github() {
-            UpdateManager.getInstance().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
         }
     }
 }
