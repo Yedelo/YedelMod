@@ -5,6 +5,8 @@ _Nooooooooooooooooooooooo!!!_
 - Remove all BedWars features
   - These can now be found under [DreamersDeluxe](https://modrinth.com/mod/dreamersdeluxe)
 - Add compatibility with other LocalCopyCompatibilityTweaker's (DreamersDeluxe)
+- Revamp name line rendering system to make a proper API
+  - Usage can be found under `at.yedel.yedelmod.utils.NameLineEvent`
 - Revamp ping system to make a proper API
   - Usage can be found under `at.yedel.yedelmod.features.ping.PingQueue`
 - Remove rank color from Bounty Hunting for maintenance purposes
