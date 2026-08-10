@@ -9,6 +9,8 @@ _Nooooooooooooooooooooooo!!!_
   - Usage can be found under `at.yedel.yedelmod.utils.NameLineEvent`
 - Revamp ping system to make a proper API
   - Usage can be found under `at.yedel.yedelmod.features.ping.PingQueue`
+- Revamp update system to make a proper API
+  - Usage can be found under `at.yedel.yedelmod.utils.update.UpdateManager`
 - Remove rank color from Bounty Hunting for maintenance purposes
 - Remove /ping ping method
 - Removed favorite server button
