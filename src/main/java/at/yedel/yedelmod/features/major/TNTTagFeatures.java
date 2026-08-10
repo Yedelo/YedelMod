@@ -3,8 +3,8 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.mixins.InvokerRender;
 import at.yedel.yedelmod.utils.Constants;
+import at.yedel.yedelmod.utils.NameLineEvent;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
@@ -14,10 +14,7 @@ import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -127,15 +124,12 @@ public class TNTTagFeatures {
         }
     }
 
-    @SubscribeEvent
-    public void renderTargetLabel(RenderPlayerEvent.Pre event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance) {
-            EntityPlayer targetPlayer = event.entityPlayer;
-            EntityPlayerSP player = UPlayer.getPlayer();
-            if (Objects.equals(targetPlayer.getName(), target) && !targetPlayer.isInvisible()) {
-                String text = "§fDistance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
-                double sneakingInc = targetPlayer.isSneaking() ? -0.125 : 0;
-                ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(targetPlayer, text, event.x, event.y + 0.274 + sneakingInc, event.z, 64);
+    @Subscribe
+    public void renderTargetLabel(NameLineEvent event) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
+            if (Objects.equals(event.getPlayer().getName(), target)) {
+                String text = "§fDistance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
+                event.addNameLine(text);
             }
         }
     }

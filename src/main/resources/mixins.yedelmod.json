@@ -3,7 +3,8 @@
   "package": "at.yedel.yedelmod.mixins",
   "client": [
     "InvokerMinecraft",
-    "InvokerRender"
+    "MixinRendererLivingEntity",
+    "MixinRenderPlayer"
   ],
   "minVersion": "0.7.11"
 }

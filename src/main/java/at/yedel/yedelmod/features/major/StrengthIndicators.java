@@ -3,23 +3,19 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.mixins.InvokerRender;
+import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
-import at.yedel.yedelmod.utils.RenderUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import com.google.common.collect.ImmutableMap;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -117,28 +113,24 @@ public class StrengthIndicators {
         }
     }
 
-    @SubscribeEvent
-    public void renderStrengthIndicator(RenderPlayerEvent.Pre event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators) {
-            EntityPlayer entityPlayer = event.entityPlayer;
-            if (!YedelConfig.getInstance().showSelfStrength && entityPlayer == UPlayer.getPlayer()) {
+    @Subscribe
+    public void renderStrengthIndicators(NameLineEvent event) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars) {
+            AbstractClientPlayer player = event.getPlayer();
+            if (!YedelConfig.getInstance().showSelfStrength && player.isUser()) {
                 return;
             }
-            if (entityPlayer.isInvisible()) {
-                return;
-            }
-            String entityName = entityPlayer.getName();
-            if (!strengthPlayers.containsKey(entityName)) {
+            String playerName = player.getName();
+            if (!strengthPlayers.containsKey(playerName)) {
                 return;
             }
             String text =
-                COLOR_MAP.get(YedelConfig.getInstance().strengthColor) + "Strength - " + String.format("%.2f", strengthPlayers.get(entityName)) + "s";
-            double currentLabelOffset = (RenderUtils.shouldRenderSubinfo(entityPlayer) ? 0.548 : 0.274);
-            double sneakingOffset = entityPlayer.isSneaking() ? -0.125 : 0;
-            // this thing goes like double the offset it's supposed to idk why it does that so it's being halved
-            double configOffset = (double) YedelConfig.getInstance().strengthIndicatorOffset / 100 / 2;
-            double offset = currentLabelOffset + sneakingOffset + configOffset;
-            ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(entityPlayer, text, event.x, event.y + offset, event.z, 64);
+                COLOR_MAP.get(YedelConfig.getInstance().strengthColor)
+                    + "Strength - "
+                    + String.format("%.2f", strengthPlayers.get(playerName))
+                    + "s";
+            event.addVerticalAdjustment((float) YedelConfig.getInstance().strengthIndicatorOffset / 100);
+            event.addNameLine(text);
         }
     }
 
