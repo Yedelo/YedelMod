@@ -1,2 +1,13 @@
-["26.1"]
-minecraftDependency = ">=26.1 <=26.1.2"
+versions.fabricloader = "0.19.3"
+versions.oneconfig = "1.0.14"
+
+["26.2-fabric"]
+versioning = "single"
+versions.fabricapi = "0.153.0+26.2"
+versions.modmenu = "20.0.1"
+
+["26.1-fabric"]
+versioning = "range"
+mc.max = "26.1.2"
+versions.fabricapi = "0.145.1+26.1"
+versions.modmenu = "18.0.0"
