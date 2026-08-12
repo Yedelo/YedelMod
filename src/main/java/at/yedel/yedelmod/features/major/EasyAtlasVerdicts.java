@@ -65,7 +65,7 @@ public class EasyAtlasVerdicts {
             submitVerdict("Evident Without Doubt");
         }
     }
-
+    //~ if >=26.2 '.screen' -> '.gui.screen()' {
     private void submitVerdict(String name) {
             LocalPlayer player = Minecraft.getInstance().player;
             if (inAtlas && player != null) {
@@ -101,4 +101,5 @@ public class EasyAtlasVerdicts {
             }
         }
     }
+    //~}
 }

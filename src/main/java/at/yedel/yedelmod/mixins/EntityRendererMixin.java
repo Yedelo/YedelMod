@@ -45,7 +45,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
         for (Component nameLine : event.getNameLines()) {
             poseStack.translate(0, 9.0F * 1.15F * 0.025F, 0);
             submitNodeCollector.submitNameTag(
-                poseStack, state.nameTagAttachment, offset, nameLine, !state.isDiscrete, state.lightCoords, state.distanceToCameraSq, camera
+                poseStack, state.nameTagAttachment, offset, nameLine, !state.isDiscrete, state.lightCoords, /*? <= 26.1 {*/state.distanceToCameraSq,/*?}*/ camera
             );
         }
     }
