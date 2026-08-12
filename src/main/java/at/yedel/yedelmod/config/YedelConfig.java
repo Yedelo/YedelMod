@@ -149,7 +149,7 @@ public class YedelConfig extends Config {
     @DependsOn("skywarsStrengthIndicators")
     @Switch(
         title = "Show Self Strength",
-        description = "Whether or not to show your own strength indicators.",
+        description = "If your own nametag is rendered (PolyNametag), this will show your own strength indicators.",
         category = "Features",
         subcategory = "Hypixel"
     )
