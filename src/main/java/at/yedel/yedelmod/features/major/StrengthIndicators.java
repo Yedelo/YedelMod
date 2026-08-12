@@ -5,13 +5,13 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
@@ -38,6 +38,15 @@ public class StrengthIndicators {
     private double strengthDuration;
 
     private StrengthIndicators() {
+        ClientTickEvents.END_CLIENT_TICK.register((_) -> {
+            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
+            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
+                String player = entry.getKey();
+                Double seconds = entry.getValue();
+                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
+            }
+            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
+        });
         HypixelModAPI.getInstance().createHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
     }
 
@@ -63,17 +72,6 @@ public class StrengthIndicators {
         else {
             strengthDuration = 0;
         }
-    }
-
-    @Subscribe
-    public void downtickStrengthPlayers(TickEvent.Start event) {
-        Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
-        for (Map.Entry<String, Double> entry : strengthPlayerSet) {
-            String player = entry.getKey();
-            Double seconds = entry.getValue();
-            strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
-        }
-        strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
     }
 
     @Subscribe

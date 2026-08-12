@@ -9,6 +9,7 @@ import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 
 
 //@TODO color doesn't work
+//@TODO hide when shouldRender reimplemented
 public class CustomTextHud extends TextHud {
     public CustomTextHud() {
         super("custom_text_hud", "Custom Text HUD", Category.getINFO(), "", "");

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 
 //@TODO color doesn't work
+//@TODO hide when shouldRender reimplemented
 public class BountyHuntingHud extends TextHud {
     public BountyHuntingHud() {
         super("bounty_hunting_hud", "Bounty Hunting HUD", Hud.Category.getINFO(), "", "");
@@ -27,7 +28,6 @@ public class BountyHuntingHud extends TextHud {
             lines.add("§cYour next target is §aYedelos§c.");
         }
         else {
-            lines.clear();
             lines.addAll(TNTTagFeatures.getInstance().getDisplayLines());
         }
         return String.join("\n", lines);
