@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Constants;
+import at.yedel.yedelmod.utils.NameLineEvent;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -121,19 +122,16 @@ public class TNTTagFeatures {
             }
         }
     }
-    //@TODO actually render it
-    //    @SubscribeEvent
-    //    public void renderTargetLabel(RenderPlayerEvent.Pre event) {
-    //        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance) {
-    //            EntityPlayer targetPlayer = event.entityPlayer;
-    //            EntityPlayerSP player = UPlayer.getPlayer();
-    //            if (Objects.equals(targetPlayer.getName(), target) && !targetPlayer.isInvisible()) {
-    //                String text = "§fDistance: " + (int) Math.floor(player.getDistanceToEntity(targetPlayer)) + " blocks";
-    //                double sneakingInc = targetPlayer.isSneaking() ? -0.125 : 0;
-    //                ((InvokerRender) event.renderer).yedelmod$renderLivingLabel(targetPlayer, text, event.x, event.y + 0.274 + sneakingInc, event.z, 64);
-    //            }
-    //        }
-    //    }
+
+    @Subscribe
+    public void renderTargetLabel(NameLineEvent event) {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
+            if (Objects.equals(event.getPlayer().getName().getString(), target)) {
+                String text = "§fDistance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
+                event.addNameLine(text);
+            }
+        }
+    }
 
     @Subscribe
     public void onBlastRadiusDeath(ChatEvent.Receive event) {
