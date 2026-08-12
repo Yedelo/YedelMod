@@ -3,10 +3,14 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.utils.NumberUtils;
+import at.yedel.yedelmod.mixins.AbstractContainerScreenInvoker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.Slot;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.ScreenOpenEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
@@ -30,7 +34,7 @@ public class EasyAtlasVerdicts {
 
     private boolean inAtlas;
     private boolean clickerEnabled = false;
-    private int slot;
+    private int slotIndex;
 
     private EasyAtlasVerdicts() {}
 
@@ -43,6 +47,11 @@ public class EasyAtlasVerdicts {
         else if (Objects.equals(text, "Atlas verdict submitted! Thank you :)")) {
             inAtlas = false;
         }
+    }
+
+    @Subscribe
+    public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
+        inAtlas = false;
     }
 
     public void submitInsufficientEvidenceVerdict() {
@@ -61,36 +70,38 @@ public class EasyAtlasVerdicts {
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
                     Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);
-                    slot = inventorySlot;
+                    slotIndex = inventorySlot;
                     clickerEnabled = true;
                     setupTimeout();
-                }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
+                }, 250, TimeUnit.MILLISECONDS);
             }
         }
     }
 
     @Subscribe
-    public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
-        inAtlas = false;
-    }
-
-    @Subscribe
     public void clickAtlasVerdict(ScreenOpenEvent event) {
-        //@TODO click
-        //        if (clickerEnabled) {
-        //            if (event.getScreen() instanceof ChestMenu container) {
-        //                container.clicked();
-        //                Multithreading.schedule(() -> {
-        //                        UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
-        //                        Minecraft.getMinecraft()
-        //                    }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
-        //                );
-        //                clickerEnabled = false;
-        //            }
-        //        }
+        if (clickerEnabled) {
+            if (event.getScreen() instanceof AbstractContainerScreen containerScreen) {
+                if (!Objects.equals(containerScreen.getTitle().getString(), "Atlas Verdict - Hacking")) {
+                    return;
+                }
+                AbstractContainerMenu containerMenu = containerScreen.getMenu();
+                if (containerMenu.slots.size() <= slotIndex) {
+                    return;
+                }
+                Slot slot = containerMenu.slots.get(slotIndex);
+                //@TODO ineffective
+                ((AbstractContainerScreenInvoker) containerScreen).yedelmod$slotClicked(slot, slot.index, 0, ContainerInput.PICKUP);
+                clickerEnabled = false;
+            }
+        }
     }
 
-    public void setupTimeout() { // In case anything goes wrong, this makes sure it doesn't randomly click the next inventory
-        Multithreading.schedule(() -> clickerEnabled = false, 1500, TimeUnit.MILLISECONDS);
+    private void c(String string) {
+        Platform.compatibility().displayChatMessage(string);
+    }
+
+    public void setupTimeout() {
+        Multithreading.schedule(() -> clickerEnabled = false, 1000, TimeUnit.MILLISECONDS);
     }
 }
