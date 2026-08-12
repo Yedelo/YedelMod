@@ -11,9 +11,10 @@ _Nooooooooooooooooooooooo!!!_
   - Usage can be found under `at.yedel.yedelmod.features.ping.PingQueue`
 - Revamp update system to make a proper API
   - Usage can be found under `at.yedel.yedelmod.utils.update.UpdateManager`
-- Remove rank color from Bounty Hunting for maintenance purposes
-- Remove /ping ping method
+- Rewrite Easy Atlas Verdicts to be potentially more safe
 - Removed favorite server button
+- Remove rank color from Bounty Hunting for maintenance purposes
 - Removed click notification system, notifications can just be clicked normally
+- Remove /ping ping method
 
 "execute all of the all in one mods by firing squad" - wyvest 2026 (eastern daylight time)
