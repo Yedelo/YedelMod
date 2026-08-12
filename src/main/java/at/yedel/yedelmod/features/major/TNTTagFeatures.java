@@ -62,13 +62,6 @@ public class TNTTagFeatures {
         });
     }
 
-    @Subscribe
-    public void onChat(ChatEvent.Receive event) {
-        if (event.getFullyUnformattedMessage().contains("secretyedelcode")) {
-            Platform.compatibility().displayChatMessage("Above 255");
-        }
-    }
-
     private void handleLocationPacket(ClientboundLocationPacket packet) {
         // intended. reassign the variable and also check it
         if (inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG")) {

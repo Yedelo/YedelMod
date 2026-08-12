@@ -12,7 +12,6 @@ import java.util.List;
 
 
 
-//@TODO implement this
 public class NameLineEvent implements Event {
     private final Entity entity;
     private final boolean isPlayer;

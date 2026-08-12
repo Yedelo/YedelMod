@@ -91,11 +91,6 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    public void fuck(NameLineEvent event) {
-        event.addNameLine(Component.literal("fuck").withColor(0x808080));
-    }
-
-    @Subscribe
     public void renderStrengthIndicators(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars
             && event.getEntity() instanceof Player player

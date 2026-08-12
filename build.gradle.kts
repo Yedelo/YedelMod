@@ -41,11 +41,6 @@ loom {
             programArgs("--resourcePackDir", resourcePackDir)
         }
     }
-
-    accessWidenerPath = sc.process(
-        rootProject.file("src/main/resources/yedelmod.classtweaker"),
-        "build/processed.classtweaker"
-    )
 }
 
 tasks {
