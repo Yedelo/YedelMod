@@ -686,7 +686,7 @@ public class YedelConfig extends Config {
     @VigilanceName(name = "Highlight target and show distance", category = "TNT Tag", subcategory = "Features")
     @Switch(
         name = "Highlight Target and Show Distance",
-        description = "Distance is displayed above their nametag, corresponding to their rank color.",
+        description = "Highlights the target and shows their distance.",
         category = "TNT Tag",
         subcategory = "Features"
     )
