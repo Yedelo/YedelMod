@@ -52,10 +52,7 @@ public class YedelMod implements ClientModInitializer {
             TNTTagFeatures.getInstance()
 		);
 		RandomPlaceholder.getInstance();
-		HudManager.register(
-			BountyHuntingHud.getInstance(),
-			CustomTextHud.getInstance()
-		);
+		HudManager.register(new BountyHuntingHud(), new CustomTextHud());
 
 		Threading.scheduleRepeat(() -> {
 			if (Minecraft.getInstance().player != null) {

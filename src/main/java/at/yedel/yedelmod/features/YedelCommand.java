@@ -13,9 +13,9 @@ import com.google.gson.JsonObject;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.glfw.GLFW;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
+import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 
@@ -58,6 +58,12 @@ public class YedelCommand {
     private static final Component FORMATTING_GUIDE_MESSAGE =
         Component.text(yedelogo + " §e§nHover to view the formatting guide.").hoverEvent(HoverEvent.showText(FORMATTING_CODES));
 
+    private String displayTitle;
+
+    public String getDisplayTitle() {
+        return displayTitle;
+    }
+
     private YedelCommand() {}
 
     @Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
@@ -67,8 +73,10 @@ public class YedelCommand {
 
     @Handler(description = "Clears the currently set display text.")
     public void cleartext() {
-        CustomTextHud.getInstance().displayText = "";
-        CustomTextHud.getInstance().save();
+        for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
+            hud.displayText = "";
+            hud.save();
+        }
         Platform.compatibility().displayChatMessage(yedelogo + " §eCleared display text!");
     }
 
@@ -127,15 +135,16 @@ public class YedelCommand {
     @Handler(description = "Sets the display text, supporting color codes with ampersands (&).")
     public void settext(String text) {
         String displayText = TextUtils.replaceAmpersand(text);
-        CustomTextHud.getInstance().displayText = text;
-        CustomTextHud.getInstance().save();
+        for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
+            hud.displayText = displayText;
+            hud.save();
+        }
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @Handler(description = "Sets the title of the game window.")
     public void settitle(String title) {
-        //@TODO it doesnt work
-        GLFW.glfwSetWindowTitle(Minecraft.getInstance().getWindow().handle(), title);
+        this.displayTitle = title;
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
 

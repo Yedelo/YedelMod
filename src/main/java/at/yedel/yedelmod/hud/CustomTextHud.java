@@ -3,10 +3,12 @@ package at.yedel.yedelmod.hud;
 
 
 import org.polyfrost.oneconfig.api.config.v1.annotations.Text;
+import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 
 
 
+//@TODO color doesn't work
 public class CustomTextHud extends TextHud {
     public CustomTextHud() {
         super("custom_text_hud", "Custom Text HUD", Category.getINFO(), "", "");
@@ -19,10 +21,15 @@ public class CustomTextHud extends TextHud {
 
     @Override
     public String getText() {
-        if (!isReal()) {
+        if (!isReal() || HudManager.INSTANCE.isEditing()) {
             return "Custom §6display §a§ltext!";
         }
         return displayText;
+    }
+
+    @Override
+    public boolean hasBackground() {
+        return false;
     }
 
     //    @Override

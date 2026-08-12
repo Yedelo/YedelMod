@@ -28,16 +28,14 @@ public enum PingMethod {
         }
     }),
     SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
-        //@TODO deal with irregular ping values
-        //        if (UMinecraft.getMinecraft().isSingleplayer()) {
-        //            throw new PingException("This method does not work in singleplayer!");
-        //        }
-        //        long ping = UMinecraft.getMinecraft().getCurrentServerData().pingToServer;
-        //        if (ping == 0) {
-        //            throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
-        //        }
-        //        return ping;
-        return Minecraft.getInstance().getCurrentServer().ping;
+        if (Minecraft.getInstance().getSingleplayerServer() != null) {
+            throw new PingException("This method does not work in singleplayer!");
+        }
+        long ping = Minecraft.getInstance().getCurrentServer().ping;
+        if (ping == 0) {
+            throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
+        }
+        return ping;
     });
 
     public final String friendlyName;
