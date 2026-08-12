@@ -41,6 +41,11 @@ loom {
             programArgs("--resourcePackDir", resourcePackDir)
         }
     }
+
+    accessWidenerPath = sc.process(
+        rootProject.file("src/main/resources/yedelmod.classtweaker"),
+        "build/processed.classtweaker"
+    )
 }
 
 tasks {
@@ -67,6 +72,13 @@ tasks {
         outputs.upToDateWhen { false }
     }
 
+    register<Copy>("buildAndCollect") {
+        group = "build"
+
+        from(jar.map { it.archiveFile })
+        into(rootProject.layout.buildDirectory.file("libs"))
+        dependsOn("build")
+    }
 
     jar {
         archiveFileName = "YedelMod-$version+${sc.current.project}.jar"

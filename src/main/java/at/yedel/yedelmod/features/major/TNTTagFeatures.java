@@ -10,6 +10,7 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -46,7 +47,7 @@ public class TNTTagFeatures {
     private boolean inTNTTag;
 
     private TNTTagFeatures() {
-        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+        HypixelModAPI.getInstance().createHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
 
         displayLines.add("§c§lBounty §f§lHunting");
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingPoints + " points");
@@ -59,6 +60,13 @@ public class TNTTagFeatures {
             }
             return InteractionResult.PASS;
         });
+    }
+
+    @Subscribe
+    public void onChat(ChatEvent.Receive event) {
+        if (event.getFullyUnformattedMessage().contains("secretyedelcode")) {
+            Platform.compatibility().displayChatMessage("Above 255");
+        }
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
@@ -78,7 +86,7 @@ public class TNTTagFeatures {
             displayLines.set(2, "§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
             displayLines.set(3, "");
             if (YedelConfig.getInstance().firstTimeBountyHunting) {
-                Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your currentNick with §n/setnick§r§3.");
+                Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §eIf this is your first time using this mod and you're nicked, or you've changed your nick, you will have to set your nick with §n/yedel setnick§r§3.");
                 YedelConfig.getInstance().firstTimeBountyHunting = false;
                 YedelConfig.getInstance().save();
             }
@@ -126,9 +134,9 @@ public class TNTTagFeatures {
     @Subscribe
     public void renderTargetLabel(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
-            if (Objects.equals(event.getPlayer().getName().getString(), target)) {
-                String text = "§fDistance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
-                event.addNameLine(text);
+            if (Objects.equals(event.getEntity().getName().getString(), target)) {
+                String text = "Distance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
+                event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().distanceLabelColor.getArgb()));
             }
         }
     }

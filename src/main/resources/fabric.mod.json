@@ -18,6 +18,7 @@
   "mixins": [
     "mixins.yedelmod.json"
   ],
+  "accessWidener": "yedelmod.classtweaker",
   "depends": {
     "java": "${java}",
     "fabricloader": "${fabricLoader}",

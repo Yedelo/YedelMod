@@ -7,6 +7,7 @@ import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.loader.api.FabricLoader;
+import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
 import org.polyfrost.oneconfig.api.notifications.v1.Notifications;
@@ -136,31 +137,14 @@ public class YedelConfig extends Config {
     public boolean skywarsStrengthIndicators = true;
 
     @DependsOn("skywarsStrengthIndicators")
-    @Dropdown(
+    @Color(
         title = "Strength Color",
         description = "Color for strength indicators",
         category = "Features",
         subcategory = "Hypixel",
-        options = {
-            "Dark Red",
-            "Red",
-            "Gold",
-            "Yellow",
-            "Dark Green",
-            "Green",
-            "Aqua",
-            "Dark Aqua",
-            "Dark Blue",
-            "Blue",
-            "Pink",
-            "Purple",
-            "White",
-            "Gray",
-            "Dark Gray",
-            "Black"
-        }
+        alpha = false
     )
-    public int strengthColor = 1;
+    public PolyColor strengthColor = new PolyColor(0xFF5555);
 
     @DependsOn("skywarsStrengthIndicators")
     @Switch(
@@ -299,7 +283,6 @@ public class YedelConfig extends Config {
     )
     private transient int empty$7 = 1;
 
-
     @Dropdown(
         title = "Ping Method",
         description =
@@ -407,7 +390,6 @@ public class YedelConfig extends Config {
         }
     }
 
-
     @Text(
         title = "Current Nick",
         description = "If you're playing nicked, set your nick or you might become the target.",
@@ -421,11 +403,21 @@ public class YedelConfig extends Config {
     @DependsOn("bountyHunting")
     @Switch(
         title = "Highlight Target and Show Distance",
-        description = "Distance is displayed above their nametag, corresponding to their rank color.",
+        description = "Highlights the target and shows their distance.",
         category = "TNT Tag",
         subcategory = "Features"
     )
     public boolean highlightTargetAndShowDistance = true;
+
+    @DependsOn("bountyHunting")
+    @Color(
+        title = "Distance Label Color",
+        description = "The color of the distance label.",
+        category = "TNT Tag",
+        subcategory = "Features",
+        alpha = false
+    )
+    public PolyColor distanceLabelColor = new PolyColor(0xFF5555);
 
     @DependsOn("bountyHunting")
     @Switch(

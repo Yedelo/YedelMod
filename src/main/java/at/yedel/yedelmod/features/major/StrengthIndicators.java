@@ -5,11 +5,11 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
-import com.google.common.collect.ImmutableMap;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
@@ -30,25 +30,6 @@ public class StrengthIndicators {
     public static StrengthIndicators getInstance() {
         return INSTANCE;
     }
-
-    private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
-        .put(0, "§4")
-        .put(1, "§c")
-        .put(2, "§6")
-        .put(3, "§e")
-        .put(4, "§2")
-        .put(5, "§a")
-        .put(6, "§b")
-        .put(7, "§3")
-        .put(8, "§1")
-        .put(9, "§9")
-        .put(10, "§d")
-        .put(11, "§5")
-        .put(12, "§f")
-        .put(13, "§7")
-        .put(14, "§8")
-        .put(15, "§0")
-        .build();
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
 
@@ -57,7 +38,7 @@ public class StrengthIndicators {
     private double strengthDuration;
 
     private StrengthIndicators() {
-        HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+        HypixelModAPI.getInstance().createHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
@@ -110,9 +91,15 @@ public class StrengthIndicators {
     }
 
     @Subscribe
+    public void fuck(NameLineEvent event) {
+        event.addNameLine(Component.literal("fuck").withColor(0x808080));
+    }
+
+    @Subscribe
     public void renderStrengthIndicators(NameLineEvent event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars) {
-            AbstractClientPlayer player = event.getPlayer();
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars
+            && event.getEntity() instanceof Player player
+        ) {
             if (!YedelConfig.getInstance().showSelfStrength && player.isLocalPlayer()) {
                 return;
             }
@@ -121,12 +108,11 @@ public class StrengthIndicators {
                 return;
             }
             String text =
-                COLOR_MAP.get(YedelConfig.getInstance().strengthColor)
-                    + "Strength - "
+                "Strength - "
                     + String.format("%.2f", strengthPlayers.get(playerName))
                     + "s";
             event.addVerticalAdjustment((float) YedelConfig.getInstance().strengthIndicatorOffset / 100);
-            event.addNameLine(text);
+            event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
         }
     }
 
