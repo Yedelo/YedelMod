@@ -4,20 +4,21 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.mixins.InvokerMinecraft;
-import at.yedel.yedelmod.utils.NumberUtils;
 import cc.polyfrost.oneconfig.events.event.ChatReceiveEvent;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
+import cc.polyfrost.oneconfig.libs.universal.UScreen;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.polyfrost.oneconfig.utils.Multithreading;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -34,8 +35,7 @@ public class EasyAtlasVerdicts {
     }
 
     private boolean inAtlas;
-    private boolean clickerEnabled = false;
-    private int slot;
+    private String verdict;
 
     private EasyAtlasVerdicts() {}
 
@@ -50,60 +50,55 @@ public class EasyAtlasVerdicts {
         }
     }
 
-    public void submitInsufficientEvidenceVerdict() {
-        submitVerdict("Insufficient Evidence", 30);
-    }
-
-    public void submitEvidenceWithoutDoubtVerdict() {
-        submitVerdict("Evidence Without Doubt", 32);
-    }
-
-    private void submitVerdict(String name, int inventorySlot) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
-            EntityPlayerSP player = UPlayer.getPlayer();
-            if (inAtlas && player != null) {
-                UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
-                player.inventory.currentItem = 7;
-                Multithreading.schedule(() -> {
-                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
-                    slot = inventorySlot;
-                    clickerEnabled = true;
-                    setupTimeout();
-                }, (int) NumberUtils.randomRange(158, 301), TimeUnit.MILLISECONDS);
-            }
-        }
-    }
-
     @Subscribe
-    public void onLeaveAtlas(ReceivePacketEvent event) {
-        if (event.packet instanceof S01PacketJoinGame) {
-            inAtlas = false;
-        }
-    }
-
-    @SubscribeEvent
     public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
         inAtlas = false;
     }
 
-    @SubscribeEvent
-    public void clickAtlasVerdict(GuiOpenEvent event) {
-        if (clickerEnabled) {
-            if (event.gui instanceof GuiContainer) {
-                EntityPlayerSP player = UPlayer.getPlayer();
-                if (player == null) {
-                    return;
-                }
-                Multithreading.schedule(() -> {
-                        UMinecraft.getMinecraft().playerController.windowClick(player.openContainer.windowId, slot, 0, 0, player);
-                    }, (int) NumberUtils.randomRange(300, 400), TimeUnit.MILLISECONDS
-                );
-                clickerEnabled = false;
-            }
+    public void submitInsufficientEvidenceVerdict() {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
+            submitVerdict("Insufficient Evidence");
         }
     }
 
-    public void setupTimeout() { // In case anything goes wrong, this makes sure it doesn't randomly click the next inventory
-        Multithreading.schedule(() -> clickerEnabled = false, 1500, TimeUnit.MILLISECONDS);
+    public void submitEvidentWithoutDoubtVerdict() {
+        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().easyAtlasVerdicts) {
+            submitVerdict("Evident Without Doubt");
+        }
+    }
+
+    private void submitVerdict(String name) {
+        EntityPlayerSP player = UPlayer.getPlayer();
+        if (inAtlas && player != null) {
+            UChat.chat(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
+            player.inventory.currentItem = 7;
+            Multithreading.schedule(() -> {
+                if (UScreen.getCurrentScreen() == null) {
+                    verdict = name;
+                    ((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                }
+            }, 250, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    @Subscribe
+    public void reallyClickAtlasVerdict(ReceivePacketEvent event) {
+        if (inAtlas && event.packet instanceof S2FPacketSetSlot) {
+            S2FPacketSetSlot packet = (S2FPacketSetSlot) event.packet;
+            ItemStack item = packet.func_149174_e();
+            if (item == null) return;
+            String itemName = UTextComponent.Companion.stripFormatting(item.getDisplayName());
+            if (Objects.equals(itemName, verdict)) {
+                Multithreading.schedule(() -> {
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
+                        if (UScreen.getCurrentScreen() instanceof GuiContainer) {
+                            int windowId = ((GuiContainer) UScreen.getCurrentScreen()).inventorySlots.windowId;
+                            UMinecraft.getMinecraft().playerController.windowClick(windowId, packet.func_149173_d(), 0, 0, UPlayer.getPlayer());
+                            verdict = "";
+                        }
+                    });
+                }, 250, TimeUnit.MILLISECONDS);
+            }
+        }
     }
 }

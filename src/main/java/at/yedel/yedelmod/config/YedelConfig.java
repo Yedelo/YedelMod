@@ -70,7 +70,7 @@ public class YedelConfig extends Config {
         initialize();
 
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
-        registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidenceWithoutDoubtVerdict);
+        registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict);
 
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
         addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
