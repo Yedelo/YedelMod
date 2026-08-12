@@ -90,6 +90,7 @@ public class TNTTagFeatures {
             players.remove(playerName);
             players.remove(YedelConfig.getInstance().currentNick);
             target = players.get((int) Math.floor(Math.random() * players.size()));
+            fightingTarget = false;
             if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().playHuntingSounds) {
                 USound.INSTANCE.playSoundStatic(Constants.PLING_SOUND_LOCATION, 1, 0.8F);
             }
