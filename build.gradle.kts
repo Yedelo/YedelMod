@@ -57,8 +57,7 @@ tasks {
             register("version", version.toString())
             register("java", target(javaVersion.majorVersion))
             register("fabricLoader", target(fabricLoaderVersion))
-            val minecraftDependency = sc.current.version
-            register("minecraft", minecraftDependency)
+            register("minecraft", sc.properties.get<String>("minecraftDependency"))
         }
         filesMatching(listOf("fabric.mod.json")) { expand(props) }
 
