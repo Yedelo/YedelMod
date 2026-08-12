@@ -2,7 +2,6 @@ package at.yedel.yedelmod.hud;
 
 
 
-import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import org.polyfrost.oneconfig.api.hud.v1.Hud;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
@@ -12,19 +11,8 @@ import java.util.ArrayList;
 
 
 public class BountyHuntingHud extends TextHud {
-    private static final BountyHuntingHud INSTANCE = new BountyHuntingHud();
-
-    public static BountyHuntingHud getInstance() {
-        return INSTANCE;
-    }
-
-    private BountyHuntingHud() {
+    public BountyHuntingHud() {
         super("bounty_hunting_hud", "Bounty Hunting HUD", Hud.Category.getINFO(), "", "");
-    }
-
-    @Override
-    public boolean getHidden() {
-        return super.getHidden() || !YedelConfig.getInstance().bountyHunting || !TNTTagFeatures.getInstance().isInTNTTag();
     }
 
     @Override
@@ -42,4 +30,9 @@ public class BountyHuntingHud extends TextHud {
         }
         return String.join("\n", lines);
     }
+
+    //    @Override
+    //    public boolean shouldRender() {
+    //        return YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
+    //    }
 }

@@ -26,7 +26,7 @@ public class YedelConfig extends Config {
         return INSTANCE;
     }
 
-    private static final transient URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
+    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
     private YedelConfig() {
         super("yedelmod", "/assets/yedelmod/yedelmod.png", "YedelMod", Category.QOL);
@@ -63,7 +63,6 @@ public class YedelConfig extends Config {
         subcategory = "Features"
     )
     public String regexChatFilterPattern = "";
-
 
     @Switch(
         title = "Random Placeholder",
@@ -128,7 +127,6 @@ public class YedelConfig extends Config {
     )
     public int autoGGDelay = 0;
 
-
     @Switch(
         title = "SkyWars Strength Indicators",
         description = "Shows people's strength above their nametags with customizable colors",
@@ -184,7 +182,6 @@ public class YedelConfig extends Config {
         step = 1
     )
     public int strengthIndicatorOffset = 0;
-
 
     @Switch(
         title = "Limbo Creative Mode",
@@ -374,7 +371,6 @@ public class YedelConfig extends Config {
     private transient int header$4 = 1;
 
     // General
-
 
     @Switch(
         title = "Bounty Hunting",

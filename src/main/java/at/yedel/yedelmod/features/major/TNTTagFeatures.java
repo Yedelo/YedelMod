@@ -52,7 +52,7 @@ public class TNTTagFeatures {
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         displayLines.add("");
 
-        AttackEntityCallback.EVENT.register((player, level, hand, entity, result) -> {
+        AttackEntityCallback.EVENT.register((_, _, _, entity, _) -> {
             if (Objects.equals(entity.getName().toString(), target) && !dead) {
                 fightingTarget = true;
             }
@@ -187,9 +187,5 @@ public class TNTTagFeatures {
 
     public List<String> getDisplayLines() {
         return displayLines;
-    }
-
-    public boolean isInTNTTag() {
-        return inTNTTag;
     }
 }
