@@ -101,7 +101,7 @@ public class YedelCommand {
     }
 
     @Handler(
-        value = {"limbo", "li"},
+        value = {"li"},
         description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead."
     )
     public void limbo() {
