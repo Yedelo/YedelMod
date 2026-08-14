@@ -202,7 +202,7 @@ public class YedelCommand {
 
     //@TODO this does not work, dp is just a replacement
     @Command("ping")
-    public class Ping {
+    public static class Ping {
         @Handler
         public void main() {
             PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
