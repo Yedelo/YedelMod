@@ -87,7 +87,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleRoundStarted(ChatEvent.Receive event) {
+    public void handleRoundStarted(ReceiveChatEvent event) {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
             for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
@@ -107,7 +107,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleFightMessages(ChatEvent.Receive event) {
+    public void handleFightMessages(ReceiveChatEvent event) {
         String msg = event.getFullyUnformattedMessage();
         Matcher tagOtherMatcher = YOU_TAGGED_PERSON_REGEX.matcher(msg);
         while (tagOtherMatcher.find()) {
@@ -135,7 +135,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onBlastRadiusDeath(ChatEvent.Receive event) {
+    public void onBlastRadiusDeath(ReceiveChatEvent event) {
         if (event.getFullyUnformattedMessage().startsWith("You were blown up by")) {
             target = null;
             dead = true;
@@ -144,7 +144,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onRoundEnd(ChatEvent.Receive event) {
+    public void onRoundEnd(ReceiveChatEvent event) {
         String msg = event.getFullyUnformattedMessage();
         Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
         while (peopleDeathMatcher.find()) {
@@ -178,7 +178,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onNickChange(ChatEvent.Receive event) {
+    public void onNickChange(ReceiveChatEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(event.getFullyUnformattedMessage(), "Processing request. Please wait...")) {
             Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §ePlease set your nick with /setnick or in the config.");
         }

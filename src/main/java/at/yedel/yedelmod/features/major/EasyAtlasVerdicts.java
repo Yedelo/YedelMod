@@ -39,7 +39,7 @@ public class EasyAtlasVerdicts {
     private EasyAtlasVerdicts() {}
 
     @Subscribe
-    public void onSuspectTeleport(ChatEvent.Receive event) {
+    public void onSuspectTeleport(ReceiveChatEvent event) {
         String text = event.getFullyUnformattedMessage();
         if (Objects.equals(text, "Teleporting you to suspect")) {
             inAtlas = true;

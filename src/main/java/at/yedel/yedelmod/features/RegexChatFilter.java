@@ -5,6 +5,8 @@ package at.yedel.yedelmod.features;
 import at.yedel.yedelmod.config.YedelConfig;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+//? if v0
+// import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 
 import java.util.regex.PatternSyntaxException;
 

@@ -23,7 +23,7 @@ public class DropperGG {
     private DropperGG() {}
 
     @Subscribe
-    public void triggerDropperGG(ChatEvent.Receive event) {
+    public void triggerDropperGG(ReceiveChatEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().dropperAutoGG) {
 	        String msg = event.getFullyUnformattedMessage();
 			if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {

@@ -43,9 +43,12 @@ stonecutter parameters {
         }
 
         string(v1) {
-            replace("UChat.chat", "Platform.compatibility().displayChatMessage")
-            replace("ReceiveChatEvent", "ChatEvent.Receive")
+            replace("cc.polyfrost.oneconfig.libs.eventbus.Subscribe", "org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe")
+            replace("cc.polyfrost.oneconfig.events.event.ChatReceiveEvent", "org.polyfrost.oneconfig.api.event.v1.events.ChatEvent")
+            replace("ChatReceiveEvent", "ChatEvent.Receive")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
+            replace("UChat.chat", "Platform.compatibility().displayChatMessage")
+            replace("event.isCancelled", "event.cancelled")
         }
     }
 

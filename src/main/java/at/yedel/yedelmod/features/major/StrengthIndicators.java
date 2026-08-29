@@ -7,7 +7,7 @@ import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
 import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -84,7 +84,7 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    public void handleKillMessage(ChatEvent.Receive event) {
+    public void handleKillMessage(ReceiveChatEvent event) {
         if (inSkywars && strengthDuration != 0) {
             String message = event.getFullyUnformattedMessage();
             for (Pattern killPattern : KILL_PATTERNS) {

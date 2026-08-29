@@ -25,7 +25,7 @@ public class AutoGuildWelcome {
     private AutoGuildWelcome() {}
 
 	@Subscribe
-	public void welcomeNewGuildMember(ChatEvent.Receive event) {
+	public void welcomeNewGuildMember(ReceiveChatEvent event) {
 		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().autoWelcomeGuildMembers) {
 			String msg = event.getFullyUnformattedMessage();
 			Matcher guildJoinMatcher = GUILD_JOIN_PATTERN.matcher(msg);

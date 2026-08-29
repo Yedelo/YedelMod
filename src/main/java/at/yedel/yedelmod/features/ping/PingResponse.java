@@ -25,7 +25,7 @@ public class PingResponse {
     }
 
     @Subscribe
-    public void handleCommandPingResponse(ChatEvent.Receive event) {
+    public void handleCommandPingResponse(ReceiveChatEvent event) {
         if (event.getFullyUnformattedMessage().contains("Unknown command")) {
             if (PingQueue.getInstance().post(PingMethod.COMMAND_RESPONSE)) {
                 event.cancelled = true;
