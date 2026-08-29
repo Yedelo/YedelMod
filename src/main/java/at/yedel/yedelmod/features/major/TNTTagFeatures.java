@@ -23,8 +23,9 @@ import net.minecraft.client.Minecraft;
 //? if legacy {
 /*import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
-*///?}
-//?} else {
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+*///?} else {
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.network.chat.Component;
@@ -148,6 +149,15 @@ public class TNTTagFeatures {
             }
         }
     }
+
+    //? if v0 {
+    /*@SubscribeEvent
+    public void handleAttackTarget(AttackEntityEvent event) {
+        if (Objects.equals(event.target.getName(), target) && !dead) {
+            fightingTarget = true;
+        }
+    }
+    *///?}
 
     @Subscribe
     public void renderTargetLabel(NameLineEvent event) {
