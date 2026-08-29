@@ -21,6 +21,13 @@ stonecutter parameters {
         this["modern"] = modern
     }
 
+    replacements {
+        string(v1) {
+            replace("ReceiveChatEvent", "ChatEvent.Receive")
+            replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
+        }
+    }
+
     val shared = mutableMapOf<String, Any?>()
     extra[current.project] = shared
 

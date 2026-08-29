@@ -5,15 +5,14 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import cc.polyfrost.oneconfig.events.event.Stage;
+import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
-import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import net.minecraftforge.event.world.WorldEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,16 +37,26 @@ public class StrengthIndicators {
     private double strengthDuration;
 
     private StrengthIndicators() {
+        //? if modern {
         ClientTickEvents.END_CLIENT_TICK.register((_) -> {
-            Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
-            for (Map.Entry<String, Double> entry : strengthPlayerSet) {
-                String player = entry.getKey();
-                Double seconds = entry.getValue();
-                strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
-            }
-            strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
+            onTick();
         });
+        //?}
         HypixelModAPI.getInstance().createHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+    }
+
+    //? if v0
+    //@Subscribe
+    private void onTick(/*? if v0 {*//*TickEvent event *//*?}*/) {
+        //? if v0
+        //if (event.stage == Stage.START) return;
+        Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
+        for (Map.Entry<String, Double> entry : strengthPlayerSet) {
+            String player = entry.getKey();
+            Double seconds = entry.getValue();
+            strengthPlayers.put(player, NumberUtils.round(seconds - 0.05, 2));
+        }
+        strengthPlayerSet.removeIf(strengthPlayer -> strengthPlayer.getValue() <= 0);
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
@@ -91,9 +100,11 @@ public class StrengthIndicators {
     @Subscribe
     public void renderStrengthIndicators(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars
-            && event.getEntity() instanceof Player player
+            //? if modern
+            && event.isPlayer()
         ) {
-            if (!YedelConfig.getInstance().showSelfStrength && player.isLocalPlayer()) {
+
+            if (!YedelConfig.getInstance().showSelfStrength && player.is()) {
                 return;
             }
             String playerName = player.getName().getString();
