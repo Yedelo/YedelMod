@@ -7,6 +7,10 @@ import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+//?if v0 {
+/*import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+*///?}
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,12 +29,13 @@ public class AutoGuildWelcome {
     private AutoGuildWelcome() {}
 
 	@Subscribe
-	public void welcomeNewGuildMember(ReceiveChatEvent event) {
+	public void welcomeNewGuildMember(ChatEvent.Receive event) {
 		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().autoWelcomeGuildMembers) {
 			String msg = event.getFullyUnformattedMessage();
 			Matcher guildJoinMatcher = GUILD_JOIN_PATTERN.matcher(msg);
 			while (guildJoinMatcher.find()) {
 				String newMember = guildJoinMatcher.group("newMember");
+				//~ send_chat_bridge
 				Minecraft.getInstance().player.connection.sendChat("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
 			}
 		}
