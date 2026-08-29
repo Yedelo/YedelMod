@@ -3,7 +3,11 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.Constants;
+
 import net.minecraft.client.Minecraft;
+//? if v0 {
+//import cc.polyfrost.oneconfig.libs.universal.UChat;
+//?} else
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
@@ -28,7 +32,6 @@ public class PingCommandInterface {
     }
 
     private void showcasePing(PingMethod method, long ping) {
-        // scheduling this avoids issues with sending a chat message while in the chat event
         Minecraft.getInstance().schedule(() -> {
             Platform.compatibility().displayChatMessage(yedelogo + " §ePing: " + color(ping) + ping + " §ems §7(" + method.friendlyName.toLowerCase() + ")");
             Constants.playPingSound(1, (float) (ping * -0.006 + 2));

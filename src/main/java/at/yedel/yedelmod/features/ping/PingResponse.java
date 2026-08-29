@@ -2,14 +2,25 @@ package at.yedel.yedelmod.features.ping;
 
 
 
+
+import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ErrorReason;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
+//? if legacy {
+/*import net.minecraft.network.play.server.S37PacketStatistics;
+import net.minecraft.network.play.server.S3APacketTabComplete;
+*///?} else {
 import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
 import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+//?}
+
+//? if v1 {
+ import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
+//?} else
+//import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 
 
 
@@ -25,7 +36,7 @@ public class PingResponse {
     }
 
     @Subscribe
-    public void handleCommandPingResponse(ReceiveChatEvent event) {
+    public void handleCommandPingResponse(ChatEvent.Receive event) {
         if (event.getFullyUnformattedMessage().contains("Unknown command")) {
             if (PingQueue.getInstance().post(PingMethod.COMMAND_RESPONSE)) {
                 event.cancelled = true;

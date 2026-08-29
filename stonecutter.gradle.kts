@@ -50,10 +50,14 @@ stonecutter parameters {
             replace("cc.polyfrost.oneconfig.utils.Multithreading", "org.polyfrost.oneconfig.utils.v1.Multithreading")
             replace("cc.polyfrost.oneconfig.libs.eventbus.Subscribe", "org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe")
             replace("cc.polyfrost.oneconfig.events.event.ChatReceiveEvent", "org.polyfrost.oneconfig.api.event.v1.events.ChatEvent")
+            replace("cc.polyfrost.oneconfig.events.event.ReceivePacketEvent", "org.polyfrost.oneconfig.api.event.v1.events.PacketEvent")
             replace("ChatReceiveEvent", "ChatEvent.Receive")
+            replace("ReceivePacketEvent", "PacketEvent.Receive")
+            replace("event.packet", "event.getPacket()")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
             replace("UChat.chat", "Platform.compatibility().displayChatMessage")
             replace("event.isCancelled", "event.cancelled")
+            replace("Minecraft.getMinecraft().addScheduledTask", "Minecraft.getInstance().schedule")
         }
     }
 
