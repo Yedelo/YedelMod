@@ -3,7 +3,7 @@ package at.yedel.yedelmod.features.major;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-import at.yedel.yedelmod.mixins.AbstractContainerScreenInvoker;
+import at.yedel.yedelmod.mixins.modern.AbstractContainerScreenInvoker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;

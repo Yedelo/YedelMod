@@ -1,6 +1,6 @@
 {
   "compatibilityLevel": "${mixinJava}",
-  "package": "at.yedel.yedelmod.mixins",
+  "package": "at.yedel.yedelmod.mixins.modern",
   "minVersion": "${mixinMin}",
   "client": [
     "AbstractContainerScreenInvoker",

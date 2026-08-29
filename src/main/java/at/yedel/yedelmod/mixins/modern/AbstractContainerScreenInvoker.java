@@ -1,4 +1,5 @@
-package at.yedel.yedelmod.mixins;
+//? if modern {
+package at.yedel.yedelmod.mixins.modern;
 
 
 
@@ -15,3 +16,4 @@ public interface AbstractContainerScreenInvoker {
     @Invoker("slotClicked")
     void yedelmod$slotClicked(Slot slot, int slotId, int buttonNum, ContainerInput containerInput);
 }
+//?}

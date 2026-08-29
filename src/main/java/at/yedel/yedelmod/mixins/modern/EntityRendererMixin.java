@@ -1,4 +1,5 @@
-package at.yedel.yedelmod.mixins;
+//? if modern {
+package at.yedel.yedelmod.mixins.modern;
 
 
 
@@ -50,3 +51,4 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
         }
     }
 }
+//?}
