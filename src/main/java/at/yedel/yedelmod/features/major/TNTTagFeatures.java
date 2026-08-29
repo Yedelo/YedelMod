@@ -187,4 +187,8 @@ public class TNTTagFeatures {
     public List<String> getDisplayLines() {
         return displayLines;
     }
+
+    public boolean isInTNTTag() {
+        return inTNTTag;
+    }
 }

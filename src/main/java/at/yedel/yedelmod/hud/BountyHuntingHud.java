@@ -2,20 +2,44 @@ package at.yedel.yedelmod.hud;
 
 
 
+import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
+//? if v1 {
 import org.polyfrost.oneconfig.api.hud.v1.Hud;
 import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
+//?} else {
+/*import at.yedel.yedelmod.utils.Constants;
+import cc.polyfrost.oneconfig.hud.SingleTextHud;
+*///?}
 
 import java.util.ArrayList;
 
 
-
-//@TODO color doesn't work
-//@TODO hide when shouldRender reimplemented
+//~ texthud_bridge
 public class BountyHuntingHud extends TextHud {
     public BountyHuntingHud() {
-        super("bounty_hunting_hud", "Bounty Hunting HUD", Hud.Category.getINFO(), "", "");
+        //? if v0 {
+        /*super(
+            "",
+            true, // enabled obviously
+            5, // x
+            35, // y
+            1, // normal size
+            false, // no background it's ugly
+            false, // no rounded corners it's also ugly
+            0, // NO rounded corners
+            0, // no x padding why would i want it
+            0, // no y padding for the same reason
+            Constants.EMPTY_COLOR, // no background color
+            false, // no border
+            0, // NO border
+            Constants.EMPTY_COLOR // no border color
+        );
+        textType = 1;
+        *///?} else v1 {
+        super("bounty_hunting_hud", "Bounty Hunting HUD", Category.getINFO(), "", "");
+        //?}
     }
 
     @Override
@@ -33,13 +57,11 @@ public class BountyHuntingHud extends TextHud {
         return String.join("\n", lines);
     }
 
-    @Override
-    public boolean hasBackground() {
-        return false;
+    //? if v0 {
+    /*@Override
+    public boolean shouldShow() {
+        return YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
     }
-
-    //    @Override
-    //    public boolean shouldRender() {
-    //        return YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
-    //    }
+    *///?}
 }
+

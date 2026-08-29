@@ -26,6 +26,12 @@ stonecutter parameters {
             replace("ReceiveChatEvent", "ChatEvent.Receive")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
         }
+
+        string(v1, "texthud_bridge") {
+            replace("SingleTextHud", "TextHud")
+            replace("protected String getText(boolean example)", "protected String getText()")
+            replace("example", "!isReal() || HudManager.INSTANCE.isEditing()")
+        }
     }
 
     val shared = mutableMapOf<String, Any?>()
