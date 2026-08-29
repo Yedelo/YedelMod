@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "name": "YedelMod",
-  "id": "yedelmod",
-  "description": "${description}",
+  "name": "${modName}",
+  "id": "${modId}",
+  "description": "${modDescription}",
   "version": "${version}",
   "authors": [
     "Yedel"
   ],
   "license": "${license}",
-  "icon": "assets/yedelmod/yedelmod.png",
+  "icon": "${modIcon}",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -16,7 +16,7 @@
     ]
   },
   "mixins": [
-    "mixins.yedelmod.json"
+    "mixins.modern.yedelmod.json"
   ],
   "depends": {
     "java": "${java}",
@@ -29,15 +29,15 @@
     "modmenu": "*"
   },
   "contact": {
-    "homepage": "https://modrinth.com/mod/yedelmod",
-    "issues": "https://github.com/Yedelo/YedelMod/issues",
-    "sources": "https://github.com/Yedelo/YedelMod"
+    "homepage": "https://modrinth.com/mod/${modId}",
+    "issues": "https://github.com/Yedelo/${modName}/issues",
+    "sources": "https://github.com/Yedelo/${modName}"
   },
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.github_releases": "https://github.com/Yedelo/YedelMod/releases/",
-        "modmenu.modrinth": "https://modrinth.com/mod/yedelmod"
+        "modmenu.github_releases": "https://github.com/Yedelo/${modName}/releases/",
+        "modmenu.modrinth": "https://modrinth.com/mod/${modId}"
       }
     }
   }

@@ -16,13 +16,18 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.9.5"
+    id("dev.kikugie.stonecutter") version "0.10-alpha.6"
 }
 
 stonecutter {
     create(rootProject) {
-        version("26.2-fabric", "26.2")
-        version("26.1-fabric", "26.1")
+        fun registerProject(versionString: String, loader: String) {
+            version("$versionString-$loader", versionString).buildscript("build.$loader.gradle.kts")
+        }
+
+        registerProject("26.2", "fabric")
+        registerProject("26.1", "fabric")
+        registerProject("1.8.9", "forge")
         vcsVersion = "26.1-fabric"
     }
 }

@@ -1,0 +1,10 @@
+{
+  "compatibilityLevel": "${mixinJava}",
+  "package": "at.yedel.yedelmod.mixins",
+  "minVersion": "${mixinMin}",
+  "client": [
+    "InvokerMinecraft",
+    "MixinRendererLivingEntity",
+    "MixinRenderPlayer"
+  ]
+}

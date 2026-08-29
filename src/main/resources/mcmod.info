@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "${modId}",
+    "name": "${modName}",
+    "description": "${modDescription}",
+    "version": "${modVersion}",
+    "mcversion": "${mcVersion}",
+    "url": "https://modrinth.com/mod/${modId}",
+    "updateUrl": "https://api.modrinth.com/v2/project/${modId}/version",
+    "authorList": [
+      "Yedel"
+    ],
+    "credits": "Debuggings for a good example mod",
+    "logoFile": "${modIcon}",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
