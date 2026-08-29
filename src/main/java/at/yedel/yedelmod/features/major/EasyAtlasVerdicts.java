@@ -34,7 +34,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import at.yedel.yedelmod.mixins.legacy.InvokerMinecraft;
-*///?} else
+*///?} else {
 import at.yedel.yedelmod.mixins.modern.AbstractContainerScreenInvoker;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -48,7 +48,8 @@ import net.minecraft.world.item.ItemStack;
 /*import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.world.WorldEvent;
-*///?}
+*/
+//?}
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;

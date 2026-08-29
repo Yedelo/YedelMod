@@ -2,6 +2,7 @@ package at.yedel.yedelmod.config;
 
 
 
+import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
@@ -121,6 +122,72 @@ public class YedelConfig extends Config {
         description = "Global toggle for the mod."
     )
     public boolean enabled = true;
+
+    //? if forge {
+    @Dropdown(
+        name = "Update Source",
+        description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
+        category = "General",
+        subcategory = "Updates",
+        options = {"Modrinth", "GitHub"}
+    )
+    public int updateSource = 0;
+
+    public UpdateSource getUpdateSource() {
+        if (updateSource == 0) {
+            return UpdateSource.MODRINTH;
+        }
+        else {
+            return UpdateSource.GITHUB;
+        }
+    }
+
+    @Switch(
+        name = "Automatically Check for Updates",
+        description = "Checks for updates on game load",
+        category = "General",
+        subcategory = "Updates"
+    )
+    public boolean automaticallyCheckForUpdates = true;
+
+    @Button(
+        name = "Modrinth Link",
+        description = "Click to open the Modrinth site",
+        category = "General",
+        subcategory = "Updates",
+        text = "Open"
+    )
+    public void openModrinthLink() {
+        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getModrinthLink())) {
+            Notifications.INSTANCE.send("YedelMod", "Couldn't open modrinth link!");
+        }
+    }
+
+    @Button(
+        name = "GitHub Link",
+        description = "Click to open the GitHub repository",
+        category = "General",
+        subcategory = "Updates",
+        text = "Open"
+    )
+    public void openGitHubRepository() {
+        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getGithubLink())) {
+            Notifications.INSTANCE.send("YedelMod", "Couldn't open github link!");
+        }
+    }
+
+    @Button(
+        name = "Check for Updates",
+        description = "Check for updates with the selected source",
+        category = "General",
+        subcategory = "Updates",
+        text = "Check",
+        size = 2
+    )
+    public void checkForUpdates() {
+        YedelMod.getInstance().getUpdateManager().checkForUpdates(getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
+    }
+    //?}
 
     /* Features */
 

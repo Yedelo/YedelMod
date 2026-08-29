@@ -32,7 +32,7 @@ stonecutter parameters {
         }
 
         string(v1, "texthud_bridge") {
-            replace("SingleTextHud", "TextHud")
+            replace("extends SingleTextHud", "extends TextHud")
             replace("protected String getText(boolean example)", "protected String getText()")
             replace("if (example)", "if (!isReal() || HudManager.INSTANCE.isEditing())")
         }
