@@ -43,6 +43,7 @@ stonecutter parameters {
         }
 
         string(v1) {
+            replace("cc.polyfrost.oneconfig.utils.Multithreading", "org.polyfrost.oneconfig.utils.v1.Multithreading")
             replace("cc.polyfrost.oneconfig.libs.eventbus.Subscribe", "org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe")
             replace("cc.polyfrost.oneconfig.events.event.ChatReceiveEvent", "org.polyfrost.oneconfig.api.event.v1.events.ChatEvent")
             replace("ChatReceiveEvent", "ChatEvent.Receive")
