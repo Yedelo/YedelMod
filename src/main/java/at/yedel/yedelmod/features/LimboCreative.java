@@ -3,11 +3,18 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+//? if v0 {
+//import cc.polyfrost.oneconfig.libs.universal.UChat;
+//?} else
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
+//? if legacy {
+//import net.minecraft.world.WorldSettings;
+//?} else
 import net.minecraft.world.level.GameType;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
+
 
 import java.util.Objects;
 
@@ -42,7 +49,7 @@ public class LimboCreative {
 
     public void awardLimboCreative() {
         if (isInLimbo()) {
-            if (Minecraft.getInstance().player.isCreative()) {
+            if (isAlreadyInCreative()) {
                 Platform.compatibility().displayChatMessage(yedelogo + " §cYou are already in creative mode!");
             }
             else {
@@ -55,7 +62,17 @@ public class LimboCreative {
     }
 
     private void giveCreative() {
+        //? if v0 {
+        //Minecraft.getMinecraft().playerController.setGameType(WorldSettings.GameType.CREATIVE);
+        //?} else
         Minecraft.getInstance().gameMode.setLocalMode(GameType.CREATIVE);
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet gamemode to creative!");
+    }
+
+    private boolean isAlreadyInCreative() {
+        //? if legacy {
+        //return Minecraft.getMinecraft().playerController.isInCreativeMode();
+        //?} else
+        return Minecraft.getInstance().player.isCreative();
     }
 }
