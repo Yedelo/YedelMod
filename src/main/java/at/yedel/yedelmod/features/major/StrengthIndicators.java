@@ -5,14 +5,28 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
-import cc.polyfrost.oneconfig.events.event.Stage;
+
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
+//? if v0 {
+/*import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+*///?}
+import com.google.common.collect.ImmutableMap;
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
+//? if legacy {
+/*import net.minecraft.client.player.AbstractClientPlayer;
+//import net.minecraft.client.entity.AbstractClientPlayer;
+*///?} else {
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraft.world.entity.player.Player;
+//?}
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +43,27 @@ public class StrengthIndicators {
     public static StrengthIndicators getInstance() {
         return INSTANCE;
     }
+
+    //? if legacy {
+    /*private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
+        .put(0, "§4")
+        .put(1, "§c")
+        .put(2, "§6")
+        .put(3, "§e")
+        .put(4, "§2")
+        .put(5, "§a")
+        .put(6, "§b")
+        .put(7, "§3")
+        .put(8, "§1")
+        .put(9, "§9")
+        .put(10, "§d")
+        .put(11, "§5")
+        .put(12, "§f")
+        .put(13, "§7")
+        .put(14, "§8")
+        .put(15, "§0")
+        .build();
+    *///?}
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
 
@@ -84,7 +119,7 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    public void handleKillMessage(ReceiveChatEvent event) {
+    public void handleKillMessage(ChatEvent.Receive event) {
         if (inSkywars && strengthDuration != 0) {
             String message = event.getFullyUnformattedMessage();
             for (Pattern killPattern : KILL_PATTERNS) {
@@ -103,19 +138,28 @@ public class StrengthIndicators {
             //? if modern
             && event.isPlayer()
         ) {
-
-            if (!YedelConfig.getInstance().showSelfStrength && player.is()) {
+            //? if v0
+            //AbstractClientPlayer player = event.getPlayer();
+            //? else
+            Player player = (Player) event.getEntity();
+            //~ if modern 'isUser' -> 'isLocalPlayer'
+            if (!YedelConfig.getInstance().showSelfStrength && player.isLocalPlayer()) {
                 return;
             }
-            String playerName = player.getName().getString();
+            String playerName = player.getName()/*? if modern {*/.getString()/*?}*/;
             if (!strengthPlayers.containsKey(playerName)) {
                 return;
             }
             String text =
-                "Strength - "
+                //? if legacy
+                //COLOR_MAP.get(YedelConfig.getInstance().strengthColor) +
+                    "Strength - "
                     + String.format("%.2f", strengthPlayers.get(playerName))
                     + "s";
             event.addVerticalAdjustment((float) YedelConfig.getInstance().strengthIndicatorOffset / 100);
+            //? if legacy
+            //event.addNameLine(text);
+            //? else
             event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
         }
     }
