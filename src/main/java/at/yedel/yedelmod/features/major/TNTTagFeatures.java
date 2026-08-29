@@ -5,17 +5,31 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.NameLineEvent;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+
+
+import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
+
+//? if v0 {
+/*import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+*///?} else
+import org.polyfrost.oneconfig.api.platform.v1.Platform;
+import org.polyfrost.oneconfig.utils.v1.Multithreading;
+
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
+//? if legacy {
+/*import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.network.NetworkPlayerInfo;
+*///?}
+//?} else {
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
-import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
-import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
-import org.polyfrost.oneconfig.api.platform.v1.Platform;
-import org.polyfrost.oneconfig.utils.v1.Multithreading;
+//?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +68,14 @@ public class TNTTagFeatures {
         displayLines.add("§a" + YedelConfig.getInstance().bountyHuntingKills + " kills");
         displayLines.add("");
 
+        //? if modern {
         AttackEntityCallback.EVENT.register((_, _, _, entity, _) -> {
             if (Objects.equals(entity.getName().toString(), target) && !dead) {
                 fightingTarget = true;
             }
             return InteractionResult.PASS;
         });
+        //?}
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
@@ -71,6 +87,9 @@ public class TNTTagFeatures {
 
     public void onTNTTagJoin() {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
+            //? if v0
+            //playerName = Minecraft.getMinecraft().thePlayer.getName();
+            //? else
             playerName = Minecraft.getInstance().getUser().getName();
             dead = false;
             target = null;
@@ -87,12 +106,18 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleRoundStarted(ReceiveChatEvent event) {
+    public void handleRoundStarted(ChatEvent.Receive event) {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
+            //? if legacy {
+            /*for (NetworkPlayerInfo playerInfo : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+                players.add(playerInfo.getGameProfile().getName());
+            }
+            *///?} else {
             for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
                 players.add(player.getName().getString());
             }
+            //?}
             players.remove(playerName);
             players.remove(YedelConfig.getInstance().currentNick);
             target = players.get((int) Math.floor(Math.random() * players.size()));
@@ -107,7 +132,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void handleFightMessages(ReceiveChatEvent event) {
+    public void handleFightMessages(ChatEvent.Receive event) {
         String msg = event.getFullyUnformattedMessage();
         Matcher tagOtherMatcher = YOU_TAGGED_PERSON_REGEX.matcher(msg);
         while (tagOtherMatcher.find()) {
@@ -127,15 +152,19 @@ public class TNTTagFeatures {
     @Subscribe
     public void renderTargetLabel(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
+            //~ if v1 'event.getPlayer().getName()' -> 'event.getEntity().getName().getString()'
             if (Objects.equals(event.getEntity().getName().getString(), target)) {
                 String text = "Distance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
+                //? if legacy {
+                //event.addNameLine(text);
+                //?} else
                 event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().distanceLabelColor.getArgb()));
             }
         }
     }
 
     @Subscribe
-    public void onBlastRadiusDeath(ReceiveChatEvent event) {
+    public void onBlastRadiusDeath(ChatEvent.Receive event) {
         if (event.getFullyUnformattedMessage().startsWith("You were blown up by")) {
             target = null;
             dead = true;
@@ -144,7 +173,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onRoundEnd(ReceiveChatEvent event) {
+    public void onRoundEnd(ChatEvent.Receive event) {
         String msg = event.getFullyUnformattedMessage();
         Matcher peopleDeathMatcher = PERSON_BLEW_UP_REGEX.matcher(msg);
         while (peopleDeathMatcher.find()) {
@@ -178,7 +207,7 @@ public class TNTTagFeatures {
     }
 
     @Subscribe
-    public void onNickChange(ReceiveChatEvent event) {
+    public void onNickChange(ChatEvent.Receive event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && Objects.equals(event.getFullyUnformattedMessage(), "Processing request. Please wait...")) {
             Platform.compatibility().displayChatMessage(BOUNTY_HUNTING_LOGO + " §ePlease set your nick with /setnick or in the config.");
         }

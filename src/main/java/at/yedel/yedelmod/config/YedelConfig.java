@@ -11,6 +11,7 @@ import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.core.ConfigUtils;
+import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
@@ -523,6 +524,7 @@ public class YedelConfig extends Config {
     )
     public boolean highlightTargetAndShowDistance = true;
 
+    //? if modern {
     @Color(
         title = "Distance Label Color",
         description = "The color of the distance label.",
@@ -531,6 +533,7 @@ public class YedelConfig extends Config {
         alpha = false
     )
     public PolyColor distanceLabelColor = new PolyColor(0xFF5555);
+    //?}
 
     @Switch(
         title = "Play Sounds for Target Selections and Kills",
