@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+// Mod
 public class YedelMod implements ClientModInitializer {
 	private static YedelMod INSTANCE;
 
