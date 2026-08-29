@@ -101,7 +101,7 @@ public class UpdateManager {
 
     private void notifyUpToDate(String updateSource, FeedbackMethod feedbackMethod) {
         if (feedbackMethod == FeedbackMethod.CHAT) {
-            UChat.chat(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
+            Platform.compatibility().displayChatMessage(logo + " §cYou are up to date with the mod version on " + updateSource + "!");
         }
         else {
             if (UScreen.getCurrentScreen() != null) { // if this isn't at launch, for auto check updates
@@ -113,7 +113,7 @@ public class UpdateManager {
     private void notifyNewVersion(String newVersion, UpdateSource updateSource, FeedbackMethod feedbackMethod) {
         URI link = updateSource == UpdateSource.MODRINTH ? modrinthLink : githubLink;
         if (feedbackMethod == FeedbackMethod.CHAT) {
-            UChat.chat(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, link.toString()));
+            Platform.compatibility().displayChatMessage(new UTextComponent(logo + " §eVersion " + newVersion + " is avaliable on " + updateSource.coloredName + "§e!").setClick(ClickEvent.Action.OPEN_URL, link.toString()));
         }
         else {
             Notifications.INSTANCE.send(modName, "Version " + newVersion + " is avaliable on " + updateSource.name + "!", () -> {
@@ -126,7 +126,7 @@ public class UpdateManager {
 
     private void handleError(UpdateSource updateSource, FeedbackMethod feedbackMethod) {
         if (feedbackMethod == FeedbackMethod.CHAT) {
-            UChat.chat(logo + " §cCouldn't get update information from " + updateSource.name + "!");
+            Platform.compatibility().displayChatMessage(logo + " §cCouldn't get update information from " + updateSource.name + "!");
         }
         else {
             Notifications.INSTANCE.send(modName, "Couldn't get update information from " + updateSource.name + "!");

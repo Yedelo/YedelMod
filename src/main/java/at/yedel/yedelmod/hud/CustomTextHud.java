@@ -15,8 +15,8 @@ import cc.polyfrost.oneconfig.config.annotations.Text;
 *///?}
 
 
-
-public class CustomTextHud extends SingleTextHud {
+//~ texthud_bridge
+public class CustomTextHud extends TextHud {
     public CustomTextHud() {
         //? if v0 {
         /*super(
@@ -48,8 +48,8 @@ public class CustomTextHud extends SingleTextHud {
     public String displayText = "";
 
     @Override
-    public String getText(boolean example) {
-        if (example) {
+    public String getText() {
+        if (!isReal() || HudManager.INSTANCE.isEditing()) {
             return "Custom §6display §a§ltext!";
         }
         return displayText;

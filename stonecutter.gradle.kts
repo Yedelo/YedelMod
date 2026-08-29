@@ -30,15 +30,22 @@ stonecutter parameters {
             replace("@KeyBind", "@Keybind")
             replace("OneKeyBind", "OneConfigKeybind")
         }
-        string(v1) {
-            replace("ReceiveChatEvent", "ChatEvent.Receive")
-            replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
-        }
 
         string(v1, "texthud_bridge") {
             replace("SingleTextHud", "TextHud")
             replace("protected String getText(boolean example)", "protected String getText()")
-            replace("example", "!isReal() || HudManager.INSTANCE.isEditing()")
+            replace("if (example)", "if (!isReal() || HudManager.INSTANCE.isEditing())")
+        }
+
+        string(v1, "command_bridge") {
+            replace("@SubCommand", "@Handler")
+            replace("aliases = ", "value =")
+        }
+
+        string(v1) {
+            replace("UChat.chat", "Platform.compatibility().displayChatMessage")
+            replace("ReceiveChatEvent", "ChatEvent.Receive")
+            replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
         }
     }
 

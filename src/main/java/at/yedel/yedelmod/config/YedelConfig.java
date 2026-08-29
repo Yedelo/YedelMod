@@ -31,6 +31,7 @@ import org.polyfrost.oneconfig.api.notifications.v1.Notifications;
 import org.polyfrost.oneconfig.api.platform.v1.DesktopHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.KeybindHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.OneConfigKeybind;
+import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
     //?}
 //? if forge {
 //import net.minecraftforge.fml.common.Loader;
@@ -100,6 +101,13 @@ public class YedelConfig extends Config {
         addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
+    }
+
+    public void open() {
+        //? if v0
+        //openGui();
+        //? else
+        ScreensKt.openUI(this);
     }
 
     // Start of config

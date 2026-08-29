@@ -9,15 +9,29 @@ import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.TextUtils;
-import com.google.gson.JsonObject;
+//? if v0 {
+/*import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Greedy;
+import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
+import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
+*///?} else {
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
-import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
+//?}
+import com.google.gson.JsonObject;
+
+import net.minecraft.client.Minecraft;
+//? if legacy {
+/*import net.minecraft.event.HoverEvent;
+import org.lwjgl.opengl.Display;
+*///?}
+
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -32,11 +46,14 @@ import static at.yedel.yedelmod.YedelMod.yedelog;
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
-
 @Command(
+    //? if v0
+    //value = "yedel", aliases = "yedelmod",
+    //? else
     value = {"yedel", "yedelmod"},
     description = "The main command of YedelMod"
 )
+    //~ command_bridge
 public class YedelCommand {
     private static final YedelCommand INSTANCE = new YedelCommand();
 
@@ -44,6 +61,7 @@ public class YedelCommand {
         return INSTANCE;
     }
 
+    //~ if v1 'String FORMATTING_CODES = ' -> 'Component FORMATTING_CODES = Component.text'
     private static final Component FORMATTING_CODES = Component.text(
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
@@ -55,28 +73,33 @@ public class YedelCommand {
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
     );
+    //? if v0 {
+    /*private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
+        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
+    *///?} else {
     private static final Component FORMATTING_GUIDE_MESSAGE =
         Component.text(yedelogo + " §e§nHover to view the formatting guide.").hoverEvent(HoverEvent.showText(FORMATTING_CODES));
+    //?}
 
+    //? if modern {
     private String displayTitle;
 
     public String getDisplayTitle() {
         return displayTitle;
     }
+    //?}
 
     private YedelCommand() {}
 
+    //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
     @Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
     public void main() {
-        ScreensKt.openUI(YedelConfig.getInstance());
+        YedelConfig.getInstance().open();
     }
 
     @Handler(description = "Clears the currently set display text.")
     public void cleartext() {
-        for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
-            hud.displayText = "";
-            hud.save();
-        }
+        setDisplayText("");
         Platform.compatibility().displayChatMessage(yedelogo + " §eCleared display text!");
     }
 
@@ -105,6 +128,9 @@ public class YedelCommand {
         description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead."
     )
     public void limbo() {
+        //? if v0 {
+        //UChat.say("§");
+        //?} else
         Minecraft.getInstance().player.connection.sendChat("§");
     }
 
@@ -133,17 +159,17 @@ public class YedelCommand {
     }
 
     @Handler(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(String text) {
+    public void settext(/*? if v0 {*//*@Greedy *//*?}*/String text) {
         String displayText = TextUtils.replaceAmpersand(text);
-        for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
-            hud.displayText = displayText;
-            hud.save();
-        }
+        setDisplayText(displayText);
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @Handler(description = "Sets the title of the game window.")
-    public void settitle(String title) {
+    public void settitle(/*? if v0 {*//*@Greedy *//*?}*/String title) {
+        //? if v0
+        //Display.setTitle(title);
+        //? else
         this.displayTitle = title;
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
@@ -152,7 +178,7 @@ public class YedelCommand {
         value = {"simulatechat", "simc"},
         description = "Simulates a chat message, supports color codes with ampersands (&)."
     )
-    private void simulatechat(String text) {
+    private void simulatechat(/*? if v0 {*//*@Greedy *//*?}*/String text) {
         String message = TextUtils.replaceAmpersand(text);
         Platform.compatibility().displayChatMessage(message);
     }
@@ -200,9 +226,23 @@ public class YedelCommand {
         PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
     }
 
+    private void setDisplayText(String text) {
+        //? if v0 {
+        /*YedelConfig.getInstance().customTextHud.displayText = text;
+        YedelConfig.getInstance().save();
+        *///?} else {
+        for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
+            hud.displayText = text;
+            hud.save();
+        }
+        //?}
+    }
+
     //@TODO this does not work, dp is just a replacement
+    //~ if v1 '@SubCommandGroup' -> '@Command'
     @Command("ping")
     public static class Ping {
+        //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
         @Handler
         public void main() {
             PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
