@@ -286,12 +286,11 @@ public class YedelConfig extends Config {
     @Dropdown(
         title = "Ping Method",
         description =
-            """
-                Command: Enters a random command and waits for the unknown command response. Works on almost all servers.
-                Tab: Sends a tab completion packet and waits for the response. Works on all servers.
-                Stats (default): Sends a statistics packet and waits for the response. Works on all servers.
-                Hypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel.
-                Server list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.""",
+            "Command: Enters a random command and waits for the unknown command response. Works on almost all servers." +
+                "\nTab: Sends a tab completion packet and waits for the response. Works on all servers." +
+                "\nStats (default): Sends a statistics packet and waits for the response. Works on all servers." +
+                "\nHypixel: Uses the Hypixel ping packet and waits for the response. Only works on Hypixel." +
+                "\nServer list: Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect.",
         category = "Commands",
         subcategory = "Index",
         options = {"Command", "Tab", "Stats", "Hypixel", "Server list"}
