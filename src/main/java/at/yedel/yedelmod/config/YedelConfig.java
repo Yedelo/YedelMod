@@ -5,8 +5,25 @@ package at.yedel.yedelmod.config;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
+    //? if v0 {
+/*import at.yedel.yedelmod.hud.CustomTextHud;
+import cc.polyfrost.oneconfig.config.Config;
+import cc.polyfrost.oneconfig.config.annotations.*;
+import cc.polyfrost.oneconfig.config.annotations.Number;
+import cc.polyfrost.oneconfig.config.core.ConfigUtils;
+import cc.polyfrost.oneconfig.config.core.OneKeyBind;
+import cc.polyfrost.oneconfig.config.data.Mod;
+import cc.polyfrost.oneconfig.config.data.ModType;
+import cc.polyfrost.oneconfig.config.elements.BasicOption;
+import cc.polyfrost.oneconfig.config.elements.OptionPage;
+import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
+import cc.polyfrost.oneconfig.config.migration.VigilanceName;
+import cc.polyfrost.oneconfig.libs.universal.UDesktop;
+import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
+import cc.polyfrost.oneconfig.platform.Platform;
+import cc.polyfrost.oneconfig.utils.Notifications;
+*///?} else {
 import com.mojang.blaze3d.platform.InputConstants;
-import net.fabricmc.loader.api.FabricLoader;
 import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
@@ -14,12 +31,18 @@ import org.polyfrost.oneconfig.api.notifications.v1.Notifications;
 import org.polyfrost.oneconfig.api.platform.v1.DesktopHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.KeybindHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.OneConfigKeybind;
+    //?}
+//? if forge {
+//import net.minecraftforge.fml.common.Loader;
+//?} else
+import net.fabricmc.loader.api.FabricLoader;
+
 
 import java.net.URI;
 
 
 
-// @TODO readd custom hit particles
+//~ config_bridge
 public class YedelConfig extends Config {
     private static final YedelConfig INSTANCE = new YedelConfig();
 
@@ -29,8 +52,54 @@ public class YedelConfig extends Config {
 
     private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
+    private void addDependentOption(String dependent, String option) {
+        addDependency(option, dependent);
+    }
+
+    private void addDependentOptions(String dependent, String... options) {
+        for (String option : options) {
+            addDependentOption(dependent, option);
+        }
+    }
+
     private YedelConfig() {
+        //? if v0 {
+        /*super(
+            new Mod(
+                "YedelMod",
+                ModType.UTIL_QOL,
+                "/assets/yedelmod/yedelmod.png"
+            ),
+            "yedelmod.json",
+            true,
+            true
+        );
+        initialize();
+
+        registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
+        registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict);
+
+        for (String internalOption : new String[] {
+            "playtimeMinutes",
+            "firstTime",
+            "bountyHuntingPoints",
+            "bountyHuntingKills",
+            "firstTimeBountyHunting"
+        }) {
+            hideIf(internalOption, () -> true);
+        }
+        *///?} else {
         super("yedelmod", "/assets/yedelmod/yedelmod.png", "YedelMod", Category.QOL);
+        //?}
+
+        addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
+        addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+        addDependentOption("dropperAutoGG", "autoGGDelay");
+        addDependentOption("regexChatFilter", "regexChatFilterPattern");
+        addDependentOption("randomPlaceholder", "randomPlaceholderText");
+        addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
+        addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
+        addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
     }
 
     // Start of config
@@ -55,8 +124,7 @@ public class YedelConfig extends Config {
         subcategory = "Features"
     )
     public boolean regexChatFilter = false;
-
-    @DependsOn("regexChatFilter")
+    
     @Text(
         title = "Regex Chat Filter Pattern",
         description = "The pattern to use for regex chat filtering.",
@@ -73,7 +141,6 @@ public class YedelConfig extends Config {
     )
     public boolean randomPlaceholder = false;
 
-    @DependsOn("randomPlaceholder")
     @Text(
         title = "Random Placeholder Text",
         description = "When this is typed in chat, it will be replaced with a random string. Be careful not to use short placeholders to not spam excessively.",
@@ -91,7 +158,6 @@ public class YedelConfig extends Config {
     )
     public boolean autoWelcomeGuildMembers = true;
 
-    @DependsOn("autoWelcomeGuildMembers")
     @Text(
         title = "Guild Welcome Message",
         description = "Message for new guild members. Use [player] for the new player.",
@@ -114,9 +180,8 @@ public class YedelConfig extends Config {
         subcategory = "Hypixel"
     )
     // very soft dependency that shouldn't mean very much
-    public boolean dropperAutoGG = FabricLoader.getInstance().isModLoaded("autogg");
+    public boolean dropperAutoGG = /*? if v0 {*/ /*Loader.isModLoaded("autogg") *//*?} else {*/FabricLoader.getInstance().isModLoaded("autogg")/*?}*/;
 
-    @DependsOn("dropperAutoGG")
     @Slider(
         title = "AutoGG Delay",
         description = "Delay for AutoGG, measured in seconds.",
@@ -136,7 +201,34 @@ public class YedelConfig extends Config {
     )
     public boolean skywarsStrengthIndicators = true;
 
-    @DependsOn("skywarsStrengthIndicators")
+    //? if legacy {
+    /*@Dropdown(
+        title = "Strength Color",
+        description = "Color for strength indicators",
+        category = "Features",
+        subcategory = "Hypixel",
+        options = {
+            "Dark Red",
+            "Red",
+            "Gold",
+            "Yellow",
+            "Dark Green",
+            "Green",
+            "Aqua",
+            "Dark Aqua",
+            "Dark Blue",
+            "Blue",
+            "Pink",
+            "Purple",
+            "White",
+            "Gray",
+            "Dark Gray",
+            "Black"
+        }
+    )
+    public int strengthColor = 1;
+
+    *///?} else {
     @Color(
         title = "Strength Color",
         description = "Color for strength indicators",
@@ -145,8 +237,8 @@ public class YedelConfig extends Config {
         alpha = false
     )
     public PolyColor strengthColor = new PolyColor(0xFF5555);
+    //?}
 
-    @DependsOn("skywarsStrengthIndicators")
     @Switch(
         title = "Show Self Strength",
         description = "If your own nametag is rendered (PolyNametag), this will show your own strength indicators.",
@@ -155,7 +247,6 @@ public class YedelConfig extends Config {
     )
     public boolean showSelfStrength = true;
 
-    @DependsOn("skywarsStrengthIndicators")
     @Slider(
         title = "Strength Indicator Offset (in hundredths)",
         description = "The Y offset (in hundredths) to render the strength indicator label at.",
@@ -183,7 +274,6 @@ public class YedelConfig extends Config {
     )
     public boolean easyAtlasVerdicts = false;
 
-    @DependsOn("easyAtlasVerdicts")
     @Keybind(
         title = "Insufficient Evidence Verdict",
         description = "Submits an \"Insufficient Evidence\" verdict in Atlas.",
@@ -191,9 +281,11 @@ public class YedelConfig extends Config {
         subcategory = "Hypixel"
     )
     public OneConfigKeybind insufficientEvidenceKeybind =
+        //? if v0 {
+        //new OneConfigKeybind(UKeyboard.KEY_O);
+        //?} else
         KeybindHelper.builder().key(InputConstants.KEY_O).action(EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict).register();
 
-    @DependsOn("easyAtlasVerdicts")
     @Keybind(
         title = "Evident Without Doubt Verdict",
         description = "Submits an \"Evident Without Doubt\" verdict in Atlas.",
@@ -201,10 +293,21 @@ public class YedelConfig extends Config {
         subcategory = "Hypixel"
     )
     public OneConfigKeybind evidentWithoutDoubtKeybind =
+        //? if v0 {
+        //new OneConfigKeybind(UKeyboard.KEY_P);
+        //?} else
         KeybindHelper.builder().key(InputConstants.KEY_P).action(EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict).register();
 
+    //? if v0 {
+    /*@HUD(
+        title = "Custom Text HUD",
+        category = "Features"
+    )
+    public CustomTextHud customTextHud = new CustomTextHud();
+    *///?}    
     /* Commands */
 
+    //~ if v1 'text' -> 'description' {
     @Info(
         title = "Description of this mod's subcommands, all under /yedel.",
         category = "Commands"
@@ -221,7 +324,7 @@ public class YedelConfig extends Config {
     private transient int info$4 = 1;
 
     @Info(
-        title = "Example: - simulatechat (simc) [text] -> /yedel simc Hi!",
+        title = "Example: - simulatechat (simc) [description] -> /yedel simc Hi!",
         category = "Commands",
         subcategory = "Index"
     )
@@ -236,8 +339,8 @@ public class YedelConfig extends Config {
     private transient int empty$1 = 1;
 
     @Info(
-        title = "- cleartext",
-        description = "Clears the currently set display text.",
+        title = "- cleardescription",
+        description = "Clears the currently set display description.",
         category = "Commands",
         subcategory = "Index"
     )
@@ -282,6 +385,7 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$7 = 1;
+    //~}
 
     @Dropdown(
         title = "Ping Method",
@@ -297,6 +401,7 @@ public class YedelConfig extends Config {
     )
     public int pingMethod = 2;
 
+    //~ if v1 'text' -> 'description' {
     @Info(
         title = "- playtime (pt)",
         description = "Shows your total playtime (while playing on servers) in hours and minutes.",
@@ -314,8 +419,8 @@ public class YedelConfig extends Config {
     private transient int empty$9 = 1;
 
     @Info(
-        title = "- settext [text]",
-        description = "Sets the display text, supporting color codes with ampersands (&).",
+        title = "- setdescription [description]",
+        description = "Sets the display description, supporting color codes with ampersands (&).",
         category = "Commands",
         subcategory = "Index"
     )
@@ -330,7 +435,7 @@ public class YedelConfig extends Config {
     private transient int empty$11 = 1;
 
     @Info(
-        title = "- simulatechat (simc) [text]",
+        title = "- simulatechat (simc) [description]",
         description = "Simulates a chat message, also supports color codes with ampersands (&).",
         category = "Commands",
         subcategory = "Index"
@@ -344,6 +449,7 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$14 = 1;
+    //~}
 
     /* TNT Tag */
 
@@ -385,6 +491,7 @@ public class YedelConfig extends Config {
         text = "Open video"
     )
     private void watchVideo() {
+        //~ if v1 'UDesktop' -> 'DesktopHelper'
         if (!DesktopHelper.browse(BOUNTY_HUNTING_VIDEO)) {
             Notifications.send("YedelMod", "Couldn't open video!");
         }
@@ -400,7 +507,6 @@ public class YedelConfig extends Config {
 
     // Features
 
-    @DependsOn("bountyHunting")
     @Switch(
         title = "Highlight Target and Show Distance",
         description = "Highlights the target and shows their distance.",
@@ -409,7 +515,6 @@ public class YedelConfig extends Config {
     )
     public boolean highlightTargetAndShowDistance = true;
 
-    @DependsOn("bountyHunting")
     @Color(
         title = "Distance Label Color",
         description = "The color of the distance label.",
@@ -419,7 +524,6 @@ public class YedelConfig extends Config {
     )
     public PolyColor distanceLabelColor = new PolyColor(0xFF5555);
 
-    @DependsOn("bountyHunting")
     @Switch(
         title = "Play Sounds for Target Selections and Kills",
         description = "Use the buttons below to test these sounds.",
@@ -454,15 +558,27 @@ public class YedelConfig extends Config {
 
     // Hidden variables for data
 
+    //? if v0
+    //@Number(title = "playtimeMinutes", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
+    //? else
     @Include
     public int playtimeMinutes = 0;
 
+    //? if v0
+    //@Number(title = "bountyHuntingPoints", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
+    //? else
     @Include
     public int bountyHuntingPoints = 0;
 
+    //? if v0
+    //@Number(title = "bountyHuntingKills", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
+    //? else
     @Include
     public int bountyHuntingKills = 0;
 
+    //? if v0
+    //@Switch(title = "firstTimeBountyHunting", category = "General", subcategory = "")
+    //? else
     @Include
     public boolean firstTimeBountyHunting = true;
 

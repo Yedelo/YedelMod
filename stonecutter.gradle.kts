@@ -22,6 +22,14 @@ stonecutter parameters {
     }
 
     replacements {
+        string(v1, "config_bridge") {
+            replace("name =", "title =")
+            replace("allowAlpha", "alpha")
+            replace("OneColor", "PolyColor")
+            replace("getRGB", "getArgb")
+            replace("@KeyBind", "@Keybind")
+            replace("OneKeyBind", "OneConfigKeybind")
+        }
         string(v1) {
             replace("ReceiveChatEvent", "ChatEvent.Receive")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
