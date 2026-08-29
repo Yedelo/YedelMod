@@ -104,7 +104,7 @@ tasks {
         dependsOn("build")
     }
 
-    jar {
+    remapJar {
         archiveFileName = finalFileName
         manifest.attributes(
             mapOf(
