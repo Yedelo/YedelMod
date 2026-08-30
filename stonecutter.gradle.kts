@@ -29,10 +29,9 @@ stonecutter parameters {
             replace("getRGB", "getArgb")
             replace("@KeyBind", "@Keybind")
             replace("OneKeyBind", "OneConfigKeybind")
-            replace("    @Info(\n" +
-                    "        text = ", "    @Info(\n" +
-                    "        title = ")
+            replace("    @Info(\n" + "        text = ", "    @Info(\n" + "        title = ")
             replace("type = InfoType.INFO,", "//type = InfoType.INFO,")
+            replace("    @CustomOption(id = \"empty\")\n" + "    @Empty", "    @Info /* command */ ")
         }
 
         string(v1, "texthud_bridge") {

@@ -481,6 +481,69 @@ public class YedelConfig extends Config {
     *///?}    
     /* Commands */
 
+    @Info(
+        title = "Example: - simulatechat (simc) [text] -> /yedel simc Hi!",
+        //type = InfoType.INFO,
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int info$5 = 1;
+
+    @Info /* command */ (
+        title = "/yedel (/yedelmod)",
+        description = "The main command, hosting all subcommands. When used with no arguments, opens this config screen.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$1 = 1;
+
+    @Info /* command */ (
+        title = "- cleartext",
+        description = "Clears the currently set display text.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$2 = 1;
+
+    @Info /* command */ (
+        title = "- constants",
+        description = "Shows mod constants such as the project version and build information.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$3 = 1;
+
+    @Info /* command */ (
+        title = "- formatting",
+        description = "Shows a formatting guide with color and style codes.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$4 = 1;
+
+    @Info /* command */ (
+        title = "- limbo (li)",
+        description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$5 = 1;
+
+    @Info /* command */ (
+        title = "- limbocreative (limbogmc, lgmc)",
+        description = "Gives you creative mode in Hypixel's limbo, given certain checks are passed.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$6 = 1;
+
+    @Info /* command */ (
+        title = "- ping [method]",
+        description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method specified below.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$7 = 1;
 
     @Dropdown(
         title = "Ping Method",
@@ -495,6 +558,62 @@ public class YedelConfig extends Config {
         options = {"Command", "Tab", "Stats", "Hypixel", "Server list"}
     )
     public int pingMethod = 2;
+
+    @Info /* command */ (
+        title = "- playtime (pt)",
+        description = "Shows your total playtime (while playing on servers) in hours and minutes.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$8 = 1;
+
+    @Info /* command */ (
+        title = "- setnick [nick]",
+        description = "Sets your nick for Bounty Hunting to not select yourself as the target.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$9 = 1;
+
+    @Info /* command */ (
+        title = "- settext [text]",
+        description = "Sets the display text, supporting color codes with ampersands (&).",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$10 = 1;
+
+    @Info /* command */ (
+        title = "- settitle [title]",
+        description = "Sets the title of the game window.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$11 = 1;
+
+    @Info /* command */ (
+        title = "- simulatechat (simc) [text]",
+        description = "Simulates a chat message, also supports color codes with ampersands (&).",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$12 = 1;
+
+    @Info /* command */ (
+        title = "- update [platform]",
+        description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$13 = 1;
+
+    @Info /* command */ (
+        title = "- yedelmessage (message)",
+        description = "Shows messages from me about the mod. These can be anything from tips to bug notices.",
+        category = "Commands",
+        subcategory = "Index"
+    )
+    private transient int empty$14 = 1;
 
     /* TNT Tag */
 

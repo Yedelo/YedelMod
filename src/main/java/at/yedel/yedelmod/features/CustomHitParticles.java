@@ -55,7 +55,7 @@ public class CustomHitParticles {
 
 
 
-switch (particle) {
+        switch (particle) {
                 case ITEM_CRACK:
                     parameters = Item.getIdFromItem(Items.redstone);
                     break;
