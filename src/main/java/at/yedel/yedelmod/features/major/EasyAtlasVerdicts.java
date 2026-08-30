@@ -26,6 +26,7 @@ import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 *///?}
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
+import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {
@@ -48,8 +49,8 @@ import net.minecraft.world.item.ItemStack;
 /*import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.world.WorldEvent;
-*/
-//?}
+
+*///?}
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -100,7 +101,6 @@ public class EasyAtlasVerdicts {
             submitVerdict("Evident Without Doubt");
         }
     }
-    //~ if >=26.2 '.screen' -> '.gui.screen()' {
     private void submitVerdict(String name) {
         //~ if modern 'EntityPlayerSP player = Minecraft.getMinecraft().thePlayer' -> 'LocalPlayer player = Minecraft.getInstance().player'
         LocalPlayer player = Minecraft.getInstance().player;
@@ -109,8 +109,8 @@ public class EasyAtlasVerdicts {
                 //~ if modern 'player.inventory.currentItem = 7' -> 'player.getInventory().setSelectedSlot(7)'
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
-                    //~ if modern 'Minecraft.getMinecraft().currentScreen' -> 'Minecraft.getInstance().screen'
-                    if (Minecraft.getInstance().screen == null) {
+                    //~ if v1 'Minecraft.getMinecraft().currentScreen' -> 'Platform.screen.current()'
+                    if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy
                         //((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
@@ -148,7 +148,7 @@ public class EasyAtlasVerdicts {
                             verdict = "";
                         }
                         *///?} else {
-                        if (Minecraft.getInstance().screen instanceof AbstractContainerScreen screen) {
+                        if (Platform.screen().current() instanceof AbstractContainerScreen screen) {
                             // this is mad stupid
                             ((AbstractContainerScreenInvoker) screen).yedelmod$slotClicked(screen.getMenu().getSlot(packet.getSlot()), packet.getSlot(), 0, ContainerInput.PICKUP);
                             verdict = "";
@@ -159,5 +159,4 @@ public class EasyAtlasVerdicts {
             }
         }
     }
-    //~}
 }

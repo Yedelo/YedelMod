@@ -124,8 +124,8 @@ public class YedelConfig extends Config {
     public boolean enabled = true;
 
     //? if forge {
-    @Dropdown(
-        name = "Update Source",
+    /*@Dropdown(
+        title = "Update Source",
         description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
         category = "General",
         subcategory = "Updates",
@@ -143,7 +143,7 @@ public class YedelConfig extends Config {
     }
 
     @Switch(
-        name = "Automatically Check for Updates",
+        title = "Automatically Check for Updates",
         description = "Checks for updates on game load",
         category = "General",
         subcategory = "Updates"
@@ -151,7 +151,7 @@ public class YedelConfig extends Config {
     public boolean automaticallyCheckForUpdates = true;
 
     @Button(
-        name = "Modrinth Link",
+        title = "Modrinth Link",
         description = "Click to open the Modrinth site",
         category = "General",
         subcategory = "Updates",
@@ -164,7 +164,7 @@ public class YedelConfig extends Config {
     }
 
     @Button(
-        name = "GitHub Link",
+        title = "GitHub Link",
         description = "Click to open the GitHub repository",
         category = "General",
         subcategory = "Updates",
@@ -177,7 +177,7 @@ public class YedelConfig extends Config {
     }
 
     @Button(
-        name = "Check for Updates",
+        title = "Check for Updates",
         description = "Check for updates with the selected source",
         category = "General",
         subcategory = "Updates",
@@ -187,7 +187,7 @@ public class YedelConfig extends Config {
     public void checkForUpdates() {
         YedelMod.getInstance().getUpdateManager().checkForUpdates(getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
     }
-    //?}
+    *///?}
 
     /* Features */
 

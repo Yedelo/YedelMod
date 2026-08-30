@@ -13,7 +13,6 @@ import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Threading;
 
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import net.minecraft.client.Minecraft;
 //? if forge {
 /*import net.minecraftforge.common.MinecraftForge;
@@ -34,8 +33,9 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 *///? else {
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
  import org.polyfrost.oneconfig.api.event.v1.EventManager;
- import org.polyfrost.oneconfig.api.hud.v1.HudManager;
-//?}
+ import org.polyfrost.oneconfig.api.hud.v1.HudManager;import org.polyfrost.oneconfig.api.platform.v1.Platform;import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
+import org.polyfrost.oneconfig.api.platform.v1.internal.ScreenPlatformImpl;
+    //?}
 
 import java.util.concurrent.TimeUnit;
 
