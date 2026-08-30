@@ -3,7 +3,7 @@
     "modid": "${modId}",
     "name": "${modName}",
     "description": "${modDescription}",
-    "version": "${modVersion}",
+    "version": "${version}",
     "mcversion": "${mcVersion}",
     "url": "https://modrinth.com/mod/${modId}",
     "updateUrl": "https://api.modrinth.com/v2/project/${modId}/version",
