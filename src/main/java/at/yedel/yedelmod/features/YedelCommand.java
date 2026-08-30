@@ -2,6 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 
+import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingCommandInterface;
 import at.yedel.yedelmod.features.ping.PingMethod;
@@ -28,6 +29,10 @@ import net.minecraft.client.Minecraft;
 /*import net.minecraft.event.HoverEvent;
 import org.lwjgl.opengl.Display;
 *///?}
+//? if forge {
+//import at.yedel.yedelmod.utils.update.UpdateManager;
+//import at.yedel.yedelmod.utils.update.UpdateSource;
+//?}
 
 
 import java.io.IOException;
@@ -284,4 +289,26 @@ public class YedelCommand {
             PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
         }
     }
+
+    //? if forge {
+    /*
+    @SubCommandGroup("update")
+    public static class Update {
+        @Main
+        public void main() {
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
+        }
+
+        @SubCommand
+        public void modrinth() {
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
+        }
+
+        @SubCommand
+        public void github() {
+            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
+        }
+    }
+     */
+    //?}
 }
