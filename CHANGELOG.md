@@ -1,3 +1,3 @@
-**2.4.0**
+# **2.5.0-beta.1**
 
-Uhhhhh i dont know how changelogs work for this
+Initial modern merge
