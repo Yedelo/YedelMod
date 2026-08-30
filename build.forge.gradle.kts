@@ -17,7 +17,7 @@ val rangedVersion by CommonProperty<Boolean>()
 val maxMc by CommonProperty<String?>()
 val finalFileName by CommonProperty<String>()
 val license: String by project
-val javaVersion = JavaVersion.VERSION_25
+val javaVersion = JavaVersion.VERSION_1_8
 
 repositories {
     gradlePluginPortal()
