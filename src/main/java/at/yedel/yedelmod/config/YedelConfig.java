@@ -28,6 +28,8 @@ import cc.polyfrost.oneconfig.libs.universal.UDesktop;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import cc.polyfrost.oneconfig.platform.Platform;
 import cc.polyfrost.oneconfig.utils.Notifications;
+import java.lang.reflect.Field;
+import java.util.Objects;
 *///?} else {
 import com.mojang.blaze3d.platform.InputConstants;
 import org.polyfrost.compose.render.PolyColor;
@@ -112,6 +114,21 @@ public class YedelConfig extends Config {
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
     }
+
+    //? if v0 {
+    /*
+    @Override
+    protected BasicOption getCustomOption(Field field, CustomOption annotation, OptionPage page, Mod mod, boolean migrate) {
+        BasicOption option = null;
+        if (Objects.equals(annotation.id(), "empty")) {
+            Empty empty = ConfigUtils.findAnnotation(field, Empty.class);
+            option = new EmptyOption(field, this, empty.name(), empty.description(), empty.category(), empty.subcategory(), empty.size());
+            ConfigUtils.getSubCategory(page, empty.category(), empty.subcategory()).options.add(option);
+        }
+        return option;
+    }
+     */
+    //?}
 
     public void open() {
         //? if v0
