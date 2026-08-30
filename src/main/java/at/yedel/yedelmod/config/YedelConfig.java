@@ -8,6 +8,7 @@ import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
     //? if v0 {
 /*import at.yedel.yedelmod.hud.CustomTextHud;
+import at.yedel.yedelmod.hud.BountyHuntingHud;
 
 
 import cc.polyfrost.oneconfig.config.Config;
@@ -729,6 +730,17 @@ public class YedelConfig extends Config {
     private void playKill() {
         Constants.playPingSound(1, 1.04f);
     }
+
+    //? if v0 {
+    /*
+       @HUD(
+        name = "Bounty Hunting HUD",
+        category = "TNT Tag",
+        subcategory = "HUD"
+    )
+    public BountyHuntingHud bountyHuntingHud = new BountyHuntingHud();
+     */
+    //?}
 
     // End of visible config
 
