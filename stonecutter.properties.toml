@@ -3,7 +3,7 @@ versions.devauth = "1.2.2"
 
 ["26.2-fabric"]
 versioning = "single"
-versions.fabricapi = "0.153.0+26.2"
+versions.fabricapi = "0.158.0+26.2"
 versions.oneconfig = "1.1.7"
 versions.modmenu = "20.0.1"
 
