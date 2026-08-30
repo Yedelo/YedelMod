@@ -106,13 +106,16 @@ public class YedelConfig extends Config {
         //?}
 
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
-        addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+        //? if legacy
+        // addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
         addDependentOption("dropperAutoGG", "autoGGDelay");
         addDependentOption("regexChatFilter", "regexChatFilterPattern");
         addDependentOption("randomPlaceholder", "randomPlaceholderText");
         addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
-        addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidenceWithoutDoubtKeybind");
-        addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill", "bountyHuntingHud");
+        addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidentWithoutDoubtKeybind");
+        addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill");
+        //? if v0
+        // addDependentOption("bountyHunting", "bountyHuntingHud");
     }
 
     //? if v0 {
