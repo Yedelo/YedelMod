@@ -10,18 +10,17 @@ import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
 //?} else {
 /*import at.yedel.yedelmod.utils.Constants;
-import cc.polyfrost.oneconfig.hud.SingleTextHud;
+import cc.polyfrost.oneconfig.hud.TextHud;
+import java.util.List;
 *///?}
 
 import java.util.ArrayList;
 
 
-//~ texthud_bridge
 public class BountyHuntingHud extends TextHud {
     public BountyHuntingHud() {
         //? if v0 {
         /*super(
-            "",
             true, // enabled obviously
             5, // x
             35, // y
@@ -42,6 +41,23 @@ public class BountyHuntingHud extends TextHud {
         //?}
     }
 
+    //? if v0 {
+    /*
+        @Override
+    protected void getLines(List<String> lines, boolean example) {
+        if (example) {
+            lines.add("§c§lBounty §f§lHunting");
+            lines.add("§a83 points");
+            lines.add("§a15 kills");
+            lines.add("§cYour next target is §aYedelos§c.");
+        }
+        else {
+            lines.clear();
+            lines.addAll(TNTTagFeatures.getInstance().getDisplayLines());
+        }
+    }
+    */
+    //?} else {
     @Override
     protected String getText() {
         ArrayList<String> lines = new ArrayList<>();
@@ -56,6 +72,7 @@ public class BountyHuntingHud extends TextHud {
         }
         return String.join("\n", lines);
     }
+    //?}
 
     //? if v0 {
     /*@Override
