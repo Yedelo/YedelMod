@@ -235,12 +235,11 @@ public class YedelCommand {
         //?}
     }
 
-    //@TODO this does not work, dp is just a replacement
     //~ if v1 '@SubCommandGroup' -> '@Command'
     @Command("ping")
     public static class Ping {
         //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
-        @Handler
+        @org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler
         public void main() {
             PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
         }
