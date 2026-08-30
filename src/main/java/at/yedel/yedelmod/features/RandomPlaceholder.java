@@ -28,7 +28,7 @@ public class RandomPlaceholder {
     }
 
     //? if v0 {
-    /*//@Subscribe
+    /*@Subscribe
     public void modifyMessage(ChatSendEvent event) {
         if (should()) {
             event.message = replace(event.message);
