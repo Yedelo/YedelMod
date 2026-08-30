@@ -46,6 +46,7 @@ public class PingResponse {
 
     @Subscribe
     public void handleStatsPingResponse(PacketEvent.Receive event) {
+        //~ if modern 'S37PacketStatistics' -> 'ClientboundAwardStatsPacket'
         if (event.getPacket() instanceof ClientboundAwardStatsPacket) {
             PingQueue.getInstance().post(PingMethod.STATS_PACKET);
         }
@@ -53,6 +54,7 @@ public class PingResponse {
 
     @Subscribe
     public void handleTabPingResponse(PacketEvent.Receive event) {
+        //~ if modern 'S3APacketTabComplete' -> 'ClientboundCommandSuggestionsPacket'
         if (event.getPacket() instanceof ClientboundCommandSuggestionsPacket) {
             PingQueue.getInstance().post(PingMethod.TAB_PACKET);
         }

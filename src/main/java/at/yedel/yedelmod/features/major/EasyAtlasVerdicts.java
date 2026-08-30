@@ -5,14 +5,7 @@ package at.yedel.yedelmod.features.major;
 import at.yedel.yedelmod.config.YedelConfig;
 
 
-import at.yedel.yedelmod.mixins.modern.AbstractContainerScreenInvoker;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.inventory.ContainerInput;
-import net.minecraft.world.item.ItemStack;
+
 
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
@@ -24,9 +17,10 @@ import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
 import cc.polyfrost.oneconfig.libs.universal.UScreen;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-*///?}
+*///?} else {
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
+//?}
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {
@@ -36,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import at.yedel.yedelmod.mixins.legacy.InvokerMinecraft;
 *///?} else {
+
 import at.yedel.yedelmod.mixins.modern.AbstractContainerScreenInvoker;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -109,7 +104,7 @@ public class EasyAtlasVerdicts {
                 //~ if modern 'player.inventory.currentItem = 7' -> 'player.getInventory().setSelectedSlot(7)'
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
-                    //~ if v1 'Minecraft.getMinecraft().currentScreen' -> 'Platform.screen.current()'
+                    //~ if v1 'Minecraft.getMinecraft().currentScreen' -> 'Platform.screen().current()'
                     if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy

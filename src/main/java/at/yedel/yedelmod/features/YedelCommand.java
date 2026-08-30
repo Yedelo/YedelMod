@@ -12,11 +12,8 @@ import at.yedel.yedelmod.utils.TextUtils;
 //? if v0 {
 /*import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Greedy;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand;
-*///?} else {
+import cc.polyfrost.oneconfig.utils.commands.annotations.*;
+    *///?} else {
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
@@ -129,7 +126,7 @@ public class YedelCommand {
     )
     public void limbo() {
         //? if v0 {
-        //UChat.say("§");
+        //Minecraft.getInstance().player.connection.sendChat("§");
         //?} else
         Minecraft.getInstance().player.connection.sendChat("§");
     }

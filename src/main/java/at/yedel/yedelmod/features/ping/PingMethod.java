@@ -3,20 +3,25 @@ package at.yedel.yedelmod.features.ping;
 
 
 import at.yedel.yedelmod.utils.TextUtils;
+import net.minecraft.client.Minecraft;
+//? if v0 {
+/*import cc.polyfrost.oneconfig.libs.universal.UChat;
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 
-//? if v0
-//import cc.polyfrost.oneconfig.libs.universal.UChat;
+*///?} else
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
-import net.minecraft.client.Minecraft;
+
 //? if legacy {
 /*import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 *///?} else {
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCommandSuggestionPacket;
-//?}
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
+    //?}
+
 
 import java.util.function.Function;
 
@@ -24,9 +29,9 @@ import java.util.function.Function;
 
 public enum PingMethod {
     //? if v0 {
-    /*COMMAND_RESPONSE("Command", () -> UChat.say("/" + TextUtils.randomUuid(8))),
+    /*COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendChat("/" + TextUtils.randomUuid(8))),
     TAB_PACKET("Tab", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> Minecraft.getMinecraft().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    STATS_PACKET("Stats", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
         if (HypixelUtils.INSTANCE.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());

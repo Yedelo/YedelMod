@@ -19,9 +19,8 @@ import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 //? if legacy {
-/*import net.minecraft.client.player.AbstractClientPlayer;
 //import net.minecraft.client.entity.AbstractClientPlayer;
-*///?} else {
+//?} else {
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;

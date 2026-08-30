@@ -8,12 +8,15 @@ import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
     //? if v0 {
 /*import at.yedel.yedelmod.hud.CustomTextHud;
+
+
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.core.ConfigUtils;
 import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.config.core.OneKeyBind;
+import cc.polyfrost.oneconfig.config.data.InfoType;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.elements.BasicOption;
@@ -36,8 +39,10 @@ import org.polyfrost.oneconfig.api.ui.v1.keybind.OneConfigKeybind;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
     //?}
 //? if forge {
-//import net.minecraftforge.fml.common.Loader;
-//?} else
+/*import net.minecraftforge.fml.common.Loader;
+import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateSource;
+*///?} else
 import net.fabricmc.loader.api.FabricLoader;
 
 
@@ -80,7 +85,7 @@ public class YedelConfig extends Config {
         initialize();
 
         registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
-        registerKeyBind(evidenceWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict);
+        registerKeyBind(evidentWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict);
 
         for (String internalOption : new String[] {
             "playtimeMinutes",
@@ -244,6 +249,7 @@ public class YedelConfig extends Config {
 
     @Info(
         title = "This only says gg at the end of the game, not when you finish.",
+        //type = InfoType.INFO,
         category = "Features",
         subcategory = "Hypixel"
     )
@@ -402,6 +408,7 @@ public class YedelConfig extends Config {
 
     @Info(
         title = "Features relating to TNT Tag, mainly bounty hunting.",
+        //type = InfoType.INFO,
         category = "TNT Tag"
     )
     private transient int header$4 = 1;
@@ -421,14 +428,20 @@ public class YedelConfig extends Config {
         text = "Reset"
     )
     private void resetConfirmation() {
-        Notifications.builder("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)").onClick(() -> {
-                bountyHuntingPoints = 0;
-                bountyHuntingKills = 0;
-                TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");
-                TNTTagFeatures.getInstance().getDisplayLines().set(2, "§c0 kills (reset)");
+        //? if v0
+        //Notifications.INSTANCE.send("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)", () -> {
+            //? else
+            Notifications.builder("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)").onClick(() -> {
+            bountyHuntingPoints = 0;
+            bountyHuntingKills = 0;
+            TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");
+            TNTTagFeatures.getInstance().getDisplayLines().set(2, "§c0 kills (reset)");
+            //~if v1 'Notifications.INSTANCE' -> 'Notifications'
             Notifications.send("Bounty Hunting", "Reset stats!");
-            }
-        ).send();
+        //? if v0
+        //});
+        //? else
+         }).send();
     }
 
     @Button(
@@ -440,6 +453,7 @@ public class YedelConfig extends Config {
     private void watchVideo() {
         //~ if v1 'UDesktop' -> 'DesktopHelper'
         if (!DesktopHelper.browse(BOUNTY_HUNTING_VIDEO)) {
+            //~if v1 'Notifications.INSTANCE' -> 'Notifications'
             Notifications.send("YedelMod", "Couldn't open video!");
         }
     }

@@ -29,6 +29,10 @@ stonecutter parameters {
             replace("getRGB", "getArgb")
             replace("@KeyBind", "@Keybind")
             replace("OneKeyBind", "OneConfigKeybind")
+            replace("    @Info(\n" +
+                    "        text = ", "    @Info(\n" +
+                    "        title = ")
+            replace("type = InfoType.INFO,", "//type = InfoType.INFO,")
         }
 
         string(v1, "texthud_bridge") {
@@ -40,10 +44,6 @@ stonecutter parameters {
         string(v1, "command_bridge") {
             replace("@SubCommand", "@Handler")
             replace("aliases = ", "value =")
-        }
-
-        string(v1, "send_chat_bridge") {
-            replace("UChat.say", "Minecraft.getInstance().player.connection.sendChat")
         }
 
         string(v1) {
@@ -58,6 +58,7 @@ stonecutter parameters {
             replace("event.packet", "event.getPacket()")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
             replace("UChat.chat", "Platform.compatibility().displayChatMessage")
+            replace("UChat.say", "Minecraft.getInstance().player.connection.sendChat")
             replace("event.isCancelled", "event.cancelled")
             replace("Minecraft.getMinecraft().addScheduledTask", "Minecraft.getInstance().schedule")
         }

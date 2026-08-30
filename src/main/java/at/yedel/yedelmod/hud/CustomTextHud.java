@@ -48,7 +48,7 @@ public class CustomTextHud extends TextHud {
     public String displayText = "";
 
     @Override
-    public String getText() {
+    protected String getText() {
         if (!isReal() || HudManager.INSTANCE.isEditing()) {
             return "Custom §6display §a§ltext!";
         }

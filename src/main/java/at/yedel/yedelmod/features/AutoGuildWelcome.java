@@ -35,7 +35,6 @@ public class AutoGuildWelcome {
 			Matcher guildJoinMatcher = GUILD_JOIN_PATTERN.matcher(msg);
 			while (guildJoinMatcher.find()) {
 				String newMember = guildJoinMatcher.group("newMember");
-				//~ send_chat_bridge
 				Minecraft.getInstance().player.connection.sendChat("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
 			}
 		}
