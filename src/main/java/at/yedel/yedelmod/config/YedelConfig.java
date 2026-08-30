@@ -44,6 +44,8 @@ import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 *///?} else
 import net.fabricmc.loader.api.FabricLoader;
+//? if legacy
+ //import net.minecraft.util.EnumParticleTypes;
 
 
 import java.net.URI;
@@ -197,6 +199,96 @@ public class YedelConfig extends Config {
     /* Features */
 
     // Features
+
+    //? if legacy {
+    /*
+    @Switch(
+        title = "Custom Hit Particles",
+        description = "Spawns customizable particles when hitting entities.",
+        category = "Features",
+        subcategory = "Features"
+    )
+    public boolean customHitParticles = false;
+
+    @Dropdown(
+        title = "Custom Particle Type",
+        description = "The custom particle to be spawned when attacking an entity.",
+        category = "Features",
+        subcategory = "Features",
+        options = {
+            "Explosion (Normal)",
+            "Explosion (Large)",
+            "Explosion (Huge)",
+            "Fireworks Spark",
+            "Water Bubble",
+            "Water Splash",
+            "Water Wake",
+            "Suspended",
+            "Suspended Depth",
+            "Crit",
+            "Sharpness",
+            "Smoke (Normal)",
+            "Smoke (Large)",
+            "Spell",
+            "Instant Spell",
+            "Mob Spell",
+            "Ambient Mob Spell",
+            "Witch Spell",
+            "Water Drip",
+            "Lava Drip",
+            "Angry Villager",
+            "Happy Villager",
+            "Town Aura",
+            "Note",
+            "Portal",
+            "Enchantment Table",
+            "Flame",
+            "Lava",
+            "Footstep",
+            "Cloud",
+            "Redstone",
+            "Snowball",
+            "Snow Shovel",
+            "Slime",
+            "Heart",
+            "Barrier",
+            "Item Crack",
+            "Block Crack",
+            "Block Dust",
+            "Water Drop",
+            "Item Take",
+            "Guardian"
+        }
+    )
+    public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+
+    @Slider(
+        title = "Particle Y Offset",
+        description = "Some particles (such as note) may not show well due to being in the player model. Use this for those particles.",
+        category = "Features",
+        subcategory = "Features",
+        min = -1,
+        max = 2,
+        step = 1
+    )
+    public int particleYOffset = 2;
+
+    @Checkbox(
+        title = "Random Particle Type",
+        description = "Spawns a random particle type on hit instead of the one chosen above.",
+        category = "Features",
+        subcategory = "Features"
+    )
+    public boolean randomParticleType = false;
+
+    @Switch(
+        title = "Only Spawn Custom Particles on Players",
+        category = "Features",
+        subcategory = "Features"
+    )
+    public boolean onlySpawnCustomParticlesOnPlayers = false;
+     
+    *///?}
 
     @Switch(
         title = "Regex Chat Filter",

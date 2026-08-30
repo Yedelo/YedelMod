@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
+import at.yedel.yedelmod.features.CustomHitParticles;
 *///?}
 //? else if fabric {
  import net.fabricmc.api.ClientModInitializer;
@@ -97,7 +98,7 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		initialize();
-		registerEventListeners(this, RandomPlaceholder.getInstance());
+		registerEventListeners(this, RandomPlaceholder.getInstance(), CustomHitParticles.getInstance());
 	}
 
 	@Mod.EventHandler
