@@ -60,5 +60,11 @@ public class CustomTextHud extends TextHud {
         public boolean shouldShow() {
             return YedelConfig.getInstance().enabled && !displayText.trim().isEmpty();
         }
-        *///?}
+        *///?} else {
+
+    @Override
+    public boolean hasBackground() {
+        return false;
+    }
+    //?}
 }

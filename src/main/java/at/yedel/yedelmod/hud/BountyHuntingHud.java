@@ -62,6 +62,11 @@ public class BountyHuntingHud extends TextHud {
     public boolean shouldShow() {
         return YedelConfig.getInstance().bountyHunting && TNTTagFeatures.getInstance().isInTNTTag();
     }
-    *///?}
+    *///?} else {
+    @Override
+    public boolean hasBackground() {
+        return false;
+    }
+    //?}
 }
 
