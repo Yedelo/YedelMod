@@ -15,9 +15,9 @@ public class YedelModConstants {
 	public static final String MOD_VERSION = "@MOD_VERSION@";
 	public static final String MOD_ID = "@MOD_ID@";
 
-	public static final String PROJECT_NAME = "@PROJECT_NAME@";
-	public static final String PROJECT_VERSION = "@PROJECT_VERSION@";
-	public static final String PROJECT_GROUP = "@PROJECT_GROUP@";
+//	public static final String PROJECT_NAME = "@PROJECT_NAME@";
+//	public static final String PROJECT_VERSION = "@PROJECT_VERSION@";
+//	public static final String PROJECT_GROUP = "@PROJECT_GROUP@";
 
 	public static final String GIT_BRANCH = "@GIT_BRANCH@";
 	public static final String GIT_COMMIT = "@GIT_COMMIT@";
