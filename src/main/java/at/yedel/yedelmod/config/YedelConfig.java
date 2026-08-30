@@ -622,6 +622,7 @@ public class YedelConfig extends Config {
     )
     private transient int empty$12 = 1;
 
+    //? if v0 {
     @Info /* command */ (
         title = "- update [platform]",
         description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
@@ -629,6 +630,7 @@ public class YedelConfig extends Config {
         subcategory = "Index"
     )
     private transient int empty$13 = 1;
+    //?}
 
     @Info /* command */ (
         title = "- yedelmessage (message)",
