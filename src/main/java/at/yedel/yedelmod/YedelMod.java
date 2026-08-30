@@ -78,6 +78,7 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 			TNTTagFeatures.getInstance()
 		);
 		RandomPlaceholder.getInstance();
+		LimboCreative.getInstance();
 		//? if v1
 		HudManager.register(new BountyHuntingHud(), new CustomTextHud());
 
