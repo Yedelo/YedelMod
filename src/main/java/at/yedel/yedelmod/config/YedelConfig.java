@@ -63,7 +63,7 @@ public class YedelConfig extends Config {
         return INSTANCE;
     }
 
-    private static final URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
+    private static final transient URI BOUNTY_HUNTING_VIDEO = URI.create("https://www.youtube.com/watch?v=-z_AZR35ozI");
 
     private void addDependentOption(String dependent, String option) {
         addDependency(option, dependent);
