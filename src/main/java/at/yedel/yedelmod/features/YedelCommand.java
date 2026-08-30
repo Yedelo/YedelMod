@@ -94,7 +94,7 @@ public class YedelCommand {
     private YedelCommand() {}
 
     //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
-    @Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
+    @org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
     public void main() {
         YedelConfig.getInstance().open();
     }
