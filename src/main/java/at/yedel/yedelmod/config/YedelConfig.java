@@ -32,8 +32,11 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 *///?} else {
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.core.particles.ParticleTypes;
 import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
+import org.polyfrost.oneconfig.api.config.v1.Node;
+import org.polyfrost.oneconfig.api.config.v1.Tree;
 import org.polyfrost.oneconfig.api.config.v1.annotations.*;
 import org.polyfrost.oneconfig.api.notifications.v1.Notifications;
 import org.polyfrost.oneconfig.api.platform.v1.DesktopHelper;
@@ -47,8 +50,11 @@ import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
 *///?} else
 import net.fabricmc.loader.api.FabricLoader;
-//? if legacy
- //import net.minecraft.util.EnumParticleTypes;
+//? if legacy {
+//import net.minecraft.util.EnumParticleTypes;
+//?} else {
+import net.minecraft.core.registries.BuiltInRegistries;
+//?}
 
 
 import java.net.URI;
@@ -223,8 +229,7 @@ public class YedelConfig extends Config {
 
     // Features
 
-    //? if legacy {
-    /*
+
     @Switch(
         title = "Custom Hit Particles",
         description = "Spawns customizable particles when hitting entities.",
@@ -237,8 +242,10 @@ public class YedelConfig extends Config {
         title = "Custom Particle Type",
         description = "The custom particle to be spawned when attacking an entity.",
         category = "Features",
-        subcategory = "Features",
-        options = {
+        subcategory = "Features"
+        //? if legacy {
+        /*
+        ,options = {
             "Explosion (Normal)",
             "Explosion (Large)",
             "Explosion (Huge)",
@@ -282,8 +289,28 @@ public class YedelConfig extends Config {
             "Item Take",
             "Guardian"
         }
+
+         */
+        //?}
     )
-    public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+    //? if legacy {
+    // public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+    //?} else {
+    public int customParticleType = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
+    //?}
+
+    // i don't know if i need to properly credit this
+    // yo shoutout overflowparticles and evergreenhud
+    //? if modern {
+    @Override
+    public Tree makeTree() {
+        Tree tree = super.makeTree();
+        Node customParticleTypeNode = tree.getProp("customParticleType");
+        String[] options = BuiltInRegistries.PARTICLE_TYPE.stream().map((particleType) -> BuiltInRegistries.PARTICLE_TYPE.getKey(particleType).toString()).toArray(String[]::new);
+        customParticleTypeNode.addMetadata("options", options);
+        return tree;
+    }
+    //?}
 
     @Slider(
         title = "Particle Y Offset",
@@ -310,8 +337,6 @@ public class YedelConfig extends Config {
         subcategory = "Features"
     )
     public boolean onlySpawnCustomParticlesOnPlayers = false;
-     
-    *///?}
 
     @Switch(
         title = "Regex Chat Filter",
