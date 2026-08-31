@@ -13,6 +13,7 @@ val modDescription by CommonProperty<String>()
 val modIcon by CommonProperty<String>()
 val fabricLoaderVersion by CommonProperty<String>()
 val oneconfigVersion by CommonProperty<String>()
+val hypixelModApiVersion by CommonProperty<String>()
 val rangedVersion by CommonProperty<Boolean>()
 val maxMc by CommonProperty<String?>()
 val finalFileName by CommonProperty<String>()
@@ -51,6 +52,7 @@ dependencies {
     implementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     implementation("org.polyfrost.oneconfig:${sc.current.version}-fabric:$oneconfigVersion")
     implementation("net.fabricmc.fabric-api:fabric-api:$fabricApiVersion")
+    // oneconfig provides hypixel mod api for now
     api("com.terraformersmc:modmenu:$modMenuVersion")
 }
 
@@ -96,6 +98,7 @@ tasks {
                 if (rangedVersion) ">=${sc.current.version} <=${maxMc}" else sc.current.version
             register("minecraft", minecraftDependency)
             register("oneconfigv1", target(oneconfigVersion))
+            register("hypixelmodapi", target(hypixelModApiVersion))
             register("mixinJava", "JAVA_${javaVersion.majorVersion}")
             register("mixinMin", "0.8")
         }

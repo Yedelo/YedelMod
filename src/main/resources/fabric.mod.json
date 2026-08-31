@@ -22,8 +22,9 @@
     "java": "${java}",
     "fabricloader": "${fabricLoader}",
     "minecraft": "${minecraft}",
+    "fabric-api": "*",
     "oneconfigv1": "${oneconfigv1}",
-    "fabric-api": "*"
+    "hypixel-mod-api": "${hypixelmodapi}"
   },
   "recommends": {
     "modmenu": "*"

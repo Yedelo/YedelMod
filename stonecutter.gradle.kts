@@ -80,6 +80,7 @@ stonecutter parameters {
     val modIcon by Declare(extra["modIcon"])
     val fabricLoaderVersion by Declare(properties.getAs<String>("versions.fabricloader"))
     val oneconfigVersion by Declare(properties.getAs<String>("versions.oneconfig"))
+    val hypixelModApiVersion by Declare(properties.getAs<String>("versions.hypixelmodapi"))
     val rangedVersion by Declare(properties.getAs<String>("versioning") == "range")
     val maxMc by Declare(if (rangedVersion) properties.getAs<String>("mc.max") else null)
     val minecraftTarget by Declare(if (rangedVersion) "${current.version}-$maxMc" else current.version)

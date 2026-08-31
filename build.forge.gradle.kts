@@ -13,6 +13,8 @@ val modName by CommonProperty<String>()
 val modId by CommonProperty<String>()
 val modDescription by CommonProperty<String>()
 val modIcon by CommonProperty<String>()
+val oneconfigVersion by CommonProperty<String>()
+val hypixelModApiVersion by CommonProperty<String>()
 val rangedVersion by CommonProperty<Boolean>()
 val maxMc by CommonProperty<String?>()
 val finalFileName by CommonProperty<String>()
@@ -47,11 +49,11 @@ configurations.named("implementation") {
 
 dependencies {
     shadeOptionally("cc.polyfrost:oneconfig-wrapper-launchwrapper:${sc.properties.getAs<String>("versions.oneconfigwrapper")}")
-    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:${sc.properties.getAs<String>("versions.oneconfig")}")
+    compileOnly("cc.polyfrost:oneconfig-${mcData.version}-${mcData.loader}:$oneconfigVersion")
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
 
-    modImplementation("net.hypixel:mod-api-forge:${sc.properties.getAs<String>("versions.hypixelmodapi")}")
-    shadeOptionally("net.hypixel:mod-api-forge-tweaker:${sc.properties.getAs<String>("versions.hypixelmodapi")}")
+    modImplementation("net.hypixel:mod-api-forge:$hypixelModApiVersion")
+    shadeOptionally("net.hypixel:mod-api-forge-tweaker:$hypixelModApiVersion")
 }
 
 toolkitLoomHelper {

@@ -1,5 +1,6 @@
 versions.fabricloader = "0.19.3"
 versions.devauth = "1.2.2"
+versions.hypixelmodapi = "1.0.1.2"
 
 ["26.2-fabric"]
 versioning = "single"
@@ -18,4 +19,3 @@ versions.modmenu = "18.0.0"
 versioning = "single"
 versions.oneconfig = "0.2.2-alpha+"
 versions.oneconfigwrapper = "1.0.0-beta+"
-versions.hypixelmodapi = "1.0.1.2"
