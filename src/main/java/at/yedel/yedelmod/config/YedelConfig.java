@@ -318,7 +318,7 @@ public class YedelConfig extends Config {
         category = "Features",
         subcategory = "Features",
         min = -1,
-        max = 2,
+        max = 3,
         step = 1
     )
     public int particleYOffset = 2;
