@@ -56,8 +56,8 @@ public class BountyHuntingHud extends TextHud {
             lines.addAll(TNTTagFeatures.getInstance().getDisplayLines());
         }
     }
-    */
-    //?} else {
+    
+    *///?} else {
     @Override
     protected String getText() {
         ArrayList<String> lines = new ArrayList<>();

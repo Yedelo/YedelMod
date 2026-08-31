@@ -113,7 +113,7 @@ public class YedelConfig extends Config {
 
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
         //? if legacy
-        // addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+         //addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
         addDependentOption("dropperAutoGG", "autoGGDelay");
         addDependentOption("regexChatFilter", "regexChatFilterPattern");
         addDependentOption("randomPlaceholder", "randomPlaceholderText");
@@ -121,7 +121,7 @@ public class YedelConfig extends Config {
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidentWithoutDoubtKeybind");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill");
         //? if v0
-        // addDependentOption("bountyHunting", "bountyHuntingHud");
+         //addDependentOption("bountyHunting", "bountyHuntingHud");
     }
 
     //? if v0 {
@@ -136,8 +136,8 @@ public class YedelConfig extends Config {
         }
         return option;
     }
-     */
-    //?}
+     
+    *///?}
 
     public void open() {
         //? if v0
@@ -290,11 +290,11 @@ public class YedelConfig extends Config {
             "Guardian"
         }
 
-         */
-        //?}
+         
+        *///?}
     )
     //? if legacy {
-    // public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+     //public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
     //?} else {
     public int customParticleType = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
     //?}
@@ -648,14 +648,14 @@ public class YedelConfig extends Config {
     private transient int empty$12 = 1;
 
     //? if v0 {
-    @Info /* command */ (
+    /*@Info /^ command ^/ (
         title = "- update [platform]",
         description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
         category = "Commands",
         subcategory = "Index"
     )
     private transient int empty$13 = 1;
-    //?}
+    *///?}
 
     @Info /* command */ (
         title = "- yedelmessage (message)",
@@ -781,13 +781,13 @@ public class YedelConfig extends Config {
     //? if v0 {
     /*
        @HUD(
-        name = "Bounty Hunting HUD",
+        title = "Bounty Hunting HUD",
         category = "TNT Tag",
         subcategory = "HUD"
     )
     public BountyHuntingHud bountyHuntingHud = new BountyHuntingHud();
-     */
-    //?}
+     
+    *///?}
 
     // End of visible config
 

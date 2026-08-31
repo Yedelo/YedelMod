@@ -30,9 +30,9 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
 *///?}
 //? if forge {
-//import at.yedel.yedelmod.utils.update.UpdateManager;
-//import at.yedel.yedelmod.utils.update.UpdateSource;
-//?}
+/*import at.yedel.yedelmod.utils.update.UpdateManager;
+import at.yedel.yedelmod.utils.update.UpdateSource;
+*///?}
 
 
 import java.io.IOException;
@@ -292,23 +292,23 @@ public class YedelCommand {
 
     //? if forge {
     /*
-    @SubCommandGroup("update")
+    @HandlerGroup("update")
     public static class Update {
         @Main
         public void main() {
             YedelMod.getInstance().getUpdateManager().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
         }
 
-        @SubCommand
+        @Handler
         public void modrinth() {
             YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
         }
 
-        @SubCommand
+        @Handler
         public void github() {
             YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
         }
     }
-     */
-    //?}
+     
+    *///?}
 }
