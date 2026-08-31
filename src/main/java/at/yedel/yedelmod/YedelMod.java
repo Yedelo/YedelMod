@@ -77,6 +77,7 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 			StrengthIndicators.getInstance(),
 			TNTTagFeatures.getInstance()
 		);
+		CustomHitParticles.getInstance();
 		RandomPlaceholder.getInstance();
 		LimboCreative.getInstance();
 		//? if v1
