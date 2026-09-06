@@ -5,14 +5,14 @@ versions.hypixelmodapi = "1.0.1.2"
 ["26.2-fabric"]
 versioning = "single"
 versions.fabricapi = "0.158.0+26.2"
-versions.oneconfig = "1.1.7"
+versions.oneconfig = "1.1.12"
 versions.modmenu = "20.0.1"
 
 ["26.1-fabric"]
 versioning = "range"
 mc.max = "26.1.2"
 versions.fabricapi = "0.155.2+26.1.2"
-versions.oneconfig = "1.1.7"
+versions.oneconfig = "1.1.12"
 versions.modmenu = "18.0.0"
 
 ["1.8.9-forge"]
