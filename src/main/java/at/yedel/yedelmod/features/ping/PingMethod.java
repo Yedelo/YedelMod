@@ -28,12 +28,13 @@ import java.util.function.Function;
 
 
 public enum PingMethod {
-    //? if v0 {
-    /*COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendChat("/" + TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    //? if legacy {
+    /*COMMAND_RESPONSE("Command", () -> TextUtils.sendChat("/" + TextUtils.randomUuid(8))),
+    TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
+    STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
-        if (HypixelUtils.INSTANCE.isHypixel()) {
+        //~ if v1 'HypixelUtils.INSTANCE' -> 'HypixelUtils'
+        if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
         }
         else {
@@ -41,10 +42,10 @@ public enum PingMethod {
         }
     }),
     SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
-        if (Minecraft.getMinecraft().isSingleplayer()) {
+        if (Minecraft.getInstance().isSingleplayer()) {
             throw new PingException("This method does not work in singleplayer!");
         }
-        long ping = Minecraft.getMinecraft().getCurrentServerData().pingToServer;
+        long ping = Minecraft.getInstance().getCurrentServerData().pingToServer;
         if (ping == 0) {
             throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
         }

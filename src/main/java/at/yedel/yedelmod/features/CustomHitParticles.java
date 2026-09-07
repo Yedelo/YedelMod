@@ -6,13 +6,11 @@ package at.yedel.yedelmod.features;
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.Minecraft;
 //? if forge {
-//import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-//?} else {
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-//?}
+/*import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+*///?}
 //? if legacy {
-/*
-import at.yedel.yedelmod.utils.NumberUtils;
+/*import at.yedel.yedelmod.utils.NumberUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,9 +18,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-
 *///?} else {
+
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.*;
@@ -57,7 +55,7 @@ public class CustomHitParticles {
     //?}
 
     private CustomHitParticles() {
-        //? if fabric {
+        //? if modern {
         AttackEntityCallback.EVENT.register((_, level, _, entity, _) -> {
             if (!level.isClientSide()) return InteractionResult.PASS;
             if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().customHitParticles) {
@@ -65,8 +63,6 @@ public class CustomHitParticles {
             }
             return InteractionResult.PASS;
         });
-        //?}
-        //? if modern {
         // i can't believe i have to do something like this. this type of code should be reserved for the content modders!
         register((type) -> new BlockParticleOption((ParticleType<BlockParticleOption>) type, Blocks.STONE.defaultBlockState()), ParticleTypes.BLOCK, ParticleTypes.BLOCK_MARKER, ParticleTypes.FALLING_DUST, ParticleTypes.DUST_PILLAR, ParticleTypes.BLOCK_CRUMBLE);
         //? if >= 26.2 {
@@ -134,7 +130,7 @@ public class CustomHitParticles {
                 default:
                     parameters = 0;
             }
-            Minecraft.getMinecraft().theWorld.spawnParticle(particle, true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, parameters);
+            Minecraft.getInstance().theWorld.spawnParticle(particle, true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, parameters);
              
             *///?} else {
             position = entity.position();

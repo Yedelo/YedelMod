@@ -4,7 +4,7 @@ package at.yedel.yedelmod.mixins.legacy;
 
 
 import at.yedel.yedelmod.utils.NameLineEvent;
-import cc.polyfrost.oneconfig.events.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

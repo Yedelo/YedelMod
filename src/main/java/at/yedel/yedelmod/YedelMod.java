@@ -29,7 +29,7 @@ import at.yedel.yedelmod.features.CustomHitParticles;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 //? if v0 {
-/*import cc.polyfrost.oneconfig.events.EventManager;
+/*import org.polyfrost.oneconfig.api.event.v1.EventManager;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 *///? else {
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;

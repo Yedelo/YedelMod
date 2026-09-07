@@ -31,8 +31,11 @@ import cc.polyfrost.oneconfig.utils.Notifications;
 import java.lang.reflect.Field;
 import java.util.Objects;
 *///?} else {
+//? if legacy {
+//import org.polyfrost.oneconfig.internal.legacy.InputConstants;
+//?} else {
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.core.particles.ParticleTypes;
+//?}
 import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.Node;
@@ -54,6 +57,7 @@ import net.fabricmc.loader.api.FabricLoader;
 //import net.minecraft.util.EnumParticleTypes;
 //?} else {
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.particles.ParticleTypes;
 //?}
 
 

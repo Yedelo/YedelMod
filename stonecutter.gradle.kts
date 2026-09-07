@@ -46,6 +46,7 @@ stonecutter parameters {
         }
 
         string(v1) {
+            replace("cc.polyfrost.oneconfig.events.EventManager", "org.polyfrost.oneconfig.api.event.v1.EventManager")
             replace("cc.polyfrost.oneconfig.utils.Multithreading", "org.polyfrost.oneconfig.utils.v1.Multithreading")
             replace("cc.polyfrost.oneconfig.libs.eventbus.Subscribe", "org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe")
             replace("cc.polyfrost.oneconfig.events.event.ChatReceiveEvent", "org.polyfrost.oneconfig.api.event.v1.events.ChatEvent")
@@ -56,10 +57,14 @@ stonecutter parameters {
             replace("WorldLoadEvent", "WorldEvent.Load")
             replace("event.packet", "event.getPacket()")
             replace("UTextComponent.Companion.stripFormatting(event.message.getUnformattedText())", "event.getFullyUnformattedMessage()")
+            replace("UTextComponent.Companion.stripFormatting", "Platform.i18n().getUnformattedText")
             replace("UChat.chat", "Platform.compatibility().displayChatMessage")
             replace("UChat.say", "Minecraft.getInstance().player.connection.sendChat")
             replace("event.isCancelled", "event.cancelled")
+        }
+        string(modern) {
             replace("Minecraft.getMinecraft().addScheduledTask", "Minecraft.getInstance().schedule")
+            replace("Minecraft.getMinecraft()", "Minecraft.getInstance()")
         }
     }
 

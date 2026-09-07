@@ -32,7 +32,7 @@ public class Constants {
 
     public static void playPingSound(float volume, float pitch) {
         //? if legacy {
-        //Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(PLING_SOUND_LOCATION, pitch));
+        //Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(PLING_SOUND_LOCATION, pitch));
         //?} else
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, pitch, volume));
     }

@@ -137,7 +137,7 @@ public class StrengthIndicators {
             //? if modern
             && event.isPlayer()
         ) {
-            //? if v0
+            //? if legacy
             //AbstractClientPlayer player = event.getPlayer();
             //? else
             Player player = (Player) event.getEntity();

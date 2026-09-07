@@ -23,14 +23,16 @@ import net.minecraft.client.Minecraft;
 //? if legacy {
 /*import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 *///?} else {
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 //?}
+//? if forge {
+/*import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+*///?}
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,9 +90,7 @@ public class TNTTagFeatures {
 
     public void onTNTTagJoin() {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
-            //? if v0
-            //playerName = Minecraft.getMinecraft().thePlayer.getName();
-            //? else
+            //~ if modern 'thePlayer' -> 'getUser()'
             playerName = Minecraft.getInstance().getUser().getName();
             dead = false;
             target = null;
@@ -111,7 +111,7 @@ public class TNTTagFeatures {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
             //? if legacy {
-            /*for (NetworkPlayerInfo playerInfo : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+            /*for (NetworkPlayerInfo playerInfo : Minecraft.getInstance().getNetHandler().getPlayerInfoMap()) {
                 players.add(playerInfo.getGameProfile().getName());
             }
             *///?} else {
@@ -162,7 +162,7 @@ public class TNTTagFeatures {
     @Subscribe
     public void renderTargetLabel(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
-            //~ if v1 'event.getPlayer().getName()' -> 'event.getEntity().getName().getString()'
+            //~ if modern 'event.getPlayer().getName()' -> 'event.getEntity().getName().getString()'
             if (Objects.equals(event.getEntity().getName().getString(), target)) {
                 String text = "Distance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
                 //? if legacy {

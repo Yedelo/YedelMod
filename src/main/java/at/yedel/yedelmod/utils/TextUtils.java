@@ -2,6 +2,8 @@ package at.yedel.yedelmod.utils;
 
 
 
+import net.minecraft.client.Minecraft;
+
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -9,6 +11,14 @@ import java.util.regex.Pattern;
 
 public class TextUtils {
     private static final Pattern ampersandFormattingPattern = Pattern.compile("&([0123456789abcdefklnor])");
+
+    public static void sendChat(String message) {
+        //? if legacy {
+        //Minecraft.getInstance().thePlayer.sendChatMessage(message);
+        //?} else {
+        Minecraft.getInstance().player.connection.sendChat(message);
+        //?}
+    }
 
     public static String replaceAmpersand(String string) {
         return ampersandFormattingPattern.matcher(string).replaceAll("§$1");
