@@ -14,6 +14,7 @@ import at.yedel.yedelmod.utils.TextUtils;
 /*import cc.polyfrost.oneconfig.libs.universal.UChat;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import cc.polyfrost.oneconfig.utils.commands.annotations.*;
+import net.minecraft.event.HoverEvent;
     *///?} else {
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -26,7 +27,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*import net.minecraft.event.HoverEvent;
+/*
 import org.lwjgl.opengl.Display;
 *///?}
 //? if forge {
@@ -130,10 +131,7 @@ public class YedelCommand {
         description = "Sends an illegal chat character, which disconnects you on most servers and sends you to limbo-like areas on some. No longer works on Hypixel, use /limbo instead."
     )
     public void limbo() {
-        //? if v0 {
-        //Minecraft.getInstance().player.connection.sendChat("§");
-        //?} else
-        Minecraft.getInstance().player.connection.sendChat("§");
+        TextUtils.sendChat("§");
     }
 
     @Handler(
@@ -169,7 +167,7 @@ public class YedelCommand {
 
     @Handler(description = "Sets the title of the game window.")
     public void settitle(/*? if v0 {*//*@Greedy *//*?}*/String title) {
-        //? if v0
+        //? if legacy
         //Display.setTitle(title);
         //? else
         this.displayTitle = title;

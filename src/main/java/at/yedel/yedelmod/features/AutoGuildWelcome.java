@@ -4,6 +4,7 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 
+import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -35,7 +36,7 @@ public class AutoGuildWelcome {
 			Matcher guildJoinMatcher = GUILD_JOIN_PATTERN.matcher(msg);
 			while (guildJoinMatcher.find()) {
 				String newMember = guildJoinMatcher.group("newMember");
-				Minecraft.getInstance().player.connection.sendChat("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
+				TextUtils.sendChat("/gc " + YedelConfig.getInstance().guildWelcomeMessage.replace("[player]", newMember));
 			}
 		}
 	}

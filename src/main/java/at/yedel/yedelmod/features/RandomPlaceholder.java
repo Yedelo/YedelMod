@@ -6,9 +6,8 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.TextUtils;
 //? if v0
 //import cc.polyfrost.oneconfig.events.event.ChatSendEvent;
-
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
-//? if fabric
+//? if modern
  import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 
@@ -21,7 +20,7 @@ public class RandomPlaceholder {
     }
 
     private RandomPlaceholder() {
-        //? if v1 {
+        //? if modern {
         ClientSendMessageEvents.MODIFY_CHAT.register((message) -> should() ? replace(message) : message);
         ClientSendMessageEvents.MODIFY_COMMAND.register((message) -> should() ? replace(message) : message);
         //?}

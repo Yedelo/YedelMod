@@ -4,7 +4,7 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 
-
+import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -33,8 +33,7 @@ public class DropperGG {
 	        String msg = event.getFullyUnformattedMessage();
 			if (msg.contains("                                Total Fails: ") || msg.contains("                              You didn't finish!")) {
 				Multithreading.schedule(() -> {
-					//~ if v1 'UChat.say' -> 'Minecraft.getInstance().player.connection.sendChat'
-					Minecraft.getInstance().player.connection.sendChat("/ac gg");
+					TextUtils.sendChat("/ac gg");
 				}, YedelConfig.getInstance().autoGGDelay, TimeUnit.SECONDS);
 			}
 		}

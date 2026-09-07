@@ -29,7 +29,7 @@ public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
     private final List<Component> nameLines = new ArrayList<>();
     private double verticalAdjustment = 0;
 
-    //? if forge {
+    //? if legacy {
     /*public NameLineEvent(NameRenderingMethod method, AbstractClientPlayer player, double distanceSquared) {
         this.method = method;
         this.player = player;
@@ -83,7 +83,7 @@ public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
         this.verticalAdjustment += verticalAdjustment;
     }
 
-    //? if forge {
+    //? if legacy {
     /*public enum NameRenderingMethod {
         STANDARD,
         SNEAKING

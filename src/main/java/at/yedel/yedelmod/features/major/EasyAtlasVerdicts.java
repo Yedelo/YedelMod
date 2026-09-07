@@ -108,7 +108,7 @@ public class EasyAtlasVerdicts {
                     if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy
-                        //((InvokerMinecraft) UMinecraft.getMinecraft()).yedelmod$rightClickMouse();
+                        //((InvokerMinecraft) Minecraft.getInstance()).yedelmod$rightClickMouse();
                         //? else
                         Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);
                     }
@@ -124,7 +124,7 @@ public class EasyAtlasVerdicts {
             /*S2FPacketSetSlot packet = (S2FPacketSetSlot) event.getPacket();
             ItemStack item = packet.func_149174_e();
             if (item == null) return;
-            String itemName = UTextComponent.Companion.stripFormatting(item.getDisplayName());
+            String itemName = Platform.i18n().getUnformattedText(item.getDisplayName());
             *///?} else {
             ClientboundContainerSetSlotPacket packet = (ClientboundContainerSetSlotPacket) event.getPacket();
             ItemStack item = packet.getItem();
@@ -137,9 +137,9 @@ public class EasyAtlasVerdicts {
                 Multithreading.schedule(() -> {
                     Minecraft.getInstance().schedule(() -> {
                         //? if legacy {
-                        /*if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
-                            int windowId = ((GuiContainer) UScreen.getCurrentScreen()).inventorySlots.windowId;
-                            UMinecraft.getMinecraft().playerController.windowClick(windowId, packet.func_149173_d(), 0, 0, UPlayer.getPlayer());
+                        /*if (Minecraft.getInstance().currentScreen instanceof GuiContainer) {
+                            int windowId = ((GuiContainer) Minecraft.getInstance().currentScreen).inventorySlots.windowId;
+                            Minecraft.getInstance().playerController.windowClick(windowId, packet.func_149173_d(), 0, 0, Minecraft.getInstance().thePlayer);
                             verdict = "";
                         }
                         *///?} else {
