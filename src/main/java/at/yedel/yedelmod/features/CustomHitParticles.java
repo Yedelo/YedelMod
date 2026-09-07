@@ -41,6 +41,7 @@ import java.util.function.Function;
 
 
 
+//@TODO not implemented for ornithe: event
 public class CustomHitParticles {
     private static final CustomHitParticles INSTANCE = new CustomHitParticles();
 

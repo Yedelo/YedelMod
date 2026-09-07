@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
 
 
 
+//@TODO not implemented for ornithe: event attacking players to bounty tag them
 public class TNTTagFeatures {
     private static final TNTTagFeatures INSTANCE = new TNTTagFeatures();
 

@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 
 
 
+//@TODO not implemented for ornithe: event tick decreasing everyone's strength time
 public class StrengthIndicators {
     private static final StrengthIndicators INSTANCE = new StrengthIndicators();
 
