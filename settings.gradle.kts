@@ -12,6 +12,8 @@ pluginManagement {
         maven("https://maven.deftu.dev/snapshots")
         maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
         maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
+        maven("https://maven.ornithemc.net/releases")
+        maven("https://maven.ornithemc.net/snapshots")
     }
 }
 
@@ -21,13 +23,13 @@ plugins {
 
 stonecutter {
     create(rootProject) {
-        fun registerProject(versionString: String, loader: String) {
-            version("$versionString-$loader", versionString).buildscript("build.$loader.gradle.kts")
+        fun registerProject(versionString: String, vararg loaders: String) {
+            for (loader in loaders) version("$versionString-$loader", versionString).buildscript("build.$loader.gradle.kts")
         }
 
         registerProject("26.2", "fabric")
         registerProject("26.1", "fabric")
-        registerProject("1.8.9", "forge")
+        registerProject("1.8.9", "forge", "fabric")
         vcsVersion = "26.1-fabric"
     }
 }
