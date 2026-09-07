@@ -80,6 +80,10 @@ val ploceus = if (ornithe) {
     null
 }
 
+stonecutter {
+    constants["ornithe"] = ornithe
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:${sc.current.version}")
     if (ornithe) mappings(ploceus!!.mcpMappings("stable", "1.8.9", "22"))
