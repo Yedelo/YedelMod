@@ -16,7 +16,7 @@
     ]
   },
   "mixins": [
-    "mixins.modern.yedelmod.json"
+    "mixins.${mixinConfig}.yedelmod.json"
   ],
   "depends": {
     "java": "${java}",
