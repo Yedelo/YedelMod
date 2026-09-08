@@ -6,5 +6,6 @@
     "InvokerMinecraft",
     "MixinRendererLivingEntity",
     "MixinRenderPlayer"
-  ]
+  ],
+  "verbose": true
 }

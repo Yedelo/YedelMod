@@ -6,5 +6,6 @@
     "AbstractContainerScreenInvoker",
     "EntityRendererMixin",
     "MinecraftMixin"
-  ]
+  ],
+  "verbose": true
 }
