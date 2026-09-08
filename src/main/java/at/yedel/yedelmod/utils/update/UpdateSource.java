@@ -16,7 +16,7 @@ public enum UpdateSource {
 
     UpdateSource(String coloredName) {
         this.coloredName = coloredName;
-        this.name = UTextComponent.Companion.stripFormatting(coloredName);
+        this.name = Platform.i18n().getUnformattedText(coloredName);
     }
 }
 *//*?}*/
