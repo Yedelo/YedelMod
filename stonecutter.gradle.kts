@@ -12,6 +12,7 @@ stonecutter parameters {
     val v1 = !v0
     val legacy = current.parsed <= "1.8.9"
     val modern = !legacy
+    val ornithe = legacy && loader == "fabric"
 
     constants {
         match(loader, "forge", "fabric")
@@ -19,6 +20,7 @@ stonecutter parameters {
         this["v1"] = v1
         this["legacy"] = legacy
         this["modern"] = modern
+        this["ornithe"] = ornithe
     }
 
     replacements {
