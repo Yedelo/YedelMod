@@ -52,7 +52,7 @@ public enum PingMethod {
         return ping;
     });
     *///?} else {
-    COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendChat("/" + TextUtils.randomUuid(8))),
+    COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendCommand(TextUtils.randomUuid(8))),
     TAB_PACKET("Tab", () -> Minecraft.getInstance().player.connection.send(new ServerboundCommandSuggestionPacket(0, "#"))),
     STATS_PACKET("Stats", () -> Minecraft.getInstance().player.connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
