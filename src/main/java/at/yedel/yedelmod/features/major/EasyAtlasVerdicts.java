@@ -122,6 +122,7 @@ public class EasyAtlasVerdicts {
         if (inAtlas && event.getPacket() instanceof ClientboundContainerSetSlotPacket) {
             //? if legacy {
             /*S2FPacketSetSlot packet = (S2FPacketSetSlot) event.getPacket();
+            //~ if ornithe 'func_149174_e' -> 'm_64707080'
             ItemStack item = packet.func_149174_e();
             if (item == null) return;
             String itemName = Platform.i18n().getUnformattedText(item.getDisplayName());
@@ -139,6 +140,7 @@ public class EasyAtlasVerdicts {
                         //? if legacy {
                         /*if (Minecraft.getInstance().currentScreen instanceof GuiContainer) {
                             int windowId = ((GuiContainer) Minecraft.getInstance().currentScreen).inventorySlots.windowId;
+                            //~ if ornithe 'func_149173_d' -> 'm_40505239'
                             Minecraft.getInstance().playerController.windowClick(windowId, packet.func_149173_d(), 0, 0, Minecraft.getInstance().thePlayer);
                             verdict = "";
                         }
