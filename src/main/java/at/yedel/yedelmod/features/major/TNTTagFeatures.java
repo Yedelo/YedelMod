@@ -21,12 +21,15 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*import net.minecraft.client.entity.AbstractClientPlayer;
+/*
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.Entity;
 *///?} else {
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResult;
 //?}
 //? if forge {
@@ -43,7 +46,6 @@ import java.util.regex.Pattern;
 
 
 
-//@TODO not implemented for ornithe: event attacking players to bounty tag them
 public class TNTTagFeatures {
     private static final TNTTagFeatures INSTANCE = new TNTTagFeatures();
 
@@ -74,16 +76,13 @@ public class TNTTagFeatures {
 
         //? if modern {
         AttackEntityCallback.EVENT.register((_, _, _, entity, _) -> {
-            if (Objects.equals(entity.getName().toString(), target) && !dead) {
-                fightingTarget = true;
-            }
+            handleTargetAttack(entity);
             return InteractionResult.PASS;
         });
         //?}
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
-        // intended. reassign the variable and also check it
         if (inTNTTag = packet.getMode().isPresent() && packet.getMode().get().equals("TNTAG")) {
             onTNTTagJoin();
         }
@@ -151,14 +150,12 @@ public class TNTTagFeatures {
         }
     }
 
-    //? if v0 {
-    /*@SubscribeEvent
-    public void handleAttackTarget(AttackEntityEvent event) {
-        if (Objects.equals(event.target.getName(), target) && !dead) {
+    public void handleTargetAttack(Entity entity) {
+        //~ if modern 'getName()' -> 'getName().getString()'
+        if (Objects.equals(entity.getName().getString(), target) && !dead) {
             fightingTarget = true;
         }
     }
-    *///?}
 
     @Subscribe
     public void renderTargetLabel(NameLineEvent event) {

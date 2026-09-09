@@ -2,6 +2,7 @@ package at.yedel.yedelmod;
 
 
 
+import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
@@ -10,7 +11,6 @@ import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
 import at.yedel.yedelmod.hud.BountyHuntingHud;
 import at.yedel.yedelmod.hud.CustomTextHud;
-import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Threading;
 
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
-import at.yedel.yedelmod.features.CustomHitParticles;
 *///?}
 //? else if fabric {
  import net.fabricmc.api.ClientModInitializer;
@@ -34,9 +33,8 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 *///? else {
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
  import org.polyfrost.oneconfig.api.event.v1.EventManager;
- import org.polyfrost.oneconfig.api.hud.v1.HudManager;import org.polyfrost.oneconfig.api.platform.v1.Platform;import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
-import org.polyfrost.oneconfig.api.platform.v1.internal.ScreenPlatformImpl;
-    //?}
+ import org.polyfrost.oneconfig.api.hud.v1.HudManager;
+//?}
 
 import java.util.concurrent.TimeUnit;
 
@@ -100,7 +98,7 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		initialize();
-		registerEventListeners(this, RandomPlaceholder.getInstance(), CustomHitParticles.getInstance());
+		registerEventListeners(this);
 	}
 
 	@Mod.EventHandler

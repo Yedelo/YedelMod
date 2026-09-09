@@ -41,7 +41,6 @@ import java.util.function.Function;
 
 
 
-//@TODO not implemented for ornithe: event
 public class CustomHitParticles {
     private static final CustomHitParticles INSTANCE = new CustomHitParticles();
 
@@ -83,16 +82,6 @@ public class CustomHitParticles {
         //?}
     }
 
-    //? if forge {
-    /*
-    @SubscribeEvent
-    public void onAttack(AttackEntityEvent event) {
-        if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().customHitParticles) {
-            handleAttack(event.entity);
-        }
-    }
-     
-    *///?}
 
     public void handleAttack(Entity entity) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().customHitParticles) {

@@ -6,12 +6,13 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
 
-import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 //? if v0 {
 /*import cc.polyfrost.oneconfig.events.event.Stage;
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-*///?}
+*///?} else {
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
+//?}
 import com.google.common.collect.ImmutableMap;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -36,7 +37,6 @@ import java.util.regex.Pattern;
 
 
 
-//@TODO not implemented for ornithe: event tick decreasing everyone's strength time
 public class StrengthIndicators {
     private static final StrengthIndicators INSTANCE = new StrengthIndicators();
 
@@ -72,17 +72,12 @@ public class StrengthIndicators {
     private double strengthDuration;
 
     private StrengthIndicators() {
-        //? if modern {
-        ClientTickEvents.END_CLIENT_TICK.register((_) -> {
-            onTick();
-        });
-        //?}
         HypixelModAPI.getInstance().createHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
     }
 
-    //? if v0
-    //@Subscribe
-    private void onTick(/*? if v0 {*//*TickEvent event *//*?}*/) {
+    @Subscribe
+    //~ if v1 'TickEvent' -> 'TickEvent.Start'
+    private void onTick(TickEvent.Start event) {
         //? if v0
         //if (event.stage == Stage.START) return;
         Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
@@ -162,12 +157,6 @@ public class StrengthIndicators {
             //? else
             event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
         }
-    }
-
-
-    @Subscribe
-    public void clearStrengthPlayers(WorldEvent.Load event) {
-        strengthPlayers.clear();
     }
 
     private static final Pattern[] KILL_PATTERNS = Arrays.stream(new String[] {

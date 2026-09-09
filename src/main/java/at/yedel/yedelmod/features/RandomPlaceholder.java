@@ -4,14 +4,10 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.TextUtils;
-//? if v0
-//import cc.polyfrost.oneconfig.events.event.ChatSendEvent;
-import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 //? if modern
  import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 
- //@TODO not implemented for ornithe: event
 public class RandomPlaceholder {
     private static final RandomPlaceholder INSTANCE = new RandomPlaceholder();
 
@@ -26,20 +22,11 @@ public class RandomPlaceholder {
         //?}
     }
 
-    //? if v0 {
-    /*@Subscribe
-    public void modifyMessage(ChatSendEvent event) {
-        if (should()) {
-            event.message = replace(event.message);
-        }
-    }
-    *///?}
-
-    private boolean should() {
+    public boolean should() {
         return YedelConfig.getInstance().enabled && YedelConfig.getInstance().randomPlaceholder && !YedelConfig.getInstance().randomPlaceholderText.trim().isEmpty();
     }
 
-    private String replace(String message) {
+     public String replace(String message) {
         return message.replace(YedelConfig.getInstance().randomPlaceholderText, "@" + TextUtils.randomUuid(8));
     }
 }
