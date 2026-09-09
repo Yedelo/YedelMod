@@ -7,7 +7,8 @@
     "MixinEntityPlayer",
     "MixinEntityPlayerSP",
     "MixinRendererLivingEntity",
-    "MixinRenderPlayer"
+    "MixinRenderPlayer",
+    "MixinFabricModAPI"
   ],
   "verbose": true
 }
