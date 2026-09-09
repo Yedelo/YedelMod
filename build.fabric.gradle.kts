@@ -83,6 +83,7 @@ val ploceus = if (ornithe) {
 dependencies {
     minecraft("com.mojang:minecraft:${sc.current.version}")
     if (ornithe) mappings(ploceus!!.mcpMappings("stable", "1.8.9", "22"))
+    if (ornithe) implementation("io.github.moehreag.hypixel:mod-api-fabric:1.0.2+build.1+mc1.8.9") { isTransitive = false }
     implementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     implementation("org.polyfrost.oneconfig:${sc.current.version}-$environment:$oneconfigVersion")
 
