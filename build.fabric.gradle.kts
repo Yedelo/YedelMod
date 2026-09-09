@@ -28,7 +28,6 @@ val fabricLoaderVersion = sc.properties.getAs<String>("versions.fabricloader")
 val fabricApiVersion = if (!ornithe) sc.properties.getAs<String>("versions.fabricapi") else null
 val oslCoreVersion = if (ornithe) sc.properties["versions.oslcore"] else null
 val oslEntrypointsVersion = if (ornithe) sc.properties["versions.oslentrypoints"] else null
-val oslNetworkingVersion = if (ornithe) sc.properties["versions.oslnetworking"] else null
 
 repositories {
     fun strictMaven(url: String, alias: String, vararg groups: String) = exclusiveContent {
@@ -92,9 +91,7 @@ dependencies {
     if (ornithe) {
         implementation("net.ornithemc.osl-gen2:core:${oslCoreVersion}")
         implementation("net.ornithemc.osl-gen2:entrypoints:${oslEntrypointsVersion}")
-        implementation("net.ornithemc.osl-gen2:networking:${oslNetworkingVersion}")
         compileOnly("net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7")
-        implementation("io.github.llamalad7:mixinextras-fabric:0.5.5")
     }
     else {
         implementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
