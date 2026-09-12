@@ -39,7 +39,7 @@ public abstract class MixinFabricModAPI {
         ServerboundHypixelPayload hypixelPayload = new ServerboundHypixelPayload(packet);
         NamespacedIdentifier id = NamespacedIdentifiers.parse(packet.getIdentifier());
         LogManager.getLogger().info("Sending hypixel packet {}", packet);
-        ClientPlayNetworking.send(id, hypixelPayload);
+        ClientPlayNetworking.sendNoCheck(id, hypixelPayload);
         return true;
     }
 }
