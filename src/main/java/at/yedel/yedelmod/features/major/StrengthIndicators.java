@@ -20,12 +20,12 @@ import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 //? if legacy {
-//import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.AbstractClientPlayer;
 //?} else {
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+/*import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-//?}
+*///?}
 
 
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class StrengthIndicators {
     }
 
     //? if legacy {
-    /*private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
+    private static final ImmutableMap<Integer, String> COLOR_MAP = ImmutableMap.<Integer, String>builder()
         .put(0, "§4")
         .put(1, "§c")
         .put(2, "§6")
@@ -63,7 +63,7 @@ public class StrengthIndicators {
         .put(14, "§8")
         .put(15, "§0")
         .build();
-    *///?}
+    //?}
     private static final String USERNAME_PATTERN = "(?<player>[1-9a-zA-Z_]{3,16})";
     private static final String NUMBER_WITH_COMMAS_PATTERN = "[\\d,]+";
 
@@ -131,31 +131,31 @@ public class StrengthIndicators {
     public void renderStrengthIndicators(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().skywarsStrengthIndicators && inSkywars
             //? if modern
-            && event.isPlayer()
+            //&& event.isPlayer()
         ) {
             //? if legacy
-            //AbstractClientPlayer player = event.getPlayer();
+            AbstractClientPlayer player = event.getPlayer();
             //? else
-            Player player = (Player) event.getEntity();
+            //Player player = (Player) event.getEntity();
             //~ if modern 'isUser' -> 'isLocalPlayer'
-            if (!YedelConfig.getInstance().showSelfStrength && player.isLocalPlayer()) {
+            if (!YedelConfig.getInstance().showSelfStrength && player.isUser()) {
                 return;
             }
-            String playerName = player.getName()/*? if modern {*/.getString()/*?}*/;
+            String playerName = player.getName()/*? if modern {*//*.getString()*//*?}*/;
             if (!strengthPlayers.containsKey(playerName)) {
                 return;
             }
             String text =
                 //? if legacy
-                //COLOR_MAP.get(YedelConfig.getInstance().strengthColor) +
+                COLOR_MAP.get(YedelConfig.getInstance().strengthColor) +
                     "Strength - "
                     + String.format("%.2f", strengthPlayers.get(playerName))
                     + "s";
             event.addVerticalAdjustment((float) YedelConfig.getInstance().strengthIndicatorOffset / 100);
             //? if legacy
-            //event.addNameLine(text);
+            event.addNameLine(text);
             //? else
-            event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
+            //event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
         }
     }
 

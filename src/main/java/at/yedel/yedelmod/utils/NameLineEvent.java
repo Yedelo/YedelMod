@@ -3,12 +3,12 @@ package at.yedel.yedelmod.utils;
 
 
 //? if legacy {
-//import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.AbstractClientPlayer;
 //?} else {
-import net.minecraft.network.chat.Component;
+/*import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-//?}
+*///?}
 //? if v1
 import org.polyfrost.oneconfig.api.event.v1.events.Event;
 
@@ -19,41 +19,41 @@ import java.util.List;
 //~ if modern 'String' -> 'Component' {
 public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
     //? if legacy {
-    /*private final NameRenderingMethod method;
+    private final NameRenderingMethod method;
     private final AbstractClientPlayer player;
-    *///?} else {
-    private final Entity entity;
+    //?} else {
+    /*private final Entity entity;
     private final boolean isPlayer;
-    //?}
+    *///?}
     private final double distanceSquared;
-    private final List<Component> nameLines = new ArrayList<>();
+    private final List<String> nameLines = new ArrayList<>();
     private double verticalAdjustment = 0;
 
     //? if legacy {
-    /*public NameLineEvent(NameRenderingMethod method, AbstractClientPlayer player, double distanceSquared) {
+    public NameLineEvent(NameRenderingMethod method, AbstractClientPlayer player, double distanceSquared) {
         this.method = method;
         this.player = player;
         this.distanceSquared = distanceSquared;
     }
-    *///?} else {
-
+    //?} else {
+/*
     public NameLineEvent(Entity entity, double distanceSquared) {
         this.entity = entity;
         this.isPlayer = entity instanceof Player;
         this.distanceSquared = distanceSquared;
     }
-    //?}
+    *///?}
 
     //? if legacy {
-    /*public NameRenderingMethod getMethod() {
+    public NameRenderingMethod getMethod() {
         return method;
     }
 
     public AbstractClientPlayer getPlayer() {
         return player;
     }
-    *///?} else {
-    
+    //?} else {
+    /*
     public Entity getEntity() {
         return entity;
     }
@@ -61,17 +61,17 @@ public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
     public boolean isPlayer() {
         return isPlayer;
     }
-    //?}
+    *///?}
 
     public double getDistanceSquared() {
         return distanceSquared;
     }
 
-    public List<Component> getNameLines() {
+    public List<String> getNameLines() {
         return nameLines;
     }
 
-    public void addNameLine(Component nameLine) {
+    public void addNameLine(String nameLine) {
         nameLines.add(nameLine);
     }
 
@@ -84,10 +84,10 @@ public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
     }
 
     //? if legacy {
-    /*public enum NameRenderingMethod {
+    public enum NameRenderingMethod {
         STANDARD,
         SNEAKING
     }
-    *///?}
+    //?}
 }
 //~}

@@ -1,4 +1,4 @@
-/*? if legacy {*//*
+/*? if legacy {*/
 package at.yedel.yedelmod.mixins.legacy;
 
 
@@ -13,4 +13,4 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface InvokerMinecraft {
     @Invoker("rightClickMouse")
     void yedelmod$rightClickMouse();
-}*//*?}*/
+}/*?}*/

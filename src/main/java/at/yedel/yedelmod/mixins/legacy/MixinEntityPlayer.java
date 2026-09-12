@@ -1,5 +1,5 @@
 //? if legacy {
-/*package at.yedel.yedelmod.mixins.legacy;
+package at.yedel.yedelmod.mixins.legacy;
 
 
 
@@ -20,4 +20,4 @@ public abstract class MixinEntityPlayer {
         CustomHitParticles.getInstance().handleAttack(entity);
     }
 }
-*///?}
+//?}

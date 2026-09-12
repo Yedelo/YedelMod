@@ -32,9 +32,9 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 *///?} else {
 //? if legacy {
-//import org.polyfrost.oneconfig.internal.legacy.InputConstants;
+import org.polyfrost.oneconfig.internal.legacy.InputConstants;
 //?} else {
-import com.mojang.blaze3d.platform.InputConstants;
+//import com.mojang.blaze3d.platform.InputConstants;
 //?}
 import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
@@ -54,11 +54,11 @@ import at.yedel.yedelmod.utils.update.UpdateSource;
 *///?} else
 import net.fabricmc.loader.api.FabricLoader;
 //? if legacy {
-//import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.EnumParticleTypes;
 //?} else {
-import net.minecraft.core.registries.BuiltInRegistries;
+/*import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.particles.ParticleTypes;
-//?}
+*///?}
 
 
 import java.net.URI;
@@ -117,7 +117,7 @@ public class YedelConfig extends Config {
 
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
         //? if legacy
-         //addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+         addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
         addDependentOption("dropperAutoGG", "autoGGDelay");
         addDependentOption("regexChatFilter", "regexChatFilterPattern");
         addDependentOption("randomPlaceholder", "randomPlaceholderText");
@@ -248,7 +248,7 @@ public class YedelConfig extends Config {
         category = "Features",
         subcategory = "Features"
         //? if legacy {
-        /*
+        
         ,options = {
             "Explosion (Normal)",
             "Explosion (Large)",
@@ -295,18 +295,18 @@ public class YedelConfig extends Config {
         }
 
          
-        *///?}
+        //?}
     )
     //? if legacy {
-     //public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+     public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
     //?} else {
-    public int customParticleType = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
+    //public int customParticleType = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
     //?}
 
     // i don't know if i need to properly credit this
     // yo shoutout overflowparticles and evergreenhud
     //? if modern {
-    @Override
+    /*@Override
     public Tree makeTree() {
         Tree tree = super.makeTree();
         Node customParticleTypeNode = tree.getProp("customParticleType");
@@ -314,7 +314,7 @@ public class YedelConfig extends Config {
         customParticleTypeNode.addMetadata("options", options);
         return tree;
     }
-    //?}
+    *///?}
 
     @Slider(
         title = "Particle Y Offset",
@@ -428,7 +428,7 @@ public class YedelConfig extends Config {
     public boolean skywarsStrengthIndicators = true;
 
     //? if legacy {
-    /*@Dropdown(
+    @Dropdown(
         title = "Strength Color",
         description = "Color for strength indicators",
         category = "Features",
@@ -454,8 +454,8 @@ public class YedelConfig extends Config {
     )
     public int strengthColor = 1;
 
-    *///?} else {
-    @Color(
+    //?} else {
+    /*@Color(
         title = "Strength Color",
         description = "Color for strength indicators",
         category = "Features",
@@ -463,7 +463,7 @@ public class YedelConfig extends Config {
         alpha = false
     )
     public PolyColor strengthColor = new PolyColor(0xFF5555);
-    //?}
+    *///?}
 
     @Switch(
         title = "Show Self Strength",
@@ -742,7 +742,7 @@ public class YedelConfig extends Config {
     public boolean highlightTargetAndShowDistance = true;
 
     //? if modern {
-    @Color(
+    /*@Color(
         title = "Distance Label Color",
         description = "The color of the distance label.",
         category = "TNT Tag",
@@ -750,7 +750,7 @@ public class YedelConfig extends Config {
         alpha = false
     )
     public PolyColor distanceLabelColor = new PolyColor(0xFF5555);
-    //?}
+    *///?}
 
     @Switch(
         title = "Play Sounds for Target Selections and Kills",

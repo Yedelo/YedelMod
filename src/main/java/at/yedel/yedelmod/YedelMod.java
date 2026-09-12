@@ -25,6 +25,8 @@ import at.yedel.yedelmod.utils.update.UpdateSource;
 //? else if fabric {
  import net.fabricmc.api.ClientModInitializer;
 //?}
+import net.ornithemc.osl.core.api.util.NamespacedIdentifiers;
+import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 //? if v0 {
@@ -83,7 +85,7 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 
 		Threading.scheduleRepeat(() -> {
 			//~ if modern 'Minecraft.getMinecraft().thePlayer' -> 'Minecraft.getInstance().player'
-			if (Minecraft.getInstance().player != null) {
+			if (Minecraft.getMinecraft().thePlayer != null) {
 				YedelConfig.getInstance().playtimeMinutes++;
 				YedelConfig.getInstance().save();
 			}

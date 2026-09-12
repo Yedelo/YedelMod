@@ -5,7 +5,7 @@ package at.yedel.yedelmod.features;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.TextUtils;
 //? if modern
- import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
+ //import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 
 public class RandomPlaceholder {
@@ -17,9 +17,9 @@ public class RandomPlaceholder {
 
     private RandomPlaceholder() {
         //? if modern {
-        ClientSendMessageEvents.MODIFY_CHAT.register((message) -> should() ? replace(message) : message);
+        /*ClientSendMessageEvents.MODIFY_CHAT.register((message) -> should() ? replace(message) : message);
         ClientSendMessageEvents.MODIFY_COMMAND.register((message) -> should() ? replace(message) : message);
-        //?}
+        *///?}
     }
 
     public boolean should() {

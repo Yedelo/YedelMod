@@ -32,7 +32,7 @@ public class PingCommandInterface {
     }
 
     private void showcasePing(PingMethod method, long ping) {
-        Minecraft.getInstance().schedule(() -> {
+        Minecraft.getMinecraft().addScheduledTask(() -> {
             Platform.compatibility().displayChatMessage(yedelogo + " §ePing: " + color(ping) + ping + " §ems §7(" + method.friendlyName.toLowerCase() + ")");
             Constants.playPingSound(1, (float) (ping * -0.006 + 2));
         });

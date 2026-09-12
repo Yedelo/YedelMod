@@ -11,9 +11,9 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-//import net.minecraft.world.WorldSettings;
+import net.minecraft.world.WorldSettings;
 //?} else
-import net.minecraft.world.level.GameType;
+//import net.minecraft.world.level.GameType;
 
 
 import java.util.Objects;
@@ -63,16 +63,16 @@ public class LimboCreative {
 
     private void giveCreative() {
         //? if legacy {
-        //Minecraft.getInstance().playerController.setGameType(WorldSettings.GameType.CREATIVE);
+        Minecraft.getMinecraft().playerController.setGameType(WorldSettings.GameType.CREATIVE);
         //?} else
-        Minecraft.getInstance().gameMode.setLocalMode(GameType.CREATIVE);
+        //Minecraft.getMinecraft().gameMode.setLocalMode(GameType.CREATIVE);
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet gamemode to creative!");
     }
 
     private boolean isAlreadyInCreative() {
         //? if legacy {
-        //return Minecraft.getInstance().playerController.isInCreativeMode();
+        return Minecraft.getMinecraft().playerController.isInCreativeMode();
         //?} else
-        return Minecraft.getInstance().player.isCreative();
+        //return Minecraft.getMinecraft().player.isCreative();
     }
 }

@@ -4,7 +4,7 @@ plugins {
     id("dev.kikugie.stonecutter")
 }
 
-stonecutter active "26.1-fabric"
+stonecutter active "1.8.9-fabric"
 
 stonecutter parameters {
     val loader = current.project.split("-")[1]

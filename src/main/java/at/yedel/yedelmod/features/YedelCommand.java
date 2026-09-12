@@ -27,9 +27,9 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*
+
 import org.lwjgl.opengl.Display;
-*///?}
+//?}
 //? if forge {
 /*import at.yedel.yedelmod.utils.update.UpdateManager;
 import at.yedel.yedelmod.utils.update.UpdateSource;
@@ -85,12 +85,12 @@ public class YedelCommand {
     //?}
 
     //? if modern {
-    private String displayTitle;
+    /*private String displayTitle;
 
     public String getDisplayTitle() {
         return displayTitle;
     }
-    //?}
+    *///?}
 
     private YedelCommand() {}
 
@@ -168,9 +168,9 @@ public class YedelCommand {
     @Handler(description = "Sets the title of the game window.")
     public void settitle(/*? if v0 {*//*@Greedy *//*?}*/String title) {
         //? if legacy
-        //Display.setTitle(title);
+        Display.setTitle(title);
         //? else
-        this.displayTitle = title;
+        //this.displayTitle = title;
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet display title to \"§f" + title + "§e\"!");
     }
 

@@ -8,12 +8,12 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ErrorReason;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 //? if legacy {
-/*import net.minecraft.network.play.server.S37PacketStatistics;
+import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.network.play.server.S3APacketTabComplete;
-*///?} else {
-import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
+//?} else {
+/*import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
 import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
-//?}
+*///?}
 
 //? if v1 {
  import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
@@ -47,7 +47,7 @@ public class PingResponse {
     @Subscribe
     public void handleStatsPingResponse(PacketEvent.Receive event) {
         //~ if modern 'S37PacketStatistics' -> 'ClientboundAwardStatsPacket'
-        if (event.getPacket() instanceof ClientboundAwardStatsPacket) {
+        if (event.getPacket() instanceof S37PacketStatistics) {
             PingQueue.getInstance().post(PingMethod.STATS_PACKET);
         }
     }
@@ -55,7 +55,7 @@ public class PingResponse {
     @Subscribe
     public void handleTabPingResponse(PacketEvent.Receive event) {
         //~ if modern 'S3APacketTabComplete' -> 'ClientboundCommandSuggestionsPacket'
-        if (event.getPacket() instanceof ClientboundCommandSuggestionsPacket) {
+        if (event.getPacket() instanceof S3APacketTabComplete) {
             PingQueue.getInstance().post(PingMethod.TAB_PACKET);
         }
     }

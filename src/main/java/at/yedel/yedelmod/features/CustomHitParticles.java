@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 *///?}
 //? if legacy {
-/*import at.yedel.yedelmod.utils.NumberUtils;
+import at.yedel.yedelmod.utils.NumberUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +18,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumParticleTypes;
-*///?} else {
-
+//?} else {
+/*
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Function;
-//?}
+*///?}
 
 
 
@@ -49,14 +49,14 @@ public class CustomHitParticles {
     }
     
     //? if modern {
-    private final HashMap<ParticleType<?>, Function<ParticleType<?>, ParticleOptions>> somehow = new HashMap<>();
+    /*private final HashMap<ParticleType<?>, Function<ParticleType<?>, ParticleOptions>> somehow = new HashMap<>();
     private final RandomSource randomSource = RandomSource.create();
     private Vec3 position;
-    //?}
+    *///?}
 
     private CustomHitParticles() {
         //? if modern {
-        AttackEntityCallback.EVENT.register((_, level, _, entity, _) -> {
+        /*AttackEntityCallback.EVENT.register((_, level, _, entity, _) -> {
             if (!level.isClientSide()) return InteractionResult.PASS;
             if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().customHitParticles) {
                 handleAttack(entity);
@@ -66,9 +66,9 @@ public class CustomHitParticles {
         // i can't believe i have to do something like this. this type of code should be reserved for the content modders!
         register((type) -> new BlockParticleOption((ParticleType<BlockParticleOption>) type, Blocks.STONE.defaultBlockState()), ParticleTypes.BLOCK, ParticleTypes.BLOCK_MARKER, ParticleTypes.FALLING_DUST, ParticleTypes.DUST_PILLAR, ParticleTypes.BLOCK_CRUMBLE);
         //? if >= 26.2 {
-        /*register((type) -> new GeyserParticleOptions((ParticleType<GeyserParticleOptions>) type, 1), ParticleTypes.GEYSER, ParticleTypes.GEYSER_PLUME);
+        /^register((type) -> new GeyserParticleOptions((ParticleType<GeyserParticleOptions>) type, 1), ParticleTypes.GEYSER, ParticleTypes.GEYSER_PLUME);
         register((type) -> new GeyserBaseParticleOptions((ParticleType<GeyserBaseParticleOptions>) type, 1, 1), ParticleTypes.GEYSER_BASE, ParticleTypes.GEYSER_POOF);
-        *///?}
+        ^///?}
         register((type) -> PowerParticleOption.create((ParticleType<PowerParticleOption>) type, 1), ParticleTypes.DRAGON_BREATH);
         register((type) -> DustParticleOptions.REDSTONE, ParticleTypes.DUST);
         register((type) -> DustColorTransitionOptions.SCULK_TO_REDSTONE, ParticleTypes.DUST_COLOR_TRANSITION);
@@ -79,7 +79,7 @@ public class CustomHitParticles {
         register((type) -> new VibrationParticleOption(new BlockPositionSource(BlockPos.containing(position)), 20), ParticleTypes.VIBRATION);
         register((type) -> new TrailParticleOption(position, 0xFFFFFFFF, 20), ParticleTypes.TRAIL);
         register((type) -> new ShriekParticleOption(0), ParticleTypes.SHRIEK);
-        //?}
+        *///?}
     }
 
 
@@ -89,16 +89,16 @@ public class CustomHitParticles {
                 return;
             }
             //~ if modern 'instanceof EntityPlayer' -> 'instanceof Player'
-            if (YedelConfig.getInstance().onlySpawnCustomParticlesOnPlayers && !(entity instanceof Player)) {
+            if (YedelConfig.getInstance().onlySpawnCustomParticlesOnPlayers && !(entity instanceof EntityPlayer)) {
                 return;
             }
             //? if legacy {
-            /*
+            
             int particleId =
                 YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleType;
             EnumParticleTypes particle = EnumParticleTypes.getParticleFromId(particleId);
             int parameters;
-			/^
+			/*
 			    Some particles take required parameters.
 			    ITEM_CRACK:
 			        0: item id
@@ -107,7 +107,7 @@ public class CustomHitParticles {
 			        0: special block number (holding both block id and state)
 			    BLOCK_DUST:
 			        0: special block number (holding both block id and state)
-			 ^/
+			 */
 
             switch (particle) {
                 case ITEM_CRACK:
@@ -120,21 +120,21 @@ public class CustomHitParticles {
                 default:
                     parameters = 0;
             }
-            Minecraft.getInstance().theWorld.spawnParticle(particle, true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, parameters);
+            Minecraft.getMinecraft().theWorld.spawnParticle(particle, true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, parameters);
              
-            *///?} else {
-            position = entity.position();
+            //?} else {
+            /*position = entity.position();
             ParticleType<?> type = getParticleType();
             if (type == null) return;
             ParticleOptions options = getParticleOptions(type);
             if (options == null) return;
-            Minecraft.getInstance().particleEngine.createParticle(options, entity.xo, entity.yo + YedelConfig.getInstance().particleYOffset, entity.zo, 0, 0, 0);
-            //?}
+            Minecraft.getMinecraft().particleEngine.createParticle(options, entity.xo, entity.yo + YedelConfig.getInstance().particleYOffset, entity.zo, 0, 0, 0);
+            *///?}
         }
     }
 
     //? if modern {
-    private ParticleOptions getParticleOptions(ParticleType<?> type) {
+    /*private ParticleOptions getParticleOptions(ParticleType<?> type) {
         if (type instanceof SimpleParticleType) {
             return (ParticleOptions) type;
         }
@@ -155,5 +155,5 @@ public class CustomHitParticles {
             somehow.put(type, provider);
         }
     }
-    //?}
+    *///?}
 }

@@ -14,9 +14,9 @@ public class TextUtils {
 
     public static void sendChat(String message) {
         //? if legacy {
-        //Minecraft.getInstance().thePlayer.sendChatMessage(message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
         //?} else {
-        Minecraft.getInstance().player.connection.sendChat(message);
+        //Minecraft.getInstance().player.connection.sendChat(message);
         //?}
     }
 

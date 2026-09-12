@@ -24,13 +24,13 @@ import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import at.yedel.yedelmod.mixins.legacy.InvokerMinecraft;
-*///?} else {
-
+//?} else {
+/*
 import at.yedel.yedelmod.mixins.modern.AbstractContainerScreenInvoker;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -39,7 +39,7 @@ import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
-//?}
+*///?}
 //? if forge {
 /*import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -98,19 +98,19 @@ public class EasyAtlasVerdicts {
     }
     private void submitVerdict(String name) {
         //~ if modern 'EntityPlayerSP player = Minecraft.getMinecraft().thePlayer' -> 'LocalPlayer player = Minecraft.getInstance().player'
-        LocalPlayer player = Minecraft.getInstance().player;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
             if (inAtlas && player != null) {
                 Platform.compatibility().displayChatMessage(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
                 //~ if modern 'player.inventory.currentItem = 7' -> 'player.getInventory().setSelectedSlot(7)'
-                player.getInventory().setSelectedSlot(7);
+                player.inventory.currentItem = 7;
                 Multithreading.schedule(() -> {
                     //~ if v1 'Minecraft.getMinecraft().currentScreen' -> 'Platform.screen().current()'
                     if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy
-                        //((InvokerMinecraft) Minecraft.getInstance()).yedelmod$rightClickMouse();
+                        ((InvokerMinecraft) Minecraft.getMinecraft()).yedelmod$rightClickMouse();
                         //? else
-                        Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);
+                        //Minecraft.getMinecraft().gameMode.useItem(Minecraft.getMinecraft().player, InteractionHand.MAIN_HAND);
                     }
                 }, 250, TimeUnit.MILLISECONDS);
             }
@@ -119,38 +119,38 @@ public class EasyAtlasVerdicts {
     @Subscribe
     public void reallyClickAtlasVerdict(PacketEvent.Receive event) {
         //~ if modern 'S2FPacketSetSlot' -> 'ClientboundContainerSetSlotPacket'
-        if (inAtlas && event.getPacket() instanceof ClientboundContainerSetSlotPacket) {
+        if (inAtlas && event.getPacket() instanceof S2FPacketSetSlot) {
             //? if legacy {
-            /*S2FPacketSetSlot packet = (S2FPacketSetSlot) event.getPacket();
+            S2FPacketSetSlot packet = (S2FPacketSetSlot) event.getPacket();
             //~ if ornithe 'func_149174_e' -> 'm_64707080'
-            ItemStack item = packet.func_149174_e();
+            ItemStack item = packet.m_64707080();
             if (item == null) return;
             String itemName = Platform.i18n().getUnformattedText(item.getDisplayName());
-            *///?} else {
-            ClientboundContainerSetSlotPacket packet = (ClientboundContainerSetSlotPacket) event.getPacket();
+            //?} else {
+            /*ClientboundContainerSetSlotPacket packet = (ClientboundContainerSetSlotPacket) event.getPacket();
             ItemStack item = packet.getItem();
             if (item == null) return;
             Component itemNameComponent = item.getCustomName();
             if (itemNameComponent == null) return;
             String itemName = itemNameComponent.getString();
-            //?}
+            *///?}
             if (Objects.equals(itemName, verdict)) {
                 Multithreading.schedule(() -> {
-                    Minecraft.getInstance().schedule(() -> {
+                    Minecraft.getMinecraft().addScheduledTask(() -> {
                         //? if legacy {
-                        /*if (Minecraft.getInstance().currentScreen instanceof GuiContainer) {
-                            int windowId = ((GuiContainer) Minecraft.getInstance().currentScreen).inventorySlots.windowId;
+                        if (Minecraft.getMinecraft().currentScreen instanceof GuiContainer) {
+                            int windowId = ((GuiContainer) Minecraft.getMinecraft().currentScreen).inventorySlots.windowId;
                             //~ if ornithe 'func_149173_d' -> 'm_40505239'
-                            Minecraft.getInstance().playerController.windowClick(windowId, packet.func_149173_d(), 0, 0, Minecraft.getInstance().thePlayer);
+                            Minecraft.getMinecraft().playerController.windowClick(windowId, packet.m_40505239(), 0, 0, Minecraft.getMinecraft().thePlayer);
                             verdict = "";
                         }
-                        *///?} else {
-                        if (Platform.screen().current() instanceof AbstractContainerScreen screen) {
+                        //?} else {
+                        /*if (Platform.screen().current() instanceof AbstractContainerScreen screen) {
                             // this is mad stupid
                             ((AbstractContainerScreenInvoker) screen).yedelmod$slotClicked(screen.getMenu().getSlot(packet.getSlot()), packet.getSlot(), 0, ContainerInput.PICKUP);
                             verdict = "";
                         }
-                        //?}
+                        *///?}
                     });
                 }, 250, TimeUnit.MILLISECONDS);
             }

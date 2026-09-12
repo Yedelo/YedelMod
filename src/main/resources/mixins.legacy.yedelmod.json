@@ -9,5 +9,11 @@
     "MixinRendererLivingEntity",
     "MixinRenderPlayer"
   ],
-  "verbose": true
+  "verbose": true,
+  "mixins": [
+    "MixinFabricModAPI",
+    "MixinNamespacedIdentifierImpl",
+    "MixinNetworkManager",
+    "MixinStringChannelIdentifierParser"
+  ]
 }

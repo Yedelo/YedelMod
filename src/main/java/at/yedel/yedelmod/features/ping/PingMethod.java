@@ -14,13 +14,13 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 
 //? if legacy {
-/*import net.minecraft.network.play.client.C14PacketTabComplete;
+import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C16PacketClientStatus;
-*///?} else {
-import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
+//?} else {
+/*import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCommandSuggestionPacket;
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
-    //?}
+    *///?}
 
 
 import java.util.function.Function;
@@ -29,9 +29,9 @@ import java.util.function.Function;
 
 public enum PingMethod {
     //? if legacy {
-    /*COMMAND_RESPONSE("Command", () -> TextUtils.sendChat("/" + TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    COMMAND_RESPONSE("Command", () -> TextUtils.sendChat("/" + TextUtils.randomUuid(8))),
+    TAB_PACKET("Tab", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
+    STATS_PACKET("Stats", () -> Minecraft.getMinecraft().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
         //~ if v1 'HypixelUtils.INSTANCE' -> 'HypixelUtils'
         if (HypixelUtils.isHypixel()) {
@@ -42,19 +42,19 @@ public enum PingMethod {
         }
     }),
     SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
-        if (Minecraft.getInstance().isSingleplayer()) {
+        if (Minecraft.getMinecraft().isSingleplayer()) {
             throw new PingException("This method does not work in singleplayer!");
         }
-        long ping = Minecraft.getInstance().getCurrentServerData().pingToServer;
+        long ping = Minecraft.getMinecraft().getCurrentServerData().pingToServer;
         if (ping == 0) {
             throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
         }
         return ping;
     });
-    *///?} else {
-    COMMAND_RESPONSE("Command", () -> Minecraft.getInstance().player.connection.sendCommand(TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> Minecraft.getInstance().player.connection.send(new ServerboundCommandSuggestionPacket(0, "#"))),
-    STATS_PACKET("Stats", () -> Minecraft.getInstance().player.connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS))),
+    //?} else {
+    /*COMMAND_RESPONSE("Command", () -> Minecraft.getMinecraft().player.connection.sendCommand(TextUtils.randomUuid(8))),
+    TAB_PACKET("Tab", () -> Minecraft.getMinecraft().player.connection.send(new ServerboundCommandSuggestionPacket(0, "#"))),
+    STATS_PACKET("Stats", () -> Minecraft.getMinecraft().player.connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
         if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
@@ -64,16 +64,16 @@ public enum PingMethod {
         }
     }),
     SERVER_LIST_PING("Server list", PingMethod::iGuessBro, (info) -> {
-        if (Minecraft.getInstance().getSingleplayerServer() != null) {
+        if (Minecraft.getMinecraft().getSingleplayerServer() != null) {
             throw new PingException("This method does not work in singleplayer!");
         }
-        long ping = Minecraft.getInstance().getCurrentServer().ping;
+        long ping = Minecraft.getMinecraft().getCurrentServer().ping;
         if (ping == 0) {
             throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
         }
         return ping;
     });
-    //?}
+    *///?}
 
     public final String friendlyName;
     public final Runnable starting;

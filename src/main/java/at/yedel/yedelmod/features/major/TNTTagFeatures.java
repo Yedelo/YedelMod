@@ -21,17 +21,17 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*
+
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
-*///?} else {
-import net.minecraft.client.player.AbstractClientPlayer;
+//?} else {
+/*import net.minecraft.client.player.AbstractClientPlayer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResult;
-//?}
+*///?}
 //? if forge {
 /*import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -75,11 +75,11 @@ public class TNTTagFeatures {
         displayLines.add("");
 
         //? if modern {
-        AttackEntityCallback.EVENT.register((_, _, _, entity, _) -> {
+        /*AttackEntityCallback.EVENT.register((_, _, _, entity, _) -> {
             handleTargetAttack(entity);
             return InteractionResult.PASS;
         });
-        //?}
+        *///?}
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
@@ -91,7 +91,7 @@ public class TNTTagFeatures {
     public void onTNTTagJoin() {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
             //~ if modern 'thePlayer' -> 'getUser()'
-            playerName = Minecraft.getInstance().getUser().getName();
+            playerName = Minecraft.getMinecraft().thePlayer.getName();
             dead = false;
             target = null;
             displayLines.set(0, "§c§lBounty §f§lHunting");
@@ -111,14 +111,14 @@ public class TNTTagFeatures {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
             //? if legacy {
-            /*for (NetworkPlayerInfo playerInfo : Minecraft.getInstance().getNetHandler().getPlayerInfoMap()) {
+            for (NetworkPlayerInfo playerInfo : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
                 players.add(playerInfo.getGameProfile().getName());
             }
-            *///?} else {
-            for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
+            //?} else {
+            /*for (AbstractClientPlayer player : Minecraft.getMinecraft().level.players()) {
                 players.add(player.getName().getString());
             }
-            //?}
+            *///?}
             players.remove(playerName);
             players.remove(YedelConfig.getInstance().currentNick);
             target = players.get((int) Math.floor(Math.random() * players.size()));
@@ -152,7 +152,7 @@ public class TNTTagFeatures {
 
     public void handleTargetAttack(Entity entity) {
         //~ if modern 'getName()' -> 'getName().getString()'
-        if (Objects.equals(entity.getName().getString(), target) && !dead) {
+        if (Objects.equals(entity.getName(), target) && !dead) {
             fightingTarget = true;
         }
     }
@@ -161,12 +161,12 @@ public class TNTTagFeatures {
     public void renderTargetLabel(NameLineEvent event) {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting && YedelConfig.getInstance().highlightTargetAndShowDistance && inTNTTag) {
             //~ if modern 'event.getPlayer().getName()' -> 'event.getEntity().getName().getString()'
-            if (Objects.equals(event.getEntity().getName().getString(), target)) {
+            if (Objects.equals(event.getPlayer().getName(), target)) {
                 String text = "Distance: " + (int) Math.sqrt(event.getDistanceSquared()) + " blocks";
                 //? if legacy {
-                //event.addNameLine(text);
+                event.addNameLine(text);
                 //?} else
-                event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().distanceLabelColor.getArgb()));
+                //event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().distanceLabelColor.getArgb()));
             }
         }
     }

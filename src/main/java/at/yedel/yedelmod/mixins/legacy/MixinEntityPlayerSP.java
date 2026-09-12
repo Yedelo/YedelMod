@@ -1,5 +1,5 @@
 //? if legacy {
-/*package at.yedel.yedelmod.mixins.legacy;
+package at.yedel.yedelmod.mixins.legacy;
 
 
 
@@ -21,4 +21,4 @@ public abstract class MixinEntityPlayerSP {
         return original;
     }
 }
-*///?}
+//?}

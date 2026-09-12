@@ -1,4 +1,4 @@
-/*? if legacy {*//*
+/*? if legacy {*/
 package at.yedel.yedelmod.mixins.legacy;
 
 
@@ -21,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 
 
-/^*
+/**
  * Implements the {@link at.yedel.yedelmod.utils.NameLineEvent} via name rendering method SNEAKING.
- ^/
+ */
 @Mixin(RendererLivingEntity.class)
 public abstract class MixinRendererLivingEntity extends Render {
     protected MixinRendererLivingEntity(RenderManager renderManager) {
@@ -37,17 +37,17 @@ public abstract class MixinRendererLivingEntity extends Render {
     @Unique
     private double yedelmod$distanceSquared;
 
-    /^*
+    /**
      * Unfortunate for compatibility
-     ^/
+     */
     @Redirect(method = "renderName(Lnet/minecraft/entity/EntityLivingBase;DDD)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;getDistanceSqToEntity(Lnet/minecraft/entity/Entity;)D"))
     private double yedelmod$setDistanceSquared(EntityLivingBase instance, Entity entity) {
         return yedelmod$distanceSquared = instance.getDistanceSqToEntity(entity);
     }
 
-    /^*
+    /**
      * Injects after the sneaking name rendering code is done, constructing an event and calling {@link net.minecraft.client.renderer.entity.Render#renderOffsetLivingLabel} anyways.
-     ^/
+     */
     @Inject(method = "renderName(Lnet/minecraft/entity/EntityLivingBase;DDD)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;popMatrix()V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
     private void yedelmod$renderSneakingNameLines(EntityLivingBase entity, double x, double y, double z, CallbackInfo ci) {
         if (!(entity instanceof AbstractClientPlayer)) {
@@ -63,4 +63,4 @@ public abstract class MixinRendererLivingEntity extends Render {
             super.renderOffsetLivingLabel(player, x, y, z, nameLine, 0.02666667F, yedelmod$distanceSquared);
         }
     }
-}*//*?}*/
+}/*?}*/

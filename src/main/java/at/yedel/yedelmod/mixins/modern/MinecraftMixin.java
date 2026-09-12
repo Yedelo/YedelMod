@@ -1,5 +1,5 @@
 //? if modern {
-package at.yedel.yedelmod.mixins.modern;
+/*package at.yedel.yedelmod.mixins.modern;
 
 
 
@@ -22,4 +22,4 @@ public abstract class MinecraftMixin {
         }
     }
 }
-//?}
+*///?}
