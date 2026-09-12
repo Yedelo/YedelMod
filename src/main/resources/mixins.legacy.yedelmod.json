@@ -12,8 +12,6 @@
   "verbose": true,
   "mixins": [
     "MixinFabricModAPI",
-    "MixinNamespacedIdentifierImpl",
-    "MixinNetworkManager",
-    "MixinStringChannelIdentifierParser"
+    "MixinNetworkManager"
   ]
 }
