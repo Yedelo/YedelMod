@@ -3,14 +3,19 @@ package at.yedel.yedelmod.mixins.legacy;
 
 
 
+import at.yedel.yedelmod.utils.InstanceAccessor;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import io.netty.buffer.Unpooled;
 import net.hypixel.modapi.fabric.FabricModAPI;
 import net.hypixel.modapi.fabric.payload.ServerboundHypixelPayload;
 import net.hypixel.modapi.packet.HypixelPacket;
+import net.hypixel.modapi.serializer.PacketSerializer;
 import net.minecraft.client.Minecraft;
-import net.ornithemc.osl.core.api.util.NamespacedIdentifier;
+import net.minecraft.client.network.NetHandlerLoginClient;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.client.C17PacketCustomPayload;import net.ornithemc.osl.core.api.util.NamespacedIdentifier;
 import net.ornithemc.osl.core.api.util.NamespacedIdentifiers;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +44,10 @@ public abstract class MixinFabricModAPI {
         ServerboundHypixelPayload hypixelPayload = new ServerboundHypixelPayload(packet);
         NamespacedIdentifier id = NamespacedIdentifiers.parse(packet.getIdentifier());
         LogManager.getLogger().info("Sending hypixel packet {}", packet);
-        ClientPlayNetworking.sendNoCheck(id, hypixelPayload);
+        PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+        PacketSerializer serializer = new PacketSerializer(buf);
+        packet.write(serializer);
+        InstanceAccessor.lastInstance.sendPacket(new C17PacketCustomPayload(packet.getIdentifier(), buf));
         return true;
     }
 }
