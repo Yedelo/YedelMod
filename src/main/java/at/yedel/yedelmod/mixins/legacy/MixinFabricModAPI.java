@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.ornithemc.osl.core.api.util.NamespacedIdentifier;
 import net.ornithemc.osl.core.api.util.NamespacedIdentifiers;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
+import org.apache.logging.log4j.LogManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,6 +38,7 @@ public abstract class MixinFabricModAPI {
         }
         ServerboundHypixelPayload hypixelPayload = new ServerboundHypixelPayload(packet);
         NamespacedIdentifier id = NamespacedIdentifiers.parse(packet.getIdentifier());
+        LogManager.getLogger().info("Sending hypixel packet {}", packet);
         ClientPlayNetworking.send(id, hypixelPayload);
         return true;
     }
