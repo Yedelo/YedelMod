@@ -25,9 +25,6 @@
     "oneconfigv1": "${oneconfigv1}",
     "hypixel-mod-api": "${hypixelmodapi}"
   },
-  "recommends": {
-    "modmenu": "*"
-  },
   "contact": {
     "homepage": "https://modrinth.com/mod/${modId}",
     "issues": "https://github.com/Yedelo/${modName}/issues",
