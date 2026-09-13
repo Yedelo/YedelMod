@@ -10,20 +10,13 @@
   "license": "${license}",
   "icon": "${modIcon}",
   "environment": "client",
-  "entrypoints": {
-    "client": [
-      "at.yedel.yedelmod.YedelMod"
-    ]
-  },
   "mixins": [
     "mixins.${mixinConfig}.yedelmod.json"
   ],
   "depends": {
     "java": "${java}",
     "fabricloader": "${fabricLoader}",
-    "minecraft": "${minecraft}",
-    "oneconfigv1": "${oneconfigv1}",
-    "hypixel-mod-api": "${hypixelmodapi}"
+    "minecraft": "${minecraft}"
   },
   "contact": {
     "homepage": "https://modrinth.com/mod/${modId}",

@@ -3,15 +3,10 @@
   "package": "at.yedel.yedelmod.mixins.legacy",
   "minVersion": "${mixinMin}",
   "client": [
-    "InvokerMinecraft",
-    "MixinEntityPlayer",
-    "MixinEntityPlayerSP",
-    "MixinRendererLivingEntity",
-    "MixinRenderPlayer"
+    "MixinNetHandlerPlayClient"
   ],
   "verbose": true,
   "mixins": [
-    "MixinFabricModAPI",
     "MixinNetworkManager"
   ]
 }

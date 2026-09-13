@@ -6,6 +6,7 @@ import at.yedel.yedelmod.utils.InstanceAccessor;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -23,8 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetworkManager.class)
 public abstract class MixinNetworkManager {
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void onInit(EnumPacketDirection enumPacketDirection, CallbackInfo ci) {
-        InstanceAccessor.lastInstance =  (NetworkManager)(Object)this;
+    private void yedelmod$send(EnumPacketDirection enumPacketDirection, CallbackInfo ci) {
+        InstanceAccessor.lastInstance = (NetworkManager) (Object) this;
     }
 
     @Inject(method = "dispatchPacket", at = @At("HEAD"))
@@ -39,5 +40,10 @@ public abstract class MixinNetworkManager {
         if (packet instanceof S3FPacketCustomPayload payload) {
             LogManager.getLogger().info("! Received S3FPacketCustomPayload {}", payload.getChannelName());
         }
+    }
+
+    @Inject(method = "setConnectionState", at = @At("HEAD"))
+    private void yedelmod$onConocnonnnn(EnumConnectionState newState, CallbackInfo ci) {
+        LogManager.getLogger().info("Set connection state to {}", newState);
     }
 }

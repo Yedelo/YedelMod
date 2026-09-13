@@ -84,15 +84,15 @@ val ploceus = if (ornithe) {
 dependencies {
     minecraft("com.mojang:minecraft:${sc.current.version}")
     if (ornithe) mappings(ploceus!!.mcpMappings("stable", "1.8.9", "22"))
-    if (ornithe) implementation("io.github.moehreag.hypixel:mod-api-fabric:1.0.2+build.1+mc1.8.9") { isTransitive = false }
+//    if (ornithe) implementation("io.github.moehreag.hypixel:mod-api-fabric:1.0.2+build.1+mc1.8.9") { isTransitive = false }
     implementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
-    implementation("org.polyfrost.oneconfig:${sc.current.version}-$environment:$oneconfigVersion")
+//    implementation("org.polyfrost.oneconfig:${sc.current.version}-$environment:$oneconfigVersion")
 
     // oneconfig provides hypixel mod api for now
     if (ornithe) {
-        implementation("net.ornithemc.osl-gen2:core:${oslCoreVersion}")
-        implementation("net.ornithemc.osl-gen2:entrypoints:${oslEntrypointsVersion}")
-        implementation("net.ornithemc.osl-gen2:networking:${oslNetworkingVersion}")
+//        implementation("net.ornithemc.osl-gen2:core:${oslCoreVersion}")
+//        implementation("net.ornithemc.osl-gen2:entrypoints:${oslEntrypointsVersion}")
+//        implementation("net.ornithemc.osl-gen2:networking:${oslNetworkingVersion}")
         compileOnly("net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7")
         implementation("io.github.llamalad7:mixinextras-fabric:0.5.5")
     }
@@ -143,8 +143,8 @@ tasks {
             val minecraftDependency =
                 if (rangedVersion) ">=${sc.current.version} <=${maxMc}" else sc.current.version
             register("minecraft", minecraftDependency)
-            register("oneconfigv1", target(oneconfigVersion))
-            register("hypixelmodapi", target(hypixelModApiVersion))
+//            register("oneconfigv1", target(oneconfigVersion))
+//            register("hypixelmodapi", target(hypixelModApiVersion))
             register("mixinJava", "JAVA_${javaVersion.majorVersion}")
             register("mixinMin", "0.8")
         }
