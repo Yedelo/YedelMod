@@ -3,7 +3,8 @@ versions.devauth = "1.2.2"
 versions.hypixelmodapi = "1.0.1.2"
 
 ["26.2-fabric"]
-versioning = "single"
+versioning = "range"
+mc.max = "26.3"
 versions.fabricapi = "0.158.0+26.2"
 versions.oneconfig = "1.1.12"
 versions.modmenu = "20.0.1"
