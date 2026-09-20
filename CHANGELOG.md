@@ -1,3 +1,7 @@
+# **3.0.0-beta.3**
+
+- Added 26.3 compatibility
+
 # **3.0.0-beta.2**
 
 - Ported mod to Fabric 26.1/2
