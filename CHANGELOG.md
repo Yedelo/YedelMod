@@ -1,3 +1,7 @@
+# **3.0.0-beta.4**
+
+- Hide custom text and bounty hunting HUDs when empty/not relevant (implement shouldShow for v1)
+
 # **3.0.0-beta.3**
 
 - Added 26.3 compatibility
