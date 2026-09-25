@@ -4,6 +4,7 @@ package at.yedel.yedelmod.hud;
 
 
 //? if v1 {
+import at.yedel.yedelmod.config.YedelConfig;
 import org.polyfrost.oneconfig.api.config.v1.annotations.Text;
 import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.hud.v1.TextHud;
@@ -55,16 +56,8 @@ public class CustomTextHud extends TextHud {
         return displayText;
     }
 
-        //? if v0 {
-        /*@Override
-        public boolean shouldShow() {
-            return YedelConfig.getInstance().enabled && !displayText.trim().isEmpty();
-        }
-        *///?} else {
-
     @Override
-    public boolean hasBackground() {
-        return false;
+    public boolean shouldShow() {
+        return YedelConfig.getInstance().enabled && !displayText.trim().isEmpty();
     }
-    //?}
 }
