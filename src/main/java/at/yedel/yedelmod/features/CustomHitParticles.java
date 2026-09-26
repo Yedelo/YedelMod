@@ -66,9 +66,9 @@ public class CustomHitParticles {
         // i can't believe i have to do something like this. this type of code should be reserved for the content modders!
         register((type) -> new BlockParticleOption((ParticleType<BlockParticleOption>) type, Blocks.STONE.defaultBlockState()), ParticleTypes.BLOCK, ParticleTypes.BLOCK_MARKER, ParticleTypes.FALLING_DUST, ParticleTypes.DUST_PILLAR, ParticleTypes.BLOCK_CRUMBLE);
         //? if >= 26.2 {
-        /*register((type) -> new GeyserParticleOptions((ParticleType<GeyserParticleOptions>) type, 1), ParticleTypes.GEYSER, ParticleTypes.GEYSER_PLUME);
+        register((type) -> new GeyserParticleOptions((ParticleType<GeyserParticleOptions>) type, 1), ParticleTypes.GEYSER, ParticleTypes.GEYSER_PLUME);
         register((type) -> new GeyserBaseParticleOptions((ParticleType<GeyserBaseParticleOptions>) type, 1, 1), ParticleTypes.GEYSER_BASE, ParticleTypes.GEYSER_POOF);
-        *///?}
+        //?}
         register((type) -> PowerParticleOption.create((ParticleType<PowerParticleOption>) type, 1), ParticleTypes.DRAGON_BREATH);
         register((type) -> DustParticleOptions.REDSTONE, ParticleTypes.DUST);
         register((type) -> DustColorTransitionOptions.SCULK_TO_REDSTONE, ParticleTypes.DUST_COLOR_TRANSITION);
