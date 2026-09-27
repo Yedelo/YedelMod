@@ -525,7 +525,6 @@ public class YedelConfig extends Config {
             bountyHuntingKills = 0;
             TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");
             TNTTagFeatures.getInstance().getDisplayLines().set(2, "§c0 kills (reset)");
-            //~if v1 'Notifications.INSTANCE' -> 'Notifications'
             Notifications.send("Bounty Hunting", "Reset stats!");
     }
 

@@ -6,6 +6,7 @@ import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
+import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 
 //? if legacy {
 /*import net.minecraft.network.play.client.C14PacketTabComplete;
@@ -13,7 +14,6 @@ import net.minecraft.network.play.client.C16PacketClientStatus;
 *///?} else {
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCommandSuggestionPacket;
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
     //?}
 
 
@@ -27,7 +27,6 @@ public enum PingMethod {
     TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
     STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
-        //~ if v1 'HypixelUtils.INSTANCE' -> 'HypixelUtils'
         if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
         }

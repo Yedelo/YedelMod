@@ -37,7 +37,6 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 @Command(
     description = "The main command of YedelMod"
 )
-    //~ command_bridge
 public class YedelCommand {
     private static final YedelCommand INSTANCE = new YedelCommand();
 

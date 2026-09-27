@@ -19,6 +19,8 @@ import net.minecraft.util.ResourceLocation;
 
 
 public class Constants {
+    //? if legacy
+    //public static final ResourceLocation PLING_SOUND_LOCATION = new ResourceLocation("random.successful_hit");
 
     public static void playPingSound(float volume, float pitch) {
         //? if legacy {

@@ -86,7 +86,6 @@ public class EasyAtlasVerdicts {
                 //~ if modern 'player.inventory.currentItem = 7' -> 'player.getInventory().setSelectedSlot(7)'
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
-                    //~ if v1 'Minecraft.getMinecraft().currentScreen' -> 'Platform.screen().current()'
                     if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy

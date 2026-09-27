@@ -14,6 +14,7 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 //? if legacy {
 //import net.minecraft.client.entity.AbstractClientPlayer;
+//import com.google.common.collect.ImmutableMap;
 //?} else {
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
