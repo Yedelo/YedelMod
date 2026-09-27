@@ -4,12 +4,6 @@ package at.yedel.yedelmod.features.ping;
 
 import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
-//? if v0 {
-/*import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
-
-*///?} else
-import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 

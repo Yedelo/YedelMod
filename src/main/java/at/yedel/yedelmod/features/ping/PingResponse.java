@@ -15,10 +15,6 @@ import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
 import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
 //?}
 
-//? if v1 {
- import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
-//?} else
-//import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 

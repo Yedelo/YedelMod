@@ -10,10 +10,6 @@ import at.yedel.yedelmod.utils.NameLineEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
-//? if v0 {
-/*import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-*///?} else
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 
@@ -32,10 +28,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResult;
 //?}
-//? if forge {
-/*import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-*///?}
 
 import java.util.ArrayList;
 import java.util.List;

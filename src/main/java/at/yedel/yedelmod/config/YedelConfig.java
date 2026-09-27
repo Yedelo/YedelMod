@@ -6,32 +6,7 @@ import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
-    //? if v0 {
-/*import at.yedel.yedelmod.hud.CustomTextHud;
-import at.yedel.yedelmod.hud.BountyHuntingHud;
-
-
-import cc.polyfrost.oneconfig.config.Config;
-import cc.polyfrost.oneconfig.config.annotations.*;
-import cc.polyfrost.oneconfig.config.annotations.Number;
-import cc.polyfrost.oneconfig.config.core.ConfigUtils;
-import cc.polyfrost.oneconfig.config.core.OneColor;
-import cc.polyfrost.oneconfig.config.core.OneKeyBind;
-import cc.polyfrost.oneconfig.config.data.InfoType;
-import cc.polyfrost.oneconfig.config.data.Mod;
-import cc.polyfrost.oneconfig.config.data.ModType;
-import cc.polyfrost.oneconfig.config.elements.BasicOption;
-import cc.polyfrost.oneconfig.config.elements.OptionPage;
-import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
-import cc.polyfrost.oneconfig.config.migration.VigilanceName;
-import cc.polyfrost.oneconfig.libs.universal.UDesktop;
-import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
-import cc.polyfrost.oneconfig.platform.Platform;
-import cc.polyfrost.oneconfig.utils.Notifications;
-import java.lang.reflect.Field;
-import java.util.Objects;
-*///?} else {
-//? if legacy {
+    //? if legacy {
 //import org.polyfrost.oneconfig.internal.legacy.InputConstants;
 //?} else {
 import com.mojang.blaze3d.platform.InputConstants;
@@ -46,12 +21,6 @@ import org.polyfrost.oneconfig.api.platform.v1.DesktopHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.KeybindHelper;
 import org.polyfrost.oneconfig.api.ui.v1.keybind.OneConfigKeybind;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
-    //?}
-//? if forge {
-/*import net.minecraftforge.fml.common.Loader;
-import at.yedel.yedelmod.utils.update.UpdateManager;
-import at.yedel.yedelmod.utils.update.UpdateSource;
-*///?} else
 import net.fabricmc.loader.api.FabricLoader;
 //? if legacy {
 //import net.minecraft.util.EnumParticleTypes;
@@ -65,7 +34,6 @@ import java.net.URI;
 
 
 
-//~ config_bridge
 public class YedelConfig extends Config {
     private static final YedelConfig INSTANCE = new YedelConfig();
 
@@ -86,35 +54,7 @@ public class YedelConfig extends Config {
     }
 
     private YedelConfig() {
-        //? if v0 {
-        /*super(
-            new Mod(
-                "YedelMod",
-                ModType.UTIL_QOL,
-                "/assets/yedelmod/yedelmod.png"
-            ),
-            "yedelmod.json",
-            true,
-            true
-        );
-        initialize();
-
-        registerKeyBind(insufficientEvidenceKeybind, EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict);
-        registerKeyBind(evidentWithoutDoubtKeybind, EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict);
-
-        for (String internalOption : new String[] {
-            "playtimeMinutes",
-            "firstTime",
-            "bountyHuntingPoints",
-            "bountyHuntingKills",
-            "firstTimeBountyHunting"
-        }) {
-            hideIf(internalOption, () -> true);
-        }
-        *///?} else {
         super("yedelmod", "/assets/yedelmod/yedelmod.png", "YedelMod", Category.QOL);
-        //?}
-
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
         //? if legacy
          //addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
@@ -124,29 +64,10 @@ public class YedelConfig extends Config {
         addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidentWithoutDoubtKeybind");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill");
-        //? if v0
-         //addDependentOption("bountyHunting", "bountyHuntingHud");
     }
 
-    //? if v0 {
-    /*
-    @Override
-    protected BasicOption getCustomOption(Field field, CustomOption annotation, OptionPage page, Mod mod, boolean migrate) {
-        BasicOption option = null;
-        if (Objects.equals(annotation.id(), "empty")) {
-            Empty empty = ConfigUtils.findAnnotation(field, Empty.class);
-            option = new EmptyOption(field, this, empty.name(), empty.description(), empty.category(), empty.subcategory(), empty.size());
-            ConfigUtils.getSubCategory(page, empty.category(), empty.subcategory()).options.add(option);
-        }
-        return option;
-    }
-     
-    *///?}
 
     public void open() {
-        //? if v0
-        //openGui();
-        //? else
         ScreensKt.openUI(this);
     }
 
@@ -155,79 +76,7 @@ public class YedelConfig extends Config {
 
     /* General */
 
-    //? if v1 {
-    @Switch(
-        title = "Enabled",
-        description = "Global toggle for the mod."
-    )
-    public boolean enabled = true;
-    //?}
 
-    //? if forge {
-    /*@Dropdown(
-        title = "Update Source",
-        description = "Where to get updates from. Use GitHub for earlier releases and Modrinth for more stable releases.",
-        category = "General",
-        subcategory = "Updates",
-        options = {"Modrinth", "GitHub"}
-    )
-    public int updateSource = 0;
-
-    public UpdateSource getUpdateSource() {
-        if (updateSource == 0) {
-            return UpdateSource.MODRINTH;
-        }
-        else {
-            return UpdateSource.GITHUB;
-        }
-    }
-
-    @Switch(
-        title = "Automatically Check for Updates",
-        description = "Checks for updates on game load",
-        category = "General",
-        subcategory = "Updates"
-    )
-    public boolean automaticallyCheckForUpdates = true;
-
-    @Button(
-        title = "Modrinth Link",
-        description = "Click to open the Modrinth site",
-        category = "General",
-        subcategory = "Updates",
-        text = "Open"
-    )
-    public void openModrinthLink() {
-        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getModrinthLink())) {
-            Notifications.INSTANCE.send("YedelMod", "Couldn't open modrinth link!");
-        }
-    }
-
-    @Button(
-        title = "GitHub Link",
-        description = "Click to open the GitHub repository",
-        category = "General",
-        subcategory = "Updates",
-        text = "Open"
-    )
-    public void openGitHubRepository() {
-        if (!UDesktop.browse(YedelMod.getInstance().getUpdateManager().getGithubLink())) {
-            Notifications.INSTANCE.send("YedelMod", "Couldn't open github link!");
-        }
-    }
-
-    @Button(
-        title = "Check for Updates",
-        description = "Check for updates with the selected source",
-        category = "General",
-        subcategory = "Updates",
-        text = "Check",
-        size = 2
-    )
-    public void checkForUpdates() {
-        YedelMod.getInstance().getUpdateManager().checkForUpdates(getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
-    }
-    *///?}
 
     /* Features */
 
@@ -406,7 +255,7 @@ public class YedelConfig extends Config {
         subcategory = "Hypixel"
     )
     // very soft dependency that shouldn't mean very much
-    public boolean dropperAutoGG = /*? if v0 {*/ /*Loader.isModLoaded("autogg") *//*?} else {*/FabricLoader.getInstance().isModLoaded("autogg")/*?}*/;
+    public boolean dropperAutoGG = FabricLoader.getInstance().isModLoaded("autogg");
 
     @Slider(
         title = "AutoGG Delay",
@@ -506,11 +355,7 @@ public class YedelConfig extends Config {
         category = "Features",
         subcategory = "Hypixel"
     )
-    public OneConfigKeybind insufficientEvidenceKeybind =
-        //? if v0 {
-        //new OneConfigKeybind(UKeyboard.KEY_O);
-        //?} else
-        KeybindHelper.builder().key(InputConstants.KEY_O).action(EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict).register();
+    public OneConfigKeybind insufficientEvidenceKeybind = KeybindHelper.builder().key(InputConstants.KEY_O).action(EasyAtlasVerdicts.getInstance()::submitInsufficientEvidenceVerdict).register();
 
     @Keybind(
         title = "Evident Without Doubt Verdict",
@@ -518,19 +363,8 @@ public class YedelConfig extends Config {
         category = "Features",
         subcategory = "Hypixel"
     )
-    public OneConfigKeybind evidentWithoutDoubtKeybind =
-        //? if v0 {
-        //new OneConfigKeybind(UKeyboard.KEY_P);
-        //?} else
-        KeybindHelper.builder().key(InputConstants.KEY_P).action(EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict).register();
+    public OneConfigKeybind evidentWithoutDoubtKeybind = KeybindHelper.builder().key(InputConstants.KEY_P).action(EasyAtlasVerdicts.getInstance()::submitEvidentWithoutDoubtVerdict).register();
 
-    //? if v0 {
-    /*@HUD(
-        title = "Custom Text HUD",
-        category = "Features"
-    )
-    public CustomTextHud customTextHud = new CustomTextHud();
-    *///?}    
     /* Commands */
 
     @Info(
@@ -651,15 +485,6 @@ public class YedelConfig extends Config {
     )
     private transient int empty$12 = 1;
 
-    //? if v0 {
-    /*@Info /^ command ^/ (
-        title = "- update [platform]",
-        description = "Checks for mod updates. Without an argument, uses the default one (modrinth). Possible platforms are \"modrinth\" or \"github\".",
-        category = "Commands",
-        subcategory = "Index"
-    )
-    private transient int empty$13 = 1;
-    *///?}
 
     @Info /* command */ (
         title = "- yedelmessage (message)",
@@ -693,20 +518,12 @@ public class YedelConfig extends Config {
         text = "Reset"
     )
     private void resetConfirmation() {
-        //? if v0
-        //Notifications.INSTANCE.send("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)", () -> {
-            //? else
-            Notifications.builder("Bounty Hunting", "Are you sure you want to reset your stats? (press %k)").onClick(() -> {
             bountyHuntingPoints = 0;
             bountyHuntingKills = 0;
             TNTTagFeatures.getInstance().getDisplayLines().set(1, "§c0 points (reset)");
             TNTTagFeatures.getInstance().getDisplayLines().set(2, "§c0 kills (reset)");
             //~if v1 'Notifications.INSTANCE' -> 'Notifications'
             Notifications.send("Bounty Hunting", "Reset stats!");
-        //? if v0
-        //});
-        //? else
-         }).send();
     }
 
     @Button(
@@ -716,9 +533,7 @@ public class YedelConfig extends Config {
         text = "Open video"
     )
     private void watchVideo() {
-        //~ if v1 'UDesktop' -> 'DesktopHelper'
         if (!DesktopHelper.browse(BOUNTY_HUNTING_VIDEO)) {
-            //~if v1 'Notifications.INSTANCE' -> 'Notifications'
             Notifications.send("YedelMod", "Couldn't open video!");
         }
     }
@@ -782,42 +597,16 @@ public class YedelConfig extends Config {
         Constants.playPingSound(1, 1.04f);
     }
 
-    //? if v0 {
-    /*
-       @HUD(
-        title = "Bounty Hunting HUD",
-        category = "TNT Tag",
-        subcategory = "HUD"
-    )
-    public BountyHuntingHud bountyHuntingHud = new BountyHuntingHud();
-     
-    *///?}
 
     // End of visible config
 
     // Hidden variables for data
-
-    //? if v0
-    //@Number(title = "playtimeMinutes", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
-    //? else
     @Include
     public int playtimeMinutes = 0;
-
-    //? if v0
-    //@Number(title = "bountyHuntingPoints", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
-    //? else
     @Include
     public int bountyHuntingPoints = 0;
-
-    //? if v0
-    //@Number(title = "bountyHuntingKills", category = "General", subcategory = "", min = 0, max = Integer.MAX_VALUE)
-    //? else
     @Include
     public int bountyHuntingKills = 0;
-
-    //? if v0
-    //@Switch(title = "firstTimeBountyHunting", category = "General", subcategory = "")
-    //? else
     @Include
     public boolean firstTimeBountyHunting = true;
 

@@ -11,16 +11,8 @@ import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
-//? if v0 {
-/*import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.UMinecraft;
-import cc.polyfrost.oneconfig.libs.universal.UScreen;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.UPlayer;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-*///?} else {
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
-//?}
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {
@@ -40,12 +32,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 //?}
-//? if forge {
-/*import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.event.world.WorldEvent;
-
-*///?}
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -77,9 +63,6 @@ public class EasyAtlasVerdicts {
         }
     }
 
-    //? if forge {
-    //@SubscribeEvent
-    //?} else
     @Subscribe
     public void onLeaveAtlasPartTwo(WorldEvent.Unload event) {
         inAtlas = false;

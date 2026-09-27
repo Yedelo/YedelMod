@@ -6,15 +6,9 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
 
-//? if v0 {
-/*import cc.polyfrost.oneconfig.events.event.Stage;
-import cc.polyfrost.oneconfig.events.event.TickEvent;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-*///?} else {
-import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
-//?}
 import com.google.common.collect.ImmutableMap;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
+import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
@@ -76,10 +70,7 @@ public class StrengthIndicators {
     }
 
     @Subscribe
-    //~ if v1 'TickEvent' -> 'TickEvent.Start'
     private void onTick(TickEvent.Start event) {
-        //? if v0
-        //if (event.stage == Stage.START) return;
         Set<Map.Entry<String, Double>> strengthPlayerSet = strengthPlayers.entrySet();
         for (Map.Entry<String, Double> entry : strengthPlayerSet) {
             String player = entry.getKey();

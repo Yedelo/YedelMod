@@ -3,9 +3,6 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
-//? if v0 {
-//import cc.polyfrost.oneconfig.libs.universal.UChat;
-//?} else
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;

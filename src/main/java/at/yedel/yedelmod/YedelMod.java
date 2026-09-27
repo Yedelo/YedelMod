@@ -14,42 +14,18 @@ import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.utils.Threading;
 
 import net.minecraft.client.Minecraft;
-//? if forge {
-/*import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import at.yedel.yedelmod.utils.update.UpdateManager;
-import at.yedel.yedelmod.utils.update.UpdateSource;
-*///?}
-//? else if fabric {
- import net.fabricmc.api.ClientModInitializer;
-//?}
+import net.fabricmc.api.ClientModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//? if v0 {
-/*import org.polyfrost.oneconfig.api.event.v1.EventManager;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-*///? else {
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager;
- import org.polyfrost.oneconfig.api.event.v1.EventManager;
- import org.polyfrost.oneconfig.api.hud.v1.HudManager;
-//?}
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
 
 import java.util.concurrent.TimeUnit;
 
 
 
 // Mod
-/*? if forge {*//*
-@Mod(
-	modid = YedelModConstants.MOD_ID,
-	name = YedelModConstants.MOD_NAME,
-	version = YedelModConstants.MOD_VERSION,
-	clientSideOnly = true
-)
-*//*?}*/
-public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
+public class YedelMod implements ClientModInitializer {
 	private static YedelMod INSTANCE;
 
 	public static YedelMod getInstance() {
@@ -78,8 +54,6 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 		CustomHitParticles.getInstance();
 		RandomPlaceholder.getInstance();
 		LimboCreative.getInstance();
-		//? if v1
-		HudManager.register(new BountyHuntingHud(), new CustomTextHud());
 
 		Threading.scheduleRepeat(() -> {
 			//~ if modern 'Minecraft.getMinecraft().thePlayer' -> 'Minecraft.getInstance().player'
@@ -90,47 +64,13 @@ public class YedelMod /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
 		}, 1, TimeUnit.MINUTES);
 	}
 
-	/*? if forge {*//*
-	public final UpdateManager updateManager = new UpdateManager(
-		"YedelMod", YedelModConstants.MOD_VERSION, "yedelmod", "Yedelo/YedelMod", YedelModConstants.yedelogo
-	);
-
-	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
-		initialize();
-		registerEventListeners(this);
-	}
-
-	@Mod.EventHandler
-	public void checkForUpdates(FMLLoadCompleteEvent event) {
-		if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().automaticallyCheckForUpdates) {
-			updateManager.checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.NOTIFICATIONS);
-		}
-	}
-
-	private void registerEventListeners(Object... eventListeners) {
-		for (Object eventListener: eventListeners) {
-			MinecraftForge.EVENT_BUS.register(eventListener);
-			EventManager.INSTANCE.register(eventListener);
-		}
-	}
-
-	public UpdateManager getUpdateManager() {
-		return updateManager;
-	}
-	*//*?} else {*/
-	
-	@Override
 	public void onInitializeClient() {
 		initialize();
 	}
 
-	private void registerEventListeners(Object... eventListeners) {
-		for (Object eventListener: eventListeners) {
-			// fabric events are registered just by the object existing
-			EventManager.INSTANCE.register(eventListener);
+	private void registerEventListeners(Object... listeners) {
+		for (Object listener: listeners) {
+			EventManager.INSTANCE.register(listener);
 		}
 	}
-	 
-	/*?}*/
 }
