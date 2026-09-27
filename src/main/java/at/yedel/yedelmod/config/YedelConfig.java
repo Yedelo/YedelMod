@@ -76,7 +76,11 @@ public class YedelConfig extends Config {
 
     /* General */
 
-
+    @Switch(
+        title = "Enabled",
+        description = "Global toggle for the mod."
+    )
+    public boolean enabled = true;
 
     /* Features */
 
