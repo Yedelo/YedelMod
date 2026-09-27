@@ -2,11 +2,9 @@ package at.yedel.yedelmod.features;
 
 
 
-import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingCommandInterface;
 import at.yedel.yedelmod.features.ping.PingMethod;
-import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.TextUtils;
@@ -14,7 +12,6 @@ import com.google.gson.JsonObject;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.minecraft.client.Minecraft;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;

@@ -12,7 +12,6 @@ import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
-import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {

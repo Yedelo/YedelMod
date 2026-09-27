@@ -2,7 +2,6 @@ package at.yedel.yedelmod.config;
 
 
 
-import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;

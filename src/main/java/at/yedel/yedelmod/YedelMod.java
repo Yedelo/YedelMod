@@ -2,15 +2,12 @@ package at.yedel.yedelmod;
 
 
 
-import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.*;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.StrengthIndicators;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.features.ping.PingResponse;
-import at.yedel.yedelmod.hud.BountyHuntingHud;
-import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.utils.Threading;
 
 import net.minecraft.client.Minecraft;

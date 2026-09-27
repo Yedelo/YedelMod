@@ -6,7 +6,6 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
 
-import com.google.common.collect.ImmutableMap;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
@@ -16,7 +15,6 @@ import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacke
 //? if legacy {
 //import net.minecraft.client.entity.AbstractClientPlayer;
 //?} else {
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 //?}
