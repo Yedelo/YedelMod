@@ -222,7 +222,7 @@ public class YedelCommand {
     }
 
     @Handler
-    public void dp() {
+    public void defaultping() {
         PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
     }
 
