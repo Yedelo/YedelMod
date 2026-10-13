@@ -5,9 +5,6 @@ package at.yedel.yedelmod.features.ping;
 import at.yedel.yedelmod.utils.Constants;
 
 import net.minecraft.client.Minecraft;
-//? if v0 {
-//import cc.polyfrost.oneconfig.libs.universal.UChat;
-//?} else
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 
 import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
