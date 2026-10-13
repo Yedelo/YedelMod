@@ -125,7 +125,7 @@ tasks {
         }
         fun target(version: String?) = ">=$version"
 
-        exclude("mcmod.info")
+        exclude("mcmod.info", "${modId}_keystore.jks")
         val props = buildMap {
             register("modName", modName)
             register("modId", modId)
