@@ -5,10 +5,6 @@ package at.yedel.yedelmod.features;
 
 import at.yedel.yedelmod.config.YedelConfig;
 import net.minecraft.client.Minecraft;
-//? if forge {
-/*import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-*///?}
 //? if legacy {
 /*import at.yedel.yedelmod.utils.NumberUtils;
 import net.minecraft.block.Block;

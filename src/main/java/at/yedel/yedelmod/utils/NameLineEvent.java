@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 //?}
-//? if v1
 import org.polyfrost.oneconfig.api.event.v1.events.Event;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 
 
 //~ if modern 'String' -> 'Component' {
-public class NameLineEvent /*? if v1 {*/implements Event/*?}*/ {
+public class NameLineEvent implements Event {
     //? if legacy {
     /*private final NameRenderingMethod method;
     private final AbstractClientPlayer player;

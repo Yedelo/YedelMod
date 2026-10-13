@@ -2,7 +2,7 @@ package at.yedel.yedelmod.features;
 
 
 
-import at.yedel.yedelmod.YedelMod;
+
 import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.features.ping.PingCommandInterface;
 import at.yedel.yedelmod.features.ping.PingMethod;
@@ -10,31 +10,18 @@ import at.yedel.yedelmod.hud.CustomTextHud;
 import at.yedel.yedelmod.launch.YedelModConstants;
 import at.yedel.yedelmod.utils.Requests;
 import at.yedel.yedelmod.utils.TextUtils;
-//? if v0 {
-/*import cc.polyfrost.oneconfig.libs.universal.UChat;
-import cc.polyfrost.oneconfig.libs.universal.wrappers.message.UTextComponent;
-import cc.polyfrost.oneconfig.utils.commands.annotations.*;
-import net.minecraft.event.HoverEvent;
-    *///?} else {
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Command;
 import org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler;
 import org.polyfrost.oneconfig.api.hud.v1.HudManager;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
-//?}
 import com.google.gson.JsonObject;
 
-import net.minecraft.client.Minecraft;
 //? if legacy {
 /*
 import org.lwjgl.opengl.Display;
 *///?}
-//? if forge {
-/*import at.yedel.yedelmod.utils.update.UpdateManager;
-import at.yedel.yedelmod.utils.update.UpdateSource;
-*///?}
-
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -50,13 +37,9 @@ import static at.yedel.yedelmod.launch.YedelModConstants.yedelogo;
 
 
 @Command(
-    //? if v0
-    //value = "yedel", aliases = "yedelmod",
-    //? else
     value = {"yedel", "yedelmod"},
     description = "The main command of YedelMod"
 )
-    //~ command_bridge
 public class YedelCommand {
     private static final YedelCommand INSTANCE = new YedelCommand();
 
@@ -64,7 +47,6 @@ public class YedelCommand {
         return INSTANCE;
     }
 
-    //~ if v1 'String FORMATTING_CODES = ' -> 'Component FORMATTING_CODES = Component.text'
     private static final Component FORMATTING_CODES = Component.text(
         "§cC§6o§el§ao§9r §1c§5o§dd§be§3s§r:" + // "Color codes:" (in rainbow)
             "\n§8Black: §8&0     §4Dark Red: §4&4     §2Dark Green: §2&2     §1Dark Blue: §1&1" +
@@ -76,13 +58,8 @@ public class YedelCommand {
             "\n§kObfuscated§r: &k     §r§lBold: §l&l     §r§mStrikethrough: §m&m" +
             "\n§nUnderline: §n&n§r     §r§oItalic: §o&o    §rReset: §r&r"
     );
-    //? if v0 {
-    /*private static final UTextComponent FORMATTING_GUIDE_MESSAGE =
-        new UTextComponent(yedelogo + " §e§nHover to view the formatting guide.").setHover(HoverEvent.Action.SHOW_TEXT, FORMATTING_CODES);
-    *///?} else {
     private static final Component FORMATTING_GUIDE_MESSAGE =
         Component.text(yedelogo + " §e§nHover to view the formatting guide.").hoverEvent(HoverEvent.showText(FORMATTING_CODES));
-    //?}
 
     //? if modern {
     private String displayTitle;
@@ -94,8 +71,7 @@ public class YedelCommand {
 
     private YedelCommand() {}
 
-    //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
-    @org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
+    @Handler(description = "The main command, hosting all subcommands. When used with no arguments, opens the config screen.")
     public void main() {
         YedelConfig.getInstance().open();
     }
@@ -159,14 +135,14 @@ public class YedelCommand {
     }
 
     @Handler(description = "Sets the display text, supporting color codes with ampersands (&).")
-    public void settext(/*? if v0 {*//*@Greedy *//*?}*/String text) {
+    public void settext(String text) {
         String displayText = TextUtils.replaceAmpersand(text);
         setDisplayText(displayText);
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet displayed text to \"§r" + displayText + "§e\"!");
     }
 
     @Handler(description = "Sets the title of the game window.")
-    public void settitle(/*? if v0 {*//*@Greedy *//*?}*/String title) {
+    public void settitle(String title) {
         //? if legacy
         //Display.setTitle(title);
         //? else
@@ -178,7 +154,7 @@ public class YedelCommand {
         value = {"simulatechat", "simc"},
         description = "Simulates a chat message, supports color codes with ampersands (&)."
     )
-    private void simulatechat(/*? if v0 {*//*@Greedy *//*?}*/String text) {
+    private void simulatechat(String text) {
         String message = TextUtils.replaceAmpersand(text);
         Platform.compatibility().displayChatMessage(message);
     }
@@ -227,22 +203,15 @@ public class YedelCommand {
     }
 
     private void setDisplayText(String text) {
-        //? if v0 {
-        /*YedelConfig.getInstance().customTextHud.displayText = text;
-        YedelConfig.getInstance().save();
-        *///?} else {
         for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
             hud.displayText = text;
             hud.save();
         }
-        //?}
     }
 
-    //~ if v1 '@SubCommandGroup' -> '@Command'
     @Command("ping")
     public static class Ping {
-        //~ if v1 '@Main' -> '@org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler'
-        @org.polyfrost.oneconfig.api.commands.v1.factories.annotated.Handler
+        @Handler
         public void main() {
             PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
         }
@@ -287,26 +256,4 @@ public class YedelCommand {
             PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
         }
     }
-
-    //? if forge {
-    /*
-    @HandlerGroup("update")
-    public static class Update {
-        @Main
-        public void main() {
-            YedelMod.getInstance().getUpdateManager().checkForUpdates(YedelConfig.getInstance().getUpdateSource(), UpdateManager.FeedbackMethod.CHAT);
-        }
-
-        @Handler
-        public void modrinth() {
-            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.MODRINTH, UpdateManager.FeedbackMethod.CHAT);
-        }
-
-        @Handler
-        public void github() {
-            YedelMod.getInstance().getUpdateManager().checkForUpdates(UpdateSource.GITHUB, UpdateManager.FeedbackMethod.CHAT);
-        }
-    }
-     
-    *///?}
 }
