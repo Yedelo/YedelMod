@@ -45,7 +45,6 @@ All hosted under /yedel (yedelmod):
 - settext [text]
 - settitle [title]
 - simulatechat (simc) [text]
-- update [platform] \<forge exclusive\>
 - yedelmessage (message)
 
 </details>
