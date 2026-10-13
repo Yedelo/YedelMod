@@ -91,6 +91,7 @@ dependencies {
         implementation("net.ornithemc.osl-gen2:core:${oslCoreVersion}")
         implementation("net.ornithemc.osl-gen2:entrypoints:${oslEntrypointsVersion}")
         compileOnly("net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7")
+        compileOnly("io.github.llamalad7:mixinextras-fabric:0.5.5")
     }
     else {
         implementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
