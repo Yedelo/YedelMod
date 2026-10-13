@@ -95,7 +95,7 @@ public class CustomHitParticles {
             //? if legacy {
             /*
             int particleId =
-                YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleType;
+                YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleTypeLegacy;
             EnumParticleTypes particle = EnumParticleTypes.getParticleFromId(particleId);
             int parameters;
 			/^
@@ -145,7 +145,7 @@ public class CustomHitParticles {
     
     private ParticleType<?> getParticleType() {
         Optional<Holder.Reference<ParticleType<?>>> maybeType = YedelConfig.getInstance().randomParticleType ?
-            BuiltInRegistries.PARTICLE_TYPE.getRandom(randomSource) : BuiltInRegistries.PARTICLE_TYPE.get(YedelConfig.getInstance().customParticleType);
+            BuiltInRegistries.PARTICLE_TYPE.getRandom(randomSource) : BuiltInRegistries.PARTICLE_TYPE.get(YedelConfig.getInstance().customParticleTypeModern);
         // what is this
         return maybeType.<ParticleType<?>>map(Holder.Reference::value).orElse(null);
     }

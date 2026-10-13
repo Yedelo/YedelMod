@@ -115,13 +115,13 @@ public class YedelConfig extends Config {
         super("yedelmod", "/assets/yedelmod/yedelmod.png", "YedelMod", Category.QOL);
         //?}
 
+        String version = /*? if modern {*/ "Modern" /*?} else {*//*"Legacy"*//*?}*/;
         addDependentOption("autoWelcomeGuildMembers", "guildWelcomeMessage");
-        //? if legacy
-         //addDependentOptions("customHitParticles", "customParticleType", "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
+        addDependentOptions("customHitParticles", "customParticleType" + version, "particleYOffset", "randomParticleType", "onlySpawnCustomParticlesOnPlayers");
         addDependentOption("dropperAutoGG", "autoGGDelay");
         addDependentOption("regexChatFilter", "regexChatFilterPattern");
         addDependentOption("randomPlaceholder", "randomPlaceholderText");
-        addDependentOptions("skywarsStrengthIndicators", "strengthColor", "showSelfStrength", "strengthIndicatorOffset");
+        addDependentOptions("skywarsStrengthIndicators", "strengthColor" + version, "showSelfStrength", "strengthIndicatorOffset");
         addDependentOptions("easyAtlasVerdicts", "insufficientEvidenceKeybind", "evidentWithoutDoubtKeybind");
         addDependentOptions("bountyHunting", "highlightTargetAndShowDistance", "playHuntingSounds", "playSelection", "playKill");
         //? if v0
@@ -293,14 +293,12 @@ public class YedelConfig extends Config {
             "Item Take",
             "Guardian"
         }
-
-         
         *///?}
     )
     //? if legacy {
-     //public int customParticleType = EnumParticleTypes.NOTE.getParticleID();
+     //public int customParticleTypeLegacy = EnumParticleTypes.NOTE.getParticleID();
     //?} else {
-    public int customParticleType = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
+    public int customParticleTypeModern = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
     //?}
 
     // i don't know if i need to properly credit this
@@ -309,7 +307,7 @@ public class YedelConfig extends Config {
     @Override
     public Tree makeTree() {
         Tree tree = super.makeTree();
-        Node customParticleTypeNode = tree.getProp("customParticleType");
+        Node customParticleTypeNode = tree.getProp("customParticleTypeModern");
         String[] options = BuiltInRegistries.PARTICLE_TYPE.stream().map((particleType) -> BuiltInRegistries.PARTICLE_TYPE.getKey(particleType).toString()).toArray(String[]::new);
         customParticleTypeNode.addMetadata("options", options);
         return tree;
@@ -452,7 +450,7 @@ public class YedelConfig extends Config {
             "Black"
         }
     )
-    public int strengthColor = 1;
+    public int strengthColorLegacy = 1;
 
     *///?} else {
     @Color(
@@ -462,7 +460,7 @@ public class YedelConfig extends Config {
         subcategory = "Hypixel",
         alpha = false
     )
-    public PolyColor strengthColor = new PolyColor(0xFF5555);
+    public PolyColor strengthColorModern = new PolyColor(0xFF5555);
     //?}
 
     @Switch(

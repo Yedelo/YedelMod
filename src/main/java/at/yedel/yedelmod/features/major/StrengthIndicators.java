@@ -147,7 +147,7 @@ public class StrengthIndicators {
             }
             String text =
                 //? if legacy
-                //COLOR_MAP.get(YedelConfig.getInstance().strengthColor) +
+                //COLOR_MAP.get(YedelConfig.getInstance().strengthColorLegacy) +
                     "Strength - "
                     + String.format("%.2f", strengthPlayers.get(playerName))
                     + "s";
@@ -155,7 +155,7 @@ public class StrengthIndicators {
             //? if legacy
             //event.addNameLine(text);
             //? else
-            event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColor.getArgb()));
+            event.addNameLine(Component.literal(text).withColor(YedelConfig.getInstance().strengthColorModern.getArgb()));
         }
     }
 
