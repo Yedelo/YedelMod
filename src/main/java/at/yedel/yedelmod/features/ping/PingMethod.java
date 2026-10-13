@@ -27,7 +27,6 @@ public enum PingMethod {
     TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
     STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
-        //~ if v1 'HypixelUtils.INSTANCE' -> 'HypixelUtils'
         if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
         }
