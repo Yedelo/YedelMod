@@ -8,13 +8,14 @@ import net.minecraft.client.Minecraft;
 //? if legacy {
 /*import at.yedel.yedelmod.utils.NumberUtils;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.entity.living.player.PlayerEntity;
+import net.minecraft.entity.particle.ParticleType;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumParticleTypes;
-*///?} else {
+import net.minecraft.item.Items;
+
+    *///?} else {
 
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.core.BlockPos;
@@ -84,7 +85,7 @@ public class CustomHitParticles {
             if (entity.isInvisible()) {
                 return;
             }
-            //~ if modern 'instanceof EntityPlayer' -> 'instanceof Player'
+            //~ if modern 'instanceof PlayerEntity' -> 'instanceof Player'
             if (YedelConfig.getInstance().onlySpawnCustomParticlesOnPlayers && !(entity instanceof Player)) {
                 return;
             }
@@ -92,7 +93,7 @@ public class CustomHitParticles {
             /*
             int particleId =
                 YedelConfig.getInstance().randomParticleType ? (int) NumberUtils.randomRange(0, 41) : YedelConfig.getInstance().customParticleTypeLegacy;
-            EnumParticleTypes particle = EnumParticleTypes.getParticleFromId(particleId);
+            ParticleType particle = ParticleType.byId(particleId);
             int parameters;
 			/^
 			    Some particles take required parameters.
@@ -107,16 +108,16 @@ public class CustomHitParticles {
 
             switch (particle) {
                 case ITEM_CRACK:
-                    parameters = Item.getIdFromItem(Items.redstone);
+                    parameters = Item.getId(Items.REDSTONE);
                     break;
                 case BLOCK_CRACK:
                 case BLOCK_DUST:
-                    parameters = Block.getStateId(Blocks.redstone_ore.getDefaultState());
+                    parameters = Block.serialize(Blocks.REDSTONE_ORE.defaultState());
                     break;
                 default:
                     parameters = 0;
             }
-            Minecraft.getInstance().theWorld.spawnParticle(particle, true, entity.posX, entity.posY + YedelConfig.getInstance().particleYOffset, entity.posZ, 0, 0, 0, parameters);
+            Minecraft.getInstance().world.addParticle(particle, true, entity.x, entity.y + YedelConfig.getInstance().particleYOffset, entity.z, 0, 0, 0, parameters);
              
             *///?} else {
             position = entity.position();

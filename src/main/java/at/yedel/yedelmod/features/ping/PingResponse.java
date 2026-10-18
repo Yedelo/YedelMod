@@ -3,13 +3,14 @@ package at.yedel.yedelmod.features.ping;
 
 
 
+
 import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.error.ErrorReason;
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPingPacket;
 //? if legacy {
-/*import net.minecraft.network.play.server.S37PacketStatistics;
-import net.minecraft.network.play.server.S3APacketTabComplete;
+/*import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
+import net.minecraft.network.packet.s2c.play.StatsS2CPacket;
 *///?} else {
 import net.minecraft.network.protocol.game.ClientboundAwardStatsPacket;
 import net.minecraft.network.protocol.game.ClientboundCommandSuggestionsPacket;
@@ -44,7 +45,7 @@ public class PingResponse {
 
     @Subscribe
     public void handleStatsPingResponse(PacketEvent.Receive event) {
-        //~ if modern 'S37PacketStatistics' -> 'ClientboundAwardStatsPacket'
+        //~ if modern 'StatsS2CPacket' -> 'ClientboundAwardStatsPacket'
         if (event.getPacket() instanceof ClientboundAwardStatsPacket) {
             PingQueue.getInstance().post(PingMethod.STATS_PACKET);
         }
@@ -52,7 +53,7 @@ public class PingResponse {
 
     @Subscribe
     public void handleTabPingResponse(PacketEvent.Receive event) {
-        //~ if modern 'S3APacketTabComplete' -> 'ClientboundCommandSuggestionsPacket'
+        //~ if modern 'CommandSuggestionsS2CPacket' -> 'ClientboundCommandSuggestionsPacket'
         if (event.getPacket() instanceof ClientboundCommandSuggestionsPacket) {
             PingQueue.getInstance().post(PingMethod.TAB_PACKET);
         }

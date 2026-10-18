@@ -60,7 +60,7 @@ public class LimboCreative {
 
     private void giveCreative() {
         //? if legacy {
-        //Minecraft.getInstance().playerController.setGameType(WorldSettings.GameType.CREATIVE);
+        //Minecraft.getInstance().interactionManager.setGameMode(WorldSettings.GameMode.CREATIVE);
         //?} else
         Minecraft.getInstance().gameMode.setLocalMode(GameType.CREATIVE);
         Platform.compatibility().displayChatMessage(yedelogo + " §eSet gamemode to creative!");
@@ -68,7 +68,7 @@ public class LimboCreative {
 
     private boolean isAlreadyInCreative() {
         //? if legacy {
-        //return Minecraft.getInstance().playerController.isInCreativeMode();
+        //return Minecraft.getInstance().interactionManager.hasCreativeInventory();
         //?} else
         return Minecraft.getInstance().player.isCreative();
     }

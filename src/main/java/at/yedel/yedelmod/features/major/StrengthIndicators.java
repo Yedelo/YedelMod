@@ -6,6 +6,7 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.NameLineEvent;
 import at.yedel.yedelmod.utils.NumberUtils;
 
+
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent;
 import com.google.common.collect.ImmutableMap;
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
@@ -14,7 +15,7 @@ import net.hypixel.data.type.GameType;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 //? if legacy {
-//import net.minecraft.client.entity.AbstractClientPlayer;
+//import net.minecraft.client.entity.living.player.ClientPlayerEntity;
 //?} else {
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
@@ -125,10 +126,10 @@ public class StrengthIndicators {
             && event.isPlayer()
         ) {
             //? if legacy
-            //AbstractClientPlayer player = event.getPlayer();
+            //ClientPlayerEntity player = event.getPlayer();
             //? else
             Player player = (Player) event.getEntity();
-            //~ if modern 'isUser' -> 'isLocalPlayer'
+            //~ if modern 'isLocal' -> 'isLocalPlayer'
             if (!YedelConfig.getInstance().showSelfStrength && player.isLocalPlayer()) {
                 return;
             }

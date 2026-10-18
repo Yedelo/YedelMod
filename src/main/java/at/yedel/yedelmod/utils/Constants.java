@@ -12,22 +12,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
 //?} else {
-/*import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
+/*import net.minecraft.client.sound.instance.SimpleSoundInstance;
+import net.minecraft.resource.Identifier;
 *///?}
-import org.polyfrost.compose.render.PolyColor;
 
 
 
 public class Constants {
     //? if legacy
-    //public static final ResourceLocation PLING_SOUND_LOCATION = new ResourceLocation("random.successful_hit");
-    public static final PolyColor EMPTY_COLOR = PolyColor.Companion.getTRANSPARENT();
+    //public static final Identifier PLING_SOUND_LOCATION = new Identifier("random.successful_hit");
 
     public static void playPingSound(float volume, float pitch) {
-        //? if legacy {
-        //Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.create(PLING_SOUND_LOCATION, pitch));
-        //?} else
-        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, pitch, volume));
+        Minecraft.getInstance().getSoundManager().play(/*? if modern {*/SimpleSoundInstance.forUI(SoundEvents.EXPERIENCE_ORB_PICKUP, pitch, volume)/*? else {*//*SimpleSoundInstance.of(PLING_SOUND_LOCATION, pitch)*//*?}*/);
     }
 }

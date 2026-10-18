@@ -13,11 +13,8 @@ public class TextUtils {
     private static final Pattern ampersandFormattingPattern = Pattern.compile("&([0123456789abcdefklnor])");
 
     public static void sendChat(String message) {
-        //? if legacy {
-        //Minecraft.getInstance().thePlayer.sendChatMessage(message);
-        //?} else {
+        //~ if legacy 'connection.sendChat' -> 'sendChat'
         Minecraft.getInstance().player.connection.sendChat(message);
-        //?}
     }
 
     public static String replaceAmpersand(String string) {

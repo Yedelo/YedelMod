@@ -4,13 +4,14 @@ package at.yedel.yedelmod.features.ping;
 
 import at.yedel.yedelmod.utils.TextUtils;
 import net.minecraft.client.Minecraft;
+
 import org.polyfrost.oneconfig.api.hypixel.v1.HypixelUtils;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPingPacket;
 
 //? if legacy {
-/*import net.minecraft.network.play.client.C14PacketTabComplete;
-import net.minecraft.network.play.client.C16PacketClientStatus;
+/*import net.minecraft.network.packet.c2s.play.ClientStatusC2SPacket;
+import net.minecraft.network.packet.c2s.play.CommandSuggestionsC2SPacket;
 *///?} else {
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCommandSuggestionPacket;
@@ -24,8 +25,8 @@ import java.util.function.Function;
 public enum PingMethod {
     //? if legacy {
     /*COMMAND_RESPONSE("Command", () -> TextUtils.sendChat("/" + TextUtils.randomUuid(8))),
-    TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C14PacketTabComplete("#"))),
-    STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS))),
+    TAB_PACKET("Tab", () -> Minecraft.getInstance().getNetworkHandler().sendPacket(new CommandSuggestionsC2SPacket("#"))),
+    STATS_PACKET("Stats", () -> Minecraft.getInstance().getNetworkHandler().sendPacket(new ClientStatusC2SPacket(ClientStatusC2SPacket.Status.REQUEST_STATS))),
     HYPIXEL_PING("Hypixel", () -> {
         if (HypixelUtils.isHypixel()) {
             HypixelModAPI.getInstance().sendPacket(new ServerboundPingPacket());
@@ -38,7 +39,7 @@ public enum PingMethod {
         if (Minecraft.getInstance().isSingleplayer()) {
             throw new PingException("This method does not work in singleplayer!");
         }
-        long ping = Minecraft.getInstance().getCurrentServerData().pingToServer;
+        long ping = Minecraft.getInstance().getCurrentServerEntry().ping;
         if (ping == 0) {
             throw new PingException("Ping is 0! This might have occured if you used Direct Connect.");
         }

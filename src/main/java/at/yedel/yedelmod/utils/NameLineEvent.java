@@ -3,12 +3,13 @@ package at.yedel.yedelmod.utils;
 
 
 //? if legacy {
-//import net.minecraft.client.entity.AbstractClientPlayer;
+//import net.minecraft.client.entity.living.player.ClientPlayerEntity;
 //?} else {
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 //?}
+
 import org.polyfrost.oneconfig.api.event.v1.events.Event;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 public class NameLineEvent implements Event {
     //? if legacy {
     /*private final NameRenderingMethod method;
-    private final AbstractClientPlayer player;
+    private final ClientPlayerEntity player;
     *///?} else {
     private final Entity entity;
     private final boolean isPlayer;
@@ -29,7 +30,7 @@ public class NameLineEvent implements Event {
     private double verticalAdjustment = 0;
 
     //? if legacy {
-    /*public NameLineEvent(NameRenderingMethod method, AbstractClientPlayer player, double distanceSquared) {
+    /*public NameLineEvent(NameRenderingMethod method, ClientPlayerEntity player, double distanceSquared) {
         this.method = method;
         this.player = player;
         this.distanceSquared = distanceSquared;
@@ -48,7 +49,7 @@ public class NameLineEvent implements Event {
         return method;
     }
 
-    public AbstractClientPlayer getPlayer() {
+    public ClientPlayerEntity getPlayer() {
         return player;
     }
     *///?} else {

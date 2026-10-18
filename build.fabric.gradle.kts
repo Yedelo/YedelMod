@@ -82,7 +82,13 @@ val ploceus = if (ornithe) {
 
 dependencies {
     minecraft("com.mojang:minecraft:${sc.current.version}")
-    if (ornithe) mappings(ploceus!!.mcpMappings("stable", "1.8.9", "22"))
+    if (ornithe) {
+        mappings(ploceus!!.layeredMappings {
+            mappings("net.ornithemc:feather-gen2:${sc.current.version}+build.${sc.properties["versions.feather"]}:v2") {
+                containsUnpick()
+            }
+        })
+    }
     implementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     implementation("org.polyfrost.oneconfig:${sc.current.version}-$environment:$oneconfigVersion")
 

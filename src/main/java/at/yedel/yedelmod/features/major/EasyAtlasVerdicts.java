@@ -4,9 +4,6 @@ package at.yedel.yedelmod.features.major;
 
 import at.yedel.yedelmod.config.YedelConfig;
 
-
-
-
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.PacketEvent;
 import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
@@ -16,10 +13,11 @@ import org.polyfrost.oneconfig.api.platform.v1.ScreenPlatform;
 import org.polyfrost.oneconfig.utils.v1.Multithreading;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiContainer;
+/*import net.minecraft.client.entity.living.player.LocalClientPlayerEntity;
+import net.minecraft.client.gui.screen.game.inventory.InventoryMenuScreen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.S2FPacketSetSlot;
+import net.minecraft.network.packet.s2c.play.InventoryMenuSlotContentS2CPacket;
+import net.minecraft.network.packet.s2c.play.SelectSlotS2CPacket;
 import at.yedel.yedelmod.mixins.legacy.InvokerMinecraft;
 *///?} else {
 
@@ -80,17 +78,18 @@ public class EasyAtlasVerdicts {
         }
     }
     private void submitVerdict(String name) {
-        //~ if modern 'EntityPlayerSP player = Minecraft.getMinecraft().thePlayer' -> 'LocalPlayer player = Minecraft.getInstance().player'
+        //~ if modern 'LocalClientPlayerEntity' -> 'LocalPlayer'
         LocalPlayer player = Minecraft.getInstance().player;
             if (inAtlas && player != null) {
                 Platform.compatibility().displayChatMessage(yedelogo + " §eSubmitting an Atlas verdict for \"" + name + "\"...");
-                //~ if modern 'player.inventory.currentItem = 7' -> 'player.getInventory().setSelectedSlot(7)'
+                // damn this would be easy with kotlin
+                //~ if modern 'player.inventory.selectedSlot = 7' -> 'player.getInventory().setSelectedSlot(7)'
                 player.getInventory().setSelectedSlot(7);
                 Multithreading.schedule(() -> {
                     if (Platform.screen().current() == null) {
                         verdict = name;
                         //? if legacy
-                        //((InvokerMinecraft) Minecraft.getInstance()).yedelmod$rightClickMouse();
+                        //((InvokerMinecraft) Minecraft.getInstance()).yedelmod$doUse();
                         //? else
                         Minecraft.getInstance().gameMode.useItem(Minecraft.getInstance().player, InteractionHand.MAIN_HAND);
                     }
@@ -100,11 +99,11 @@ public class EasyAtlasVerdicts {
 
     @Subscribe
     public void reallyClickAtlasVerdict(PacketEvent.Receive event) {
-        //~ if modern 'S2FPacketSetSlot' -> 'ClientboundContainerSetSlotPacket'
+        //~ if modern 'InventoryMenuSlotContentS2CPacket' -> 'ClientboundContainerSetSlotPacket'
         if (inAtlas && event.getPacket() instanceof ClientboundContainerSetSlotPacket) {
             //? if legacy {
-            /*S2FPacketSetSlot packet = (S2FPacketSetSlot) event.getPacket();
-            ItemStack item = packet.m_64707080();
+            /*InventoryMenuSlotContentS2CPacket packet = (InventoryMenuSlotContentS2CPacket) event.getPacket();
+            ItemStack item = packet.getItem();
             if (item == null) return;
             String itemName = Platform.i18n().getUnformattedText(item.getDisplayName());
             *///?} else {
@@ -119,9 +118,9 @@ public class EasyAtlasVerdicts {
                 Multithreading.schedule(() -> {
                     Minecraft.getInstance().schedule(() -> {
                         //? if legacy {
-                        /*if (Minecraft.getInstance().currentScreen instanceof GuiContainer) {
-                            int windowId = ((GuiContainer) Minecraft.getInstance().currentScreen).inventorySlots.windowId;
-                            Minecraft.getInstance().playerController.windowClick(windowId, packet.m_40505239(), 0, 0, Minecraft.getInstance().thePlayer);
+                        /*if (Minecraft.getInstance().screen instanceof InventoryMenuScreen) {
+                            int windowId = ((InventoryMenuScreen) Minecraft.getInstance().screen).menu.networkId;
+                            Minecraft.getInstance().interactionManager.clickSlot(windowId, packet.getSlotId(), 0, 0, Minecraft.getInstance().player);
                             verdict = "";
                         }
                         *///?} else {
