@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Minecraft.class)
 public interface InvokerMinecraft {
-    @Invoker("rightClickMouse")
-    void yedelmod$rightClickMouse();
+    @Invoker("doUse")
+    void yedelmod$doUse();
 }*//*?}*/

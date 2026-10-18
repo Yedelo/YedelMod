@@ -58,7 +58,6 @@ public class YedelMod implements ClientModInitializer {
 		HudManager.register(new BountyHuntingHud(), new CustomTextHud());
 
 		Threading.scheduleRepeat(() -> {
-			//~ if modern 'Minecraft.getMinecraft().thePlayer' -> 'Minecraft.getInstance().player'
 			if (Minecraft.getInstance().player != null) {
 				YedelConfig.getInstance().playtimeMinutes++;
 				YedelConfig.getInstance().save();

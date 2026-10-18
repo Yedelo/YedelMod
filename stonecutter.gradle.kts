@@ -1,3 +1,4 @@
+import com.github.javaparser.printer.concretesyntaxmodel.CsmElement.string
 import kotlin.reflect.KProperty
 
 plugins {
@@ -20,8 +21,7 @@ stonecutter parameters {
 
     replacements {
         string(modern) {
-            replace("Minecraft.getMinecraft().addScheduledTask", "Minecraft.getInstance().schedule")
-            replace("Minecraft.getMinecraft()", "Minecraft.getInstance()")
+            replace("Minecraft.getInstance().executeTask", "Minecraft.getInstance().schedule")
         }
     }
 

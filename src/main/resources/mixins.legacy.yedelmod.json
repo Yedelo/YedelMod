@@ -4,10 +4,10 @@
   "minVersion": "${mixinMin}",
   "client": [
     "InvokerMinecraft",
-    "MixinEntityPlayer",
-    "MixinEntityPlayerSP",
-    "MixinRendererLivingEntity",
-    "MixinRenderPlayer"
+    "MixinLivingEntityRenderer",
+    "MixinLocalClientPlayerEntity",
+    "MixinPlayerEntity",
+    "MixinPlayerRenderer"
   ],
   "verbose": true
 }

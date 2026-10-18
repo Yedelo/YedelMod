@@ -6,11 +6,6 @@ import at.yedel.yedelmod.YedelMod;
 import at.yedel.yedelmod.features.major.EasyAtlasVerdicts;
 import at.yedel.yedelmod.features.major.TNTTagFeatures;
 import at.yedel.yedelmod.utils.Constants;
-//? if legacy {
-//import org.polyfrost.oneconfig.internal.legacy.InputConstants;
-//?} else {
-import com.mojang.blaze3d.platform.InputConstants;
-//?}
 import org.polyfrost.compose.render.PolyColor;
 import org.polyfrost.oneconfig.api.config.v1.Config;
 import org.polyfrost.oneconfig.api.config.v1.Node;
@@ -23,10 +18,12 @@ import org.polyfrost.oneconfig.api.ui.v1.keybind.OneConfigKeybind;
 import org.polyfrost.oneconfig.utils.v1.dsl.ScreensKt;
 import net.fabricmc.loader.api.FabricLoader;
 //? if legacy {
-//import net.minecraft.util.EnumParticleTypes;
-//?} else {
+/*import net.minecraft.entity.particle.ParticleType;
+import org.polyfrost.oneconfig.internal.legacy.InputConstants;
+*///?} else {
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.particles.ParticleTypes;
+import com.mojang.blaze3d.platform.InputConstants;
 //?}
 
 
@@ -148,7 +145,7 @@ public class YedelConfig extends Config {
         *///?}
     )
     //? if legacy {
-     //public int customParticleTypeLegacy = EnumParticleTypes.NOTE.getParticleID();
+     //public int customParticleTypeLegacy = ParticleType.NOTE.getId();
     //?} else {
     public int customParticleTypeModern = BuiltInRegistries.PARTICLE_TYPE.getId(ParticleTypes.NOTE);
     //?}

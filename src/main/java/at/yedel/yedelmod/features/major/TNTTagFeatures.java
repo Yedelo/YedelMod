@@ -6,7 +6,6 @@ import at.yedel.yedelmod.config.YedelConfig;
 import at.yedel.yedelmod.utils.Constants;
 import at.yedel.yedelmod.utils.NameLineEvent;
 
-
 import org.polyfrost.oneconfig.api.event.v1.events.ChatEvent;
 import org.polyfrost.oneconfig.api.event.v1.invoke.impl.Subscribe;
 
@@ -17,9 +16,7 @@ import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
 import net.minecraft.client.Minecraft;
 //? if legacy {
-/*
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.network.NetworkPlayerInfo;
+/*import net.minecraft.client.network.PlayerInfo;
 import net.minecraft.entity.Entity;
 *///?} else {
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -82,7 +79,7 @@ public class TNTTagFeatures {
 
     public void onTNTTagJoin() {
         if (YedelConfig.getInstance().enabled && YedelConfig.getInstance().bountyHunting) {
-            //~ if modern 'thePlayer' -> 'getUser()'
+            //~ if modern '.player' -> '.getUser()'
             playerName = Minecraft.getInstance().getUser().getName();
             dead = false;
             target = null;
@@ -103,8 +100,9 @@ public class TNTTagFeatures {
         if (inTNTTag && event.getFullyUnformattedMessage().endsWith("has started!")) {
             players.clear();
             //? if legacy {
-            /*for (NetworkPlayerInfo playerInfo : Minecraft.getInstance().getNetHandler().getPlayerInfoMap()) {
-                players.add(playerInfo.getGameProfile().getName());
+            /*// look at me using the name 'playerInfo' before switching to feather
+            for (PlayerInfo playerInfo : Minecraft.getInstance().getNetworkHandler().getOnlinePlayers()) {
+                players.add(playerInfo.getProfile().getName());
             }
             *///?} else {
             for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
