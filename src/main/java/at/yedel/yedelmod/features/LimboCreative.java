@@ -3,6 +3,8 @@ package at.yedel.yedelmod.features;
 
 
 import at.yedel.yedelmod.config.YedelConfig;
+import org.polyfrost.oneconfig.api.event.v1.EventManager;
+import org.polyfrost.oneconfig.api.event.v1.events.WorldEvent;
 import org.polyfrost.oneconfig.api.platform.v1.Platform;
 import net.hypixel.modapi.HypixelModAPI;
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket;
@@ -35,6 +37,7 @@ public class LimboCreative {
 
     private LimboCreative() {
         HypixelModAPI.getInstance().registerHandler(ClientboundLocationPacket.class, this::handleLocationPacket);
+        EventManager.register(WorldEvent.Unload.class, (event) -> inLimboServer = false);
     }
 
     private void handleLocationPacket(ClientboundLocationPacket packet) {
