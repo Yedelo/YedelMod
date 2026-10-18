@@ -423,14 +423,6 @@ public class YedelConfig extends Config {
     )
     private transient int empty$6 = 1;
 
-    @Info(
-        title = "Use /yedel defaultping if /yedel ping doesn't work.",
-        category = "Commands",
-        subcategory = "Index",
-        icon = "polyui/err.svg"
-    )
-    private transient int empty$v1 = 1;
-
     @Info /* command */ (
         title = "- ping [method]",
         description = "Shows your ping to the server in chat, using several methods. Without an argument, uses the default method specified below.",
