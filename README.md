@@ -2,11 +2,7 @@
 
 ![icon](src/main/resources/assets/yedelmod/yedelmod.png)
 
-![Discord Badge](https://img.shields.io/badge/discord-yedel-blue)
-
-![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20version)
-
-![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version)
+![GitHub Release](https://img.shields.io/github/v/release/Yedelo/YedelMod?label=GitHub%20version) ![Modrinth Version](https://img.shields.io/modrinth/v/oYw9EG5g?label=Modrinth%20version) ![Discord Badge](https://img.shields.io/badge/discord-yedel-blue)
 
 Expansive features for Hypixel and Minecraft QOL
 
