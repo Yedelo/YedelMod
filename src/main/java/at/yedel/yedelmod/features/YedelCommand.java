@@ -198,62 +198,42 @@ public class YedelCommand {
     }
 
     @Handler
-    public void defaultping() {
+    public void ping() {
         PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
+    }
+
+    @Handler
+    public void ping(String type) {
+        switch (type) {
+            case "command":
+            case "c":
+                PingCommandInterface.getInstance().queuePing(PingMethod.COMMAND_RESPONSE);
+                break;
+            case "tab":
+            case "t":
+                PingCommandInterface.getInstance().queuePing(PingMethod.TAB_PACKET);
+                break;
+            case "stats":
+            case "s":
+                PingCommandInterface.getInstance().queuePing(PingMethod.STATS_PACKET);
+                break;
+            case "hypixel":
+            case "h":
+                PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
+                break;
+            case "list":
+            case "l":
+                PingCommandInterface.getInstance().queuePing(PingMethod.SERVER_LIST_PING);
+                break;
+            default:
+                Platform.compatibility().displayChatMessage(yedelogo + " §cYou must enter a valid ping method (command, tab, stats, hypixel, list)!");
+        }
     }
 
     private void setDisplayText(String text) {
         for (CustomTextHud hud : HudManager.INSTANCE.getHudsOfType(CustomTextHud.class)) {
             hud.displayText = text;
             hud.save();
-        }
-    }
-
-    @Command("ping")
-    public static class Ping {
-        @Handler
-        public void main() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.values()[YedelConfig.getInstance().pingMethod]);
-        }
-
-        @Handler(
-            value = {"command", "c"},
-            description = "Enters a random command and waits for the unknown command response. Works on almost all servers."
-        )
-        public void command() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.COMMAND_RESPONSE);
-        }
-
-        @Handler(
-            value = {"tab", "t"},
-            description = "Sends a tab completion packet and waits for the response. Works on all servers."
-        )
-        public void tab() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.TAB_PACKET);
-        }
-
-        @Handler(
-            value = {"stats", "s"},
-            description = "Sends a statistics packet and waits for the response. Works on all servers."
-        )
-        public void stats() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.STATS_PACKET);
-        }
-
-        @Handler(
-            value = {"list", "l"},
-            description = "Gets the ping displayed previously on the server list. Doesn't work on singleplayer or if you used Direct Connect."
-        )
-        public void list() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.SERVER_LIST_PING);
-        }
-
-        @Handler(
-            value = {"hypixel", "h"},
-            description = "Uses the Hypixel ping packet and waits for the response. Only works on Hypixel."
-        )
-        public void hypixel() {
-            PingCommandInterface.getInstance().queuePing(PingMethod.HYPIXEL_PING);
         }
     }
 }
