@@ -48,7 +48,6 @@ public class YedelMod implements ClientModInitializer {
 			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			PingResponse.getInstance(),
-			RegexChatFilter.getInstance(),
 			StrengthIndicators.getInstance(),
 			TNTTagFeatures.getInstance()
 		);

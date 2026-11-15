@@ -190,22 +190,6 @@ public class YedelConfig extends Config {
     public boolean onlySpawnCustomParticlesOnPlayers = false;
 
     @Switch(
-        title = "Regex Chat Filter",
-        description = "Use a customizable regular expression to filter chat.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public boolean regexChatFilter = false;
-    
-    @Text(
-        title = "Regex Chat Filter Pattern",
-        description = "The pattern to use for regex chat filtering.",
-        category = "Features",
-        subcategory = "Features"
-    )
-    public String regexChatFilterPattern = "";
-
-    @Switch(
         title = "Random Placeholder",
         description = "Type a customizable placeholder to replace it with a random string from a UUID.",
         category = "Features",
