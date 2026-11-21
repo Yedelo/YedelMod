@@ -15,10 +15,7 @@ Expansive features for Hypixel and Minecraft QOL
 <details><summary>Features</summary>
 
 - Custom Hit Particles
-- Regex Chat Filter
 - Random Placeholder
-- Auto Welcome Guild Members
-- Dropper AutoGG
 - SkyWars Strength Indicators
 - Limbo Creative Mode
 - Easy Atlas Verdicts
