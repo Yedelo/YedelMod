@@ -206,22 +206,6 @@ public class YedelConfig extends Config {
     )
     public String randomPlaceholderText = "//r";
 
-    @Switch(
-        title = "Auto Welcome Guild Members",
-        description = "Automatically welcomes new guild members with a customizable message.",
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    public boolean autoWelcomeGuildMembers = true;
-
-    @Text(
-        title = "Guild Welcome Message",
-        description = "Message for new guild members. Use [player] for the new player.",
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    public String guildWelcomeMessage = "Welcome, [player]!";
-
     @Info(
         title = "This only says gg at the end of the game, not when you finish.",
         //type = InfoType.INFO,
