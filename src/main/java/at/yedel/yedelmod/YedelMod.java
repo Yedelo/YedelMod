@@ -44,7 +44,6 @@ public class YedelMod implements ClientModInitializer {
 		CommandManager.register(YedelCommand.getInstance());
 
 		registerEventListeners(
-			DropperGG.getInstance(),
 			EasyAtlasVerdicts.getInstance(),
 			PingResponse.getInstance(),
 			StrengthIndicators.getInstance(),

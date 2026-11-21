@@ -206,34 +206,6 @@ public class YedelConfig extends Config {
     )
     public String randomPlaceholderText = "//r";
 
-    @Info(
-        title = "This only says gg at the end of the game, not when you finish.",
-        //type = InfoType.INFO,
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    private transient int info$1 = 1;
-
-    @Switch(
-        title = "Dropper AutoGG",
-        description = "AutoGG for Hypixel dropper.",
-        category = "Features",
-        subcategory = "Hypixel"
-    )
-    // very soft dependency that shouldn't mean very much
-    public boolean dropperAutoGG = FabricLoader.getInstance().isModLoaded("autogg");
-
-    @Slider(
-        title = "AutoGG Delay",
-        description = "Delay for AutoGG, measured in seconds.",
-        category = "Features",
-        subcategory = "Hypixel",
-        min = 0,
-        max = 5,
-        step = 1
-    )
-    public int autoGGDelay = 0;
-
     @Switch(
         title = "SkyWars Strength Indicators",
         description = "Shows people's strength above their nametags with customizable colors",
